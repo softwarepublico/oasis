@@ -1,0 +1,29 @@
+<?php
+	$this->script('validaForm');
+	$this->script('mascara');
+	$this->script('calendario');
+	$this->script('validaData');
+    $this->script('scriptFile',array('/comparativo-nivel-de-servico/index.js'));
+ ?>
+<form id="formRelatorioComparativoNivelDeServico">
+    <label class="float-l span-4 right required" for="cd_objeto_contrato"><?php echo $this->escape($this->translate('L_VIEW_OBJETO_CONTRATO')) ?>:</label>
+        <?php echo $this->formSelect("cd_objeto_contrato",null,array('class'=>'float-l'),$this->arrObjetoContrato); ?>
+
+    <label class="float-l span-4 right clear-l" for="cd_profissional"><?php echo $this->escape($this->translate('L_VIEW_PROFISSIONAL')) ?>:</label>
+        <?php echo $this->formSelect("cd_profissional",null,array('class'=>'float-l'),array('0'=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE')))); ?>
+
+    <label class="float-l span-4 right clear-l" for="cd_nivel_servico"><?php echo $this->escape($this->translate('L_VIEW_NIVEL_SERVICO')) ?>:</label>
+        <?php echo $this->formSelect("cd_nivel_servico",null,array('class'=>'float-l'),array('0'=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE')))); ?>
+
+    <label class="float-l span-4 right clear-l" for="dt_demanda_inicio"><?php echo $this->escape($this->translate('L_VIEW_PERIODO')) ?>:</label>
+        <?php echo $this->data("dt_demanda_inicio",null,array('class'=>'float-l span-3')); ?>
+
+    <label class="float-l span-1 center" for="dt_demanda_final"><?php echo $this->escape($this->translate('L_VIEW_A')) ?></label>
+        <?php echo $this->data("dt_demanda_final",null,array('class'=>'float-l span-3')); ?>
+
+    <label class="float-l span-4 right clear-l" for="st_tipo"> <?php echo $this->escape($this->translate('L_VIEW_TIPO')) ?>:</label>
+        <label class="float-l span-4" for="st_tipo">
+                <input type="checkbox" value="A" id="st_tipo" name="st_tipo" /><?php echo $this->escape($this->translate('L_VIEW_COM_ATRASO')) ?>
+        </label>
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->escape($this->translate('L_BTN_GERAR')) ?></button>
+</form>

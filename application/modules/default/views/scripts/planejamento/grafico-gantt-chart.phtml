@@ -1,0 +1,37 @@
+<?php
+   $this->script('ganttChart');
+?>
+<script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl() ?>/public/js/modules/default/planejamento/grafico-gantt.js"></script>
+<form id="formPlanejamentoGrafico" class="divTab">
+    <label class="float-l span-2 right required" for="cd_projeto_planejamento_grafico"><?php echo $this->escape($this->translate('L_VIEW_PROJETO')) ?>:</label>
+		<?php echo $this->formSelect('cd_projeto_planejamento_grafico',null,array('class'=>'float-l'),$this->comboProjeto) ?>
+    <label class="float-l clear-l span-2 right required" for="cd_modulo_planejamento_grafico"><?php echo $this->escape($this->translate('L_VIEW_MODULO')) ?>:</label>
+		<?php echo $this->formSelect('cd_modulo_planejamento_grafico',null,array('class'=>'float-l'),array(0=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE')))) ?>
+    <label class="float-l clear-l span-2 right"><?php echo $this->escape($this->translate('L_VIEW_TIPO').":") ?></label>
+		<label class="float-l span-4 right">
+			<?php echo $this->escape($this->translate('L_VIEW_TODAS_PROPOSTAS')) ?>
+			<input type="radio" id="gantt_tipo_rel-T" name="gantt_tipo_rel" value="T" class="float-l" />
+		</label>
+		<label class="float-l span-5 right">
+			<?php echo $this->escape($this->translate('L_VIEW_PROPOSTAS_EM_EXECUCAO')) ?>
+			<input type="radio" id="gantt_tipo_rel-E" name="gantt_tipo_rel" value="E" class="float-l" />
+		</label>
+	
+		<fieldset class="float-l clear-l span-12">
+			<legend><?php echo $this->escape($this->translate('L_VIEW_FILTRO')) ?></legend>
+
+			<label class="float-l clear-l span-3 right">
+				<?php echo $this->escape($this->translate('L_VIEW_MODULO')) ?>
+				<input type="radio" id="gantt_modulo" name="gantt_filtro" value="M" />
+			</label>
+			<label class="float-l clear-l span-3 right">
+				<?php echo $this->escape($this->translate('L_VIEW_ETAPAS')) ?>
+				<input type="radio" id="gantt_etapas" name="gantt_filtro" value="E" />
+			</label>
+			<label class="float-l clear-l span-3 right">
+				<?php echo $this->escape($this->translate('L_VIEW_ATIVIDADES')) ?>
+				<input type="radio" id="gantt_atividade" name="gantt_filtro" value="A" checked="checked" />
+			</label>
+		</fieldset>
+     <?php echo $this->formButton('btn_gerar_grafico_gantt',$this->escape($this->translate('L_BTN_GERAR_GRAFICO')), array("class"=>"float-l clear-l verde")); ?>
+</form>

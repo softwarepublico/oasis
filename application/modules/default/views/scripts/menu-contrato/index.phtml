@@ -1,0 +1,145 @@
+<?php 
+    $this->script('tab');
+    $this->script('grid');
+    $this->script('validaForm');
+    $this->script('mascara');
+    $this->script('validaCNPJ');
+	$this->script('validaCPF');
+    $this->script('calendario');
+    $this->script('validaData');
+    $this->script('mascaraDinheiro');
+    $this->script('numero');
+	$this->script('editorHtml');
+    $this->script('scriptFile',array('/menu-contrato/index.js'));
+?>
+<?php echo $this->formHidden('config_hidden_empresa','N') ?>
+<?php if((ChecaPermissao::possuiPermissao('empresa') === true) ||
+		 (ChecaPermissao::possuiPermissao('contato-empresa') === true)): ?>
+	<div id="accordion_empresa" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed') && ($('#config_hidden_empresa').val() == 'N')){configAccordionEmpresa();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_EMPRESA')); ?></span>
+    </div>
+	<div id="form_empresa" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('empresa/tabs.phtml') ?>
+		<div class="accordionBottom" style="min-height: 20px;"></div>
+	</div>
+<?php endif; ?>
+
+
+<?php echo $this->formHidden('config_hidden_contratos','N') ?>
+<?php if(ChecaPermissao::possuiPermissao('contrato') === true): ?>
+	<div id="accordion_contrato" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed') && ($('#config_hidden_contratos').val() == 'N')){configAccordionContratos();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_CONTRATO')); ?></span>
+    </div>
+	<div id="form_accordion_contrato" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('painel-contrato/tabs.phtml') ?>
+		<div class="accordionBottom" style="min-height: 20px;"></div>
+	</div>
+<?php endif; ?>
+
+<?php echo $this->formHidden('config_hidden_metrica_contrato','N') ?>
+<?php if(ChecaPermissao::possuiPermissao('contrato-definicao-metrica') === true): ?>
+	<div id="accordion_metrica_contrato" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed') && ($('#config_hidden_metrica_contrato').val() == 'N')){configAccordionMetricaContrato();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_ASSOCIAR_METRICA_CONTRATO')); ?></span>
+	</div>
+	<div id="form_metrica_contrato" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('contrato-definicao-metrica/index.phtml') ?>
+	</div>
+<?php endif; ?>
+
+<?php echo $this->formHidden('config_hidden_projeto_contrato','N') ?>
+<?php if(ChecaPermissao::possuiPermissao('associar-projeto-contrato') === true): ?>
+	<div id="accordion_projeto_contrato" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed') && ($('#config_hidden_projeto_contrato').val() == 'N')){configAccordionProjetoContrato();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_ASSOCIAR_PROJETO_CONTRATO')); ?></span>
+	</div>
+	<div id="form_projeto_contrato" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('associar-projeto-contrato/index.phtml') ?>
+	</div>
+<?php endif; ?>
+
+<?php echo $this->formHidden('config_hidden_item_inventario_contrato','N') ?>
+<?php if(ChecaPermissao::possuiPermissao('associar-item-inventario-contrato') === true): ?>
+	<div id="accordion_item_inventario_contrato" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed') && ($('#config_hidden_item_inventario_contrato').val() == 'N')){configAccordionItemInventarioContrato();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_ASSOCIAR_ITEM_INVENTARIO_CONTRATO')); ?></span>
+	</div>
+	<div id="form_item_inventario_contrato" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('associar-item-inventario-contrato/index.phtml') ?>
+	</div>
+<?php endif; ?>
+
+<?php echo $this->formHidden('config_hidden_perfil_papel_profissional','N') ?>
+<?php if((ChecaPermissao::possuiPermissao('perfil-profissional-papel-profissional') === true) ||
+		 (ChecaPermissao::possuiPermissao('perfil-profissional') === true) ||
+		 (ChecaPermissao::possuiPermissao('papel-profissional') === true) ): ?>
+	<div id="accordion_perfil_papel" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){configAccordionPerfilPapelProfissional();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_PERFIL_PAPEL_PROFISSIONAL')); ?></span>
+	</div>
+	<div id="form_perfil_papel" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('perfil-profissional-papel-profissional/tabs.phtml') ?>
+	</div>
+<?php endif; ?>
+
+<?php echo $this->formHidden('config_hidden_associar_perfil_papel_profissional_objeto_contrato','N') ?>
+<?php if(ChecaPermissao::possuiPermissao('associar-perfil-papel-profissional-objeto-contrato') === true ): ?>
+	<div id="accordion_perfil_papel" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){configAccordionAssociarPerfilPapelProfissionalObjetoContrato();}">
+		<span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_ASSOCIAR_PERFIL_PAPEL_OBJETO_CONTRATO')); ?></span>
+	</div>
+	<div id="form_perfil_papel" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('associar-perfil-papel-profissional-objeto-contrato/tabs.phtml') ?>
+	</div>
+<?php  endif; ?>
+
+<?php echo $this->formHidden('config_hidden_perfil_objeto','N') ?>
+<?php if(ChecaPermissao::possuiPermissao('perfil-menu') === true): ?>
+	<div id="accordion_perfil_objeto" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed') && ($('#config_hidden_perfil_objeto').val() == 'N')){configAccordionPerfilObjeto();}">
+		<span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_ASSOCIAR_PERFIL_SISTEMA_OBJETO_CONTRATO')); ?></span>
+	</div>
+	<div id="form_perfil_objeto" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('perfil-menu/index.phtml') ?>
+	</div>
+<?php endif; ?>
+
+<?php echo $this->formHidden('config_hidden_etapa_atividade','N') ?>
+<?php if(ChecaPermissao::possuiPermissao('etapa') === true || 
+         ChecaPermissao::possuiPermissao('atividade') === true ||
+         ChecaPermissao::possuiPermissao('associar-atividade-objeto-contrato') === true): ?>
+	<div id="accordion_etapa" class="accordion-closed" onclick="if(($(this).hasClass('accordion-closed')) && ($('#config_hidden_etapa_atividade').val()=='N')){configAccordionEtapaAtividade();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_ETAPA_ATIVIDADE')); ?></span>
+    </div>
+	<div id="form_accordion_etapa" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('etapa/tabs.phtml') ?>
+		<div class="accordionBottom" style="min-height: 20px;"></div>
+	</div>
+<?php endif; ?>
+
+<?php echo $this->formHidden('config_hidden_item_questao_risco','N') ?>
+<?php if(ChecaPermissao::possuiPermissao('item-risco') === true || ChecaPermissao::possuiPermissao('questao-analise-risco') === true): ?>
+	<div id="accordion_item_risco" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){configAccordionItemQuestaoRisco();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_ITEM_QUESTAO_ANALISE_RISCO')); ?></span>
+    </div>
+	<div id="form_accordion_item_risco" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('item-risco/tabs.phtml') ?>
+		<div class="accordionBottom" style="min-height: 20px;"></div>
+	</div>
+<?php endif; ?>
+
+<?php if(ChecaPermissao::possuiPermissao('documentacao-contrato') === true): ?>
+	<div id="accordion_documentacao_contrato" class="accordion-closed">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_DOCUMENTACAO_CONTRATO')); ?></span>
+    </div>
+	<div id="form_accordion_documentacao_contrato" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('documentacao-contrato/index.phtml') ?>
+		<div class="accordionBottom" style="min-height: 20px;"></div>
+	</div>
+<?php endif; ?>
+
+<?php echo $this->formHidden('config_hidden_rotina','N') ?>
+<?php if(ChecaPermissao::possuiPermissao('rotina') === true ||
+         ChecaPermissao::possuiPermissao('associar-rotina-objeto-contrato') === true): ?>
+	<div id="accordion_rotina" class="accordion-closed" onclick="if(($(this).hasClass('accordion-closed')) && ($('#config_hidden_rotina').val()=='N')){configAccordionRotina();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_ROTINA')); ?></span>
+    </div>
+	<div id="form_accordion_rotina" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('rotina/tabs.phtml') ?>
+		<div class="accordionBottom" style="min-height: 20px;"></div>
+	</div>
+<?php endif; ?>

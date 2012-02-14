@@ -1,0 +1,58 @@
+<script type="text/javascript" language="javascript" src="<?php echo $this->baseUrl() ?>/public/js/modules/default/gerenciamento-risco/index.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#container-gerenciamento-risco').show().tabs();
+
+	$('#st_impacto_proposta').change(function(){
+		gridProjetoPropostaExecucao($(this).val());
+	}); 
+	$('#st_impacto_risco').change(function(){
+		gridAnaliseRisco($('#cd_projeto_risco').val(),$('#cd_proposta_risco').val(),$(this).val());
+	}); 
+});
+function configGerenciamentoRisco()
+{
+    gridProjetoPropostaExecucao();
+    $('#config_hidden_risco').val('S');
+}
+</script>
+<div id="container-gerenciamento-risco" style="display: none;">
+	<ul>
+    	<li id="li_aba_propostasAndamentoRisco">
+            <a href="#propostasAndamentoRisco">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PROPOSTAS_ANDAMENTO')) ?></span>
+            </a>
+        </li>
+        <li id="li_aba_AnaliseItemRisco" style="display:none;">
+            <a href="#AnaliseItemRisco">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_ITEM_RISCO')) ?></span>
+            </a>
+        </li>
+        <li id="li_aba_questionarioAnaliseRisco" style="display:none;">
+            <a href="#questionarioAnaliseRisco">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_QUESTIONARIO_RISCO')) ?></span>
+            </a>
+        </li>
+        <li id="li_aba_analiseRisco" style="display:none;" >
+            <a href="#analiseRisco">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_ANALISE_RISCO')) ?></span>
+            </a>
+        </li>
+    </ul>
+    <div id="propostasAndamentoRisco" class="divTab">
+	    <label class="float-l span-2 right"><?php echo $this->escape($this->translate('L_VIEW_IMPACTO')) ?>:</label>
+			<?php echo $this->selectUtil('impactoRisco','st_impacto_proposta',null,array("class"=>"float-l"))?>
+        <div id="gridProjetosPropostaExecucao" class="float-l span-20"></div>
+    </div>
+    <div id="AnaliseItemRisco" class="divTab">
+    	<label class="float-l span-2 right"><?php echo $this->escape($this->translate('L_VIEW_IMPACTO')) ?>:</label>
+			<?php echo $this->selectUtil('impactoRisco','st_impacto_risco',null,array("class"=>"float-l"))?>
+        <div id="gridAnaliseItemRisco" class="floatl clear-l"></div>
+    </div>
+    <div id="questionarioAnaliseRisco" class="divTab">
+        <div id="questionarioAnaliseItemRisco"></div>
+    </div>
+    <div id="analiseRisco" class="divTab">
+    	<div id="analiseRisco"></div>
+    </div>
+</div>	

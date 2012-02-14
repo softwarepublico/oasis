@@ -1,0 +1,34 @@
+<div style="overflow-x: auto; padding: 5px; height: 400px; width: 820px;" class="border">
+    <form id="formSolicitacaoPedido" action="<?php echo $this->url(array('module'=>'pedido', 'controller'=>'PedidoEmitirSolicitacaoProposta','action'=>'cadastro')); ?>" method="POST">
+            <?php 
+                echo $this->formHidden('cd_unidade',$this->dadosUsuario->cd_unidade,array('class'=>'float-l'));
+                echo $this->formHidden('cd_solicitacao_pedido',$this->cd_solicitacao_pedido,array('class'=>'float-l'));
+            ?>
+
+        <label class="float-l span-2 right clear-l" for="tx_nome_usuario"><?php echo $this->escape($this->translate('L_VIEW_NOME')) ?>:</label>
+                <?php echo $this->formText('tx_nome_usuario',$this->dadosUsuario->tx_nome_usuario,array('class'=>'span-10 float-l', 'maxlength'=>'100','readonly'=>'readonly')); ?>
+
+            <label class="float-l span-2 right clear-l" for="tx_sigla_unidade"><?php echo $this->escape($this->translate('L_VIEW_UNIDADE')) ?>:</label>
+                <?php echo $this->formText('tx_sigla_unidade',$this->dadosUsuario->tx_sigla_unidade,array('class'=>'span-10 float-l', 'maxlength'=>'100','readonly'=>'readonly')); ?>
+
+            <label class="float-l span-2 right clear-l" for="tx_sala_usuario"><?php echo $this->escape($this->translate('L_VIEW_SALA')) ?>:</label>
+                <span class="span-5 float-l"><?php echo $this->formText('tx_sala_usuario',$this->dadosUsuario->tx_sala_usuario,array('class'=>'span-3 float-l', 'maxlength'=>'50','readonly'=>'readonly')); ?></span>
+
+            <label class="float-l span-2 right" for="tx_telefone_usuario"><?php echo $this->escape($this->translate('L_VIEW_TELEFONE')) ?>:</label>
+                <?php echo $this->telefone('tx_telefone_usuario',$this->dadosUsuario->tx_telefone_usuario,array('class'=>' gapLeft span-3 float-l', 'maxlength'=>'14','readonly'=>'readonly')); ?>
+
+            <label class="float-l clear-l span-2 right required" for="cd_objeto"><?php echo $this->escape($this->translate('L_VIEW_OBJETO')) ?>:</label>
+                <?php echo $this->formSelect('cd_objeto',null,array('class'=>'float-l'),$this->arrObjeto); ?>
+            
+            <label class="float-l span-2 right clear-l required" for="tx_obs_solicitacao"><?php echo $this->escape($this->translate('L_VIEW_DESCRICAO')) ?>:</label>
+                <?php echo $this->formTextarea('tx_obs_solicitacao',null,array('class'=>'span-10 height-5 float-l')); ?>
+
+            <label class="float-l span-2 right clear-l required" for="ni_prazo_atendimento"><?php echo $this->escape($this->translate('L_VIEW_PRAZO_ATENDIMENTO')) ?>:</label>
+                <?php echo $this->formText('ni_prazo_atendimento',null,array('class'=>'span-10 float-l', 'maxlength'=>'14')); ?>
+
+            <?php
+                echo $this->formButton('btCadastrarSolicitacaoPedido',$this->escape($this->translate('L_BTN_SALVAR')),array('class'=>'float-l clear-l push-2 verde','onclick'=>'cadastrarSolicitacaoPedido()'));
+                echo $this->formButton('btResetSolicitacaoPedido',$this->escape($this->translate('L_BTN_LIMPAR')),array('class'=>'float-l push-3 vermelho','type'=>'reset'));
+            ?>
+        </form>
+</div>

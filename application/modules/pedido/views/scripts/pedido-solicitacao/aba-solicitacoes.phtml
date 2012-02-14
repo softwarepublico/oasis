@@ -1,0 +1,60 @@
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#pedidos").tablesorter({widthFixed: true, widgets: ['zebra']});
+});
+</script>
+
+<div class="clear boxTab height-2">
+    <button type="button" 
+            class="span-4 float-r azul"
+            style="margin-top:5px"
+            onclick="location.href = '<?php echo $this->url(array('module'=>'pedido', 'controller'=>'pedido-solicitacao', 'action'=>'formulario')); ?>'"
+            >
+            <?php echo $this->escape($this->translate('L_BTN_NOVA_SOLICITACAO')) ?>
+    </button>
+</div>
+
+<table cellspacing="1" id="pedidos" class="tablesorter">
+    <thead>
+        <tr>
+            <th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_DATA_HORA')) ?></th>
+            <th class="span-4"><?php echo $this->escape($this->translate('L_VIEW_GRID_SITUACAO')) ?></th>
+            <th><?php echo $this->escape($this->translate('L_VIEW_GRID_OBSERVACAO')) ?></th>
+            <th class="center span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_ACAO')) ?></th>
+        </tr>
+    </thead>
+    <tbody>
+<?php if(count($this->pedidos)):?>
+    <?php foreach($this->pedidos as $rs) : ?>
+        <tr>
+            <td>
+                <?php if(strpos('PM', $rs['st_situacao_pedido']) !== false): ?>
+                <a href="<?php echo $this->url(array('module'=>'pedido','controller'=>'pedido-solicitacao','action'=>'formulario','pedido'=>$rs['cd_solicitacao_pedido'])); ?>">
+                    <?php echo date('d/m/Y H:i:s', strtotime($rs['dt_solicitacao_pedido']))?>
+                </a>
+                <?php else: ?>
+                    <?php echo date('d/m/Y H:i:s', strtotime($rs['dt_solicitacao_pedido']))?>
+                <?php endif; ?>
+            </td>
+            <td><?php echo $this->situacao[$rs['st_situacao_pedido']]?></td>
+            <td><?php echo nl2br($rs['tx_observacao_pedido'])?></td>
+            <td class="center">
+                <?php if($rs['st_situacao_pedido'] == 'P'):?>
+                    <a href="<?php echo $this->url(array('module'=>'pedido','controller'=>'pedido-solicitacao','action'=>'encaminhar','cd_solicitacao_pedido'=>$rs['cd_solicitacao_pedido'])) ?>" 
+                       onclick="return confirm('Encaminhar esta Solicitação?')"><?php echo $this->escape($this->translate('L_VIEW_ENCAMINHAR')) ?></a>
+                <?php else: ?>
+                    <a href="<?php echo $this->url(array('module'=>'pedido','controller'=>'pedido-solicitacao','action'=>'historico','cd_solicitacao_pedido'=>$rs['cd_solicitacao_pedido'])) ?>"><?php echo $this->escape($this->translate('L_VIEW_ACOMPANHAR')) ?></a>
+                <?php endif; ?>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+<?php else:
+       echo " <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>";
+      endif; ?>
+    </tbody>
+</table>

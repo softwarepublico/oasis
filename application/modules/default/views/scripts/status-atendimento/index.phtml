@@ -1,0 +1,10 @@
+<link rel="stylesheet" href="<?php echo $this->baseUrl() ?>/public/js/lib/colorPicker/css/colorpicker.css" type="text/css" />
+<script type="text/javascript" src="<?php echo $this->baseUrl() ?>/public/js/lib/colorPicker/colorpicker.js"></script>
+<?php
+    $this->script('scriptFile',array('/status-atendimento/index.js'));
+    $this->script('grid');
+    $this->script('validaForm');
+    $this->script('numero');
+    echo $this->formStatusAtendimento;
+?>
+<div class="float-l clear-l push-4" id="gridStatusAtendimento"></div>

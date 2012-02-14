@@ -1,0 +1,32 @@
+<li id="box-demanda-por-tecnico" class="boxList float-l boxPequeno">
+	<div class="portlet">
+		<div class="portlet-header"><?php echo $this->titulo_box_demanda_por_tecnico; ?>
+			<a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button" unselectable="on" style="-moz-user-select: none;">
+				<span class="ui-icon ui-icon-closethick imgCloseBox" unselectable="on" style="-moz-user-select: none;">close</span>
+			</a>
+		</div>
+		<div class="portlet-content">
+			<?php if( count($this->res) > 0 ): ?>
+				<div class="float-l gap-3" style="overflow-y:scroll; height: 265px;">
+                    <span class="float-l span-6 center" style="color: red;"><?php echo Base_Util::getTranslator('L_VIEW_EXECUTADAS_EM_VARIAVEL', $this->periodo) ?></span>
+					<?php foreach( $this->res as $res):
+							$fim = "";
+							if(strlen($res['tx_nome_conhecido']) >= 15){
+								$fim = "...";
+							}
+							$tx_nome_conhecido = trim(ucwords( mb_strtolower(substr($res['tx_nome_conhecido'],0,15),'utf-8')));
+					?>
+						<div class="float-l " style="margin-top: 5px; background-color:#DFF0F2">
+							<label class=" clear-l span-3" style="margin-top: 5px;"><?php echo $tx_nome_conhecido.$fim?></label>
+							<span class="highlight span-3 float-l" style="margin:0 0 0;text-align: center; color:white;font-size: 15px;cursor:default;-moz-border-radius:10px; margin-top: 3px;">
+								<?php echo $res['total'] ?>
+							</span>
+						</div>
+					<?php endforeach; ?>
+				</div>
+			<?php else: ?>
+				<span class="float-l span-6 bold center" style="color: red; margin-top: 120px;"><?php echo $this->escape(Base_Util::getTranslator('L_VIEW_SEM_REGISTRO_PARA_VARIAVEL', $this->periodo)) ?></span>
+			<?php endif; ?>
+		</div>
+	</div>
+</li>

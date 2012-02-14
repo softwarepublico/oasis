@@ -1,0 +1,32 @@
+<?php
+    $this->script('scriptFile',array('/demanda-executor-demanda/index.js'));
+?>
+<input type="hidden" id="cd_demanda" name="cd_demanda" value="<?php echo $this->demanda['cd_demanda'] ?>"/>
+<input type="hidden" id="cd_nivel_servico" name="cd_nivel_servico" value="<?php echo $this->cd_nivel_servico ?>"/>
+<div class="box span-21 border gradient">
+	<h3 class="highlight tarja-1"><?php echo $this->escape($this->translate('L_VIEW_DETALHE_DEMANDA')) ?></h3>
+
+	<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_NUMERO')) ?>:</label>
+        <p class="span-6"><?php echo $numero = (!is_null($this->demanda['ni_solicitacao'])) ? "{$this->demanda['ni_solicitacao']}/{$this->demanda['ni_ano_solicitacao']}" : $this->demanda['cd_demanda']; ?></p>
+	<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_DATA_HORA_DEMANDA')) ?>:</label>
+        <p class="span-6"><?php echo date('d/m/Y H:i:s', strtotime($this->demanda['dt_demanda'])) ?></p>
+	<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_NIVEL_SERVICO')) ?>:</label>
+        <p class="span-15"><?php echo $this->demanda['tx_nivel_servico'] ?></p>
+	<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_SOLICITANTE')) ?>:</label>
+        <p class="span-6"><?php echo $this->demanda['tx_solicitante_demanda'] ?></p>
+	<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_UNIDADE')) ?>:</label>
+        <p class="span-6"><?php echo $this->demanda['tx_sigla_unidade'] ?></p>
+	<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_DESCRICAO')) ?>:</label>
+        <div class="span-15" style="text-align: justify; margin-left: 10px;"><?php echo $this->demanda['tx_demanda'] ?></div>
+    <label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACAO')) ?>:</label>
+        <p class="span-15" style="text-align: justify;"><?php echo $this->demanda['tx_obs_nivel_servico'] ?></p>
+
+    <hr style="width:815px;"/>
+	<div>
+		<?php echo $this->formButton('bt_voltar', $this->escape($this->translate('L_BTN_VOLTAR')), array('class' => 'float-l azul'), null)?>
+		<div class="float-l span-15" style="margin-left: 79px;">
+            <label class="bold float-l right" style="color: red; margin-left: 181px;"><?php echo Base_Util::getTranslator('L_MSG_ALERT_CLIQUE_PARA_REGISTRAR_OPERACAO', $this->escape($this->translate('L_BTN_REGISTRAR_LEITURA'))) ?></label>
+		</div>		
+		<?php echo $this->formButton('bt_ok', $this->escape($this->translate('L_BTN_REGISTRAR_LEITURA')), array('class' => 'float-r verde',null, 'onClick' => 'gravaDataHoraLeituraDemanda()'), null)?>
+	</div>
+</div>

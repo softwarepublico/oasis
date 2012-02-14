@@ -1,0 +1,26 @@
+<?php
+    $this->script('scriptFile',array('/custo-contrato-demanda/index.js'));
+?>
+<div class="clear" id="formCustoContratoDemanda">
+	<?php echo $this->formHidden('valor_contrato_demanda_mes', null, null, null); ?>
+    <label class="float-l bold span-3 required" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_MES')) ?>:</label>
+    <?php echo $this->mesCombo('ni_mes_custo_contrato_demanda', null, array('class'=>'float-l'), null)?>
+    
+    <label class="float-l bold clear-l span-3 required" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_ANO')) ?>:</label>
+    <?php echo $this->anoCombo('ni_ano_custo_contrato_demanda', null, array('class'=>'float-l'), 1) ?>
+
+    <label class="float-l bold clear-l span-3 required" style="margin-top:2px;"><?php echo $this->translate('L_VIEW_CONTRATO') ?>:</label>
+	<?php echo $this->formSelect('cd_contrato_custo_contrato_demanda', null, array('class'=>'float-l span-4'), $this->arrContratosTipoDemandaServico); ?>
+
+    <div id="div_valor_contrato" class="float-l clear-l">
+		<label class="bold span-5 float-l"><?php echo $this->escape($this->translate('L_VIEW_VALOR_CONTRATO_MENSAL')) ?>:</label>
+		<p class="span-3 float-l " id="p_valor_contrato"></p>
+	</div>
+	<label class="float-l bold clear-l span-3" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_MULTA')) ?>:</label>
+    <?php echo $this->Moeda('nf_total_multa', null, array('class'=>'float-l span-4'), null); ?>
+    <label class="float-l bold clear-l span-3" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_GLOSAS')) ?>:</label>
+    <?php echo $this->Moeda('nf_total_glosa', null, array('class'=>'float-l span-4'), null); ?>
+    <label class="float-l bold clear-l span-3 required" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_VALOR_PAGO')) ?>:</label>
+    <?php echo $this->Moeda('nf_total_pago', null, array('class'=>'float-l span-4'), null); ?>
+</div>
+<button id="bt_salvar_custo_contrato_demanda" class="verde float-l push-3 clear-l" type="button" name="submit"><?php echo $this->escape($this->translate('L_BTN_SALVAR')) ?></button>

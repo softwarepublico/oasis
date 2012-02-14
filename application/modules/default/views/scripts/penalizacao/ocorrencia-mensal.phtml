@@ -1,0 +1,11 @@
+<?php
+    $this->script('scriptFile',array('/penalizacao/justificativa.js'));
+?>
+<div id="tabJustificativaPenalizacao" class="divTab">
+	<div class="clear boxTab">
+		<label class="float-l" style="margin-top:6px; font-size:20px;" id="mesAnoJustificativaPenalizacao"><?php echo $this->mesAno ?></label>
+		<label class="float-r" style="margin-top:6px;"><?php echo $this->anoCombo('ano_penalizacao_justificativa',$this->anoComboValue) ?></label>
+		<label class="float-r" style="margin-top:6px;"><?php echo $this->mesCombo('mes_penalizacao_justificativa',$this->mesComboValue,array('descricaoMes'=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE_MES')))) ?></label>
+    </div>
+	<div id="gridJustificativaPenalizacao" class="float-l clear-l" style="width:820px;"></div>
+</div>

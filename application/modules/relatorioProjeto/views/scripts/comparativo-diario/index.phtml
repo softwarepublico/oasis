@@ -1,0 +1,16 @@
+<?php 
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/comparativo-diario/index.js'));
+?>
+<form id="formRelatorioDemandaComparativoDiario">
+    <label class="float-l clear-l span-3 right" for="cd_profissional"><?php echo $this->translate('L_VIEW_PROFISSIONAL') ?>:</label>
+		<span class="float-l"><?php echo $this->formSelect("cd_profissional",null,null,$this->arrProfissional); ?></span>
+		  
+    <label class="float-l clear-l span-3 right required" for="mes"><?php echo $this->translate('L_VIEW_MES') ?>:</label>
+		<span class="float-l"><?php echo $this->mesCombo("mes",null,array('class'=>'float-l span-3')); ?></span>
+		  
+    <label class="float-l clear-l span-3 right required" for="ano"><?php echo $this->translate('L_VIEW_ANO') ?>:</label>
+		<span class="float-l"><?php echo $this->anoCombo("ano",null,array('class'=>'float-l span-3')); ?></span>
+		
+	<button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->translate('L_BTN_GERAR') ?></button>
+</form>

@@ -1,0 +1,15 @@
+<div class="divTab">
+    <div class="clear boxTab">
+        <label class="float-l" style="margin-top:2px;">
+            <?php echo $this->escape($this->translate('L_VIEW_PROJETO')) ?>:
+            <span class="SigProjeto bold"></span>
+        </label>
+        <hr />
+        <label class="float-l" style="margin-top:2px;">
+            <?php echo $this->escape($this->translate('L_VIEW_REGRA_DE_NEGOCIO')) ?>:
+            <span class="Descricao bold"></span>
+            <?php echo $this->formHidden('cd_regraNegocio_homologacao',null,array('class'=>'codTabela')); ?>
+        </label>
+    </div>
+    <div id="grid_regraNegocio_homologacao_gerenciamentoTeste"></div>
+</div>

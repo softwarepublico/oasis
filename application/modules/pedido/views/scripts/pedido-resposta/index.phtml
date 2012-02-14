@@ -1,0 +1,27 @@
+<?php
+    $this->script('grid');
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/pedido-resposta/index.js'));
+?>
+
+<form id="form_cadastro_resposta">
+    <?php echo $this->formHidden('cd_resposta_pedido'); ?>
+
+    <label for="tx_titulo_resposta" class="float-l span-2 right required">
+        <?php echo $this->escape($this->translate('L_VIEW_RESPOSTA')) ?>:
+    </label>
+    
+    <?php echo $this->formText('tx_titulo_resposta',$this->resposta['tx_titulo_resposta'],array("maxlength"=>"150", "class"=>"span-8 float-l" )); ?>
+
+    <?php echo $this->formButton('btn_salvar_resposta',
+                                 $this->escape($this->translate('L_BTN_SALVAR')),
+                                 array('class'=>'float-l clear-l push-2 verde'));?>
+    <?php echo $this->formButton('btn_limpar_resposta',
+                                 $this->escape($this->translate('L_BTN_LIMPAR')),
+                                 array('class'=>'float-l push-2 azul','type'=>'reset'));?>
+    <?php echo $this->formButton('btn_cancelar_resposta',
+                                 $this->escape($this->translate('L_BTN_CANCELAR')),
+                                 array('class'=>'float-l push-2 vermelho'));?>
+</form>
+
+<div id="grid_resposta_pergunta_pedido" class="float-l clear-l"></div>

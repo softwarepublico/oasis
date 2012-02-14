@@ -1,0 +1,92 @@
+<?php
+	$this->script("grid");
+    $this->script('editorHtml');
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/demanda/index.js'));
+?>
+<form method="post" id="formEncaminharSolicitacaoTipoDemanda">
+	<input type="hidden" id="cd_demanda" name="cd_demanda" value="<?php echo $this->cd_demanda ?>"/>
+	<input type="hidden" id="cd_profissional_hidden" name="cd_profissional_hidden" value=""/>
+	<input type="hidden" id="cd_nivel_servico_hidden" name="cd_nivel_servico_hidden" value=""/>
+	<input type="hidden" id="cd_objeto" name="cd_objeto" value="<?php echo $this->cd_objeto ?>"/>
+	<input type="hidden" id="ni_solicitacao" name="ni_solicitacao" value=""/>
+	<input type="hidden" id="ni_ano_solicitacao" name="ni_ano_solicitacao" value=""/>
+	<input type="hidden" id="dt_demanda" name="dt_demanda" value="<?php echo $this->dt_demanda ?>"/>
+    
+	<input type="hidden" id="cd_item_inventariado" name="cd_item_inventariado" value="<?php echo $this->cd_item_inventariado ?>"/>
+	
+	<div class="box span-21 border gradient">
+        <h3 class="highlight tarja-1"><?php echo $this->escape($this->translate('L_VIEW_DETALHE_DEMANDA')) ?></h3>
+
+		<label class="bold float-l span-5 right"><?php echo $this->escape($this->translate('L_VIEW_DATA_HORA_DEMANDA')) ?>:</label>
+            <p class="span-6"><?php echo $this->dt_demanda ?></p>
+        <label class="span-5 float-l right  required"><?php echo $this->escape($this->translate('L_VIEW_SOLICITANTE')) ?>:</label>
+            <p class="span-6 floa-l "><?php echo $this->formText('tx_solicitante_demanda', $this->demanda['tx_solicitante_demanda'], array('class' => 'span-10 float-l', 'style' => 'margin-right: 10px;'), null) ?></p>
+            
+		<label class="span-5 right required"><?php echo $this->escape($this->translate('L_VIEW_UNIDADE_SOLICITANTE')) ?>:</label>
+            <p class="span-6"><?php echo $this->formSelect('cd_unidade', $this->cd_unidade, array('class' => 'span-5 float-l', 'style' => 'margin-right: 10px;'), $this->cd_unidade_combo) ?></p>
+		<label class="span-5 right required"><?php echo $this->escape($this->translate('L_VIEW_DESCRICAO')) ?>:</label>
+            <p class="span-6">
+                <?php echo $this->editorHtml('tx_demanda', $this->demanda['tx_demanda'], array('style' => 'width:550px; height:50px;', 'class' => 'float-l span-6','editor'=>K_EDITOR)) ?>
+            </p>
+
+        <label class="span-5 right required" for="cd_status_atendimento"><?php echo $this->escape($this->translate('L_VIEW_PRIORIDADE_DEMANDA')) ?>:</label>
+			<p><?php echo $this->formSelect('cd_status_atendimento',$this->cd_status_atendimento,array('class'=>'float-l'),$this->comboStatusAtendimento) ?></p>
+
+            <?php
+            echo $this->formButton(
+                    'btn_salvar_demanda',
+                    $this->translate('L_BTN_SALVAR'),
+                    array(
+                        'class'=>'verde float-l push-10 hide'
+                    ));
+            echo $this->formButton(
+                    'btn_alterar_demanda',
+                    $this->translate('L_BTN_ALTERAR'),
+                    array(
+                        'class'=>'azul float-l push-10 hide'
+                    ))
+                    ?>
+
+
+		<label class="bold span-5 "><i><?php echo $this->escape($this->translate('L_VIEW_DETALHE_EXECUCAO')) ?></i></label>
+
+		<hr style="width:815px;"/>
+		
+        <label class="span-5 right"><?php echo $this->escape($this->translate('L_VIEW_OBJETO_EXECUTOR')) ?>:</label>
+			<p><?php echo $this->tx_objeto ?></p>
+
+            <div>
+                <fieldset id="demanda_po_prof" class="float-r span-2" style="margin-right: 30px">
+                    <legend><?php echo $this->escape('Demanda/Profissional') ?></legend>
+                		<label class="bold span-2 "><i><?php echo $this->escape($this->translate('L_VIEW_ABERTA(S)').':') ?></i></label>
+                            <p><span id="demanda_aberta"><?php echo $this->demandaAberta ?></span></p>       
+                        <label class="bold span-2 "><i><?php echo $this->escape($this->translate('L_VIEW_FECHADA(S)').':') ?></i></label>
+                            <p><span id="demanda_fechada"><?php echo $this->demandaFechada ?></span></p>
+                </fieldset>    
+            </div>            
+            
+            
+        <label class="span-5 right required" for="cd_nivel_servico"><?php echo $this->escape($this->translate('L_VIEW_NIVEL_SERVICO')) ?>:</label>
+			<p id="comboNivelServico"><?php echo $this->formSelect('cd_nivel_servico',null,array('class'=>'float-l')) ?></p>
+			<p id="descNivelServico"></p>
+
+		<label class="span-5 right required" for="cd_profissional"><?php echo $this->escape($this->translate('L_VIEW_PROFISSIONAL_EXECUTAR')) ?>:</label>
+			<p id="comboProfissional"><?php echo $this->formSelect('cd_profissional',null,array('class'=>'float-l')) ?></p>
+			<p id="descProfissional"></p>
+		
+        <label class="clear-l right span-5"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACOES')) ?>:</label>
+			<p><?php echo $this->formTextarea('tx_obs_nivel_servico', $this->tx_obs_demanda, array('style' => 'width:570px; height:50px;', 'class' => 'span-4')) ?></p>
+
+		<?php echo $this->formButton('bt_designar_profissional_encaminhar_solicitacao_tipo_demanda', $this->escape($this->translate('L_BTN_DESIGNAR_PROFISSIONAL')), array('class' => 'float-r verde','style'=>'margin-right: 55px;'), null)?>
+		<?php echo $this->formButton('bt_cancelar_solicitacao_tipo_demanda', $this->escape($this->translate('L_BTN_CANCELAR')), array('class' => 'float-r vermelho'), null)?>
+
+        <div class="clear span-20" style="margin-left: 15px; margin-bottom: 8px;" id="profissionaisAlocados"></div>
+		
+        <hr style="width:815px;"/>
+
+		<?php echo $this->formButton('bt_cancelar_encaminhar_demanda', $this->escape($this->translate('L_BTN_CANCELAR')), array('class' => 'float-l vermelho'), null)?>
+		<?php echo $this->formButton('nova_demanda',$this->escape($this->translate('L_BTN_NOVA_DEMANDA')),array('class'=>'azul float-r')) ?>
+	</div>
+	
+</form>

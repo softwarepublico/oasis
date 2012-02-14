@@ -1,0 +1,80 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#container-proposta').show().tabs(); 
+    $('#config_hidden_controle_proposta').val('N');
+});
+function configControleProposta()
+{
+	executaControlePropostaAjax();
+    $('#config_hidden_controle_proposta').val('S');
+}
+</script>
+<div id="container-proposta" style="display: none;">
+	<ul>
+    	<li>
+            <a href="#etapaControle">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_ETAPAS_CONTROLE')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#alteracaoProposta">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_ALTERACAO')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#encerramentoProposta">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_ENCERRAMENTO')) ?></span>
+            </a>
+        </li>
+		<?php  if(ChecaPermissao::possuiPermissao('alocacao-recurso-proposta-contrato-anterior') === true): ?>
+        <li>
+            <a href="#alocacaoPropostaContratoAnterior">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_ALOCACAO_CONTRATO_ANTERIOR')) ?></span>
+            </a>
+        </li>
+        <li id="li-alocacao" style="display: none;">
+            <a href="#tab-alocacao">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_ALOCACAO')) ?></span>
+            </a>
+        </li>
+		<?php endif;?>    
+		<?php if(ChecaPermissao::possuiPermissao('desalocacao-recurso-proposta') === true): ?>
+        <li>
+            <a href="#desalocacaoPropostaContrato">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_DESALOCACAO_RECURSO')) ?></span>
+            </a>
+        </li>
+        <li id="li-desalocacao" style="display: none;">
+            <a href="#tab-desalocacao">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_DESALOCACAO')) ?></span>
+            </a>
+        </li>
+		<?php endif;?>    
+    </ul>
+
+    <div id="etapaControle">
+    	<?php echo $this->render('controle-proposta/etapa-controle.phtml') ?>
+    </div>
+    <div id="alteracaoProposta">
+    	<?php echo $this->render('controle-alteracao-proposta/index.phtml') ?>
+    </div>
+    <div id="encerramentoProposta">
+        <?php echo $this->render('controle-encerramento-proposta/index.phtml') ?>
+    </div>
+	<?php  if(ChecaPermissao::possuiPermissao('alocacao-recurso-proposta-contrato-anterior') === true): ?>
+    <div id="alocacaoPropostaContratoAnterior">
+        <?php echo $this->render('alocacao-recurso-proposta-contrato-anterior/index.phtml') ?>
+    </div>
+    <div id="tab-alocacao">
+        <div id="alocacao" class="clear divTab"></div>
+    </div>
+	<?php endif;?>    
+	<?php  if(ChecaPermissao::possuiPermissao('desalocacao-recurso-proposta') === true): ?>
+    <div id="desalocacaoPropostaContrato">
+        <?php echo $this->render('desalocacao-recurso-proposta/index.phtml') ?>
+    </div>
+    <div id="tab-desalocacao">
+        <div id="desalocacao" class="clear divTab"></div>
+    </div>
+	<?php endif;?>    
+</div>

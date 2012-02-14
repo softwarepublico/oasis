@@ -1,0 +1,20 @@
+<?php
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/demanda-em-aberto/index.js'));
+?>
+<form id="formRelatorioDemandaEmAberto">
+
+    <label class="float-l span-4 right required" for="cd_objeto_contrato"><?php echo $this->escape($this->translate('L_VIEW_OBJETO_CONTRATO')) ?>:</label>
+    <?php echo $this->formSelect("cd_objeto_contrato",null,array('class'=>'float-l'),$this->arrObjetoContrato); ?>
+
+    <label class="float-l right clear-l span-4" for="cd_profissional"><?php echo $this->escape($this->translate('L_VIEW_PROFISSIONAL')) ?>:</label>
+    <?php echo $this->formSelect("cd_profissional",null,array('class'=>'float-l')); ?>
+
+    <label id="lb_mes" class="float-l right clear-l span-4" for="mes"><?php echo $this->escape($this->translate('L_VIEW_MES')) ?>:</label>
+    <?php echo $this->mesCombo("mes",0,array('class'=>'float-l span-4')); ?>
+
+    <label id="lb_ano" class="float-l right clear-l span-4" for="ano"><?php echo $this->escape($this->translate('L_VIEW_ANO')) ?>:</label>
+    <?php echo $this->anoCombo("ano",0,array('class'=>'float-l span-4')); ?>
+
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->escape($this->translate('L_BTN_GERAR')) ?></button>
+</form>

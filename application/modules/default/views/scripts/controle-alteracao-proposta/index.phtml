@@ -1,0 +1,10 @@
+<?php
+    $this->script('scriptFile',array('/controle-alteracao-proposta/index.js'));
+?>
+<div id="tabelaControleAlteracaoProposta" class="divTab boxTab">
+    <label class=" float-l span-2 bold right" style="margin-top: 3px;"><?php echo $this->escape($this->translate('L_VIEW_CONTRATO')) ?></label>
+	<p class="float-l" style="margin-top: 3px;"><?php echo $this->formSelect('cd_contrato_controle_alteracao_proposta', null, null, $this->listaContrato) ?></p>
+	<label class=" float-l span-2 bold right" style="margin-top: 3px;"><?php echo $this->translate('L_VIEW_PROJETO') ?>:</label>
+	<p class="float-l" style="margin-top: 3px;"><?php echo $this->formSelect('cd_projeto', null, null, array("0" => $this->escape($this->translate('L_VIEW_COMBO_SELECIONE')))) ?></p>	
+</div>
+<div id="gridControleAlteracaoProposta"></div>

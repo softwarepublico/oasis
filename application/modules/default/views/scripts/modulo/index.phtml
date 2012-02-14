@@ -1,0 +1,36 @@
+<?php
+    $this->script('scriptFile',array('/modulo/index.js'));
+?>
+<div style="margin-right:5px; padding-left:5px;">
+	<label class="span-3 float-l bold"><?php echo $this->escape($this->translate('L_VIEW_PROJETO')) ?>:</label>
+	<p class="float-l clear-r"><?php echo $this->nomeProjeto; ?></p>
+</div>
+<div class="float-l clear-l span-15" id="formModulos">
+    <h3 class="clear"><?php echo $this->escape($this->translate('L_VIEW_ADICIONAR_MODULO')) ?></h3>
+	<label class="float-l span-3 required" for="tx_modulo" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_NOME_MODULO')) ?>:</label>
+	<?php
+		echo $this->formText('tx_modulo','',array('size'=>75, 'class'=>'span-9 float-l'));
+		echo $this->formHidden('cd_modulo');
+		echo $this->formButton('adicionar', $this->escape($this->translate('L_BTN_ADICIONAR')), array('class' => 'verde', 'style' => 'margin-top:1px;'));
+		echo $this->formButton('alterar', $this->escape($this->translate('L_BTN_ALTERAR')), array('class' => 'verde ', 'style' => 'margin-top:1px;'));
+	?>
+	<div id="grid" class="span-9 clear-l float-l push-3"></div>
+</div>
+<div style="margin-left:14px;">
+
+	<?php echo $this->flipFlop(array('name'=>'cd_modulo_combo', 
+                                     'label'=>$this->escape($this->translate('L_VIEW_MODULOS_DISPONIVEIS')),
+                                     'value'=>$this->modulo),
+						       array('name'=>'cd_modulo_combo2',
+                                     'label'=>$this->escape($this->translate('L_VIEW_MODULOS_VINCULADOS_PROPOSTA')),
+                                     'value'=>$this->modulo2),
+						       'addModulo',
+						       'removeModulo',
+                                8); ?>
+	<div class="accordionBottom" style="min-height: 30px;"></div>
+</div>
+
+<div class="accordionBottom">
+	<label class="bold span-18 right float-l" style="color: red;"><?php echo Base_Util::getTranslator('L_MSG_ALERT_CLIQUE_PARA_REGISTRAR_OPERACAO', $this->escape($this->translate('L_BTN_CONFIRMAR'))) ?></label>
+	<button type="button" class="verde" id="bt_confirmar_modulo" name="bt_confirmar_modulo"><?php echo $this->escape($this->translate('L_BTN_CONFIRMAR')) ?></button>
+</div>

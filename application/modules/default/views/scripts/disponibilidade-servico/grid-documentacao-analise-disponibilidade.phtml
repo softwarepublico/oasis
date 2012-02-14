@@ -1,0 +1,82 @@
+<script type="text/javascript" defer="defer">
+$(document).ready(function() {
+	// call the tablesorter plugin
+    $("#tableDocumentacaoAnaliseDispServico").tablesorter({widthFixed: true, widgets: ['zebra']});
+	$("#tableDocumentacaoAnaliseDispServico").tablesorterPager({container: $("#tableDocumentacaoAnaliseDispServicoPager")});
+});
+</script>
+<table id="tableDocumentacaoAnaliseDispServico" cellspacing="1" class="tablesorter" style="border-collapse: collapse">
+	<thead>
+		<tr>
+            <th class="span-4"><?php echo $this->escape($this->translate('L_VIEW_GRID_OBJETO'        )) ?></th>
+			<th class="span-7"><?php echo $this->escape($this->translate('L_VIEW_GRID_TIPO_DOCUMENTO')) ?></th>
+			<th class="span-8"><?php echo $this->escape($this->translate('L_VIEW_GRID_NOME_DOCUMENTO')) ?></th>
+			<th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_ABRIR'         )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+	?>
+	<tr>
+		<?php
+			$fimObjeto		 = "";
+			if( strlen($res['tx_objeto']) >= 30 ){
+				$fimObjeto = "...";
+			}
+			$tx_objeto = substr($res['tx_objeto'],0,30);
+		?>
+		<td title="<?php echo $res['tx_objeto'] ?>" onClick="recuperaDadosAnaliseDispServico('<?php echo $res['cd_objeto']; ?>','<?php echo $res['cd_disponibilidade_servico']; ?>')"><?php echo $tx_objeto.$fimObjeto; ?></td>
+
+		<?php
+			$fimTipo	 = "";
+			if( strlen($res['tx_tipo_documentacao']) >= 65 ){
+				$fimTipo = "...";
+			}
+			$tx_tipo_documentacao = substr($res['tx_tipo_documentacao'],0,65);
+		?>
+		<td title="<?php echo $res['tx_tipo_documentacao'] ?>"><?php echo $tx_tipo_documentacao.$fimTipo; ?></td>
+
+		<?php
+			$fimNomeArq	 = "";
+			if( strlen($res['tx_nome_arq_disp_servico']) >= 70 ){
+				$fimNomeArq = "...";
+			}
+			$tx_nome_arq_disp_servico = substr($res['tx_nome_arq_disp_servico'],0,70);
+		?>
+		<td title="<?php echo $res['tx_nome_arq_disp_servico'] ?>"><?php echo $tx_nome_arq_disp_servico.$fimNomeArq ?></td>
+		<td>
+            <a id="aDonwload" href="<?php echo $this->baseUrl();?>/disponibilidade-servico/download-documento-disponibilidade-servico/cd_disponibilidade_servico/<?php echo $res['cd_disponibilidade_servico'] ?>/cd_objeto/<?php echo $res['cd_objeto'] ?>/tipo/<?php echo $res['cd_tipo_documentacao'] ?>/data/<?php echo $res['dt_doc_disponibilidade_servico'] ?>">
+                <?php echo $this->escape($this->translate('L_VIEW_ABRIR')) ?>
+            </a>
+        </td>
+	</tr>
+	<?php
+		endforeach;
+	} else {
+		echo "  <tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr> ";
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableDocumentacaoAnaliseDispServicoPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

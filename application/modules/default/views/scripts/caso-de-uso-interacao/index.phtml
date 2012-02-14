@@ -1,0 +1,34 @@
+<div style="overflow:hidden;" id="formInteracao">
+	<?php 
+		echo $this->formHidden('cd_interacao'); 
+		echo $this->formHidden('dt_versao_caso_de_uso_interacao'); 
+	?>
+    <label class="float-l span-3 clear-l right required" for="cd_modulo_interacao"><?php echo $this->escape($this->translate('L_VIEW_MODULO')) ?>:</label>
+		<?php echo $this->formSelect('cd_modulo_interacao', null, array('class'=>'float-l'), $this->comboModulo) ?>
+	<label class="float-l span-3 clear-l right required" for="cd_caso_de_uso_combo"><?php echo $this->escape($this->translate('L_VIEW_CASO_DE_USO')) ?>:</label>
+		<?php echo $this->formSelect('cd_caso_de_uso_combo', null,array('class'=>'float-l')) ?>
+	<label class="float-l span-3 clear-l right required" for="cd_ator_combo"><?php echo $this->escape($this->translate('L_VIEW_ATOR')) ?>:</label>
+		<?php echo $this->formSelect('cd_ator_combo', null, array('class'=>'float-l'),null); ?>
+   <label class="float-l span-3 clear-l right"><?php echo $this->escape($this->translate('L_VIEW_ORDEM')) ?>:</label>
+   		<?php echo $this->formText('ni_ordem_interacao',null,array('class'=>'float-l span-2', 'onKeyPress'=>'return soNumeros(event);')) ?>
+	<label class="float-l span-3 clear-l right"><?php echo $this->escape($this->translate('L_VIEW_TIPO')) ?>:</label>
+	<div class="span-5 float-l">
+        <label class="float-l span-2">
+            <input type="radio" value="S" class="float-l clear-l" id="st_interacao_s" name="st_interacao" checked="checked">
+                <?php echo $this->escape($this->translate('L_VIEW_SISTEMA')) ?>
+        </label>
+		<label class="float-l span-2">
+            <input type="radio" value="A" class="float-l" id="st_interacao_a" name="st_interacao">
+                <?php echo $this->escape($this->translate('L_VIEW_ATOR')) ?>
+        </label>
+	</div>	
+    <label class="float-l span-3 clear-l right"><?php echo $this->escape($this->translate('L_VIEW_DESCRICAO')) ?>:</label>
+	<?php 
+	    echo $this->formTextarea('tx_interacao', '', array('class' => 'span-14 height-4 float-l'));
+
+		echo $this->formButton('adicionarInteracao', $this->escape($this->translate('L_BTN_ADICIONAR')),array('class' => 'float-l clear-l push-3 verde'));
+		echo $this->formButton('alterarInteracao', $this->escape($this->translate('L_BTN_ALTERAR')), array('class' => 'float-l clear-l push-3 verde'));
+		echo $this->formButton('cancelarInteracao', $this->escape($this->translate('L_BTN_CANCELAR')), array('class' => 'float-l push-3 vermelho'));
+	?>
+</div>
+<div id="gridInteracao"></div>

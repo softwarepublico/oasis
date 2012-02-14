@@ -1,0 +1,82 @@
+<?php
+    $this->script('validaForm');
+    $this->script('treeview');
+    $this->script('scriptFile',array('/inicio/index.js',
+                                     '/inicio/box-manager.js'));
+?>
+
+<script type="text/javascript" language="javascript" src="<?php echo $this->baseUrl() ?>/public/js/modules/default/inicio/msg-antiga.js"></script>
+
+<script type="text/javascript">
+    
+	var strBox = '<?php echo $this->box_list; ?> ';
+
+	if( strBox.length > 1 ){
+		arrBox = strBox.split(",");
+
+		var qtdBox = arrBox.length;
+
+		//verifica se o contrato e objeto da sessao são diferente de zero
+		//caso verdadeiro executa a chamada inicial dos boxes
+		//caso falso não executa a chamada inicial dos boxes pois não há dados para contrato e objeto zero
+		if( ('<?php echo $_SESSION['oasis_logged'][0]['cd_contrato'] ?>' != 0) && ( '<?php echo $_SESSION['oasis_logged'][0]['cd_objeto'] ?>' != 0) || ( '<?php echo $_SESSION['oasis_logged'][0]['cd_profissional'] ?>' == 0 ) ){
+
+			if( qtdBox > 0 ){
+				if( ('<?php echo $_SESSION["oasis_logged"][0]["st_dados_todos_contratos"]; ?>' === 'S') ){
+					$("#content").append('<span id="span_boxes_do_contrato" style="color: red;" class="span-21 center bold float-l">'+getTranslaterJsComVariaveis(i18n.L_VIEW_SCRIPT_BOX_DO_CONTRATO, new Array('<?php echo $this->tx_contrato_prof_associado ?>'))+'</span>');
+				}
+				//menta os boxes que estão associados para visualização
+				for(var i=0; i < qtdBox; i++ ){
+					montaBox(arrBox[i]);
+				}
+			}
+		}else{
+			if( '<?php echo $_SESSION["oasis_logged"][0]["st_dados_todos_contratos"]; ?>' === 'S' ){
+				$("#content").append('<span id="span_boxes_do_contrato" style="color: red;" class="span-21 center bold float-l">'+getTranslaterJsComVariaveis(i18n.L_VIEW_SCRIPT_BOX_DO_CONTRATO, new Array('<?php echo $this->tx_contrato_prof_associado ?>'))+'</span>');
+
+				//quando o objeto for zero nao mostra o span
+				if( '<?php echo $_SESSION["oasis_logged"][0]["cd_objeto"]; ?>' == 0 ){
+					$("#span_boxes_do_contrato").hide();
+				}
+			}
+		}
+	}
+
+	if('<?php echo $this->msgAberta; ?>'){
+		abreDialogMensagens();
+		//abreDialogMensagens('<?php //echo $this->strHtmlMensagem; ?>')
+	}
+</script>
+<!-- area dos boxes -->
+<ul class="clear-l span-21 boxList" id="boxList"></ul>
+
+<div class="float-r clear-r">
+    <span><?php echo $this->escape($this->translate('L_VIEW_ABRE_CONFIGURACOES_BOXES')) ?></span>
+    <img class="openBox" 
+         style="cursor:pointer"
+         src="<?php echo $this->baseUrl()?>/public/img/boxes.gif"
+         alt="(<?php echo $this->escape($this->translate('L_VIEW_ABRE_CONFIGURACOES_BOXES')) ?>)"
+         title="<?php echo $this->escape($this->translate('L_VIEW_ABRE_CONFIGURACOES_BOXES')) ?>" />
+</div>
+
+<div class="float-r clear-r">
+    <span><?php echo $this->escape($this->translate('L_VIEW_ABRIR_MENSAGENS_ANTIGAS')) ?></span>
+    <img class="openBoxMensagensAntigas" 
+         style="cursor:pointer"
+         src="<?php echo $this->baseUrl()?>/public/img/iconMessage16.gif"
+         alt="(<?php echo $this->escape($this->translate('L_VIEW_MENSAGENS_ANTIGAS')) ?>)"
+         title="<?php echo $this->escape($this->translate('L_VIEW_ABRIR_MENSAGENS_ANTIGAS')) ?>" />
+</div>
+
+<?php if( $_SESSION["oasis_logged"][0]["st_dados_todos_contratos"] === "S" ):
+        $this->script('scriptFile',array('/inicio/box-troca-contrato.js'));
+?>
+	<div class="float-r clear-r">
+		<span><?php echo $this->escape($this->translate('L_VIEW_ESCOLHER_CONTRATO_VISUALIZAR_BOX')) ?></span>
+		<img class="openTrocaContrato" 
+             style="cursor:pointer"
+             src="<?php echo $this->baseUrl()?>/public/img/u42.png"
+             alt="(<?php echo $this->escape($this->translate('L_VIEW_ALTERA_CONTRATO_VISUALIZAR_BOX')) ?>)"
+             title="<?php echo $this->escape($this->translate('L_VIEW_TROCA_VISUALIZACAO')) ?>" />
+	</div>
+<?php endif; ?>

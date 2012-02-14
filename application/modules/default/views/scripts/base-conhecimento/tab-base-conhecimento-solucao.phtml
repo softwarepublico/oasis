@@ -1,0 +1,34 @@
+<div id="divVerConhecimento" class="box span-20 border gradient">
+	
+    <h3 class="highlight tarja-1"><?php echo $this->escape($this->translate('L_VIEW_BASE_CONHECIMENTO_SOLUCAO')) ?></h3>
+
+	<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_AREA_CONHECIMENTO')) ?>:</label><p class="span-14"><?php echo $this->arrBaseConhecimento["tx_area_conhecimento"] ?></p>
+	
+    <label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_ASSUNTO')) ?>:</label><p class="span-14"><?php echo $this->arrBaseConhecimento["tx_assunto"] ?></p>
+	
+    <label class="bold clear-l float-l span-4"><?php echo $this->escape($this->translate('L_VIEW_PROBLEMA')) ?></label>
+        <div class="span-19 float-l clear-l height-10 border" style="overflow-x: hidden; overflow-x: auto; margin-left:18px; margin-bottom: 5px;">
+            <p class="span-18"><?php echo $this->arrBaseConhecimento["tx_problema"] ?></p>
+        </div>
+	
+    <label class="bold clear-l float-l span-4"><?php echo $this->escape($this->translate('L_VIEW_SOLUCAO')) ?></label>
+        <div class="span-19 float-l clear-l height-10 border" style="overflow-x: hidden; overflow-x: auto; margin-left:18px; margin-bottom: 5px;">
+            <p class="span-18"><?php echo $this->arrBaseConhecimento["tx_solucao"] ?></p>
+        </div>
+	<br>
+</div>
+<div class="clear float-l span-21" style="margin-top: 9px;">
+		<?php
+			echo $this->formButton('btn_cancelar_base_conhecimento_solucao', $this->escape($this->translate('L_BTN_CANCELAR')),array('class'=>'azul float-r'));
+		 ?>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+	// call the tablesorter plugin
+    $("#btn_cancelar_base_conhecimento_solucao").click(function(){
+		$("#base-conhecimento-solucao"		).html('');
+		$('#container-baseConhecimento'     ).triggerTab(1);
+		$("#li-base-conhecimento-solucao"	).css("display", "none");
+	});
+});
+</script>

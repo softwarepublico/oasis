@@ -1,0 +1,24 @@
+<?php
+    $this->script('scriptFile',array('/custo-projeto/index.js'))
+?>
+<form id="formRelatorio">
+    <hr />
+		<label class="span-2 right float-l required" for="cd_contrato"><?php echo $this->translate('L_VIEW_CONTRATO') ?>:</label>
+			<?php echo $this->formSelect('cd_contrato',null,array('class'=>'float-l'),$this->arrContrato); ?>
+
+		<label class="float-l clear-l"><input type="radio" id="projeto" name="projeto" onclick="abreProjeto()" value="p" /><?php echo $this->translate('L_VIEW_POR_PROJETO') ?></label>
+      	<p class="float-l clear-l push-1" style="display: none;" id="comboProjeto">
+      		
+      		<label class="span-2 right required float-l "><?php echo $this->translate('L_VIEW_PROJETO') ?>:</label>
+      			<?php echo $this->formSelect('cd_projeto',null,array('class'=>'float-l'),array(0=>Base_Util::getTranslator('L_VIEW_COMBO_SELECIONE'))); ?>
+      	</p>
+      <label class="float-l clear-l"><input type="radio" id="unidade" name="projeto" onclick="abreUnidade()" value="u" /><?php echo $this->translate('L_VIEW_POR_UNIDADE') ?></label>
+      	<p class="float-l clear-l push-1" style="display: none;" id="comboUnidade">
+
+
+			<label class="span-2 right required float-l clear-l"><?php echo $this->translate('L_VIEW_UNIDADE') ?>:</label>
+      			<?php echo $this->formSelect('cd_unidade','',array('class'=>'float-l'),$this->comboUnidade); ?>
+      	</p>
+    <hr />
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->translate('L_BTN_GERAR') ?></button>
+</form>

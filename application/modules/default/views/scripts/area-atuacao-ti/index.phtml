@@ -1,0 +1,15 @@
+<?php
+    $this->script('validaForm');
+    $this->script('grid');
+    $this->script('scriptFile',array('/area-atuacao-ti/index.js'));
+?>
+<div id="formAreaAtuacaoTi">
+	<?php echo $this->formHidden('cd_area_atuacao_ti'); ?>
+    <label class="float-l span-5 clear-l right required" for="tx_area_atuacao_ti"><?php echo $this->escape($this->translate('L_VIEW_AREA_ATUACAO')) ?>:</label>
+		<?php echo $this->formText('tx_area_atuacao_ti', '', array('class'=>'float-l span-10','maxlength'=>'200')) ?>
+	<?php
+		echo $this->formButton('btn_salvar_area_atuacao_ti',$this->escape($this->translate('L_BTN_SALVAR')),array('class'=>'verde buttonBar'));
+		echo $this->formButton('btn_cancelar_area_atuacao_ti',$this->escape($this->translate('L_BTN_CANCELAR')),array('class'=>'hide vermelho buttonBar'));
+	?>
+</div>
+<div class="float-l span-10" id="gridAreaAtuacaoTi"></div>

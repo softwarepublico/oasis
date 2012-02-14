@@ -1,0 +1,28 @@
+<script type="text/javascript" language="javascript" src="<?php echo $this->baseUrl() ?>/public/js/modules/default/inicio/msg-antiga.js"></script>
+
+<div id="div_params_consulta_msg" class="border float-l" style="padding: 5px; margin-top: -50px;">
+	<div class="span-7 float-l">
+		<div class="span-7 float-l">
+            <label class="bold float-l span-3 required" for="mes_msg_inicial" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_MES_INICIAL')) ?>:</label>
+			<?php echo $this->mesCombo('mes_msg_inicial',null,array('class'=>'float-l')); ?>
+		</div>
+		<div class="span-7 float-l">
+			<label class="bold float-l span-3 clear-l required" for="ano_msg_inicial" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_ANO_INICIAL')) ?>:</label>
+			<?php echo $this->anoCombo('ano_msg_inicial',null,array('class'=>'float-l')); ?>
+		</div>
+	</div>
+	<div class="span-7 float-l">
+		<div class="span-7 float-l">
+			<label id="lb_mes_msg_final" class="bold float-l span-3" for="mes_msg_final" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_MES_FINAL')) ?>:</label>
+			<?php echo $this->mesCombo('mes_msg_final',0,array('class'=>'float-l')); ?>
+		</div>
+		<div class="span-7 float-l">
+			<label id="lb_ano_msg_final" class="bold float-l span-3 clear-l" for="ano_msg_final" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_ANO_FINAL')) ?>:</label>
+			<?php echo $this->anoCombo('ano_msg_final',0,array('class'=>'float-l')); ?>
+		</div>
+	</div>
+	<div class="span-14 float-l center">
+		<?php echo $this->formButton('btn_pesquisar_msg',$this->escape($this->translate('L_BTN_PESQUISAR')),array('class'=>'verde')); ?>
+	</div>
+</div>
+<div id="div_retorno_msg_antiga" class="float-l" style="margin-top: 10px;"></div>

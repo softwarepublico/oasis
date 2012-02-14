@@ -1,0 +1,42 @@
+<div class="divTab">
+	<?php 
+	   echo $this->formHidden( 'dt_analise_execucao_projeto' ); 
+	?>
+	
+    <label class="bold float-l right span-7 required" for="tx_resultado_analise_execucao" editor="editor" style="margin-top:2px;">
+        <?php echo $this->escape($this->translate('L_VIEW_RESULTADO_ANALISE')) ?>:
+    </label>
+    <div id="div_resultado_analise_execucao" class="float-l wysiwyg" style="width: 401px;height: 144px;display:none;background-color:#eee;color:#aaa;padding:50px;border: 2px solid #ccc;overflow:scroll"></div>
+    <?php 
+        echo $this->editorHtml( 'tx_resultado_analise_execucao', null, array('class'=>'float-l','cols'=>'60','rows'=>'13','editor'=>K_EDITOR)); 
+    ?>
+	
+    <label class="bold float-l right span-7 " for="dt_decisao_analise_execucao" editor="editor" style="margin-top:2px;">
+        <?php echo $this->escape($this->translate('L_VIEW_DATA_DECISAO')) ?>:
+    </label>
+    <?php 
+        echo $this->data( 'dt_decisao_analise_execucao', null, array('class'=>'float-l span-3')); 
+    ?>
+    
+    <label class="bold float-l right span-7 clear-l" for="tx_decisao_analise_execucao" editor="editor" style="margin-top:2px;">
+        <?php echo $this->escape($this->translate('L_VIEW_DECISAO_ANALISE')) ?>:
+    </label>
+    <div id="div_decisao_analise_execucao" class="float-l wysiwyg" style="width: 401px;height: 144px;display:none;background-color:#eee;color:#aaa;padding:50px;border: 2px solid #ccc;overflow:scroll"></div>
+	<?php 
+	    echo $this->editorHtml( 'tx_decisao_analise_execucao', null, array('class'=>'float-l','cols'=>'60','rows'=>'13','editor'=>K_EDITOR));
+		echo $this->formButton(
+		         'btn_salvar_analise_execucao_projeto', 
+		         $this->escape($this->translate('L_BTN_SALVAR')),
+		         array(
+		             'class' => 'verde float-l push-7',
+		             'onclick' => 'salvarAnaliseExecucaoProjeto()'
+		         ));
+		echo $this->formButton(
+		         'btn_cancelar_analise_execucao_projeto', 
+		         $this->escape($this->translate('L_BTN_CANCELAR')),
+		         array(
+		             'class' => 'vermelho float-l push-7',
+		             'onclick' => 'cancelarAnaliseExecucaoProjeto()'
+		         ));
+	?>
+</div>

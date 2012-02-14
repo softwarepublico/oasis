@@ -1,0 +1,18 @@
+<form id="formHomologacaoParcela" style="margin-left: 10px;">
+
+	<?php echo $this->formHidden('cd_projeto_homologacao_parcela',$this->cd_projeto); ?>
+	<?php echo $this->formHidden('cd_proposta_homologacao_parcela',$this->cd_proposta); ?>
+	<?php echo $this->formHidden('cd_parcela_homologacao_parcela',$this->cd_parcela); ?>
+
+    <label class="float-l span-3 bold"><?php echo $this->escape($this->translate('L_VIEW_PROJETO')) ?>: </label>
+	<span class="float-l span-11 bold"><?php echo "{$this->tx_sigla_projeto} ({$this->escape($this->translate('L_VIEW_PARCELA'))} {$this->ni_parcela})"; ?></span>
+
+	<label class="float-l clear-l span-3 required"><?php echo $this->escape($this->translate('L_VIEW_HOMOLOGACAO')) ?>:</label>
+		<input class="span-1 float-l" type="radio" id="st_homologacao_parcela_A" name="st_homologacao_parcela" value="A" checked="checked">
+            <label class="span-1 float-l"><?php echo $this->escape($this->translate('L_VIEW_SIM')) ?></label>
+		<input class="span-1 float-l" type="radio" id="st_homologacao_parcela_N" name="st_homologacao_parcela" value="N">
+            <label class="span-1 float-l"><?php echo $this->escape($this->translate('L_VIEW_NAO')) ?></label>
+
+	<label id="lb_tx_obs_homologacao_parcela" class="float-l clear-l span-3"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACOES')) ?>:</label>
+		<?php echo $this->formTextarea('tx_obs_homologacao_parcela', '', array( 'class'=>'float-l span-11' ,'style' => 'width:400px; height:80px;')) ?>
+</form>

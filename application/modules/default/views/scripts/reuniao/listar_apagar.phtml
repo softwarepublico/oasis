@@ -1,0 +1,17 @@
+<table>
+    <tr>
+        <td><?php echo $this->escape($this->translate('L_VIEW_REUNIAO')) ?></td>
+	</tr>
+	<?php
+	foreach ($this->res as $reuniao):
+	?>
+	<tr>
+		<td>
+			<a href="<?php echo $this->baseUrl();?>/reuniao/editar/cd_reuniao/<?php echo $reuniao->cd_reuniao?>"><?php echo $reuniao->dt_reuniao?></a>
+		</td>
+	</tr>
+	<?php
+	endforeach;
+	?>
+</table>
+<hr />

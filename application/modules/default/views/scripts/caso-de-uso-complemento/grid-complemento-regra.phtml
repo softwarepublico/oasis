@@ -1,0 +1,53 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableRegra").tablesorter({widthFixed: true, widgets: ['zebra']});
+});
+</script>
+<?php echo $this->formHidden('st_fechamento_caso_de_uso_hidden_re',(count($this->res) > 0)?$this->res[0]['st_fechamento_caso_de_uso']:"") ?>
+<table id="tableRegra" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+			<td colspan="3"><center><b><?php echo $this->escape($this->translate('L_VIEW_GRID_REGRA')) ?></b></center></td>
+		</tr>
+		<tr>
+			<th width="15px">&nbsp;</th>
+			<th width="70px"><?php echo $this->escape($this->translate('L_VIEW_GRID_ORDEM')) ?></th>
+			<th width="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_COMPLEMENTOS')) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+	?>
+		<tr>
+			<td width="15">
+				<?php if(is_null($res['st_fechamento_caso_de_uso'])): ?>
+					<img id="imgExcluir" 
+                         height="13"
+                         width="13"
+                         style="cursor:pointer;"
+                         onclick="excluirComplemento('<?php echo $res['cd_complemento'] ?>','<?php echo $res['dt_versao_caso_de_uso'] ?>');"
+                         src="<?php echo $this->baseUrl()?>/public/img/del.png"
+                         alt="<?php echo $this->escape($this->translate('L_BTN_EXCLUIR')) ?>"/></td>
+				<?php endIf;?>
+			<td width="50" onClick="ajaxRecuperaComplemento(<?php echo $res['cd_complemento'] ?>,'<?php echo $res['dt_versao_caso_de_uso'] ?>')" style="cursor:pointer;">
+				<?php echo ($res['ni_ordem_complemento'])?"RE".$res['ni_ordem_complemento']:"" ?>
+			</td>
+			<td width="50" onClick="ajaxRecuperaComplemento(<?php echo $res['cd_complemento'] ?>,'<?php echo $res['dt_versao_caso_de_uso'] ?>')" style="cursor:pointer;">
+				<?php echo $res['tx_complemento'] ?>
+			</td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo " <tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			</tr> ";
+	}
+	?>
+	</tbody>
+</table>

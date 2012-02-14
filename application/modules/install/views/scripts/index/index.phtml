@@ -1,0 +1,77 @@
+<?php
+	$this->script('tab');
+	$this->script('validaForm');
+    $this->script('mascara')
+?>
+<script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl('getBaseUrlScript'); ?>/index/index.js"></script>
+<script language="javascript" type="text/javascript">
+$(document).ready(function() {
+	$('#container-install').show().tabs({
+		fxFade: true,
+		fxSpeed: 'slow',
+		disabled: [2,3,4,5,6,7,8,9,10]
+	});
+});
+</script>
+<style>
+	/* Css para as tabs do sistema */
+	.tabs-nav li {
+		float:left;
+		margin:0 0 0 1px;
+		min-width:80px;
+	}
+	.tabs-nav a span {
+		height:18px;
+		min-height:18px;
+		min-width:60px;
+		padding-right:0;
+		padding-top:6px;
+		width:63px;
+	}
+</style>
+<img class="float-l hide" style="margin: 0px 5px 0px -5px;" src="<?php echo $this->baseUrl(); ?>/public/img/u46.png"/>
+<img class="float-l hide" style="margin:5px 10px 0px 0px;" src="<?php echo $this->baseUrl(); ?>/public/img/u42.png"/>
+<div id="container-install" style="display: none; margin-bottom: 10px;">
+	<ul>
+    	<li><a href="#passo1" ><span><?php echo $this->escape($this->translate('L_VIEW_PASSO')) ?> - 1</span></a></li>
+    	<li><a href="#passo2" ><span><?php echo $this->escape($this->translate('L_VIEW_PASSO')) ?> - 2</span></a></li>
+    	<li><a href="#passo3" ><span><?php echo $this->escape($this->translate('L_VIEW_PASSO')) ?> - 3</span></a></li>
+    	<li><a href="#passo4" ><span><?php echo $this->escape($this->translate('L_VIEW_PASSO')) ?> - 4</span></a></li>
+    	<li><a href="#passo5" ><span><?php echo $this->escape($this->translate('L_VIEW_PASSO')) ?> - 5</span></a></li>
+    	<li><a href="#passo6" ><span><?php echo $this->escape($this->translate('L_VIEW_PASSO')) ?> - 6</span></a></li>
+    	<li><a href="#passo7" ><span><?php echo $this->escape($this->translate('L_VIEW_PASSO')) ?> - 7</span></a></li>
+    	<li><a href="#passo8" ><span><?php echo $this->escape($this->translate('L_VIEW_PASSO')) ?> - 8</span></a></li>
+    	<li><a href="#passo9" ><span><?php echo $this->escape($this->translate('L_VIEW_PASSO')) ?> - 9</span></a></li>
+    	<li><a href="#passo10"><span><?php echo $this->escape($this->translate('L_VIEW_PASSO')) ?> - 10</span></a></li>
+    </ul>
+    <div id="passo1">
+		<div class="divTab" id="language"></div>
+    </div>
+    <div id="passo2">
+		<div class="divTab" id="apresentacao"></div>
+    </div>
+    <div id="passo3">
+		<div class="divTab" id="licenca"></div>
+    </div>
+    <div id="passo4">
+		<div class="divTab" id="verifica_permissao"></div>
+    </div>
+    <div id="passo5">
+		<div class="divTab" id="configuracao_banco_de_dados"></div>
+    </div>
+    <div id="passo6">
+		<div class="divTab" id="configuracao_constantes"></div>
+    </div>
+    <div id="passo7">
+		<div class="divTab" id="constantes_criadas"></div>
+    </div>
+    <div id="passo8">
+		<div class="divTab" id="tabelas_criadas"></div>
+    </div>
+    <div id="passo9">
+		<div class="divTab" id="defini_administrador"></div>
+    </div>
+    <div id="passo10">
+		<div class="divTab" id="finaliza_instalacao"></div>
+    </div>
+</div>

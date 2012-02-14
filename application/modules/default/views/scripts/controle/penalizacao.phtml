@@ -1,0 +1,49 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#container-penalizacao').show().tabs(); 
+    $('#config_hidden_penalizacao').val('N');
+});
+function configPenalizacao()
+{
+//    if( $('#cd_objeto_penalizacao').val() != "-1"){
+		gridJustificativaPenalizacao();
+//	}
+    $('#config_hidden_penalizacao').val('S');
+}
+</script>
+<div id="container-penalizacao" style="display: none;">
+	<ul>
+    	<li>
+            <a href="#registrarOcorrencia">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_REGISTRAR_OCORRENCIA')) ?></span>
+            </a>
+        </li>
+    	<li>
+            <a href="#justificativa">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_OCORRENCIA_MENSAL')) ?></span>
+            </a>
+        </li>
+    	<li id="liRegistrarJustificativa" style="display:none;">
+            <a href="#registrarJustificativa">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_REGISTRAR_JUSTIFICATIVA')) ?></span>
+            </a>
+        </li>
+        <li id="liAnaliseJustificativa" style="display:none;">
+            <a href="#analiseJustificativa">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_ANALISE_JUSTIFICATIVA')) ?></span>
+            </a>
+        </li>
+    </ul>
+    <div id="registrarOcorrencia">
+    	<?php echo $this->render('penalizacao/index.phtml') ?>
+    </div>
+    <div id="justificativa">
+    	<?php echo $this->render('penalizacao/ocorrencia-mensal.phtml') ?>
+    </div>
+    <div id="registrarJustificativa" style="display: none;">
+        <div id="divRegistrarJustificativa" class="divTab"></div>
+    </div>
+    <div id="analiseJustificativa" style="display: none;">
+        <div id="divAnaliseJustificativa" class="divTab"></div>
+    </div>
+</div>

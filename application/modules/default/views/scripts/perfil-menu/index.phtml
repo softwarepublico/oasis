@@ -1,0 +1,29 @@
+<?php
+    $this->script('treeview');
+    $this->script('scriptFile',array('/perfil-menu/index.js'));
+?>
+<script type="text/javascript">
+<!--
+$(document).ready(function() {
+	$("#config_hidden_perfil_objeto").val('N');
+});
+
+function configAccordionPerfilObjeto()
+{
+	if($("#config_hidden_perfil_objeto").val() === 'N'){
+		comboObjetoContratoAtivo('cd_objeto_associar_perfil_objeto');
+		$("#config_hidden_perfil_objeto").val('S');
+	}
+}
+//-->
+</script>
+<div style="margin-left: 19px;">
+    <label class="float-l span-2 clear-l"><?php echo $this->escape($this->translate('L_VIEW_OBJETO')) ?>:</label>
+	<?php echo $this->formSelect("cd_objeto_associar_perfil_objeto", null, array('class'=>'float-l'), null); ?>
+	<label class="float-l span-2 clear-l"><?php echo $this->escape($this->translate('L_VIEW_PERFIL')) ?>:</label>
+	<?php echo $this->formSelect("cd_perfil_associar_perfil_objeto", null, array('class'=>'float-l'), $this->arrPerfisPerfilSistemaObjetoContrato); ?>
+</div>
+<div id="treeviewMenu" style="display:none; margin-left: 19px;">
+	<?php echo $this->render('perfil-menu/treeview.phtml');	?>
+</div>
+<div class="accordionBottom" style="min-height: 20px;"></div>

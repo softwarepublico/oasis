@@ -1,0 +1,19 @@
+<?php
+    $this->script('scriptFile',array('/associar-rotina-objeto-contrato/index.js'));
+?>
+
+<form id="form_associar_rotina_objeto_contrato" class="float-l" style="margin-left: 8px;">
+
+    <label class="float-l clear-l span-4 required" for="cd_area_atuacao_ti_rotina_objeto_contrato"><?php echo $this->escape($this->translate('L_VIEW_AREA_ATUACAO_TI')); ?>:</label>
+    <?php echo $this->formSelect('cd_area_atuacao_ti_rotina_objeto_contrato',null,array('class'=>'float-l'), $this->arrAreaAtuacaoTiAssociacao);?>
+
+    <label class="float-l clear-l span-4 required" for="cd_objeto_rotina_objeto_contrato"><?php echo $this->escape($this->translate('L_VIEW_OBJETO')); ?>:</label>
+    <?php echo $this->formSelect('cd_objeto_rotina_objeto_contrato',null,array('class'=>'float-l'), $this->arrObjetoContratoAssociacao);?>
+
+    <?php
+		echo $this->flipFlop(array('name'=>'cd_rotina_objeto_contrato_1', 'label'=>$this->translate('L_VIEW_ROTINA')),
+							 array('name'=>'cd_rotina_objeto_contrato_2', 'label'=>$this->translate('L_VIEW_ROTINA_ASSOCIADA')),
+							 'add_rotina_objeto_contrato',
+							 'remove_rotina_objeto_contrato',8);
+    ?>
+</form>

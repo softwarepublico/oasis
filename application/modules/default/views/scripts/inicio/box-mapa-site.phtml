@@ -1,0 +1,16 @@
+<script type="text/javascript" language="javascript" src="<?php $this->baseUrl()?> public/js/modules/default/inicio/box-mapa-site.js"></script>
+<li id="box-mapa-site" class="boxList float-l boxPequeno">
+	<div class="portlet">
+		<div class="portlet-header"><?php echo $this->titulo_box_mapa_site; ?>
+			<a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button" unselectable="on" style="-moz-user-select: none;">
+				<span class="ui-icon ui-icon-closethick imgCloseBox" unselectable="on" style="-moz-user-select: none;">close</span>
+			</a>
+		</div>
+		<div class="portlet-content">
+			<div id="treeEstrutura" class="gap-3" style="overflow-y:scroll; height: 265px">
+			<img src="<?php echo $this->baseUrl()?>/public/img/treeview.gif" alt="<?php echo $this->escape($this->translate('L_VIEW_MAPA_SITE')) ?>" />
+				<?php $this->treeviewMenu("mapa_site", $this->dataMenu, false); ?>
+			</div>
+		</div>
+	</div>
+</li>

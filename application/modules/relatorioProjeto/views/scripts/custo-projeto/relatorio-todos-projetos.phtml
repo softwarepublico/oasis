@@ -1,0 +1,105 @@
+<?php
+//criando o objeto
+$objPdf = new Base_Tcpdf_Pdf();
+
+$arrKeywords = array(K_CREATOR_SYSTEM,
+                             Base_Util::getTranslator('L_TIT_REL_CUSTO_PROJETO'),
+                             Base_Util::getTranslator('L_VIEW_CUSTO'),
+                             Base_Util::getTranslator('L_VIEW_PROJETO'),
+                             Base_Util::getTranslator('L_VIEW_TODOS_PROJETOS'),
+                             Base_Util::getTranslator('L_VIEW_RELATORIO')
+                            );
+
+//Inicia cabeçalho do relatório
+$objPdf->iniciaRelatorio(Base_Util::getTranslator('L_TIT_REL_CUSTO_PROJETO')." - ".Base_Util::getTranslator('L_VIEW_TODOS_PROJETOS'), $arrKeywords);
+
+$objPdf->SetDisplayMode("real");
+
+// set font
+$objPdf->SetFont('helvetica', '', 10);
+
+// add a page
+$objPdf->AddPage();
+
+//Column titles
+//$header = array('Sigla Projeto','Unidade','Mês Inicio', 'Mês Fim', "Total de {$this->siglaMetricaPadraoPorContrato}", 'Valor');
+$header = array(Base_Util::getTranslator('L_VIEW_SIGLA_PROJETO'),
+                Base_Util::getTranslator('L_VIEW_UNIDADE'),
+                Base_Util::getTranslator('L_VIEW_MES_INICIO'),
+                Base_Util::getTranslator('L_VIEW_MES_FIM'),
+ //               Base_Util::getTranslator('L_VIEW_TOTAL_VARIAVEL', $this->siglaMetricaPadraoPorContrato),
+				Base_Util::getTranslator('L_VIEW_UNIDADES_METRICA'),
+				Base_Util::getTranslator('L_VIEW_VALOR'));
+
+// print colored table
+
+coloredTable($header, $this->arrCustoProjeto, $objPdf);
+
+// ---------------------------------------------------------
+
+//Close and output PDF document
+$objPdf->Output('relatorio_custo_todos_projetos.pdf', 'I');
+
+//============================================================+
+// END OF FILE                                                 
+//============================================================+
+
+function coloredTable($header,$data, $objPdf){
+	
+	// Colors, line width and bold font
+	$objPdf->SetDrawColor(50);
+	$objPdf->SetFillColor(240,240,240);
+	$objPdf->SetTextColor(0);
+	$objPdf->SetLineWidth(0.3);
+	$objPdf->SetFont('', 'B',9);
+	// Header
+	$w = array(58, 20, 17, 17, 34, 34);
+	for($i = 0; $i < count($header); $i++)
+		$objPdf->Cell($w[$i], 7, $header[$i], 1, 0, 'C', 1);
+
+	$objPdf->Ln();
+	// Color and font restoration
+	$objPdf->SetFillColor(240, 248, 255);
+	$objPdf->SetTextColor(0);
+	$objPdf->SetFont('','',8);
+	// Data
+	$fill = 0;
+
+	$totalHora  = 0;
+	$totalValor = 0;
+	$qtdProjeto = 0;
+
+	foreach($data as $row){
+		$arrUnidade = explode("/",$row['tx_sigla_unidade']);
+		$tam = count($arrUnidade);
+		
+		$objPdf->Cell($w[0], 6, $row['tx_sigla_projeto'], 'LR', 0, 'L', $fill);
+		$objPdf->Cell($w[1], 6, $arrUnidade[$tam-1], 'LR', 0, 'C', $fill);
+		$objPdf->Cell($w[2], 6, $row['dt_inicio'], 'LR', 0, 'C', $fill);
+		$objPdf->Cell($w[3], 6, $row['dt_fim'], 'LR', 0, 'C', $fill);
+		$objPdf->Cell($w[4], 6, number_format($row['ni_total_horas_parcela'],1,',','.')."  ", 'LR', 0, 'R', $fill);
+		$objPdf->Cell($w[5], 6, number_format($row['valor_total'],2,',','.')."  ", 'LR', 0, 'R', $fill);
+		$objPdf->Ln();
+		$fill=!$fill;
+		
+		$qtdProjeto++;
+		$totalHora  += $row['ni_total_horas_parcela'];
+		$totalValor += $row['valor_total'];
+	}
+	
+	$objPdf->Cell($w[0], 6, Base_Util::getTranslator('L_VIEW_TOTAL'), 'LTB', 0, 'L',0);
+	$objPdf->Cell($w[1], 6, "", 'TB', 0, 'R', 0);
+	$objPdf->Cell($w[2], 6, "", 'TB', 0, 'R', 0);
+	$objPdf->Cell($w[3], 6, "", 'TB', 0, 'R', 0);
+	$objPdf->Cell($w[4], 6, "", 'TB', 0, 'R', 0);
+	$objPdf->Cell($w[5], 6, number_format($totalValor,2,',','.')."  ", 'LRTB', 0, 'R', 0);
+	$objPdf->Ln();
+	
+	$objPdf->Cell($w[0], 6, Base_Util::getTranslator('L_VIEW_QTD_PROJETO').": {$qtdProjeto}", '', 0, 'L',0);
+	$objPdf->Cell($w[1], 6, "", '', 0, 'R', 0);
+	$objPdf->Cell($w[2], 6, "", '', 0, 'R', 0);
+	$objPdf->Cell($w[3], 6, "", '', 0, 'R', 0);
+	$objPdf->Cell($w[4], 6, "", '', 0, 'R', 0);
+	$objPdf->Cell($w[5], 6, "", '', 0, 'R', 0);
+}
+?>

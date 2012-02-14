@@ -1,0 +1,167 @@
+<script type="text/javascript" defer="defer">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableSolicitacoes").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableSolicitacoes").tablesorterPager({container: $("#pager_solicitacoes")}); 
+ 
+});
+
+</script>
+<table id="tableSolicitacoes" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th class="span-1"><?php echo $this->escape($this->translate('L_VIEW_GRID_SOLICITACAO'          )) ?></th>
+			<th class="span-1"><?php echo $this->escape($this->translate('L_VIEW_GRID_UNIDADE'              )) ?></th>
+			<th class="span-4"><?php echo $this->escape($this->translate('L_VIEW_GRID_DESCRICAO_SOLICITACAO')) ?></th>
+			<th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_SITUACAO'             )) ?></th>
+			<th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_ACAO'                 )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+	?>
+		<tr <?php if (is_null($res['dt_leitura_solicitacao'])) {?> class="negrito" <?php }?>>
+			<td>
+				<a href="<?php echo $this->baseUrl()?>/gerenciar-projetos-solicitacao-detalhes/index/cd_objeto/<?php echo $res['cd_objeto']?>/ni_solicitacao/<?php echo $res['ni_solicitacao']?>/ni_ano_solicitacao/<?php echo $res['ni_ano_solicitacao']?>/abaOrigem/solicitacaoServico"><?php echo $res['solicitacao'] ?></a>
+			</td>
+			<td><?php echo $res['tx_sigla_unidade'] ?></td>
+			<td><?php echo substr(strip_tags($res['tx_solicitacao']),0,50)."..." ?></td>
+			<td>
+				<?php
+				/**
+				 * Se o objeto do contrato estipulou período para leitura de solicitação de serviço, faz-se os cálculos
+				 * do tempo para leitura de cada solicitação. Se não, mostra apenas um texto indicando que não há tempo
+				 * limite para a leitura
+				 */
+				?>
+				<?php if ($this->st_necessita_justificativa == "S") : ?>
+					<?php
+					/*
+					 * Se a solicitação não foi lida, verifica se a hora da emissão da solicitação está dentro do período
+					 * indicado no cadastro do objeto do contrato. Se não estiver, verifica se o tempo calculado para leitura da
+					 * solicitação foi ultrapassado (($res['minutos_para_leitura'] < 0)). Se foi, será mostrado o botão para jus-
+					 * tificativa, se não, será mostrado os minutos restantes para leitura. Se estiver, verifica se o tempo
+					 * para leitura da solicitação é maior que o tempo estabelecido para leitura no cadastro do objeto do contrato.
+					 * Se o tempo for maior, mostra o botão para justificativa. Se não for maior, indica os minutos restantes para
+					 * leitura.
+					 */
+					      if (is_null($res['dt_leitura_solicitacao'])) :
+						      if ($res['hora_no_periodo'] == false) :
+								  if ($res['minutos_para_leitura'] < 0) : ?>
+									<button class="vermelho" 
+                                            onClick="abreModalJustificar('<?php echo $res['cd_objeto']?>', '<?php echo $res['ni_solicitacao']?>', '<?php echo $res['ni_ano_solicitacao']?>')"
+                                            id="button_justificar_<?php echo $res['ni_solicitacao']?>_<?php echo $res['ni_ano_solicitacao']?>">
+                                        <?php echo $this->escape($this->translate('L_BTN_JUSTIFICAR')) ?>
+                                    </button>
+							<?php else :
+									  echo $res['minutos_para_leitura']." ".$this->escape($this->translate('L_VIEW_MINUTOS_PARA_LEITURA'));
+								  endif; 
+							  else: 
+							      if ($res['minutos_para_leitura'] > $this->ni_minutos_justificativa) : ?>
+									<button class="vermelho" 
+                                            onClick="abreModalJustificar('<?php echo $res['cd_objeto']?>', '<?php echo $res['ni_solicitacao']?>', '<?php echo $res['ni_ano_solicitacao']?>')"
+                                            id="button_justificar_<?php echo $res['ni_solicitacao']?>_<?php echo $res['ni_ano_solicitacao']?>">
+                                        <?php echo $this->escape($this->translate('L_BTN_JUSTIFICAR')) ?>
+                                    </button>
+							<?php else :
+									  echo ($this->ni_minutos_justificativa-$res['minutos_para_leitura'])." ".$this->escape($this->translate('L_VIEW_MINUTOS_PARA_LEITURA'));
+								  endif;
+							  endif;
+						  else :
+					  /*
+					   * Se a solicitação foi lida, verifica se a hora da emissão da solicitação está dentro do período
+					   * indicado no cadastro do objeto do contrato. Se estiver, calcula a diferença real entre a hora
+					   * da emissão da solicitação. Se a solicitação não foi justificada, verifica se a quantidade
+					   * de minutos até a leitura da solicitação é maior que o tempo indicado para leitura no cadastro
+					   * do objeto do contrato. Se for maior, mostra o botão para justificativa. Se a solicitação foi
+					   * justificada, mostra um botão para ver a justificativa. Se não estiver, calcula a diferença real
+					   * entre a hora da emissão da solicitação. Se a solicitação não foi justificada, verifica se a quantidade
+					   * de minutos até a leitura da solicitação é maior que o tempo indicado para leitura no cadastro
+					   * do objeto do contrato. Se for, mostra o botão para justificar. Se a solicitação foi justificada,
+					   * mostra o botão para ver a justificativa.
+					   */
+							if ($res['hora_no_periodo'] == true) :
+								$minutosAteLeitura = $this->datediff($res['dt_solicitacao'], $res['dt_leitura_solicitacao']);
+								if (is_null($res['tx_justificativa_solicitacao'])) {
+									if ($minutosAteLeitura > $this->ni_minutos_justificativa){ ?>
+										<button class="vermelho" 
+                                                onClick="abreModalJustificar('<?php echo $res['cd_objeto']?>', '<?php echo $res['ni_solicitacao']?>', '<?php echo $res['ni_ano_solicitacao']?>')"
+                                                id="button_justificar_<?php echo $res['ni_solicitacao']?>_<?php echo $res['ni_ano_solicitacao']?>">
+                                            <?php echo $this->escape($this->translate('L_BTN_JUSTIFICAR')) ?>
+                                        </button>
+						<?php
+									}
+								} else {  ?>
+									<button class="azul" 
+                                            onClick="abreModalVerJustificativa('<?php echo $res['cd_objeto']?>', '<?php echo $res['ni_solicitacao']?>', '<?php echo $res['ni_ano_solicitacao']?>')"
+                                            id="button_ver_justificar_<?php echo $res['ni_solicitacao']?>_<?php echo $res['ni_ano_solicitacao']?>">
+                                        <?php echo $this->escape($this->translate('L_BTN_VER_JUSTIFICATIVA')) ?>
+                                    </button>
+						<?php   }
+							else:
+								$minutosAteLeitura = $this->datediff($res['dt_solicitacao'], $res['dt_leitura_solicitacao']);
+								if (is_null($res['tx_justificativa_solicitacao'])) {
+									if ($minutosAteLeitura > $res['minutos_para_leitura']){ ?>
+										<button class="vermelho" 
+                                                onClick="abreModalJustificar('<?php echo $res['cd_objeto']?>', '<?php echo $res['ni_solicitacao']?>', '<?php echo $res['ni_ano_solicitacao']?>')"
+                                                id="button_justificar_<?php echo $res['ni_solicitacao']?>_<?php echo $res['ni_ano_solicitacao']?>">
+                                            <?php echo $this->escape($this->translate('L_BTN_JUSTIFICAR')) ?>
+                                        </button>
+						<?php
+									}
+								} else { ?>
+									<button class="azul" 
+                                            onClick="abreModalVerJustificativa('<?php echo $res['cd_objeto']?>', '<?php echo $res['ni_solicitacao']?>', '<?php echo $res['ni_ano_solicitacao']?>')"
+                                            id="button_ver_justificar_<?php echo $res['ni_solicitacao']?>_<?php echo $res['ni_ano_solicitacao']?>">
+                                        <?php echo $this->escape($this->translate('L_BTN_VER_JUSTIFICATIVA')) ?>
+                                    </button>
+						<?php
+								}
+							endif; //if ($res['hora_no_periodo'] == true)
+						  endif; //if (is_null($res['dt_leitura_solicitacao']))
+				      else:  
+						echo $res['minutos_para_leitura'];
+				      endif;//if ($this->st_necessita_justificativa == "S")  ?>
+			</td>
+			<td><?php if ($res['st_solicitacao'] == '1' && is_null($res['tem_proposta']) && !is_null($res['dt_leitura_solicitacao'])) { ?> 
+				<button class="verde" 
+                        onClick="abreModal('<?php echo $res['cd_objeto']?>', '<?php echo $res['ni_solicitacao']?>', '<?php echo $res['ni_ano_solicitacao']?>')"
+                        id="button_salvar_<?php echo $res['ni_solicitacao']?>_<?php echo $res['ni_ano_solicitacao']?>">
+                    <?php echo $this->escape($this->translate('L_BTN_CRIAR_PROPOSTA')) ?>
+                </button>
+				<?php } else { ?>
+					&nbsp; 
+				<?php } ?>
+			</td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo " <tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr> ";
+	}
+	?>
+	</tbody>
+</table>
+<div id="pager_solicitacoes" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

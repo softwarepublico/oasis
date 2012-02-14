@@ -1,0 +1,21 @@
+<div class="divTab" >
+    <form method="post" id="formOcorrenciaAdministrativa">
+        <label class="float-l span-4 right required" for="cd_contrato_objeto"><?php echo $this->escape($this->translate('L_VIEW_CONTRATO')) ?>:</label>
+        <?php echo $this->formSelect('cd_contrato_objeto', '', array('class'=>'float-l')); ?>
+
+        <label class="float-l clear-l span-4 right required" for="cd_evento_ocorrencia"><?php echo $this->escape($this->translate('L_VIEW_EVENTO')) ?>:</label>
+        <?php echo $this->formSelect('cd_evento_ocorrencia', '', array('class'=>'float-l'));?>
+
+        <label class="float-l clear-l span-4 right required" for="dt_ocorrencia_administrativa"><?php echo $this->escape($this->translate('L_VIEW_DATA_OCORRENCIA')) ?>:</label>
+        <?php echo $this->DataHora('dt_ocorrencia_administrativa', $this->dt_ocorrencia_administrativa, array('class'=>'span-4 float-l'), null);?>
+
+        <label class="float-l span-4 clear-l right required" for="tx_ocorrencia_administrativa"><?php echo $this->escape($this->translate('L_VIEW_OCORRENCIA')) ?>:</label>
+        <?php echo $this->formTextarea('tx_ocorrencia_administrativa', '', array('style'=>'width:550px; height:50px;', 'class'=>'span-4 float-l'));?>
+
+        <?php
+            echo $this->formButton('adicionarOcorrencia', $this->escape($this->translate('L_BTN_SALVAR'  )),array('class'=>'verde float-l clear-l push-4'));
+            echo $this->formButton('alterarOcorrencia'  , $this->escape($this->translate('L_BTN_ALTERAR' )),array('class'=>'verde float-l clear-l push-4'));
+            echo $this->formButton('cancelarOcorrencia' , $this->escape($this->translate('L_BTN_CANCELAR')),array('class'=>'vermelho float-l push-4'));
+        ?>
+    </form>
+</div>

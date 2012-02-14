@@ -1,0 +1,36 @@
+<?php 
+$this->script('editorHtml'); 
+$this->script('validaForm');
+$this->script('scriptFile',array('/pre-demanda/index.js'));
+?>
+<form method="post" id="formPreDemanda">
+    <input type="hidden" id="cd_pre_demanda"    name="cd_pre_demanda" value="<?php echo $this->cd_pre_demanda ?>"/>
+    <input type="hidden" id="cd_objeto_emissor" name="cd_objeto_emissor" value="<?php echo $this->cd_objeto_emissor ?>"/>
+    <input type="hidden" id="cd_objeto_emissor" name="dt_pre_demanda" value="<?php echo $this->dt_pre_demanda ?>"/>
+    <input type="hidden" id="cd_profissional_solicitante" name="cd_profissional_solicitante" value="<?php echo $this->cd_profissional_solicitante ?>"/>
+    <input type="hidden" id="ni_solicitacao"    name="ni_solicitacao" value="<?php echo $this->ni_solicitacao ?>"/>
+
+    <div>
+        <div style="padding-top:8px; padding-left:10px;">
+            <label class="bold float-l right span-5"><?php echo $this->escape($this->translate('L_VIEW_DATA_HORA_PRE_DEMANDA')) ?>:</label>
+                <p class="float-l span-6"><?php echo $this->dt_pre_demanda ?></p>
+            <label class="float-l right span-5 clear-l"><?php echo $this->escape($this->translate('L_VIEW_OBJETO_SOLICITANTE')) ?>:</label>
+                <p class="float-l span-6"><?php echo $this->tx_objeto_emissor ?></p>
+            <label class="float-l right span-5 clear-l required"><?php echo $this->escape($this->translate('L_VIEW_UNIDADE_SOLICITANTE')) ?>:</label>
+                <p class="float-l span-6"><?php echo $this->formSelect('cd_unidade', K_CD_UNIDADE, array('class' => 'span-5 float-l', 'style' => 'margin-right: 10px;'), $this->cd_unidade_combo) ?></p>
+        </div>
+        <div  style="padding-top:8px; padding-left:10px;">
+            <label class="float-l right span-5 clear-l required"><?php echo $this->escape($this->translate('L_VIEW_OBJETO_EXECUTOR')) ?>:</label>
+                <p class="float-l span-6"><?php echo $this->formSelect('cd_objeto_receptor', $this->cd_objeto_receptor, array('class' => 'span-5 float-l', 'style' => 'margin-right: 10px;'), $this->objetoCombo) ?></p>
+
+            <label class="float-l right span-5 clear-l required" for="tx_pre_demanda" editor="editor"><?php echo $this->escape($this->translate('L_VIEW_DESCRICAO')) ?>:</label>
+            <?php echo $this->editorHtml('tx_pre_demanda', $this->tx_pre_demanda, array('style' => 'width:550px; height:50px;', 'class' => 'float-l span-6','editor'=>K_EDITOR)) ?>
+        </div>
+        <hr />
+        <div  style="padding-top:8px; padding-left:10px;">
+            <?php echo $this->formButton('bt_cancelar_pre_demanda', $this->escape($this->translate('L_BTN_CANCELAR')), array('class' => 'azul buttonBar'), null);?>
+            <?php echo $this->formButton('bt_salvar_pre_demanda', $this->escape($this->translate('L_BTN_SALVAR')), array('class' => 'verde buttonBar'), null);?>
+            <?php echo $this->formButton('bt_excluir_pre_demanda', $this->escape($this->translate('L_BTN_EXCLUIR')), array('class' => 'vermelho buttonBar'), null);?>
+        </div>
+    </div>
+</form>

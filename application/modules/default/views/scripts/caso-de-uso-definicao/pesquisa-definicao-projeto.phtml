@@ -1,0 +1,67 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+    $("#tableDefinicao").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableDefinicao").tablesorterPager({container: $("#tableDefinicaoPager"), size:05});
+});
+</script>
+<table id="tableDefinicao" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+			<th class="{sorter: false} span-1">&nbsp;</th>
+            <th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_MODULO'     )) ?></th>
+			<th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_CASO_DE_USO')) ?></th>
+			<th class="span-1"><?php echo $this->escape($this->translate('L_VIEW_GRID_ORDEM'      )) ?></th>
+			<th class="span-1"><?php echo $this->escape($this->translate('L_VIEW_GRID_DESCRICAO'  )) ?></th>
+		</tr>
+  </thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+	?>
+		<tr>
+			<td>
+				<?php if(is_null($res['st_fechamento_caso_de_uso'])):?>
+					<img id="imgExcluir" height="13" width="13" style="cursor:pointer;" onclick="excluirDefinicao('<?php echo $res['cd_caso_de_uso'] ?>','<?php echo $res['dt_versao_caso_de_uso'] ?>');" src="<?php echo $this->baseUrl()?>/public/img/del.png" alt="<?php echo $this->escape($this->translate('L_BTN_EXCLUIR')) ?>"/>
+				<?php endif; ?>
+            </td>
+			<td style="cursor:pointer;" onclick="recuperaDefinicao(<?php echo $res['cd_caso_de_uso'] ?>,<?php echo $res['cd_projeto'] ?>,<?php echo $res['cd_modulo'] ?>,'<?php echo $res['dt_versao_caso_de_uso'] ?>')">
+				<?php echo $res['tx_modulo'] ?>
+			</td>
+			<td style="cursor:pointer;" onclick="recuperaDefinicao(<?php echo $res['cd_caso_de_uso'] ?>,<?php echo $res['cd_projeto'] ?>,<?php echo $res['cd_modulo'] ?>,'<?php echo $res['dt_versao_caso_de_uso'] ?>')">
+				<?php echo $res['tx_caso_de_uso'] ?>
+			</td>
+			<td style="cursor:pointer;" onclick="recuperaDefinicao(<?php echo $res['cd_caso_de_uso'] ?>,<?php echo $res['cd_projeto'] ?>,<?php echo $res['cd_modulo'] ?>,'<?php echo $res['dt_versao_caso_de_uso'] ?>')">
+				<?php echo $res['ni_ordem_caso_de_uso'] ?>
+			</td>
+			<td style="cursor:pointer;" onclick="recuperaDefinicao(<?php echo $res['cd_caso_de_uso'] ?>,<?php echo $res['cd_projeto'] ?>,<?php echo $res['cd_modulo'] ?>,'<?php echo $res['dt_versao_caso_de_uso'] ?>')">
+				<?php echo $res['st_fechamento_caso_de_uso_desc']?>
+			</td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo " <tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			  </tr> ";
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableDefinicaoPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="05">05</option>
+			<option value="10">10</option>
+		</select>
+	</form>
+</div>

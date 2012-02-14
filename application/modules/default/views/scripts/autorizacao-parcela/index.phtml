@@ -1,0 +1,15 @@
+<form method="post" id="formAutorizacaoParcela">
+
+	<?php echo $this->formHidden('cd_projeto_autorizacao_parcela',		 $this->cd_projeto ); ?>
+	<?php echo $this->formHidden('cd_proposta_autorizacao_parcela',		 $this->cd_proposta ); ?>
+	<?php echo $this->formHidden('cd_parcela_autorizacao_parcela',		 $this->cd_parcela ); ?>
+	<?php echo $this->formHidden('ni_parcela_autorizacao_parcela',		 $this->ni_parcela ); ?>
+	<?php echo $this->formHidden('tx_sigla_projeto_autorizacao_parcela', $this->tx_sigla_projeto ); ?>
+
+	<label class="float-l span-3 bold"><?php echo $this->translate('L_VIEW_PROJETO') ?>:</label>
+	<span class="float-l span-11 bold"><?php echo $this->tx_sigla_projeto." (".$this->escape($this->translate('L_VIEW_PARCELA'))." ".$this->ni_parcela.")" ?></span>
+
+	<label class="float-l clear-l span-3"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACOES')) ?>:</label>
+	<?php echo $this->formTextarea('tx_obs_autorizacao_parcela', '', array( 'class'=>'float-l span-11' ,'style' => 'width:420px; height:120px;')) ?>
+
+</form>

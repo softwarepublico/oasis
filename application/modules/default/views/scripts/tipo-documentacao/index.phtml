@@ -1,0 +1,20 @@
+<?php 
+    $this->script('grid'); 
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/tipo-documentacao/index.js'));
+    
+    echo $this->form;
+?>
+<hr />
+<button id="salvarTipoDocumentacao" class="verde buttonBar" value="Salvar" type="button" name="salvarTipoDocumentacao"><?php echo $this->escape($this->translate('L_BTN_SALVAR')) ?></button>
+<button id="alterarTipoDocumentacao" class="verde buttonBar" value="alterar" type="button" name="alterarTipoDocumentacao"><?php echo $this->escape($this->translate('L_BTN_ALTERAR')) ?></button>
+<button id="cancelarTipoDocumentacao" class="vermelho buttonBar" value="cancelar" type="button" name="cancelarTipoDocumentacao"><?php echo $this->escape($this->translate('L_BTN_CANCELAR')) ?></button>
+<div id="gridTipoDocumentacao"></div>
+<script type="text/javascript">
+
+function mostraExemplo()
+{
+	showToolTip(i18n.L_VIEW_SCRIPT_EXEMPLO+': png ou png.jpg.gif ',$('#tx_extensao_documentacao'));
+	var t = setTimeout("removeTollTip()",3000);
+}
+</script>

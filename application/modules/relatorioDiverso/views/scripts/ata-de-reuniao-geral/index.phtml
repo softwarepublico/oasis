@@ -1,0 +1,15 @@
+<?php
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/ata-de-reuniao-geral/index.js'));
+ ?>
+<form id="formRelatorioAtaReuniaoGeral">
+
+
+    <label class="span-2 required clear-l float-l right" for="cd_objeto"><?php echo $this->translate('L_VIEW_OBJETO') ?>:</label>
+    	<?php echo $this->formSelect("cd_objeto",null,array('class'=>'float-l'), $this->arrObjeto2); ?>
+
+    <button class="verde float-l clear-l push-2" id="btn_gerar_ata_branco" name="btn_gerar_ata_branco" type="button" onclick="window.open('<?php echo $this->baseUrl();?>/relatorioDiverso/ata-de-reuniao-geral/generate2')"><?php echo $this->translate('L_VIEW_GERAR_ATA_BRANCO') ?></button>
+
+    <div id="relAtaReuniaoGeral" class="float-l clear-l bold push-2"></div>
+    	
+</form>

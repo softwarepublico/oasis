@@ -1,0 +1,14 @@
+<?php
+    $this->script('numero');
+    $this->script('scriptFile',array('/execucao-produto-parcela/index.js'));
+?>
+<div id="formExecucaoProdutoParcela" class="divTab">
+	<label class="float-l span-2 right"><?php echo $this->translate('L_VIEW_PROJETO') ?>:</label>
+		<?php echo $this->formSelect('cd_projeto_execucao_produto_parcela',null,array('class'=>'float-l'),$this->comboProjeto) ?>
+	<label class="float-l clear-l span-2 right"><?php echo $this->escape($this->translate('L_VIEW_PROPOSTA')) ?>Proposta:</label>
+		<?php echo $this->formSelect('cd_proposta_execucao_produto_parcela',null,array('class'=>'float-l'),array(0=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE')))) ?>
+	<label class="float-l clear-l span-2 right"><?php echo $this->escape($this->translate('L_VIEW_PARCELA')) ?>:</label>
+		<?php echo $this->formSelect('cd_parcela_execucao_produto_parcela',null,array('class'=>'float-l'),array(0=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE')))) ?>
+	<div id="gridExecucaoProdutoParcela" class="float-l clear-l span-21" style="display: none;"></div>
+	<?php echo $this->formButton('btn_salvar_execucao_produto_parcela', $this->escape($this->translate('L_BTN_SALVAR')), array('class'=>'float-r clear-l verde')); ?>
+</div>

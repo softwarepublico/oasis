@@ -1,0 +1,68 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#container_etapa').show()
+                         .tabs()
+                         .triggerTab(1);
+	$("#config_hidden_etapa_atividade").val('N');
+});
+</script>
+
+<div id="container_etapa" style="display: none;">
+    <?php
+        $permissaoEtapa      = 'N';
+        $permissaoAtividade  = 'N';
+        $permissaoAssociacao = 'N';
+    ?>
+	<ul>
+		<?php if(ChecaPermissao::possuiPermissao('etapa') === true): $permissaoEtapa = 'S'; ?>
+            <li><a href="#aba_etapa"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_ETAPA')); ?></span></a></li>
+        <?php endif; ?>
+
+		<?php if(ChecaPermissao::possuiPermissao('atividade') === true): $permissaoAtividade = 'S'; ?>
+	        <li id="li-atividade"><a href="#aba_atividade"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_ATIVIDADE')); ?></span></a></li>
+        <?php endif; ?>
+
+		<?php if(ChecaPermissao::possuiPermissao('associar-atividade-objeto-contrato') === true): $permissaoAssociacao = 'S'; ?>
+	        <li><a href="#aba_associar_atividade_obj_contr"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_ASSOCIAR_ATIVIDADE_OBJETO_CONTRATO')); ?></span></a></li>
+        <?php endif; ?>
+    </ul>
+	
+		<?php if(ChecaPermissao::possuiPermissao('etapa') === true): ?>
+		    <div id="aba_etapa">
+		    	<div class="divTab"><?php echo $this->render('etapa/index.phtml') ?></div>
+		    </div>
+        <?php endif; ?>
+        
+		<?php if(ChecaPermissao::possuiPermissao('atividade') === true): ?>
+		    <div id="aba_atividade">
+		    	<div class="divTab"><?php echo $this->render('atividade/index.phtml') ?></div>
+		    </div>
+        <?php endif; ?>
+		<?php if(ChecaPermissao::possuiPermissao('associar-atividade-objeto-contrato') === true): ?>
+		    <div id="aba_associar_atividade_obj_contr">
+		    	<div class="divTab"><?php echo $this->render('associar-atividade-objeto-contrato/index.phtml') ?></div>
+		    </div>
+        <?php endif; ?>
+</div>
+
+<script type="text/javascript">
+
+    var permEtapa      = '<?php echo $permissaoEtapa;     ?>';
+    var permAtividade  = '<?php echo $permissaoAtividade; ?>';
+    var permAssociacao = '<?php echo $permissaoAssociacao;?>';
+
+    function configAccordionEtapaAtividade()
+    {
+        if( (permEtapa == 'S') && ($("#cd_area_atuacao_ti_etapa").val() != 0) ){
+            montaGridEtapa();
+        }
+        if( (permAtividade == 'S') && ($("#cd_area_atuacao_ti_atividade").val() != 0) ){
+            montaComboEtapa();
+        }
+
+        if( (permAssociacao == 'S') && ($('#cd_area_atuacao_ti_associacao').val() != 0) ){
+            comboEtapaAssociacao();
+        }
+        $("#config_hidden_etapa_atividade").val('S');
+    }
+</script>

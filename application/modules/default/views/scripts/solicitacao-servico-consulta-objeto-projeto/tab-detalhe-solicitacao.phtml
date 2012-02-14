@@ -1,0 +1,41 @@
+<?php 
+	echo $this->formHidden('tab_origem',$this->tab_origem);
+    $this->script('scriptFile',array('/solicitacao-servico-consulta-objeto-projeto/detalhe-solicitacao.js'));
+?>
+<div class="box span-20 border gradient">
+	<h3 class="highlight tarja-1"><?php echo $this->escape($this->translate('L_VIEW_DETALHE_SOLICITACAO')) ?></h3>
+	<label class="bold span-4"><?php echo $this->escape($this->translate('L_VIEW_NUMERO')) ?>:</label>
+        <p class="span-15"><?php echo "{$this->solicitacao['ni_solicitacao']}/{$this->solicitacao['ni_ano_solicitacao']}" ?></p>
+	<label class="bold span-4"><?php echo $this->escape($this->translate('L_VIEW_OBJETO_CONTRATO')) ?>:</label>
+        <p class="span-15"><?php echo $this->solicitacao['tx_objeto'] ?></p>
+	<label class="bold span-4"><?php echo $this->escape($this->translate('L_VIEW_DATA_SOLICITACAO')) ?>:</label>
+        <p class="span-15"><?php echo $this->solicitacao['dt_solicitacao'] ?></p>
+	<label class="bold span-4"><?php echo $this->escape($this->translate('L_VIEW_TIPO_SOLICITACAO')) ?>:</label>
+        <p class="span-15"><?php echo $this->solicitacao['st_solicitacao'] ?></p>
+	<label class="bold span-4"><?php echo $this->escape($this->translate('L_VIEW_GESTOR_SOLICITANTE')) ?></label>
+        <p class="span-15"></p>
+
+	<hr style="width:780px;"/>
+
+	<label class="span-3" style="padding-left:45px;"><?php echo $this->escape($this->translate('L_VIEW_NOME')) ?>:</label>
+        <p class="span-6"><?php echo $this->solicitacao['tx_solicitante'] ?></p>
+	<label class="span-3" style="padding-left:45px;"><?php echo $this->escape($this->translate('L_VIEW_UNIDADE')) ?>:</label>
+        <p class="span-15"><?php echo $this->solicitacao['tx_sigla_unidade'] ?></p>
+	<label class="span-3" style="padding-left:45px;"><?php echo $this->escape($this->translate('L_VIEW_SALA')) ?>:</label>
+        <p class="span-15"><?php echo $this->solicitacao['tx_sala_solicitante'] ?></p>
+	<label class="span-3" style="padding-left:45px;"><?php echo $this->escape($this->translate('L_VIEW_TELEFONE')) ?>:</label>
+        <p class="span-15"><?php echo $this->solicitacao['tx_telefone_solicitante'] ?></p>
+	
+    <hr style="width:780px;"/>
+
+	<label class="bold span-4"><?php echo $this->escape($this->translate('L_VIEW_DESCRICAO_SOLICITACAO')) ?>:</label>
+        <p class="span-15" style="text-align: justify;"><?php echo $this->solicitacao['tx_solicitacao'] ?></p>
+	<label class="bold span-4"><?php echo $this->escape($this->translate('L_VIEW_PRAZO_ATENDIMENTO')) ?> (<?php echo $this->escape($this->translate('L_VIEW_DIAS')) ?>):</label>
+        <p class="span-15"><?php echo $this->solicitacao['ni_prazo_atendimento'] ?></p>
+	<label class="bold span-4"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACOES')) ?>:</label>
+        <p class="span-15" style="text-align: justify;"><?php echo $this->solicitacao['tx_obs_solicitacao'] ?></p>
+	<hr style="width:780px;"/>
+	<label class="span-2 float-r clear-l">
+        <?php echo $this->formButton('bt_fechar_tab_detalhe_solicitacao', $this->escape($this->translate('L_BTN_FECHAR')), array('class' => 'float-r azul'), null)?>
+    </label>
+</div>

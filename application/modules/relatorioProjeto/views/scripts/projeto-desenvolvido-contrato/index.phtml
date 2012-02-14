@@ -1,0 +1,26 @@
+<?php 
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/projeto-desenvolvido-contrato/index.js'));
+?>
+<form id="formRelatorioProjetoDesenvolvidoContrato">
+    <label class="span-2 float-l required required" for="cd_contrato"><?php echo $this->translate('L_VIEW_CONTRATO') ?>:</label>
+    	<?php echo $this->formSelect("cd_contrato",null,null,$this->comboContrato); ?>
+	<fieldset id="fieldset_impacto">
+		<legend><?php echo $this->translate('L_VIEW_IMPACTO') ?></legend>
+
+		<label class="span-3 float-l clear-l" for="rel_interno">
+			<input type="checkbox" id="rel_interno" name="rel_interno" value="I" />
+			<?php echo $this->translate('L_VIEW_INTERNO') ?>
+		</label>
+		<label class="span-3 float-l clear-l" for="rel_externo">
+			<input type="checkbox" id="rel_externo" name="rel_externo" value="E" />
+			<?php echo $this->translate('L_VIEW_EXTERNO') ?>
+		</label>
+		<label class="span-3 float-l clear-l" for="rel_ambos">
+			<input type="checkbox" id="rel_ambos" name="rel_ambos" value="A" />
+			<?php echo $this->translate('L_VIEW_AMBOS') ?>
+		</label>
+	</fieldset>
+
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->translate('L_BTN_GERAR') ?></button>
+</form>    	

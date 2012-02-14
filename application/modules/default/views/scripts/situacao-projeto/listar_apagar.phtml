@@ -1,0 +1,20 @@
+<table>
+    <tr>
+        <td><?php echo $this->escape($this->translate('L_VIEW_SITUACAO_PROJETO')) ?></td>
+	</tr>
+	<?php
+	foreach ($this->res as $situacaoProjeto):
+	?>
+	<tr>
+		<td>
+			<a href="<?php echo $this->baseUrl();?>/situacao-projeto/editar/cd_situacao_projeto/<?php echo $situacaoProjeto->cd_situacao_projeto?>"><?php echo $situacaoProjeto->ni_mes_situacao_projeto."/".$situacaoProjeto->ni_ano_situacao_projeto?></a>
+		</td>
+		<td>
+			<?php echo $situacaoProjeto->tx_situacao_projeto?>
+		</td>
+	</tr>
+	<?php
+	endforeach;
+	?>
+</table>
+<br />

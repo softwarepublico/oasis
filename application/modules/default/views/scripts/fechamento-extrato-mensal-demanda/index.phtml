@@ -1,0 +1,8 @@
+<?php
+    $this->script('scriptFile',array('/fechamento-extrato-mensal-demanda/index.js'));
+?>
+<div id="tabelaFechamentoExtratoMensalDemanda" class="divTab boxTab">
+	<label class="span-2 float-l bold right" style="margin-top: 3px;"><?php echo $this->translate('L_VIEW_CONTRATO') ?>:</label>
+	<p class="float-l" style="margin-top: 3px;"><?php echo $this->formSelect('cd_contrato_fechamento_demanda', null,array('class'=>'float-l span-4'), $this->arrContratosTipoDemandaServico) ?></p>
+</div>
+<div id="gridFechamentoExtratoMensalDemanda"></div>

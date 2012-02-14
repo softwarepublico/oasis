@@ -1,0 +1,21 @@
+<?php
+    $this->script('scriptFile',array('/dicionario-de-dados/documentar.js'));
+?>
+<?php echo $this->formHidden("config_hidden_aba_documentar", "N"); ?>
+<div style="overflow:hidden;" id="formDocumentar">
+    <div>
+        <label class="float-l span-2 clear-l right"><?php echo $this->escape($this->translate('L_VIEW_TABELAS')) ?>:</label>
+        <?php echo $this->formSelect('tx_tabelas', null, array('class'=>'float-l'), null) ?>
+        <label class="float-l span-2 clear-l right"><?php echo $this->escape($this->translate('L_VIEW_COMENTARIO_REGISTRADO_SISTEMA')) ?>:</label>
+        <?php echo $this->formTextarea('tx_desc_tabelas', '', array('class'=>' span-13 height-4 float-l')) ?>
+        <label class="float-l span-2 clear-l right"><?php echo $this->escape($this->translate('L_VIEW_COMENTARIO_REGISTRADO_BANCO')) ?>:</label>
+        <?php echo $this->formTextarea('tx_desc_tabelas_banco', '', array('class'=>' span-13 height-4 float-l','readonly'=>'readonly')) ?>
+    </div>
+    <div class="float-l push-2" id="dadosColunas"></div>
+    <div>
+        <?php
+        echo $this->formButton('salvarDocumentacao', '+ '.$this->escape($this->translate('L_BTN_SALVAR')), array('class' => 'float-l span-2  push-2 verde clear-l'));
+        echo $this->formButton('alterarDocumentacao', '+ '.$this->escape($this->translate('L_BTN_ALTERAR')), array('class' => 'float-l span-2 push-2 verde clear-l'));
+        ?>
+    </div>
+</div>

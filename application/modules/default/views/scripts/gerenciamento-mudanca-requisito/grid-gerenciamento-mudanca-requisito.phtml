@@ -1,0 +1,87 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableGerenciamentoMudancaRequisito").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableGerenciamentoMudancaRequisito").tablesorterPager({container: $("#tableGerenciamentoMudancaRequisitoPager")}); 
+});
+</script>
+<table id="tableGerenciamentoMudancaRequisito" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_PROJETO'  )) ?></th>
+			<th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_REQUISITO')) ?></th>
+			<th class="span-1"><?php echo $this->escape($this->translate('L_VIEW_GRID_VERSAO'   )) ?></th>
+			<th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_SITUACAO' )) ?></th>
+			<th class="span-4"><?php echo $this->escape($this->translate('L_VIEW_GRID_ACAO'     )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+		
+			$fimProj = "";
+			if(strlen($res['tx_sigla_projeto']) >= 18){
+				$fimProj = "...";
+			}
+			$tx_sigla_projeto = substr($res['tx_sigla_projeto'],0,18).$fimProj; 
+
+			$fimReq = "";
+			if(strlen($res['tx_requisito']) >= 33){
+				$fimReq = "...";
+			}
+			$tx_requisito = substr($res['tx_requisito'],0,33).$fimReq; 
+	?>
+		<tr>
+			<td title="<?php echo $res['tx_sigla_projeto']; 			?>"><?php echo $tx_sigla_projeto;				?></td>
+			<td title="<?php echo $res['tx_requisito'];					?>"><?php echo $tx_requisito;		  			?></td>
+			<td title="<?php echo "Versão ".$res['ni_versao_requisito'];?>"><?php echo $res['ni_versao_requisito'];		?></td>
+			<td title="<?php echo $res['st_decisao_mudanca_desc'];		?>"><?php echo $res['st_decisao_mudanca_desc'];	?></td>
+			<td style="text-align: center;">
+				<?php
+					if( empty($res['st_decisao_mudanca'] )){
+						$clickAnalise  = "cadastrarDecisaoMudancaRequisito({$res['cd_projeto']},{$res['cd_item_controle_baseline']},'{$res['dt_gerencia_mudanca']}',{$res['cd_item_controlado']},'{$res['dt_versao_item_controlado']}','{$res['tx_sigla_projeto']}','{$res['tx_requisito']}')";
+						echo $this->formButton(
+                                'btn_analisar_pedido_mudanca_requisito',
+                                $this->escape($this->translate('L_BTN_ANALISAR_PEDIDO')),
+                                array(
+                                    'class'=>'azul',
+                                    'onclick'=>"{$clickAnalise}"
+                             ));
+
+					}else if( $res['st_decisao_mudanca'] === "S" && $res['st_execucao_mudanca'] == '' ){
+						$clickAbrirRequisito  = "geraNovaVersaoRequisito({$res['ni_versao_requisito']},{$res['cd_projeto']},{$res['cd_item_controle_baseline']},'{$res['dt_gerencia_mudanca']}',{$res['cd_item_controlado']},'{$res['dt_versao_item_controlado']}');";
+						echo $this->formButton(
+                                'btn_abrir_requisito_mudanca_requisito',
+                                $this->escape($this->translate('L_BTN_ABRIR_REQUISITO')),
+                                array(
+                                    'class'=>'azul',
+                                    'onclick'=>"{$clickAbrirRequisito}"
+                             ));
+					}
+				?>
+			</td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo "<tr><td colspan='5' style='text-align: center;'>".$this->escape($this->translate('L_VIEW_SEM_REGISTRO'))."</td></tr>";
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableGerenciamentoMudancaRequisitoPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

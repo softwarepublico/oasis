@@ -1,0 +1,15 @@
+<div id="formPesqBaseConhecimento" style="overflow:hidden;">
+    <label class="float-l span-4 clear-l right required" for="cd_area_conhecimento"><?php echo $this->escape($this->translate('L_VIEW_AREA_CONHECIMENTO')) ?>:</label>
+		<?php echo $this->formSelect('cd_area_conhecimento_pesq', '', array('class'=>'float-l'),$this->arrAreaConhecimento) ?>
+	
+    <label class="float-l span-4 clear-l right required" for="tx_assunto"><?php echo $this->escape($this->translate('L_VIEW_ASSUNTO')) ?>:</label>
+		<?php echo $this->formText('tx_assunto_pesq', '', array('class'=>'float-l span-9','maxlength'=>'50')) ?>
+	
+    <label class="span-4 right float-l clear-l"><?php echo $this->escape($this->translate('L_VIEW_TIPO')) ?>:</label>
+		<p class="float-l"><input type="radio" name="tipo_consulta" id="tipo_consulta_and" value="AND" checked="checked" />And</p>
+		<p class="float-l"><input type="radio" name="tipo_consulta" id="tipo_consulta_or" value="OR" />Or</p>
+
+	<?php echo $this->formButton('btn_pesq_conhecimento',$this->escape($this->translate('L_BTN_PESQUISAR')),array('class'=>'verde float-l span-2 clear-l push-11')) ?>
+
+	<div class="float-l span-21" id="gridPesquisaBaseConhecimento"></div>
+</div>

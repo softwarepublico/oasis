@@ -1,0 +1,36 @@
+<?php
+    $this->script('grid');
+    $this->script('tab');
+    $this->script('scriptFile',array('/pedido-decisao-encaminhada-comite/index.js'));
+?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#container_decisao_encaminhada_comite').show().tabs();
+        $('#container_decisao_encaminhada_comite').triggerTab(1);
+    });
+</script>
+
+<div id="container_decisao_encaminhada_comite" style="display: none;">
+	<ul>
+        <li><a href="#pedidos_encimenhados_comite">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PEDIDOS')) ?></span>
+            </a>
+        </li>
+        <li id="li_encaminhar_pedido_finalizar" style="display:none">
+            <a href="#encaminhar_pedido_finalizar">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_ENCAMINHAR')) ?></span>
+            </a>
+        </li>
+    </ul>
+    <div id="pedidos_encimenhados_comite">
+		<div class="divTab">
+            <div class="boxTab height-2"></div>
+            <div id="grid_pedidos_encaminhados_comite" class="float-l clear-l"></div>
+		</div>
+    </div>
+    <div id="encaminhar_pedido_finalizar">
+		<div class="divTab">
+            <div id="div_encaminhar_pedido_finalizar_processo"></div>
+		</div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<?php 
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/analise-medicao/index.js'));
+?>
+<form id="formRelatorioProjetoAnaliseMedicao">
+	<hr />
+      <label class="float-l"><input type="radio" id="medicao" name="relatorio" onclick="abreMedicao()" value="m" /><?php echo $this->translate('L_VIEW_POR_MEDICAO') ?></label>
+      	<p class="float-l clear-l push-1" style="display: none;" id="comboMedicao">
+      		<label class="required float-l right span-2"><?php echo $this->translate('L_VIEW_MEDICAO') ?>:</label>
+      		<?php echo $this->formSelect('cd_medicao',null,array('class'=>'float-l','style'=>'width: 600px;','disabled'=>'disabled'),$this->comboMedicao); ?>
+      	</p>
+      	
+      <label class="float-l clear-l"><input type="radio" id="box" name="relatorio" onclick="abreBox()" value="b" /><?php echo $this->translate('L_VIEW_POR_BOX') ?></label>
+      	<p class="float-l clear-l push-1" style="display: none;" id="comboBoxInicio">
+      		<label class="required float-l right span-2"><?php echo $this->translate('L_VIEW_BOX') ?>:</label>
+      		<?php echo $this->formSelect('cd_box_inicio','',array('class'=>'float-l','disabled'=>'disabled'),$this->comboBoxInicio); ?>
+      	</p>
+    <hr />    	
+    	
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->translate('L_BTN_GERAR') ?></button>
+</form>

@@ -1,0 +1,61 @@
+<script type="text/javascript" defer="defer">
+	$(document).ready(function() {
+	    $("#tabela_propostaAndamentoRisco").tablesorter({widthFixed: true, widgets: ['zebra']});
+	    $("#tabela_propostaAndamentoRisco").tablesorterPager({container: $("#pager_propostaAndamentoRisco")});
+
+	});
+</script>
+<div class="float-l clear-l">
+	<table id="tabela_propostaAndamentoRisco" cellspacing="1" class="tablesorter" style="width:auto;">
+		<thead>
+		    <tr>
+                <th class="span-8"><?php echo $this->escape($this->translate('L_VIEW_GRID_PROJETO' )) ?></th>
+				<th class="span-4"><?php echo $this->escape($this->translate('L_VIEW_GRID_PROPOSTA')) ?></th>
+				<th class="span-8"><?php echo $this->escape($this->translate('L_VIEW_GRID_RISCO'   )) ?></th>
+			</tr>
+		</thead>
+		<tbody>
+		<?php
+		if($this->arrProjetosPropostas){
+			foreach ($this->arrProjetosPropostas as $res):
+		?>
+	    <tr onclick="gridAnaliseRisco(<?php echo $res['cd_projeto'] ?>, <?php echo $res['cd_proposta']; ?>)" style="cursor:pointer;">
+	        <td><?php echo $res['tx_sigla_projeto']; ?></td>
+	        <td><?php echo $this->escape($this->translate('L_VIEW_PROPOSTA_NR'))." {$res['cd_proposta']}"; ?></td>
+	        <td class="center">
+	        	<div class="center float-l clear-l height-1" style="border: 1px solid; margin-left: 30px; width:<?php echo $res['tamanho']."px" ?>;">
+		            <div class="float-l height-1"  style="background: #FFFFFF no-repeat; width:<?php echo $res['riscoBranco'  ] ?>px;"></div>
+		            <div class="float-l height-1"  style="background: #00af4d no-repeat; width:<?php echo $res['riscoVerde'   ] ?>px;"></div>
+		            <div class="float-l height-1"  style="background: #fbe200 no-repeat; width:<?php echo $res['riscoAmarelo' ] ?>px;"></div>
+		            <div class="float-l height-1"  style="background: #e70033 no-repeat; width:<?php echo $res['riscoVermelho'] ?>px;"></div>
+		            <div class="float-l height-1"  style="background: #d0cfcb no-repeat; width:<?php echo $res['riscoCinza'   ] ?>px;"></div>
+	            </div>
+	        </td>
+		</tr>
+		<?php
+			endforeach;
+		} else {
+			echo "  <tr>
+						<td colspan='3' style='text-align:center;'>".$this->escape($this->translate('L_MSG_ALERT_SEM_PROJETO_PROPOSTA_EXECUCAO'))."</td>
+					</tr>
+			";
+		}
+		?>
+		</tbody>
+	</table>
+	<div id="pager_propostaAndamentoRisco" class="pager">
+		<form>
+			<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+			<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+			<input type="text" class="pagedisplay"/>
+			<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+			<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+			<select class="pagesize">
+				<option selected="selected"  value="10">10</option>
+				<option value="20">20</option>
+				<option value="30">30</option>
+				<option value="40">40</option>
+			</select>
+		</form>
+	</div>
+</div>

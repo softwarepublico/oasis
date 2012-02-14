@@ -1,0 +1,33 @@
+<div id="boxTrocaContrato">
+	<div>
+		<table id="boxes" style="border: 2px solid #DFF0F2">
+			<thead>
+				<tr class="gradient">
+					<td class="bold center" colspan="2" style="font-style:italic" ><?php echo $this->escape($this->translate('L_VIEW_SELECIONE_CONTRATO')) ?></td>
+				</tr>
+			</thead>
+			<tbody>
+		<?php
+			$html = '';
+			$i = 0;
+			foreach( $this->arrContrato as $key=>$contrato):
+				if($i%2==0):
+					$html .= '<tr style="background-color:#fbfbfb">';
+				else:
+					$html .= '<tr style="background-color:#DFF0F2">';
+				endif;
+					$html .= '	<td class="span-1 center">';
+					$html .= "		<input class=\"rd_contrato\" type=\"radio\" name=\"rd_contrato\" id=\"rd_{$key}\" value=\"{$key}\" onclick=\"recuperaListaBox('{$key}','{$contrato}')\" />";
+					$html .= "	</td>";
+					$html .= '	<td>';
+					$html .= '		<label for="rd_'. $key .'">'.$contrato.'</label>';
+					$html .= "	</td>";
+					$html .= "</tr>";
+				$i++;
+			endforeach;
+			echo $html;
+		?>
+			</tbody>
+		</table>
+	</div>
+</div>

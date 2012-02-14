@@ -1,0 +1,42 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableMedida").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableMedida").tablesorterPager({container: $("#tableMedidaPager")}); 
+});
+</script>
+<table id="tableMedida" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_MEDIDAS')) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res):
+		foreach ($this->res as $res):
+	?>
+		<tr><td onClick="redirecionaMedida(<?php echo $res['cd_medida'] ?>)" style="cursor:pointer;"><?php echo $res['tx_medida'] ?></td></tr>
+	<?php
+		endforeach;
+	else:
+		echo " <tr><td>&nbsp;</td></tr>";
+	endif;
+	?>
+	</tbody>
+</table>
+<div id="tableMedidaPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

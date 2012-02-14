@@ -1,0 +1,68 @@
+<?php
+$this->script('scriptFile',array('/pre-demanda-painel/index.js'));
+?>
+<form method="post" id="formAceitePreDemanda">
+    <input type="hidden" id="cd_pre_demanda" name="cd_pre_demanda" value="<?php echo $this->preDemanda[0]['cd_pre_demanda'] ?>"/>
+    <input type="hidden" id="st_aceite_pre_demanda" name="st_aceite_pre_demanda" value="<?php echo $this->preDemanda[0]['st_aceite_pre_demanda'] ?>"/>
+
+    <div class="box span-21 border gradient">
+        <div class="highlight" style="padding:5px">
+            <h2><?php echo $this->escape($this->translate('L_VIEW_ACEITE_PRE_DEMANDA')) ?></h2>
+        </div>
+
+        <div style="padding-top:8px; padding-left:10px;">
+            <label class="bold span-6"><?php echo $this->escape($this->translate('L_VIEW_DETALHE_PRE_DEMANDA')) ?></label>
+            <label class="bold span-5 float-l " style="padding-left:15px;"><?php echo $this->escape($this->translate('L_VIEW_DATA_HORA')) ?>:</label><p class="span-10 float-l"><?php echo $this->preDemanda[0]['dt_pre_demanda'] ?></p>
+            <label class="bold span-5 float-l clear-l" style="padding-left:15px;"><?php echo $this->escape($this->translate('L_VIEW_OBJETO_SOLICITANTE')) ?>:</label><p class="span-10 float-l"><?php echo $this->preDemanda[0]['tx_objeto_emissor'] ?></p>
+            <label class="bold span-5 float-l clear-l" style="padding-left:15px;"><?php echo $this->escape($this->translate('L_VIEW_UNIDADE_SOLICITANTE')) ?>:</label><p class="span-10 float-l"><?php echo $this->preDemanda[0]['tx_sigla_unidade'] ?></p>
+            <label class="bold span-5 float-l clear-l" style="padding-left:15px;"><?php echo $this->escape($this->translate('L_VIEW_DESCRICAO')) ?>:</label><div class="span-15 float-l" style="text-align:justify; margin-left: 10px;"><?php echo $this->preDemanda[0]['tx_pre_demanda'] ?></div>
+
+            <label class="bold span-4 float-l clear-l"><?php echo $this->escape($this->translate('L_VIEW_DETALHE_EXECUCAO')) ?></label>
+            <label class="bold span-5 float-l clear-l" style="padding-left:15px;"><?php echo $this->escape($this->translate('L_VIEW_OBJETO_EXECUTOR')) ?>:</label><p class="span-10 float-l"><?php echo $this->preDemanda[0]['tx_objeto'] ?></p>
+            <label class="bold span-5 float-l clear-l" style="padding-left:15px;"><?php echo $this->escape($this->translate('L_VIEW_PROFISSIONAL_EXECUTOR')) ?>:</label><p class="span-10 float-l">
+                <?php
+                $quant = count($this->arrDemandaProfissional);
+                foreach($this->arrDemandaProfissional as $key=>$value):
+                    echo $value;
+                    if($quant > 0) { echo "<br />"; }
+                    $quant--;
+                endforeach;
+                ?></p>
+            <label class="bold span-5 float-l clear-l" style="padding-left:15px;"><?php echo $this->escape($this->translate('L_VIEW_DESCRICAO_EXECUCAO')) ?>:</label>
+            <div class="span-20 float-l clear-l height-10 border" style="overflow-x: hidden; overflow-x: auto; margin-left:18px; margin-bottom: 5px;">
+                <?php
+                if(count($this->arrHistorico) > 0) {
+                    $cd_nivel_servico = -1;
+                    foreach($this->arrHistorico as $historico):
+                        if($historico['cd_nivel_servico'] != $cd_nivel_servico) {
+                            ?>
+                <label class="float-l"><?php echo "<b>".$historico['tx_nivel_servico']."</b>" ?></label>
+                        <?php }?>
+                <ul class="clear-l span-18">
+                    <li class="clear-l float-l push-1 span-17" style="text-align: justify;">
+                                <?php echo $historico['dt_inicio']."&nbsp;a&nbsp;".$historico['dt_fim']." &nbsp;&nbsp;(".$historico['tx_profissional'].")<br />".$historico['tx_historico'] ?>
+                    </li>
+                </ul>
+                        <?php
+                        $cd_nivel_servico = $historico['cd_nivel_servico'];
+                    endforeach;
+                } else { ?>
+                <label style="color: red; text-align: center;"><?php echo $this->escape($this->translate('L_MSG_ALERT_SEM_HISTORICO_REGISTRADO_PROFISSIONAL')) ?></label>
+                <?php } ?>
+            </div>
+            <br />
+
+            <hr style="width:800px;"/>
+            <label class="bold span-6 float-l clear-l"><?php echo $this->escape($this->translate('L_MSG_DEMANDA_ATENDIDA_ANTERIORMENTE')) ?></label>
+            <p class="span-3 float-l"><input class="span-1 float-l" type="radio" id="st_aceite_pre_demanda" name="st_aceite_pre_demanda" value="S"><?php echo $this->escape($this->translate('L_VIEW_SIM')) ?></p>
+            <p class="span-3 float-l"><input class="span-1 float-l" type="radio" id="st_aceite_pre_demanda" name="st_aceite_pre_demanda" value="N"><?php echo $this->escape($this->translate('L_VIEW_NAO')) ?></p>
+            <p class="span-4 float-l clear-l"><?php echo $this->formTextarea('tx_obs_aceite_pre_demanda', null, array('style' => 'width:750px; height:50px;', 'class' => 'span-4')) ?></p>
+
+            <?php echo $this->formButton('bt_cancelar_aceite_pre_demanda', mb_strtoupper($this->escape($this->translate('L_BTN_CANCELAR')),'utf-8'), array('class' => 'float-l  clear-l vermelho'), null)?>
+            <?php echo $this->formButton('bt_salvar_aceite_pre_demanda', mb_strtoupper($this->escape($this->translate('L_BTN_REGISTRAR_ACEITE_PRE_DEMANDA')),'utf-8'), array('class' => 'float-r  verde'), null)?>
+            <p class="clear-l"></p>
+        </div>
+
+    </div>
+</form>
+<div id="teste"></div>

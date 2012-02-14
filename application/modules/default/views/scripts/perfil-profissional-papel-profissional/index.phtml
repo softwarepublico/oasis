@@ -1,0 +1,17 @@
+<?php
+    $this->script('scriptFile',array('/perfil-profissional-papel-profissional/index.js'));
+?>
+<div id="div_associa_perfil_papel_profissional" style="margin-left:5px;">
+    <label class="span-3 float-l clear-l required" for="cd_area_atuacao_associa_perfil_papel_profissional"><?php echo $this->escape($this->translate('L_VIEW_AREA_ATUACAO')) ?>:</label>
+    <?php echo $this->formSelect('cd_area_atuacao_associa_perfil_papel_profissional', null, array('class'=>'float-l'), null); ?>
+
+    <label class="span-3 float-l clear-l required" for="cd_perfil_profissional_associa_perfil_papel_profissional"><?php echo $this->escape($this->translate('L_VIEW_PERFIL_PROFISSIONAL')) ?>:</label>
+    <?php echo $this->formSelect('cd_perfil_profissional_associa_perfil_papel_profissional', null, array('class'=>'float-l'), array(0=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE')))); ?>
+
+    <?php
+		echo $this->flipFlop(array('name'=>'cd_papel_profissional1', 'label'=>$this->escape($this->translate('L_VIEW_PAPEIS_PROFISSIONAIS'))),
+							 array('name'=>'cd_papel_profissional2', 'label'=>$this->escape($this->translate('L_VIEW_PAPEIS_PROFISSIONAIS_ASSOCIADOS'))),
+							 'add_perfil_papel_profissional',
+							 'remove_perfil_papel_profissional',8);
+    ?>
+</div>

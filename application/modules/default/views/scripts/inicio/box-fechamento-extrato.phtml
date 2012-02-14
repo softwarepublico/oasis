@@ -1,0 +1,42 @@
+<li id="box-fechamento-extrato" class="boxList float-l boxPequeno">
+	<div class="portlet">
+		<div class="portlet-header"><?php echo $this->titulo_box_fechamento_extrato; ?>
+			<a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button" unselectable="on" style="-moz-user-select: none;">
+				<span class="ui-icon ui-icon-closethick imgCloseBox" unselectable="on" style="-moz-user-select: none;">close</span>
+			</a>
+		</div>
+		<div class="portlet-content">
+			<div class="gap-3" style="padding-top:5px">
+                <label class="bold span-7 center"><?php echo $this->escape($this->translate('L_VIEW_PREVISTO')) ?></label>
+                <?php if (($this->previsto != $this->encerrar + $this->extrato)) { ?>
+    				<span class="highlight span-4 float-l clear-l" style="margin:0 0 0 61px; text-align: center;color:red;font-size:3em;cursor:default;-moz-border-radius:10px">
+                    
+                <?php }else{ ?>
+    				<span class="highlight span-4 float-l clear-l" style="margin:0 0 0 61px; text-align: center;color:white;font-size:3em;cursor:default;-moz-border-radius:10px">
+    
+                <?php    } ?>
+
+					<?php echo $this->previsto; ?>
+				</span>
+				<label class="bold span-7 center"><?php echo $this->escape($this->translate('L_VIEW_ENCERRAR')) ?></label>
+				<span class="highlight span-4 float-l clear-l" style="margin:0 0 0 61px; text-align: center;color:white;font-size:3em;cursor:default;-moz-border-radius:10px">
+					<?php echo $this->encerrar; ?>
+				</span>
+				<label class="bold span-7 center"><?php echo $this->escape($this->translate('L_VIEW_EXTRATO')) ?></label>
+                <?php if (($this->encerrar > 0)) { ?>
+    				<span class="highlight span-4 float-l clear-l" style="margin:0 0 0 61px; text-align: center;color:red;font-size:3em;cursor:default;-moz-border-radius:10px">
+                    
+                <?php }else{
+                         if ($this->previsto != $this->extrato) { ?>
+                                <span class="highlight span-4 float-l clear-l" style="margin:0 0 0 61px; text-align: center;color:red;font-size:3em;cursor:default;-moz-border-radius:10px">
+                <?php    }else{ ?>
+                            <span class="highlight span-4 float-l clear-l" style="margin:0 0 0 61px; text-align: center;color:greenwhite;font-size:3em;cursor:default;-moz-border-radius:10px">
+                <?php    }
+                    ?>
+                <?php } ?>    
+					<?php echo $this->extrato; ?>
+				</span>
+			</div>
+		</div>
+	</div>
+</div>

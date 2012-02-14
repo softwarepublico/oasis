@@ -1,0 +1,33 @@
+<?php
+/**
+ * Base exception for the Document package.
+ *
+ * @package Document
+ * @version 1.0
+ * @copyright Copyright (C) 2005-2008 eZ systems as. All rights reserved.
+ * @license http://ez.no/licenses/new_bsd New BSD License
+ */
+
+/**
+ * Exception thrown, when a visitor could not be found for a node / subtree.
+ *
+ * @package Document
+ * @version 1.0
+ */
+class ezcDocumentMissingVisitorException extends ezcDocumentException
+{
+    /**
+     * Construct exception from errnous string and current position
+     * 
+     * @param string $class 
+     * @return void
+     */
+    public function __construct( $class )
+    {
+        parent::__construct( 
+            "Could not find visitor for '{$class}'."
+        );
+    }
+}
+
+?>

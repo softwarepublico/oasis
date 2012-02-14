@@ -1,0 +1,28 @@
+<?php 
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/requisito-projeto/index.js'));
+?>
+<script src="<?php echo $this->baseUrl('getBaseUrlScript');?>/requisito-projeto/index.js" type="text/javascript"></script>
+<form id="formRelatorioProjetoRequisito">
+
+	<label class="span-2 float-l right required" for="cd_contrato"><?php echo $this->translate('L_VIEW_CONTRATO') ?>:</label>
+		<?php echo $this->formSelect('cd_contrato',null,array('class'=>'float-l'),$this->arrContrato); ?>
+		
+    <label class="span-2 float-l clear-l right required" for="cd_projeto"><?php echo $this->translate('L_VIEW_PROJETO') ?>:</label>
+    	<?php echo $this->formSelect("cd_projeto",null,array('class'=>'float-l'), array(0=>Base_Util::getTranslator('L_VIEW_COMBO_SELECIONE'))); ?>
+    	
+    <label class="span-2 float-l clear-l right"><?php echo $this->translate('L_VIEW_REQUISITOS') ?>:</label>
+    
+    <input type="radio" class="float-l" name="tipo_relatorio" id="requisitos_todos" value="T" checked="checked"/>
+    <label class="bold span-4 float-l" for="requisitos_todos"><?php echo $this->translate('L_VIEW_ABERTOS_FECHADOS') ?></label>
+
+	<label class="clear-l float-l span-2">&nbsp;</label>
+    <input type="radio" class="float-l " name="tipo_relatorio" id="requisitos_fechados" value="F" />
+    <label class="bold span-3 float-l" for="requisitos_fechados"><?php echo $this->translate('L_VIEW_FECHADOS') ?></label>
+
+	<label class="clear-l float-l span-2">&nbsp;</label>
+    <input type="radio" class="float-l " name="tipo_relatorio" id="requisitos_baseline" value="B" />
+    <label class="bold span-3 float-l" for="requisitos_baseline"><?php echo $this->translate('L_VIEW_BASELINE') ?></label>
+
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->translate('L_BTN_GERAR') ?></button>
+</form>

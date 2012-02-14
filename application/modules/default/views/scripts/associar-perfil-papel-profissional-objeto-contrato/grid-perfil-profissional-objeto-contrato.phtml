@@ -1,0 +1,65 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#perfilProfissionalObjetoContrato").tablesorter({widthFixed: true, widgets: ['zebra']});
+        $("#perfilProfissionalObjetoContrato").tablesorterPager({container: $("#perfilProfissionalObjetoContratoPager"), size: 5});
+
+    });
+</script>
+<table cellspacing="1" id="perfilProfissionalObjetoContrato" class="tablesorter float-l">
+    <thead>
+        <tr>
+            <th class="span-7"><?php echo $this->translate('L_VIEW_GRID_PERFIL_PROFISSIONAL') ?></th>
+            <th class="span-11"><?php echo $this->translate('L_VIEW_GRID_DESCRICAO') ?></th>
+            <th class="span-2"><?php echo $this->translate('L_VIEW_GRID_ACAO') ?></th>
+        </tr>
+    </thead>
+    <tbody>
+	<?php if($this->rowSetPerfilProfissional->valid()): ?>
+			<?php foreach($this->rowSetPerfilProfissional as $row):
+                $idInput = "desc_perf_{$row->cd_objeto}_{$row->cd_perfil_profissional}";
+            ?>
+				<tr>
+                    <td><?php echo $row->tx_perfil_profissional; ?></td>
+                    <td><?php echo $this->formText($idInput,
+                                                   $row->tx_descricao_perfil_prof,
+                                                   array('class'=>'span-11')) ?></td>
+                    <?php
+                        $button   = '';
+                        $btnColor = 'verde';
+                        $btnLabel = $this->translate('L_BTN_SALVAR');
+                        $function = "salvarDescricaoPerfilProfissionalObjetoContrato('{$idInput}','{$row->cd_objeto}','{$row->cd_perfil_profissional}')";
+                        if(!empty($row->tx_descricao_perfil_prof)){
+                            $btnColor = 'azul';
+                            $btnLabel  = $this->translate('L_BTN_ALTERAR');
+                        }
+                        $button   = $this->formButton("btn_{$row->cd_objeto}_{$row->cd_perfil_profissional}",
+                                                      $btnLabel,
+                                                      array('class'=>$btnColor,
+                                                            'onclick'=>$function));
+                    ?>
+                    <td style="text-align: center"><?php echo $button; ?></td>
+				</tr>
+			<?php endforeach; ?>
+	<?php else:
+            echo "<tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>";
+        endif; ?>
+    </tbody>
+</table>
+<div id="perfilProfissionalObjetoContratoPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="5">05</option>
+			<option value="10">10</option>
+			<option value="20">20</option>
+		</select>
+	</form>
+</div>

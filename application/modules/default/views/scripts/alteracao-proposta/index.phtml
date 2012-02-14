@@ -1,0 +1,7 @@
+<form id="formAlteracaoProposta" style="margin-left: 10px;">
+	<?php echo $this->formHidden('cd_projeto_alteracao_proposta',$this->cd_projeto); ?>
+	<?php echo $this->formHidden('cd_proposta_alteracao_proposta',$this->cd_proposta); ?>
+
+    <label class="span-3"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACOES')) ?>:</label>
+	<?php echo $this->formTextarea('tx_motivo_alteracao_proposta', '', array('style' => 'width:550px; height:120px;')) ?>
+</form>

@@ -1,0 +1,159 @@
+<script type="text/javascript" defer="defer">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableControleParcela").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableControleParcela").tablesorterPager({container: $("#pager_controle_parcela")}); 
+ 
+});
+</script>
+<table  id="tableControleParcela" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th><?php echo $this->escape($this->translate('L_VIEW_GRID_SIGLA'   )) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_PROPOSTA')) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_PARCELA' )) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_METRICA' )) ?></th>
+			<th colspan="5"><?php echo $this->escape($this->translate('L_VIEW_GRID_ETAPA_CONTROLE')) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+	?>
+	<tr>
+		<td><?php echo $res['tx_sigla_projeto']?></td>
+		<td>
+            <a href="#" onclick="abrePopUp('<?php echo $this->baseUrl()?>/relatorioProjeto/documento-proposta/documento-proposta/cd_projeto/<?php echo $res['cd_projeto'] ?>/cd_proposta/<?php echo $res['cd_proposta'] ?>/tipo_proposta/completa');">
+                <?php echo $this->escape($this->translate('L_VIEW_PROPOSTA_NR'))." ".$res['cd_proposta'] ?>
+            </a>
+        </td>
+		<td><?php echo $res['ni_parcela'] ?></td>
+		<td><?php echo $res['ni_horas_parcela'] ?></td>		
+		<td style="text-align:center">
+			<div><?php echo $this->escape($this->translate('L_VIEW_AUTORIZACAO')) ?></div>
+			<div>
+				<?php if ($res['st_autorizacao_parcela'] == 'S') {?>
+                          <a href="#" onClick="abreModalAutorizacaoParcelaDetalhe('<?php echo $res['cd_projeto']?>', '<?php echo $res['cd_proposta']?>', '<?php echo $res['cd_parcela']?>', '<?php echo $res['tx_sigla_projeto']?>', '<?php echo $res['ni_parcela']?>')"><img src="<?php echo $this->baseUrl()?>/public/img/u42.png"></a>
+				<?php } else {?>
+				<?php   if($this->mes_corrente == true) {   ?>
+                            <a href="#" onClick="abreModalAutorizacaoParcela('<?php echo $res['cd_projeto']?>', '<?php echo $res['cd_proposta']?>', '<?php echo $res['cd_parcela']?>', '<?php echo $res['tx_sigla_projeto']?>', '<?php echo $res['ni_parcela']?>')"><img src="<?php echo $this->baseUrl()?>/public/img/u46.png"></a>
+				<?php   } else {?>
+                            <img src="<?php echo $this->baseUrl()?>/public/img/u46.png">
+				<?php   } ?>
+				<?php } ?>
+			</div>
+		</td>
+		<td style="text-align:center">
+			<div><?php echo $this->escape($this->translate('L_VIEW_FECHAMENTO')) ?></div>
+			<div>
+				<?php if ($res['st_fechamento_parcela'] == 'S') {?>
+                          <a href="#" onClick="abreModalFechamentoParcelaDetalhe('<?php echo $res['cd_projeto']?>', '<?php echo $res['cd_proposta']?>', '<?php echo $res['cd_parcela']?>', '<?php echo $res['tx_sigla_projeto']?>', '<?php echo $res['ni_parcela']?>')"><img src="<?php echo $this->baseUrl()?>/public/img/u42.png"></a>
+				<?php } else {
+                          if ($res['st_autorizacao_parcela'] == 'S'){
+                              if($_SESSION['oasis_logged'][0]['cd_perfil'] == K_CODIGO_PERFIL_CONTROLE){?>
+                                  <a href="#" onClick="fechaParcela('<?php echo $res['cd_projeto']?>', '<?php echo $res['cd_proposta']?>', '<?php echo $res['cd_parcela']?>')"><img src="<?php echo $this->baseUrl()?>/public/img/u46.png"></a>
+				<?php 
+						      } else {
+							      echo "<img src='{$this->baseUrl()}/public/img/u46.png'>";
+						      }
+					      } else {?>
+                              <img src="<?php echo $this->baseUrl()?>/public/img/u46.png">
+				<?php     }
+                      }?>
+			</div>
+		</td>		
+		<td style="text-align:center" class="span-2">
+			<div><?php echo $this->escape($this->translate('L_VIEW_PARECER_TECNICO')) ?></div>
+			<div>
+				<?php if ($res['st_parecer_tecnico_parcela'] == 'A') {?>
+                          <a href="#" onClick="abreModalParecerTecnicoParcelaDetalhe('<?php echo $res['cd_projeto']?>', '<?php echo $res['cd_proposta']?>', '<?php echo $res['cd_parcela']?>', '<?php echo $res['tx_sigla_projeto']?>', '<?php echo $res['ni_parcela']?>')"><img src="<?php echo $this->baseUrl()?>/public/img/u42.png"></a>
+				<?php } else {
+					      if ($res['st_fechamento_parcela'] == 'S'){?>
+                           <?php   if($this->mes_corrente == true) {   ?>
+                                <?php if ($res['st_parecer_tecnico_parcela'] == 'N') {?>
+                                             <a href="#" onClick="abreModalParecerTecnicoParcelaDetalhe('<?php echo $res['cd_projeto']?>', '<?php echo $res['cd_proposta']?>', '<?php echo $res['cd_parcela']?>', '<?php echo $res['tx_sigla_projeto']?>', '<?php echo $res['ni_parcela']?>')"><img src="<?php echo $this->baseUrl()?>/public/img/u48.png"></a>
+                                <?php } else { ?>
+                                             <a href="#" onClick="abreModalParecerTecnicoParcela('<?php echo $res['cd_projeto']?>', '<?php echo $res['cd_proposta']?>', '<?php echo $res['cd_parcela']?>', '<?php echo $res['tx_sigla_projeto']?>', '<?php echo $res['ni_parcela']?>', '<?php echo $res['st_pendente']?>')"><img src="<?php echo $this->baseUrl()?>/public/img/u46.png"></a>
+                                 <?php   } ?>                                        
+                           <?php   } else {?>
+                                <?php if ($res['st_parecer_tecnico_parcela'] == 'N') {?>
+                                          <a href="#" onClick="abreModalParecerTecnicoParcelaDetalhe('<?php echo $res['cd_projeto']?>', '<?php echo $res['cd_proposta']?>', '<?php echo $res['cd_parcela']?>', '<?php echo $res['tx_sigla_projeto']?>', '<?php echo $res['ni_parcela']?>')"><img src="<?php echo $this->baseUrl()?>/public/img/u48.png"></a>
+                                <?php } else { ?>
+                                        <img src=" <?php echo $this->baseUrl()?> /public/img/u46.png">
+                              <?php   } ?>
+              
+                           <?php   } ?>
+				<?php     } else {?>
+                                    <img src="<?php echo $this->baseUrl()?>/public/img/u46.png">
+                        <?php     } ?>              
+				<?php } ?>
+                              
+			</div>
+		</td>
+		<td style="text-align:center">
+			<div><?php echo $this->escape($this->translate('L_VIEW_ACEITE')) ?></div>
+			<div>
+				<?php if ($res['st_aceite_parcela'] == 'S') {?>
+                          <a href="#" onClick="abreModalAceiteParcelaDetalhe('<?php echo $res['cd_projeto']?>', '<?php echo $res['cd_proposta']?>', '<?php echo $res['cd_parcela']?>', '<?php echo $res['tx_sigla_projeto']?>', '<?php echo $res['ni_parcela']?>')"><img src="<?php echo $this->baseUrl()?>/public/img/u42.png"></a>
+				<?php } else {
+                          if ($res['st_parecer_tecnico_parcela'] == 'A' || K_PARECER_TECNICO_NEGATIVO_COORDENACAO == 'S'){?>
+                        <?php   if($this->mes_corrente == true) {   ?>
+                                    <a href="#" onClick="abreModalAceiteParcela('<?php echo $res['cd_projeto']?>', '<?php echo $res['cd_proposta']?>', '<?php echo $res['cd_parcela']?>', '<?php echo $res['tx_sigla_projeto']?>', '<?php echo $res['ni_parcela']?>')"><img src="<?php echo $this->baseUrl()?>/public/img/u46.png"></a>
+                        <?php   } else {?>
+                                    <img src="<?php echo $this->baseUrl()?>/public/img/u46.png">
+                        <?php   } ?>
+				<?php     } else {?>
+                              <img src="<?php echo $this->baseUrl()?>/public/img/u46.png">
+				<?php     }
+                      }?>
+			</div>
+		</td>
+		<td style="text-align:center">
+			<div><?php echo $this->escape($this->translate('L_VIEW_HOMOLOGACAO')) ?></div>
+			<div>
+				<?php if ($res['st_homologacao_parcela'] == 'A') {?>
+                          <a href="#" onClick="abreModalHomologacaoParcelaDetalhe('<?php echo $res['cd_projeto']?>', '<?php echo $res['cd_proposta']?>', '<?php echo $res['cd_parcela']?>', '<?php echo $res['tx_sigla_projeto']?>', '<?php echo $res['ni_parcela']?>')"><img src="<?php echo $this->baseUrl()?>/public/img/u42.png"></a>
+				<?php } else {
+                          if ($res['st_aceite_parcela'] == 'S'){?>
+                        <?php   if($this->mes_corrente == true) {   ?>
+                                    <a href="#" onClick="abreModalHomologacaoParcela('<?php echo $res['cd_projeto']?>', '<?php echo $res['cd_proposta']?>', '<?php echo $res['cd_parcela']?>', '<?php echo $res['tx_sigla_projeto']?>', '<?php echo $res['ni_parcela']?>')"><img src="<?php echo $this->baseUrl()?>/public/img/u46.png"></a>
+                        <?php   } else {?>
+                                    <img src="<?php echo $this->baseUrl()?>/public/img/u46.png">
+                        <?php   } ?>
+				<?php     } else {?>
+                              <img src="<?php echo $this->baseUrl()?>/public/img/u46.png">
+				<?php     }
+                      }?>
+			</div>
+		</td>
+	</tr>
+	<?php
+		endforeach;
+	} else {
+		echo " <tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td colspan='5'>&nbsp;</td>
+				</tr>";
+	}
+	?>
+	</tbody>
+</table>
+<div id="pager_controle_parcela" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

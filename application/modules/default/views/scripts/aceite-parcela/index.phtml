@@ -1,0 +1,18 @@
+<form id="formAceiteParcela">
+	<?php echo $this->formHidden('cd_projeto_aceite_parcela' ,$this->cd_projeto); ?>
+	<?php echo $this->formHidden('cd_proposta_aceite_parcela',$this->cd_proposta); ?>
+	<?php echo $this->formHidden('cd_parcela_aceite_parcela',$this->cd_parcela); ?>
+
+	<span class="float-l bold">
+        <?php echo $this->tx_sigla_projeto; ?> (<?php echo $this->escape($this->translate('L_VIEW_PARCELA'))." ".$this->ni_parcela; ?>)
+    </span>
+
+	<label class="float-l clear-l span-3 right required"><?php echo $this->escape($this->translate('L_VIEW_ACEITE')) ?>:</label>
+		<input class="span-1 float-l" type="radio" id="st_aceite_parcela_S" name="st_aceite_parcela" value="S" checked="checked">
+            <label class="span-1 float-l"><?php echo $this->escape($this->translate('L_VIEW_SIM')) ?></label>
+		<input class="span-1 float-l" type="radio" id="st_aceite_parcela_N" name="st_aceite_parcela" value="N">
+            <label class="span-1 float-l"><?php echo $this->escape($this->translate('L_VIEW_NAO')) ?></label>
+
+	<label id="lb_tx_obs_aceite_parcela" class="float-l clear-l span-3 right"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACOES')) ?>:</label>
+		<?php echo $this->formTextarea('tx_obs_aceite_parcela', '', array( 'class'=>'float-l' ,'style' => 'width:400px; height:80px;')) ?>
+</form>

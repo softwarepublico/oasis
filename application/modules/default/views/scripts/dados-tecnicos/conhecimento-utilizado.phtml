@@ -1,0 +1,19 @@
+<?php
+$this->script('scriptFile',array('/dados-tecnicos/conhecimento-utilizado.js'));
+?>
+<div id="tabelaConhecimentoUtilizado" class="divTab" style="padding-left: 10px;">
+
+    <label class="bold float-l span-6" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_TIPO_CONHECIMENTO_UTILIZADO')) ?>:</label>
+    <?php echo $this->formSelect('cd_tipo_conhecimento', null, array('class'=>'float-l'), $this->arrComboTipoConhecimento)."<br>"; ?>
+
+    <?php echo $this->flipFlop(array('name'=>'cd_conhecimento1',
+                                     'label'=>$this->escape($this->translate('L_VIEW_CONHECIMENTO')),
+                                     'value'=>$this->arrComboConhecimento1),
+                               array('name'=>'cd_conhecimento2',
+                                     'label'=>$this->escape($this->translate('L_VIEW_UTILIZADO_PROPOSTA')),
+                                     'value'=>$this->arrComboConhecimento2),
+                               'addTipoConhecimento',
+                               'removeTipoConhecimento',8); ?>
+
+</div>
+<div id="teste"></div>

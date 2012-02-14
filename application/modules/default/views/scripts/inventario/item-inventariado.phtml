@@ -1,0 +1,24 @@
+<?php
+    $this->script('grid');
+    $this->script('numero');
+    $this->script('scriptFile',array('/inventario/index.js'));
+?>
+<div id="div_item_inventariado" class="divTab">
+    <?php echo $this->formHidden('cd_item_inventariado'); ?>
+
+	<label class="float-l span-4 bold required" for="cd_area_atuacao_ti_item_inventariado"><?php echo $this->escape($this->translate('L_VIEW_AREA_ATUACAO_TI')) ?>:</label>
+	<?php echo $this->formSelect('cd_area_atuacao_ti_item_inventariado', null, array('class'=>'float-l span-4'), $this->arrAreaAtuacaoTi); ?>
+	<label class="float-l span-4 bold  clear-l required" for="cd_inventario_item_inventariado"><?php echo $this->escape($this->translate('L_VIEW_NOME_INVENTARIO')) ?>:</label>
+	<?php echo $this->formSelect('cd_inventario_item_inventariado', null, array('class'=>'float-l span-4'), null); ?>
+	<label class="float-l span-4 bold  clear-l required" for="cd_item_inventario_item_inventariado"><?php echo $this->escape($this->translate('L_VIEW_TIPO_ITEM_INVENTARIO')) ?>:</label>
+	<?php echo $this->formSelect('cd_item_inventario_item_inventariado', null, array('class'=>'float-l span-4'), null); ?>
+	<label class="float-l span-4 bold  clear-l required" for="tx_item_inventariado_item_inventariado"><?php echo $this->escape($this->translate('L_VIEW_ITEM_INVENTARIADO')) ?>:</label>
+	<?php echo $this->formText('tx_item_inventariado_item_inventariado', null, array('class'=>'float-l span-4'), null); ?>
+
+    <?php echo $this->formButton('btn_salvar_item_inventariado', $this->escape($this->translate('L_BTN_SALVAR')), array('class'=>'float-l clear-l verde push-4')); ?>
+	<?php echo $this->formButton('btn_cancelar_item_inventariado', $this->escape($this->translate('L_BTN_CANCELAR')), array('class'=>'float-l vermelho push-4')); ?>
+
+	<div id="gridItemInventariado" class="float-l clear-l span-20" style="display:none;"></div>
+
+
+</div>

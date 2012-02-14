@@ -1,0 +1,24 @@
+<?php 
+	$this->script('validaForm');
+	$this->script('mascara');
+	$this->script('calendario');
+    $this->script('validaData');
+    $this->script('scriptFile',array('/demanda-detalhe/index.js'));
+ ?>
+<form id="formRelatorioDemandaDetalhe">
+
+     <label class="float-l span-4 right required" for="cd_objeto"><?php echo $this->escape($this->translate('L_VIEW_OBJETO_CONTRATO')) ?>:</label>
+    <?php echo $this->formSelect("cd_objeto",null,array('class'=>'float-l'),$this->arrObjetoContrato); ?>
+
+     <label class="float-l clear-l span-4 right" for="ni_solicitacao"><?php echo $this->escape($this->translate('L_VIEW_SOLICITACAO')) ?>:</label>
+		<span class="float-l"><?php echo $this->formText("ni_solicitacao",null,array('class'=>'span-4')); ?></span>
+
+     <label class="float-l clear-l span-4 right" for="ni_ano_solicitacao"><?php echo $this->escape($this->translate('L_VIEW_ANO_SOLICITACAO')) ?>:</label>
+		<span class="float-l"><?php echo $this->formText("ni_ano_solicitacao",null,array('class'=>'span-4')); ?></span>
+
+    <label class="float-l clear-l span-4 right" for="cd_demanda"><?php echo $this->escape($this->translate('L_VIEW_DEMANDA')) ?>:</label>
+		<span class="float-l"><?php echo $this->formText("cd_demanda",null,null); ?></span>
+	  
+    		  
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->escape($this->translate('L_BTN_GERAR')) ?></button>
+</form>

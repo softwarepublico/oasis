@@ -1,0 +1,149 @@
+<p>Utiliza a classe "showgrid" para exibir a grid no background</p>
+
+<div class="box gradient span-21">
+    <div class="highlight"><h1>Classes CSS</h1></div>
+    <h1>Dimensões</h1>
+    <dl style="margin-left:40px;">
+        <dt>span-n</dt>
+        <dd>Define a largura do elemento (baseado nas unidades da grid).<br/>
+            span-1, span-2, span-3, ... span-21;
+        </dd>
+        <dt>height-n</dt>
+        <dd>Define a altura do elemento (cada unidade da altura é proporcional a altura de um elemento "input").<br/>
+            span-1, span-2, span-3, span-4, span-5, span-6.
+        </dd>
+    </dl>
+
+    <h1>Posicionamento</h1>
+    <dl style="margin-left:40px;">
+        <dt>.float-l</dt>
+        <dd>Permite que o elemento flutue alinhado a esquerda</dd>
+        <dt>.float-r</dt>
+        <dd>Permite que o elemento flutue alinhado a direita</dd>
+        <dt>.clear-l</dt>
+        <dd>não permite que outros elementos seja posicionados a esquerda.<br/>
+            Pose ser usado com uma quebra de linha no formulário.
+        </dd>
+        <dt>.gapLeft</dt>
+        <dd>margem de 10px a esquerda do elemento</dd>
+        <dt>.gap-1 .gap-2 .gap-3</dt>
+        <dd>margem de 5, 10 e 15px abaixo do elemento</dd>        
+        <dt>.right</dt>
+        <dd>Alinha elementos de texto a direita.</dd>
+        <dt>.left</dt>
+        <dd>Alinha elementos de texto a esquerda.</dd>
+        <dt>.center</dt>
+        <dd>Centraliza o texto.</dd>
+    </dl>  
+</div>
+<hr />
+
+
+<div class="showgrid">
+    <h1>Labels (as cores foram utilizadas para auxiliar a visualização)</h1>
+	<div class="span-2" style="background-color:lightblue;">span-2</div><div class="span-3" style="background-color:lightgreen;">span-3</div>
+	<div class="span-4" style="background-color:lightblue;">span-4</div>
+	<div class="span-5">span-5</div>
+	<div class="span-6" style="background-color:lightblue;">span-6</div>
+
+    <hr />
+    <div class="span-7" style="background-color:skyblue;">span-7</div>
+    <div class="span-8" style="background-color:silver;">span-8</div>
+    <div class="span-9" style="background-color:lightgreen;">span-9</div>
+    <div class="span-10" style="background-color:lightblue;">span-10</div>
+
+    <hr />
+    <h1>Inputs</h1>
+    <input type="text" class="float-l clear-l" value="float-l clear-l"/> 
+    <input type="text" class="float-l clear-l" value="float-l clear-l"/> 
+    <input type="text" class="float-l" value="float-l"/> 
+    <input type="text" class="float-r" value="float-r"/> 
+    <input type="text" class="float-l clear-l" value="float-l clear-l"/>
+
+    <hr />
+    <input type="text" class="span-4" value="span-4"/><input type="text" class="span-4" value="span-4"/> 
+    <input type="text" class="span-4 float-l" value="span-4 float-l"/> 
+    <input type="text" class="span-4 float-l push-1 gapLeft" value="span-4 float-l gapLeft"/> 
+    <input type="text" class="float-l clear-l" value="float-l clear-l"/>     
+
+    <hr />
+    <h1>Div</h1>
+    <div class="box height-4">box height-4</div>
+    <div class="highlight">highlight</div>
+    <div class="box gradient height-7">box gradient height-7</div>
+    
+    <hr />
+    <div class="span-20 border showgrid">
+	    <div class="highlight"><h1>(h1 dentro de uma div.highlight)</h1></div>
+	    <label class="float-l left span-7">span-4 float-l left</label>
+	    <input type="text" class="float-l" value=".float-l"/>
+	    <button class="gapLeft verde float-l">verde</button>
+	     
+	    <label class="float-l clear-l center span-7">span-4 clear-l float-l center</label>
+	    <input type="text" class="float-l" value=".float-l"/>
+	    <button class="gapLeft azul span-2 float-l">azul</button> 
+	    
+	    <label class="float-l clear-l right span-7">span-4 float-l clear-l right</label>
+	    <input type="text" class="float-l" value=".float-l"/>
+	    <button class="gapLeft vermelho float-r span-5">vermelho float-r span-3</button> 
+    </div>
+</div>
+<hr />
+<h1>AREA PARA TESTE</h1>
+<fieldset class="span-12">
+	<legend>SandBox</legend>
+    <label class="float-l span-2 right">id:</label><input id="idElemento" readonly="readonly" class="span-5 float-l "/>
+    <label class="float-l span-2 right clear-l">class:</label><input id="classElemento" class="span-9 float-l "/>
+    <button id="aplicar" class="float-l clear-l push-2 verde">aplicar classe</button>
+</fieldset>
+<p>clique nos elementos abaixo para </p>
+<div id="exemplo" class="border showgrid">
+	<label id="labelInputText">Text input:</label> <input type="text" id="inputText" value="inputText"/>
+	<label id="labelInputRadio">Radio input:</label> <input type="Radio" id="inputRadio"/>
+	<label id="labelInputCheckbox">Checkbox input:</label> <input type="checkbox" id="inputCheckbox"/>
+	<label id="labelSelect">Select field:</label> <select id="select"><option>Option 01</option><option>Option 02</option></select>
+	<label id="labelTextArea">Textarea:</label><textarea id="textArea">Textarea text</textarea>
+	<button id="button" value="button text">button text</button>
+	<button id="button2" class="buttonBar verde">buttonBar verde</button>
+	<button id="button2" class="buttonBar vermelho">buttonBar vermelho</button>
+	<button id="button2" class="buttonBar azul">buttonBar azul</button>
+</div>
+<style>
+<!--
+
+    #exemplo *:hover{
+        outline:1px solid red;
+        *background-color:lightblue;
+    }
+    
+-->
+</style>
+<script type="text/javascript" language="javascript">
+    function sandBox(obj){
+        var idElemento = $('#idElemento');
+        var classElemento = $('#classElemento');
+        classElemento.focus();
+        idElemento.val('');
+        classElemento.val('');
+        idElemento.val(obj.get(0).getAttribute('id'));
+        classElemento.val(obj.get(0).getAttribute('class'));
+    }
+
+    $('#labelInputText'     ).click(function(){sandBox($(this))});
+    $('#inputText'          ).click(function(){sandBox($(this))});
+    $('#labelInputRadio'    ).click(function(){sandBox($(this))});
+    $('#inputRadio'         ).click(function(){sandBox($(this))});
+    $('#labelInputCheckbox' ).click(function(){sandBox($(this))});
+    $('#inputCheckbox'      ).click(function(){sandBox($(this))});
+    $('#labelSelect'        ).click(function(){sandBox($(this))});
+    $('#select'             ).click(function(){sandBox($(this))});
+    $('#labelTextArea'      ).click(function(){sandBox($(this))});
+    $('#textArea'           ).click(function(){sandBox($(this))});
+    $('#button'             ).click(function(){sandBox($(this))});
+    $('#aplicar').click(function(){
+        var id = $('#idElemento').val();
+        $('#'+ id).attr('class', $('#classElemento').val());
+    })
+</script>
+<p class="toolTip"><span>Campo obrigatório</span></p>
+

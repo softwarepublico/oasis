@@ -1,0 +1,19 @@
+<?php 
+$this->script('validaForm');
+$this->script('scriptFile',array('/index/index.js'));
+?>
+<div class="float-l push-6" style="color: red;">
+    <?php echo $this->errorMessage; ?>
+</div>
+<hr />
+<fieldset class="span-8 push-6 float-l">
+    <legend>Login</legend>
+    <form id="formLogin" action="<?php echo $this->baseUrl()?>/auth" method="post">
+        <label class="float-l span-2 right"><?php echo $this->translate('L_VIEW_USUARIO') ?></label>
+        <input id="usuario" name="usuario" class="span-5 float-l" type="text" />
+        <label class="float-l span-2 right clear-l"><?php echo $this->translate('L_VIEW_SENHA') ?></label>
+        <input id="senha" type="password" name="senha" class="span-5 float-l" onkeypress="checarCapsLock(event,$(this))"/>
+        <button type="submit" id="btLogin" class="float-l clear-l push-2 verde"><?php echo $this->translate('L_BTN_ACESSAR') ?></button>
+    </form>
+</fieldset>
+<hr />

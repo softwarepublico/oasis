@@ -1,0 +1,22 @@
+<?php
+    $this->script('scriptFile',array('/custo-contrato-demanda/index.js'));
+?>
+<div class="clear" id="formCustoContratoDemandaPorMetrica">
+	<?php echo $this->formHidden('cd_custo_demanda_por_metrica', null, null, null); ?>
+    <label class="float-l bold span-3 required" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_MES')) ?>:</label>
+    <?php echo $this->mesCombo('ni_mes_custo_metrica', null, array('class'=>'float-l'), null)?>
+    
+    <label class="float-l bold clear-l span-3 required" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_ANO')) ?>:</label>
+    <?php echo $this->anoCombo('ni_ano_custo_metrica', null, array('class'=>'float-l'), 1) ?>
+
+    <label class="float-l bold clear-l span-3 required" style="margin-top:2px;"><?php echo $this->translate('L_VIEW_CONTRATO') ?>:</label>
+	<?php echo $this->formSelect('cd_contrato_custo_metrica', null, array('class'=>'float-l span-4'), $this->arrContratosTipoDemandaServico); ?>
+
+    <label class="float-l bold clear-l span-3" style="margin-top:2px;"><?php echo $this->translate('L_VIEW_PROJETO') ?>:</label>
+	<?php echo $this->formSelect('cd_projeto_custo_metrica', null, array('class'=>'float-l span-4'), $this->listaProjetos); ?>
+
+    <label class="float-l bold clear-l span-3 required" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_QTD_UNIDADE_METRICA')) ?>:</label>
+    <?php echo $this->Moeda('nf_qtd_unidade_metrica', null, array('class'=>'float-l span-4'), null); ?>
+</div>
+<button id="bt_salvar_custo_contrato_demanda_metrica" class="verde float-l push-3 clear-l" type="button" name="submit"><?php echo $this->escape($this->translate('L_BTN_SALVAR')) ?></button>
+<div class="float-l span-10 push-3 clear-l" id="gridCustoContratoMetrica"></div>

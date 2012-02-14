@@ -1,0 +1,18 @@
+<?php
+    $this->script('scriptFile',array('/gerenciamento-rotina/designacao-rotina.js'));
+?>
+
+<form id="form_designacao_rotina" class="float-l" style="margin-left: 8px;">
+
+    <input type="hidden" id="cd_objeto_designacao_rotina" name="cd_objeto_designacao_rotina" value="<?php echo $this->cd_objeto ?>"/>
+
+    <label class="float-l clear-l span-4 required" for="cd_rotina_designacao_rotina"><?php echo $this->escape($this->translate('L_VIEW_ROTINA')); ?>:</label>
+    <?php echo $this->formSelect('cd_rotina_designacao_rotina',null,array('class'=>'float-l'), $this->arrRotina);?>
+
+    <?php
+		echo $this->flipFlop(array('name'=>'cd_profissional_1', 'label'=>$this->translate('L_VIEW_PROFISSIONAL')),
+							 array('name'=>'cd_profissional_2', 'label'=>$this->translate('L_VIEW_PROFISSIONAL_DESIGNADO')),
+							 'add_profissional_designacao_rotina',
+							 'remove_profissional_designacao_rotina',8);
+    ?>
+</form>

@@ -1,0 +1,21 @@
+<div style="margin-left: 10px;">
+	<div class="float-l span-14">
+		<label class="float-l span-4 bold"><?php echo $this->translate('L_VIEW_PROJETO') ?>:</label>
+		<span class="float-l span-10 bold"><?php echo $this->tx_sigla_projeto ?></span>
+	</div>
+	<div class="float-l span-14">
+		<label class="float-l span-4 bold"><?php echo $this->escape($this->translate('L_VIEW_PARCELA')) ?>:</label>
+		<span class="float-l span-10 bold"><?php echo $this->ni_parcela?></span>
+	</div>
+
+	<div class="float-l span-14">
+		<label class="float-l span-4"><?php echo $this->escape($this->translate('L_VIEW_DATA_AUTORIZACAO')) ?>:</label>
+		<span class="float-l span-10"><?php echo $this->dt_autorizacao_parcela ?></span>
+
+		<label class="float-l span-4 clear-l"><?php echo $this->escape($this->translate('L_VIEW_PROFISSIONAL')) ?>:</label>
+		<span class="float-l span-10" style="text-align: justify;"><?php echo $this->profissional_autorizacao_parcela ?></span>
+
+		<label class="float-l span-4 clear-l"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACOES')) ?>:</label>
+		<span class="float-l span-10" style="text-align: justify;"><?php echo $this->tx_obs_autorizacao_parcela ?></span>
+	</div>
+</div>

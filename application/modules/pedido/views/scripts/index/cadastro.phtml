@@ -1,0 +1,13 @@
+<?php
+    $this->script('mascara');
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/pedido.js','/index/cadastro.js'))
+?>
+<div class="float-l push-4" style="color: red;">
+	<?php echo $this->errorMessageCadastro; ?>
+</div>
+<hr />
+<fieldset id="fld_form_cad_user_pedido" class="push-4 float-l clear-l">
+    <legend><?php echo $this->escape($this->translate('L_VIEW_NAO_SOU_CADASTRATO')) ?></legend>
+        <?php echo $this->form ?>
+</fieldset>

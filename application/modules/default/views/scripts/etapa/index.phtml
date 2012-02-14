@@ -1,0 +1,8 @@
+<?php
+    $this->script('scriptFile',array('/etapa/index.js'));
+    echo $this->formEtapa;
+    
+    echo $this->formButton('bt_salvar_etapa', $this->translate('L_BTN_SALVAR'), array('class'=>'verde float-l push-3 clear-l'));
+    echo $this->formButton('bt_cancelar_etapa',$this->translate('L_BTN_CANCELAR'),array('class'=>'vermelho float-l push-3'));
+?>
+<div id="gridEtapa" class="float-l clear-l push-3"></div>

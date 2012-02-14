@@ -1,0 +1,78 @@
+<script type="text/javascript" language="javascript" src="<?php echo $this->baseUrl(); ?>/public/js/modules/default/solicitacao-tipo-demanda/profissional-designado.js"></script>
+<div id="tabSolicitacaoTipoDemandaExecultor">
+	<?php 
+		echo $this->formHidden('cd_demanda',$this->arrDemanda['cd_demanda']);
+		echo $this->formHidden('cd_profissional',$this->arrProfissional[0]['cd_profissional']);
+		echo $this->formHidden('tab_origem',$this->tab_origem);
+	?>
+	<label class="bold span-4 float-l"><?php echo $this->escape($this->translate('L_VIEW_DATA_DEMANDA')) ?>:</label>
+		<p class="span-5 float-l "><?php echo date('d/m/Y H:i:s', strtotime($this->arrDemanda['dt_demanda'])) ?></p>
+	<label class="bold clear-l float-l span-4"><?php echo $this->escape($this->translate('L_VIEW_SOLICITACAO')) ?>:</label>
+		<p class="float-l span-5"><?php echo (!is_null($this->arrDemanda['ni_solicitacao'])) ? $this->arrDemanda['ni_solicitacao']."/".$this->arrDemanda['ni_ano_solicitacao'] : $this->arrDemanda['cd_demanda'] ?></p>
+	<label class="bold clear-l float-l span-4"><?php echo $this->escape($this->translate('L_VIEW_DEMANDA')) ?>:</label>
+		<div class="span-15" style="text-align: justify; margin-left: 10px;"><?php echo $this->arrDemanda['tx_demanda'] ?></div>		
+	<label class="bold clear-l float-l span-4"><?php echo $this->escape($this->translate('L_VIEW_PROFISSIONAL')) ?>:</label>
+		<p class="span-17 float-l "><?php echo $this->arrProfissional[0]['tx_profissional'] ?></p>
+	<?php 
+		$i = 1;
+		$fechar = "S";
+		foreach($this->arrDemandaNivelServico as $chave=>$valor):
+			if($i > 1){echo "<br />";}
+	?>
+		<hr style="width: 829px; border-top: 1px solid #54BDCD; visibility: visible; display: block;" />
+		<label class="bold clear-l float-l span-17" style="text-align: justify;"><?php echo $this->escape($this->translate('L_VIEW_NIVEL_SERVICO')) ?> - <?php echo $valor['tx_nivel_servico'] ?> </label>
+		<label class="bold clear-l float-l span-4"><?php echo $this->escape($this->translate('L_VIEW_DATA')) ?>:</label>
+			<p class="span-5 float-l "><?php echo date('d/m/Y H:i:s', strtotime($valor['dt_demanda_nivel_servico'])) ?></p>
+        <label class="bold clear-l float-l span-4"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACAO')) ?>:</label>
+			<p class="span-15 float-l" style="text-align: justify;"><?php echo $valor['tx_obs_nivel_servico'] ?></p>
+		<?php if($valor['st_fechamento_nivel_servico'] != "S"): $fechar = "N"; ?>
+				
+			<label class="span-14 float-l" style="color: red;">
+				<input type="checkbox" id="nivelServico_<?php echo $valor['cd_nivel_servico'] ?>" name="nivelServico_<?php echo $valor['cd_nivel_servico'] ?>" onclick="motivoFechamento(<?php echo $valor['cd_nivel_servico'] ?>)"><?php echo $this->escape($this->translate('L_VIEW_FECHAR_NIVEL_SERVICO')) ?>
+			</label>
+		<div id="divMotivo_<?php echo $valor['cd_nivel_servico'] ?>" style="display: none;">
+            <label id="label_motivo" class="bold clear-l float-l span-4" for="tx_motivo_fechamento_<?php echo $valor['cd_nivel_servico'] ?>"><?php echo $this->escape($this->translate('L_VIEW_MOTIVO_FECHAMENTO')) ?>:</label>
+				<p><?php  echo $this->formTextarea("tx_motivo_fechamento_{$valor['cd_nivel_servico']}",null,array('class'=>'float-l height-4 span-9'))?></p>
+		</div>
+		<?php endif;
+		$i++;
+		endforeach;
+		?>
+	<hr style="width: 829px; border-top: 1px solid #54BDCD; visibility: visible; display: block;" />
+	<label class="bold clear-l float-l span-4"><?php echo $this->escape($this->translate('L_VIEW_HISTORICO_EXECUCAO')) ?></label>
+	<div class="span-20 float-l clear-l height-8 border" style="overflow-x: hidden; overflow-x: auto; margin-left:18px; margin-bottom: 5px;">
+		<?php 
+			if(count($this->arrDados) > 0):
+				foreach($this->arrDados as $historico): ?>
+					<ul>
+						<li class="clear-l float-l span-19" style="text-align: justify;">
+							<?php echo "<b>".date('d/m/Y H:i:s', strtotime($historico['dt_inicio']))."&nbsp;a&nbsp;".date('d/m/Y H:i:s', strtotime($historico['dt_fim']))."</b><hr />".$historico['tx_historico'] ?>
+						</li>
+					</ul>
+		<?php  endforeach;
+			else: ?>
+                <label style="color: red; text-align: center;"><?php echo $this->escape($this->translate('L_MSG_ALERT_SEM_HISTORICO_REGISTRADO_PROFISSIONAL')) ?></label>
+		<?php endif; ?>
+	</div>
+	<div class="clear float-l span-21" style="margin-top: 9px;">
+		<?php
+			echo $this->formButton('btn_cancelar_demanda_profissional', $this->escape($this->translate('L_BTN_CANCELAR')),array('class'=>'vermelho float-l clear-l'));
+			echo $this->formButton('btn_fechar_demanda_profissional', $this->escape($this->translate('L_BTN_FECHAR_DEMANDA')),array('class'=>'verde float-r'));
+			echo "<label class='float-r' style='color:red;' id='informativoButton'>".$this->escape($this->translate('L_MSG_ALERT_FECHAR_DEMANDA_SE_PROFISSIONAL_NAO_PODE'))."</label>";
+		 ?>
+	</div>
+</div>
+<script type="text/javascript">
+<!--
+	var fechar = "<?php echo $fechar ?>";
+	
+	if(fechar == "S"){
+		$('#btn_fechar_demanda_profissional').hide();
+		$('#informativoButton').hide();
+		$('#btn_cancelar_demanda_profissional').html(i18n.L_VIEW_SCRIPT_BTN_VOLTAR);
+		$('#btn_cancelar_demanda_profissional').attr("class","");
+		$('#btn_cancelar_demanda_profissional').attr("class","verde float-l clear-l");
+	}
+	
+//-->
+</script>

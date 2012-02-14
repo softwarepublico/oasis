@@ -1,0 +1,20 @@
+<?php
+    $this->script('numero');
+    $this->script('scriptFile',array('/inventario/index.js'));
+?>
+<div id="formInventario" class="divTab">
+	<label class="float-l span-4 bold required" for="cd_area_atuacao_ti_form_inventario"><?php echo $this->escape($this->translate('L_VIEW_AREA_ATUACAO_TI')) ?>:</label>
+	<?php echo $this->formSelect('cd_area_atuacao_ti_form_inventario', null, array('class'=>'float-l span-6'), $this->arrAreaAtuacaoTi); ?>
+	<label class="float-l span-4 bold  clear-l required" for="cd_inventario_form_inventario"><?php echo $this->escape($this->translate('L_VIEW_NOME_INVENTARIO')) ?>:</label>
+	<?php echo $this->formSelect('cd_inventario_form_inventario', null, array('class'=>'float-l span-6'), null); ?>
+	<label class="float-l span-4 bold  clear-l required" for="cd_item_inventario_form_inventario"><?php echo $this->escape($this->translate('L_VIEW_TIPO_ITEM_INVENTARIO')) ?>:</label>
+	<?php echo $this->formSelect('cd_item_inventario_form_inventario', null, array('class'=>'float-l span-6'), null); ?>
+
+    <label class="float-l span-4 bold  clear-l required" for="cd_item_inventariado_form_inventario"><?php echo $this->escape($this->translate('L_VIEW_ITEM_INVENTARIADO')) ?>:</label>
+	<?php echo $this->formSelect('cd_item_inventariado_form_inventario', null, array('class'=>'float-l span-6'), null); ?>
+    <label class="float-l span-4 bold  clear-l required" for="cd_subitem_inventario_form_inventario"><?php echo $this->escape($this->translate('L_VIEW_SUBITEM_INVENTARIO')) ?>:</label>
+	<?php echo $this->formSelect('cd_subitem_inventario_form_inventario', null, array('class'=>'float-l span-6'), null); ?>
+
+
+	<div id="gridFormInventario" class="float-l clear-l span-20" style="display: none;"></div>
+</div>

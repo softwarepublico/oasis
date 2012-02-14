@@ -1,0 +1,88 @@
+<div class="box span-13 push-2" id="box_posicionamento" style="margin:0 !important;">
+    <?php echo $this->escape($this->translate('')) ?>
+	<?php
+		echo "<h3 class=\"highlight tarja-1\">".$this->escape($this->translate('L_VIEW_CAMPOS_TABELA'))."</h3>";
+		if(trim($this->arrDadosTabelas[0]['msg']) == ""){
+			$columns_table = ""; 
+			$key_primary = "";
+			$checked = "";
+			$preenchida = "";
+			$comentario = "";
+			$cd_projeto = "";
+			$cd_projeto = $this->arrDadosTabelas[0]['cd_projeto'];
+			foreach($this->arrDadosTabelas as $key=>$value){
+				$columns_table .= $value['column_name']."_col|";
+				if($value['st_chave'] != ""){
+					$key_primary .= $value['column_name']."_col|";
+				}
+				
+				if(trim($value['description_column_registre']) != "" || trim($value['description_column_bank']) != ""){
+					$checked          = "checked='checked'";
+					$preenchida       = "<strong> - <i>".$this->escape($this->translate('L_VIEW_COLUNA_PREENCHIDA'))."</i></strong>";
+				} else {
+					$checked          = "";
+					$preenchida       = "";
+				}
+
+                $comentario       = ($value['description_column_registre'])? $value['description_column_registre']: "";
+                $comentario_banco = ($value['description_column_bank'])    ? $value['description_column_bank']    : "";
+
+				$scriptTabela = "";
+				if(trim($value['description_table_registre']) != ""){
+					$scriptTabela .= "$('#tx_desc_tabelas').val('{$value['description_table_registre']}');";
+				} else { 
+					$scriptTabela .= "$('#tx_desc_tabelas').val('');";
+				}
+				if(trim($value['description_table_bank']) != ""){
+					$scriptTabela .= "$('#tx_desc_tabelas_banco').val('{$value['description_table_bank']}');";
+				} else {
+					$scriptTabela .= "$('#tx_desc_tabelas_banco').val('');";
+				}
+				echo "<input type='checkbox'  $checked id='{$value['column_name']}_col' name='{$value['column_name']}_col' value='{$value['column_name']}' class='float-l clear-l'>";
+				echo "<label for='{$value['column_name']}_col' style='cursor: pointer;' class='span-8 clear-n'>{$value['column_name']}</label>";
+
+				echo "<label class='span-8 clear-n push-1' id='".$value['column_name']."_label_comentario' style='padding-left: 39px; display:none;'>".$this->escape($this->translate('L_VIEW_COMENTARIO_REGISTRADO_SISTEMA'))."</label>";
+				echo $this->formTextarea($value['column_name']."_comentario", $comentario, array('style' => 'display:none;', 'class'=>'span-11 push-1 float-l clear-l height-3'));
+
+				echo "<label class='span-8 clear-l push-1' id='".$value['column_name']."_label_comentario_banco' style='padding-left: 39px; display:none;'>".$this->escape($this->translate('L_VIEW_COMENTARIO_REGISTRADO_BANCO'))."</label>";
+				echo $this->formTextarea($value['column_name']."_comentario_banco", $comentario_banco, array('style' => 'display:none; ', 'class'=>'span-11 push-1 float-l clear-l height-3','readonly'=>'readonly'));
+				
+				echo " <script>
+							if($('#{$value['column_name']}_comentario').val() != ''){
+								$('#{$value['column_name']}_comentario').show();
+								$('#{$value['column_name']}_comentario_banco').show();
+								$('#{$value['column_name']}_label_comentario').show();
+								$('#{$value['column_name']}_label_comentario_banco').show();
+								$('#{$value['column_name']}_col').attr('checked','checked');
+							}
+							$('#{$value['column_name']}_col').click(function(){
+                                if( $('#{$value['column_name']}_comentario').val() != ''){
+                                    $('#{$value['column_name']}_comentario').show();
+                                    $('#{$value['column_name']}_comentario_banco').show();
+                                    $('#{$value['column_name']}_label_comentario').show();
+                                    $('#{$value['column_name']}_label_comentario_banco').show();
+                                    $('#{$value['column_name']}_col').attr('checked','checked');
+                                }
+								if (this.checked == true) {
+									$('#{$value['column_name']}_comentario').show();
+									$('#{$value['column_name']}_comentario_banco').show();
+									$('#{$value['column_name']}_label_comentario').show();
+									$('#{$value['column_name']}_label_comentario_banco').show();
+								} else {
+									$('#{$value['column_name']}_comentario').hide();
+									$('#{$value['column_name']}_comentario_banco').hide();
+									$('#{$value['column_name']}_label_comentario').hide();
+									$('#{$value['column_name']}_label_comentario_banco').hide();
+								}
+							});
+							{$scriptTabela}
+					</script>";
+			}
+			echo $this->formHidden('columns_table',$columns_table);
+			echo $this->formHidden('key_primary',$key_primary);
+			echo $this->formHidden('cd_projeto',$cd_projeto);
+		} else {
+			echo "<label class='float-l span-4'>{$this->arrDadosTabelas[0]['msg']}</label>";
+		}
+	?>
+</div>

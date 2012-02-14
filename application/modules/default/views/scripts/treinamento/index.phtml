@@ -1,0 +1,10 @@
+<?php 
+ 	$this->script('grid');
+ 	$this->script('validaForm');
+    $this->script('scriptFile',array('/treinamento/index.js'));
+
+    echo $this->form;
+?>
+<hr />
+<?php echo $this->formButton('btn_alterar_treinamento',$this->escape($this->translate('L_BTN_SALVAR')),array('class'=>'buttonBar verde','style'=>'display:none')) ?>
+<div id="gridTreinamento" class="float-l span-16"></div>

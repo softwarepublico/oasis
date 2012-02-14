@@ -1,0 +1,24 @@
+<?php
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/gerenciamento-risco-projeto/index.js'));
+?>
+<form id="formRelatorioGerenciamentoRiscoProjeto">
+    <?php echo $this->formHidden('tx_contrato_objeto') ?>
+    <?php echo $this->formHidden('tx_projeto') ?>
+    <?php echo $this->formHidden('tx_impacto') ?>
+
+    <label class="span-2 float-l bold right required" for="cd_contrato"><?php echo $this->translate('L_VIEW_CONTRATO').':' ?></label>
+        <?php echo $this->formSelect('cd_contrato',null,array('class'=>'float-l'),$this->arrContrato); ?>
+    <label class="span-2 float-l clear-l bold right required" for="cd_projeto"><?php echo $this->translate('L_VIEW_PROJETO').':' ?></label>
+        <?php echo $this->selectUtil('projeto','cd_projeto',null,array('class'=>'float-l')); ?>
+    <label class="span-2 float-l clear-l bold right required" for="cd_proposta"><?php echo $this->translate('L_VIEW_PROPOSTA').':' ?></label>
+        <?php echo $this->selectUtil('proposta','cd_proposta',null,array('class'=>'float-l')); ?>
+    <label class="span-2 float-l clear-l bold right" for="st_impacto_risco"><?php echo $this->translate('L_VIEW_IMPACTO').':' ?></label>
+        <?php echo $this->selectUtil('impactoRisco','st_impacto_risco',null,array('class'=>'float-l')); ?>
+    <label class="span-2 float-l clear-l bold right" for="cd_etapa"><?php echo $this->translate('L_VIEW_ETAPA').':' ?></label>
+        <?php echo $this->selectUtil('etapa','cd_etapa',null,array('class'=>'float-l')); ?>
+    <label class="span-2 float-l clear-l bold right" for="cd_atividade"><?php echo $this->translate('L_VIEW_ATIVIDADE').':' ?></label>
+        <?php echo $this->selectUtil('atividade','cd_atividade',null,array('class'=>'float-l')); ?>
+    
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->translate('L_BTN_GERAR_RELATORIO') ?></button>
+</form>

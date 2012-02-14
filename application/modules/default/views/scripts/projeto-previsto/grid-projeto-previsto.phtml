@@ -1,0 +1,55 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableProjetoPrevisto").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableProjetoPrevisto").tablesorterPager({container: $("#tableProjetoPrevistoPager")}); 
+});
+</script>
+<table id="tableProjetoPrevisto" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_PROJETO_PREVISTO'  )) ?></th>
+			<th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_SIGLA_UNIDADE'     )) ?></th>
+			<th class="span-4"><?php echo $this->escape($this->translate('L_VIEW_GRID_UNIDADES_PREVISTAS')) ?></th>
+			<th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_TIPO_PROJETO'      )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res->valid()):
+		foreach ($this->res as $res):
+	?>
+		<tr onClick="recuperaProjetoPrevisto(<?php echo $res->cd_projeto_previsto ?>)" style="cursor:pointer;">
+			<td><?php echo $res->tx_projeto_previsto; ?></td>
+			<td><?php echo $res->tx_sigla_unidade; ?></td>
+			<td><?php echo $res->ni_horas_projeto_previsto." ".$res->tx_sigla_metrica; ?></td>
+			<td><?php echo $res->st_projeto_previsto; ?></td>
+		</tr>
+	<?php
+		endforeach;
+	else:
+		echo " <tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			  </tr>";
+	endif;
+	?>
+	</tbody>
+</table>
+<div id="tableProjetoPrevistoPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

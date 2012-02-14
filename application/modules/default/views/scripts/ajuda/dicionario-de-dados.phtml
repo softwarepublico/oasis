@@ -1,0 +1,41 @@
+<div class="divConteudoAjuda">
+	<div align="center">
+        <img src="<?php echo $this->baseUrl();?>/public/img/ajuda/projeto/dicionario-de-dados-documentar.png" alt="Tela Ajuda" />
+    </div>
+	<p>
+        Para efetuar a documentação do dicionário de dados é necessário selecionar
+        a tabela que deseja documentar.
+    </p>
+	<p>
+        OBS: caso nenhuma tabela estiver disponível é necessário realizar as configurações
+        da conexão com Banco de Dados que serão descritas abaixo.
+    </p>
+	<p>
+        Ao selecionar uma tabela ira aparecer os campos desta tabela para que seja
+        efetuado o registro dos comentários. Os comentários descritos aqui são guardados
+        em tabela específica não alterando os possíveis comentários já existentes no banco.
+    </p>
+    
+    <div align="center">
+        <img src="<?php echo $this->baseUrl();?>/public/img/ajuda/projeto/dicionario-de-dados-configuracao.png" alt="Tela Ajuda" />
+    </div>
+	<p>
+        As informações referentes a conexão com o banco de dados são guardadas em
+        tabela. Uma vez configurado não será mais necessário configurar a menos que
+        haja alteração desta conexão.
+    </p>
+    <p>
+        A informações necessárias a configuração da conexão são as seguintes:
+    </p>
+    <ul>
+        <li><b>Banco de Dados:</b> aqui é descrito o tipo de banco a ser utilizado para a conexão</li>
+        <li><b>Servidor:</b> aqui é descrito onde o banco se encontra. Pode ser informado o IP ou o nome do Servidor</li>
+        <li><b>Nome do Banco de Dados:</b> aqui é descrito o nome do banco de dados a ser acessado</li>
+        <li><b>Schema:</b> aqui é descrito o nome do schema do banco de dados a ser acessado (nem todos os tipos de banco de dados utilizam schema)</li>
+        <li><b>Usuário de Acesso:</b> aqui é descrito o nome do usuário de acesso ao banco de dados</li>
+        <li><b>Senha de Acesso:</b> aqui é descrita a senha do usuário de acesso ao banco de dados</li>
+    </ul>
+    <p>
+        Ao clicar em salvar as informações serão validadas e salvas.
+    </p>
+</div>

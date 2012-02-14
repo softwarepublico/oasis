@@ -1,0 +1,10 @@
+<?php
+    $this->script('scriptFile',array('/projeto-previsto/index.js'));
+    echo $this->formProjetoPrevisto;
+?>
+<hr />
+<button id="bt_salvar_projeto_previsto"		class="verde float-l push-3"	type="button" name="bt_salvar_projeto_previsto"><?php echo $this->escape($this->translate('L_BTN_SALVAR'    )) ?></button>
+<button id="bt_cancelar_projeto_previsto"	class="azul float-l push-3"		type="button" name="bt_cancelar_projeto_previsto"><?php echo $this->escape($this->translate('L_BTN_CANCELAR')) ?></button>
+<button id="bt_excluir_projeto_previsto"	class="vermelho float-l push-3" type="button" name="bt_excluir_projeto_previsto"><?php echo $this->escape($this->translate('L_BTN_EXCLUIR'  )) ?></button>
+
+<div id="gridProjetoPrevisto" class="float-l clear-l push-2"></div>

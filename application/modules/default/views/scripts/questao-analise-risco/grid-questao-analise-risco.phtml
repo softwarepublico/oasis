@@ -1,0 +1,52 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableQuestaoAnaliseRisco").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableQuestaoAnaliseRisco").tablesorterPager({container: $("#tableQuestaoAnaliseRiscoPager")}); 
+});
+</script>
+<table id="tableQuestaoAnaliseRisco" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_QUESTAO_ANALISE_RISCO')) ?></th>
+			<th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_ETAPA'                )) ?></th>
+			<th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_ATIVIDADE'            )) ?></th>
+			<th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_ITEM_RISCO'           )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+	?>
+		<tr onclick="redirecionaQuestaoAnaliseRisco(<?php echo $res['cd_questao_analise_risco'] ?>)" style="cursor:pointer;">
+			<td><?php echo $res['tx_questao_analise_risco'] ?></td>
+			<td><?php echo $res['tx_etapa'] ?></td>
+			<td><?php echo $res['tx_atividade'] ?></td>
+			<td><?php echo $res['tx_item_risco'] ?></td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo '<tr>
+				<td colspan="4" style="text-align:center">'.$this->escape($this->translate('L_VIEW_SEM_REGISTRO')).'</td>
+			  </tr>';
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableQuestaoAnaliseRiscoPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

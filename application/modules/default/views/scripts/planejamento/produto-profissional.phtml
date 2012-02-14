@@ -1,0 +1,49 @@
+<?php
+    $this->script('scriptFile',array('/planejamento/produto-profissional.js'));
+?>
+<div class="float-l" style="margin-left:10px;">
+    <label class="right float-l span-2 required" for="cd_contrato_planejamento_produto_profissional"><?php echo $this->escape($this->translate('L_VIEW_CONTRATO')) ?>:</label>
+    <?php echo $this->formSelect('cd_contrato_planejamento_produto_profissional',
+                                 null,
+                                 array('class'=>'float-l'),
+                                 $this->arrContrato); ?>
+	<label class="right float-l span-2 clear-l required" for="cd_projeto_planejamento_produto_profissional">
+        <?php echo $this->escape($this->translate('L_VIEW_PROJETO'))?>:
+    </label>
+    <?php echo $this->formSelect('cd_projeto_planejamento_produto_profissional',
+                                 null,
+                                 array('class'=>'float-l'),
+                                 array(0=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE')))); ?>
+    <label class="right float-l span-2 clear-l required" for="cd_proposta_planejamento_produto_profissional">
+        <?php echo $this->escape($this->translate('L_VIEW_PROPOSTA')) ?>:
+    </label>
+    <?php echo $this->formSelect('cd_proposta_planejamento_produto_profissional',
+                                 null,
+                                 array('class'=>'float-l'),
+                                 array(0=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE')))); ?>
+	<label class="right float-l span-2 clear-l required" for="cd_parcela_planejamento_produto_profissional">
+        <?php echo $this->escape($this->translate('L_VIEW_PARCELA')) ?>:
+    </label>
+    <?php echo $this->formSelect('cd_parcela_planejamento_produto_profissional',
+                                 null,
+                                 array('class'=>'float-l'),
+                                 array(0=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE')))); ?>
+	<label class="right float-l span-2 clear-l required" for="cd_produto_planejamento_produto_profissional">
+        <?php echo $this->escape($this->translate('L_VIEW_PRODUTO')) ?>:
+    </label>
+    <?php echo $this->formSelect('cd_produto_planejamento_produto_profissional',
+                                 null,
+                                 array('class'=>'float-l'),
+                                 array(0=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE')))); ?>
+</div>
+
+<div class="left float-l" style="margin-left:10px;">
+	<?php echo $this->flipFlop(array('name' =>'cd_profissional_planejamento_produto_profissional',
+                                     'label'=>$this->escape($this->translate('L_VIEW_PROFISSIONAIS'))),
+							   array('name' =>'cd_profissional_planejamento_produto_profissional_associados',
+                                     'label'=>$this->escape($this->translate('L_VIEW_PROFISSIONAIS_ASSOCIADOS'))),
+							   'add_profissional_produto_profissional',
+							   'remove_profissional_produto_profissional',8); ?>
+
+    <div class="accordionBottom" style="min-height: 10px;"></div>
+</div>

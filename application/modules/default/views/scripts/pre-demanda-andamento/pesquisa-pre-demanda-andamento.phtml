@@ -1,0 +1,67 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tablePreDemandaAndamento").tablesorter({widthFixed: true, widgets: ['zebra']}) 
+    $("#tablePreDemandaAndamento").tablesorterPager({container: $("#pager_pre_demanda_andamento")}); 
+});
+</script>
+<table id="tablePreDemandaAndamento" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th><?php echo $this->escape($this->translate('L_VIEW_GRID_DATA_HORA'            )) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_SOLICITANTE'          )) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_OBJETO_EXECUTOR'      )) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_DESCRICAO_PRE_DEMANDA')) ?></th>
+            <th><?php echo $this->escape($this->translate('L_VIEW_GRID_SITUACAO'             )) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_SOLICITACAO'          )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+	?>
+		<tr>
+			<td>
+			<?php if (is_null($res['ni_solicitacao'])): ?>
+                <a href="<?php echo $this->baseUrl()?>/pre-demanda/editar/cd_pre_demanda/<?php echo $res['cd_pre_demanda']?>/abaOrigem/pre-demanda-andamento"><?php echo date('d/m/Y H:i:s', strtotime($res['dt_pre_demanda'])); ?></a>
+			<?php else : ?>
+				<a href="<?php echo $this->baseUrl()?>/pre-demanda-painel/pre-demanda-detalhes/cd_pre_demanda/<?php echo $res['cd_pre_demanda']?>/abaOrigem/pre-demanda-andamento"><?php echo date('d/m/Y H:i:s', strtotime($res['dt_pre_demanda'])); ?></a>
+			<?php endif; ?>
+			</td>
+			<td><?php echo $res['tx_nome_conhecido'] ?></td>
+			<td><?php echo $res['tx_objeto'] ?></td>
+			<td><?php echo substr(strip_tags($res['tx_pre_demanda']),0,30)."..." ?></td>
+            <td><?php echo $res['situacao'] ?></td>
+			<td><?php if (!is_null($res['ni_solicitacao'])) { echo $res['ni_solicitacao'] . "/" . $res['ni_ano_solicitacao'];} ?></td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo "  <tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+                    <td>&nbsp;</td>
+				</tr> ";
+	}
+	?>
+	</tbody>
+</table>
+<div id="pager_pre_demanda_andamento" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

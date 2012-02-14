@@ -1,0 +1,56 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableMedicoes").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableMedicoes").tablesorterPager({container: $("#tableMedicoesPager")}); 
+});
+</script>
+<table id="tableMedicoes" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th class="span-7"><?php echo $this->escape($this->translate('L_VIEW_GRID_MEDICAO')) ?></th>
+			<th class="span-4"><?php echo $this->escape($this->translate('L_VIEW_GRID_NIVEL')) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+	?>
+		<tr>
+			<?php 
+			    $fim = "";
+				if(strlen($res['tx_medicao']) >= 120){
+					$fim = "...";
+				}
+				$tx_medicao = substr($res['tx_medicao'],0,120) 
+			?>
+			<td style="cursor: pointer;" onClick="recuperaDadosMedicao(<?php echo $res['cd_medicao'] ?> )"><?php echo $tx_medicao.$fim; ?></td>
+			<td style="cursor: pointer;" onClick="recuperaDadosMedicao(<?php echo $res['cd_medicao'] ?> )"><?php echo $res['st_nivel_medicao']; ?></td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo " <tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			  </tr>";
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableMedicoesPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="05">05</option>
+			<option value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+		</select>
+	</form>
+</div>

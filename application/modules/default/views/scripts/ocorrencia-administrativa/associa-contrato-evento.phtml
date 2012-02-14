@@ -1,0 +1,41 @@
+<?php
+    $this->script('scriptFile',array('/ocorrencia-administrativa/index.js'));
+?>
+<div class="divTab">
+    <label class="float-l"><?php echo $this->escape($this->translate('L_VIEW_CONTRATO')) ?>:</label>
+    <?php echo $this->formSelect('cd_contrato_evento', null, null, null);?>
+
+    <?php echo $this->flipFlop(array('name'=>'cd_evento',  'label'=>$this->escape($this->translate('L_VIEW_EVENTOS_ADMINISTRATIVOS'))),
+							   array('name'=>'cd_evento2', 'label'=>$this->escape($this->translate('L_VIEW_EVENTOS_ADMINISTRATIVOS_CONTRATO'))),
+							   'add',
+							   'remove',8);
+    ?>
+<!--
+   	<label class="bold float-l span-9  clear-l" style="margin-top:2px;">Eventos Administrativos:</label>
+	<label class="bold float-l span-10 right" style="margin-top:2px;">Eventos Administrativos Associados ao Contrato:</label>
+	<?php
+//		echo $this->formSelect( 'cd_evento',
+//		                        null,
+//		                        array(
+//		                            'multiple' => 'multiple',
+//	                                'class'    => 'span-9 float-l clear-l left',
+//	                                'style'    => 'height: 150px;'
+//		                        ));
+	?>
+	<div class="span-2" style="position:relative; left:20px; top:62px">
+		<?php
+//			echo $this->formButton('add', '>>');
+//			echo $this->formButton('remove', '<<', array('style' => 'margin-top:10px;'));
+		?>
+	</div>
+	<?php
+//		echo $this->formSelect( 'cd_evento2',
+//		                        null,
+//		                        array(
+//		                            'multiple' => 'multiple',
+//		                            'class'    => 'span-9 float-l left',
+//		                            'style'    => 'height: 150px;'
+//		                        ));
+	?>
+-->
+</div>

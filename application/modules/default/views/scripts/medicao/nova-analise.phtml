@@ -1,0 +1,22 @@
+<div id="div_nova_analise_medicao" class="divTab">
+    <label id="lb_medicao" class="right float-l span-4 required" for="cmb_medicao" ><?php echo $this->escape($this->translate('L_VIEW_MEDICAO')) ?>:</label>
+	<?php echo $this->formSelect( 'cmb_medicao', null ,array('class'=>'span-6 float-l'), null ); ?>
+	<span id="descMedicao" class="float-l" style="display: none;"></span>
+	
+	<label id="lb_box" class="right float-l clear-l span-4 required" for="cmb_box_inicio" ><?php echo $this->escape($this->translate('L_VIEW_BOX')) ?>:</label>
+	<?php echo $this->formSelect( 'cmb_box_inicio', null ,array('class'=>'span-6 float-l'), null ); ?>
+	<span id="descBox" class="float-l" style="display: none;"></span>
+	
+	<label class="right float-l clear-l span-4 required" for="tx_resultado_analise_medicao" ><?php echo $this->escape($this->translate('L_VIEW_RESULTADO_ANALISE')) ?>:</label>
+	<?php echo $this->formTextArea( 'tx_resultado_analise_medicao', null ,array('class'=>'span-12 float-l height-4','rows'=>'10','cols'=>'20')); ?>
+	
+	<label class="right float-l clear-l span-4 required" for="tx_dados_medicao" ><?php echo $this->escape($this->translate('L_VIEW_DADOS_MEDICAO')) ?>:</label>
+	<?php echo $this->formTextArea( 'tx_dados_medicao', null ,array('class'=>'span-12 float-l height-4','rows'=>'10','cols'=>'20')); ?>
+	
+	<?php
+		echo $this->formButton('btn_salvar_analise_medicao', $this->escape($this->translate('L_BTN_SALVAR')), array('class'=>'verde float-l clear-l push-4'));
+		echo $this->formButton('btn_alterar_analise_medicao', $this->escape($this->translate('L_BTN_SALVAR')), array('class'=>'verde float-l clear-l push-4','style'=>'display:none;'));
+		echo $this->formButton('btn_cancelar_analise_medicao', $this->escape($this->translate('L_BTN_CANCELAR')), array('class'=>'vermelho float-l push-4'));
+	 ?>
+
+</div>

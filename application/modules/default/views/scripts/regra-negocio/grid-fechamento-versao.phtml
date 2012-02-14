@@ -1,0 +1,70 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableFechamentoVersao").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableFechamentoVersao").tablesorterPager({container: $("#tableFechamentoVersaoPager")}); 
+});
+</script>
+<table id="tableFechamentoVersao" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th class="span-10"><?php echo $this->escape($this->translate('L_VIEW_GRID_REGRA_DE_NEGOCIO')) ?></th>
+			<th class="span-2" ><?php echo $this->escape($this->translate('L_VIEW_GRID_VERSAO'       )) ?></th>
+			<th class="span-2" ><?php echo $this->escape($this->translate('L_VIEW_GRID_STATUS'       )) ?></th>
+			<th class="span-3" ><?php echo $this->escape($this->translate('L_VIEW_GRID_ACAO'         )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+	?>
+		<tr>
+			<?php 
+			    $fim = "";
+				if(strlen($res['tx_regra_negocio']) >= 100){
+					$fim = "...";
+				}
+				$tx_regra_negocio = substr($res['tx_regra_negocio'],0,100) 
+			?>
+			<td><?php echo $tx_regra_negocio.$fim 			  ?></td>
+			<td style="text-align: center;"><?php echo $res['ni_versao_regra_negocio']	    ?></td>
+			<td style="text-align: center;"><?php echo $res['st_fechamento_regra_negocio']; ?></td>
+			
+			<?php if($res['st_fechamento_regra_negocio'] === 'Aberta'){ ?>
+				<td style="text-align: center;">
+					<?php echo $this->formButton('btn_fechar_versao_regra', $this->escape($this->translate('L_BTN_FECHAR_VERSAO')), array('class'=>'verde','onclick'=>"fecharVersaoRegraNegocio({$res['cd_regra_negocio']},'{$res['dt_regra_negocio']}')")); ?>
+				</td>
+			<?php }else{ ?>
+				<td></td>
+			<?php } ?>
+			
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo " <tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			  </tr>";
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableFechamentoVersaoPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="05">05</option>
+			<option value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+		</select>
+	</form>
+</div>

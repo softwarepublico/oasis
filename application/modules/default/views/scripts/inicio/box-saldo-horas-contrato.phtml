@@ -1,0 +1,19 @@
+<li id="box-saldo-horas-contrato" class="boxList float-l boxMedio">
+	<div class="portlet">
+		<div class="portlet-header"><?php echo $this->titulo_box_saldo_horas_contrato; ?>
+			<a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button" unselectable="on" style="-moz-user-select: none;">
+				<span class="ui-icon ui-icon-closethick imgCloseBox" unselectable="on" style="-moz-user-select: none;">close</span>
+			</a>
+		</div>
+		<div class="portlet-content">
+			<div class="gap-3">
+			<object data="<?php echo $this->imagem_box_saldo_horas_contrato?>" type="image/svg+xml">
+				<!-- You need a browser capeable of SVG to display this image. -->
+				<?php echo $this->escape($this->translate('L_MSG_ALERT_BROWSER_INCOMPATIVEL_IMAGEM_SGV')) ?>
+			</object>
+			<!--     <img src="<?php echo SYSTEM_PATH ?>/public/img/grafico-saldo-horas-contrato.png" /> -->
+				<label><?php echo $this->escape(Base_Util::getTranslator('L_VIEW_TOTAL_SIGLA_METRICA_VARIAVEL_CONTRATO', $this->tx_sigla_metrica_padrao)) ?>: <span class="bold"><?php echo $this->qde_box_saldo_horas_contrato?></span></label>
+			</div>
+		</div>
+	</div>
+</li>

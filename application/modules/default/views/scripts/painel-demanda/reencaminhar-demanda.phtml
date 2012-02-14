@@ -1,0 +1,62 @@
+<?php 
+	$this->script('grid');
+	$this->script('validaForm');
+    $this->script('scriptFile',array('/painel-demanda/reencaminhar-demanda.js'));
+?>
+<form method="post" id="formReencaminharDemanda">
+
+	<input type="hidden" id="cd_profissional_hidden"  name="cd_profissional_hidden"  value=""/>
+	<input type="hidden" id="cd_nivel_servico_hidden" name="cd_nivel_servico_hidden" value=""/>
+	<input type="hidden" id="cd_demanda"              name="cd_demanda"              value="<?php echo $this->demanda['cd_demanda'] ?>"/>
+	<input type="hidden" id="cd_objeto"               name="cd_objeto"               value="<?php echo $this->demanda['cd_objeto'] ?>"/>
+	<input type="hidden" id="tx_obs_demanda"          name="tx_obs_demanda_anterior" value="<?php echo $this->demanda['tx_obs_nivel_servico'] ?>"/>
+	<input type="hidden" id="tx_demanda"              name="tx_demanda"              value="<?php echo htmlspecialchars($this->demanda['tx_demanda']) ?>"/>
+	<input type="hidden" id="cd_unidade"              name="cd_unidade"              value="<?php echo $this->demanda['cd_unidade'] ?>"/>
+	<input type="hidden" id="tx_solicitante_demanda"  name="tx_solicitante_demanda"  value="<?php echo $this->demanda['tx_solicitante_demanda'] ?>"/>
+	
+	<div class="box span-21 border gradient">
+        <h3 class="highlight tarja-1"><?php echo $this->escape($this->translate('L_VIEW_DETALHE_DEMANDA')) ?></h3>
+		<hr style="width:815px;"/>
+		<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_DATA_HORA_DEMANDA')) ?>:</label>
+            <p class="span-6"><?php echo date('d/m/Y H:i:s', strtotime($this->demanda['dt_demanda'])) ?></p>
+
+		<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_SOLICITANTE')) ?>:</label>
+            <p class="span-6"><?php echo $this->demanda['tx_solicitante_demanda'] ?></p>
+
+		<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_UNIDADE')) ?>:</label>
+            <p class="span-6"><?php echo $this->demanda['tx_sigla_unidade'] ?></p>
+
+		<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_DESCRICAO')) ?>:</label>
+            <div class="span-15" style="text-align: justify; margin-left: 10px;"><?php echo $this->demanda['tx_demanda'] ?></div>
+
+		<div id="observacaoProfissional">
+			<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACOES_ANTERIORES')) ?>:</label>
+			<p id="observacaoAnterior" class="span-15" style="text-align: justify;"></p>
+		</div>
+		
+		<label class="bold span-5"><i><?php echo $this->escape($this->translate('L_VIEW_DETALHE_EXECUCAO')) ?></i></label>
+		<hr style="width:815px;"/>
+		<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_OBJETO_EXECUTOR')) ?>:</label>
+			<p><?php echo $this->demanda['tx_objeto'] ?></p>
+
+		<label class="bold span-5 required" for="cd_nivel_servico"><?php echo $this->escape($this->translate('L_VIEW_NIVEL_SERVICO')) ?>:</label>
+			<p id="comboNivelServico"><?php echo $this->formSelect('cd_nivel_servico',null,array('class'=>'float-l'),$this->arrNivelServico) ?></p>			
+			<p id="descNivelServico"></p>
+
+		<label class="bold span-5 required" for="cd_profissional"><?php echo $this->escape($this->translate('L_VIEW_PROFISSIONAL_EXECUTAR')) ?>:</label>
+			<p id="comboProfissional"><?php echo $this->formSelect('cd_profissional',null,array('class'=>'float-l')) ?></p>
+			<p id="descProfissional"></p>
+
+		<label class="bold span-5 required" for="cd_prioridade"><?php echo $this->escape($this->translate('L_VIEW_PRIORIDADE')) ?>:</label>
+			<p><?php echo $this->formSelect('cd_prioridade',null,array('class'=>'float-l'), $this->comboPrioridade) ?></p>
+
+		<label class="clear-l bold span-5"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACOES')) ?>:</label>
+			<p><?php echo $this->formTextarea('tx_obs_nivel_servico', null, array('style' => 'width:570px; height:50px;', 'class' => 'span-4')) ?></p>
+			
+		<?php echo $this->formButton('bt_designar_profissional_reencaminhar_demanda', $this->escape($this->translate('L_BTN_DESIGNAR_PROFISSIONAL')), array('class' => 'float-r verde','style'=>'margin-right: 55px;'), null);
+              echo $this->formButton('bt_cancelar_demanda', $this->escape($this->translate('L_BTN_CANCELAR')), array('class' => 'float-r vermelho'), null); ?>
+		<div class="clear span-20" style="margin-left: 15px; margin-bottom: 8px;" id="reencaminharProfissionaisAlocados"></div>
+		<hr style="width:815px;"/>
+		<?php echo $this->formButton('bt_cancelar_reencaminhar_demanda',$this->escape($this->translate('L_BTN_CANCELAR')), array('class' => 'float-l vermelho'), null)?>
+	</div>
+</form>

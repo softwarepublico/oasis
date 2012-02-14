@@ -1,0 +1,33 @@
+<?php $this->script('treeview'); ?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#container_perfil').show().tabs().triggerTab(1);
+        $("#config_hidden_perfil").val('N');
+    });
+
+    function configAccordionPerfil()
+    {
+        if($("#config_hidden_perfil").val() === 'N'){
+            montaGridPerfil();
+            montaTreeview();
+            $("#config_hidden_perfil").val('S');
+        }
+    }
+</script>
+<div id="container_perfil" style="display: none;">
+    <ul>
+        <li><a href="#aba_perfil"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_PERFIL')) ?></span></a></li>
+        <li><a href="#aba_menu"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_MENU')) ?></span></a></li>
+        <li><a href="#aba_perfil_menu"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_PERFIL_MENU')) ?></span></a></li>
+    </ul>
+
+    <div id="aba_perfil">
+        <div class="divTab"><?php echo $this->render('perfil/index.phtml') ?></div>
+    </div>
+    <div id="aba_menu">
+        <div class="divTab"><?php echo $this->render('menu/index.phtml') ?></div>
+    </div>
+    <div id="aba_perfil_menu">
+        <?php echo $this->render('perfil-menu-sistema/index.phtml') ?>
+    </div>
+</div>

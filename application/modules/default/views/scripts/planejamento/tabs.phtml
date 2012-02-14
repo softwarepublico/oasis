@@ -1,0 +1,35 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#container-planejamento').show().tabs(); 
+});
+</script>
+<div id="container-planejamento" style="display: none;">
+	<ul>
+        <li>
+            <a href="#aba_planejamento">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PLANEJAMENTO')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#aba_produto_profissional">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PRODUTO_PROFISSIONAL')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#aba_grafico_gantt">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_GRAFICO_GANTT')) ?></span>
+            </a>
+        </li>
+    </ul>
+    <div id="aba_planejamento">
+    	<?php echo $this->render('planejamento/index.phtml') ?>
+    </div>
+    <div id="aba_produto_profissional">
+        <div class="divTab">
+            <?php echo $this->render('planejamento/produto-profissional.phtml') ?>
+        </div>
+    </div>
+    <div id="aba_grafico_gantt">
+    	<?php echo $this->render('planejamento/grafico-gantt-chart.phtml') ?>
+    </div>
+</div>

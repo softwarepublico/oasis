@@ -1,0 +1,18 @@
+<div id="formBaseConhecimento" style="overflow:hidden;">
+		<?php 
+			echo $this->formHidden('cd_base_conhecimento');
+		?>
+		<label class="float-l span-4 clear-l right required" for="cd_area_conhecimento"><?php echo $this->escape($this->translate('L_VIEW_AREA_CONHECIMENTO')) ?>:</label>
+			<?php echo $this->formSelect('cd_area_conhecimento', '', array('class'=>'float-l'),$this->arrAreaConhecimento) ?>
+
+		<label class="float-l span-4 clear-l right required" for="tx_assunto"><?php echo $this->escape($this->translate('L_VIEW_ASSUNTO')) ?>:</label>
+			<?php echo $this->formText('tx_assunto', '', array('class'=>'float-l span-15','maxlength'=>'50')) ?>
+
+		<label class="float-l span-4 clear-l right required" for="tx_problema" editor="editor"><?php echo $this->escape($this->translate('L_VIEW_PROBLEMA')) ?>:</label>
+       	     <?php echo $this->editorHtml('tx_problema', '', array('class'=>'float-l', 'cols'=>'71', 'rows'=>'8','editor'=>K_EDITOR)) ?>
+
+        <label id="label_tx_solucao" class="float-l span-4 clear-l right" for="tx_solucao" editor="editor"><?php echo $this->escape($this->translate('L_VIEW_SOLUCAO')) ?>:</label>
+       	     <?php echo $this->editorHtml('tx_solucao', '', array('class'=>'float-l', 'cols'=>'71', 'rows'=>'8','editor'=>K_EDITOR)) ?>
+
+		<?php echo $this->formButton('btn_salvar_conhecimento',$this->escape($this->translate('L_BTN_SALVAR')),array('class'=>'verde float-l span-2 clear-l push-17')) ?>
+</div>

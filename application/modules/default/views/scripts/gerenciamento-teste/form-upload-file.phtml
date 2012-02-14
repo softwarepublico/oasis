@@ -1,0 +1,41 @@
+<div class="boxTab">
+<?php
+    if($this->params['st_obrigatorio']=='S'):
+?>
+<img src="<?php echo $this->baseUrl(); ?>/public/img/u42.png" title="<?php echo $this->escape($this->translate('L_MSG_ALERT_ITEM_TESTE_OBRIGATORIO')) ?>" />
+<?php
+    endif;
+    if( (int)$this->params['qtd_arquivo']>0 ):
+        $testoAnexo = $this->escape(Base_Util::getTranslator('L_MSG_ALERT_ITEM_TESTE_COM_XX_ANEXO', $this->params['qtd_arquivo']));
+?>
+<img src="<?php echo $this->baseUrl(); ?>/public/img/anexo.png" title="<?php echo $testoAnexo; ?>" />
+<?php
+        echo "({$this->params['qtd_arquivo']})<br />";
+    elseif($this->params['st_obrigatorio']=='S'):
+        echo "<br />";
+    endif;
+?>
+<p class="bold"><?php echo $this->params['ni_ordem_item_teste'].' - '.$this->params['tx_item_teste']; ?></p>
+</div>
+<br />
+<label class="span-3 float-l clear-l right bold required" for="cd_tipo_documentacao__form_upload_file" ><?php echo $this->escape($this->translate('L_VIEW_TIPO_ARQUIVO')) ?></label>
+<?php
+    echo $this->formSelect('cd_tipo_documentacao__form_upload_file', null, array('class' => 'float-l'), $this->tipoDocumentacaoCombo);
+ ?>
+<label class="span-3 float-l clear-l right bold required" for="tx_arquivo_form_upload_file"><?php echo $this->escape($this->translate('L_VIEW_ARQUIVO')) ?></label>
+<?php
+    $inputs = '#cd_tipo_documentacao__form_upload_file';
+    foreach($this->params as $name=>$value){
+        if($name=="textAreaPreenchido"){
+            $value = str_ireplace("\n","%0A",$value); // para corrigir o problema da quebra de linha...
+        }
+        $inputs .= ",#{$name}__form_upload_file";
+        echo $this->formHidden("{$name}__form_upload_file",($value=="null")?'':$value);
+    }
+    echo $this->formFile("tx_arquivo_form_upload_file",array('class'=>'float-l','size'=> '50'));
+?>
+<div id="divDebug" class="clear float-r hide bold corner-all border-all" ></div>
+<script>
+    var inptusUploadValue = '<?php echo $inputs; ?>';
+    var abaSuccessUpload  = '<?php echo $this->params['aba']; ?>';
+</script>

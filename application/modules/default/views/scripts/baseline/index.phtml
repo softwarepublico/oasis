@@ -1,0 +1,10 @@
+<?php
+    $this->script('scriptFile',array('/baseline/index.js'));
+?>
+<div class="clear boxTab">
+    <button id="btn_gerar_baseline" class="azul float-r" style="margin-top: 2px;"><?php echo $this->escape($this->translate('L_BTN_NOVA_BASELINE')) ?></button>
+	<label class="bold span-2 float-l"><?php echo $this->translate('L_VIEW_PROJETO') ?>:</label>
+	<?php echo $this->formSelect('cmb_projeto_baseline','',array('class'=>'float-l'), $this->arrProjetosBaseline) ?>
+</div>
+
+<div id="gridBaseline" style="display: none;"></div>

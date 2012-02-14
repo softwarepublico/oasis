@@ -1,0 +1,20 @@
+<form id="form_cadastro_pergunta">
+    <?php echo $this->formHidden('cd_pergunta_pedido')?>
+
+    <label class="float-l span-3 right bold required" for="tx_titulo_pergunta"><?php echo $this->escape($this->translate('L_VIEW_PERGUNTA')) ?>:</label>
+    <?php echo $this->formText('tx_titulo_pergunta',null, array('class'=>'span-12 float-l','maxlength'=>'200')); ?>
+
+    <label class="float-l span-3 clear-l right bold required" for="tx_ajuda_pergunta"><?php echo $this->escape($this->translate('L_VIEW_TEXTO_APOIO')) ?>:</label>
+    <?php echo $this->formText('tx_ajuda_pergunta',null, array('class'=>'span-12 float-l')); ?>
+
+    <label class="float-l span-3 clear-l right bold required" for="st_obriga_resposta" ><?php echo $this->escape($this->translate('L_VIEW_OBRIGATORIA')) ?>:</label>
+    <?php echo $this->formSelect('st_obriga_resposta',null,array('class'=>'float-l span-3'), $this->arrOption)?>
+
+    <label class="float-l span-4 right bold required" for="st_multipla_resposta"><?php echo $this->escape($this->translate('L_VIEW_MULTIPLA_RESPOSTA')) ?>:</label>
+    <?php echo $this->formSelect('st_multipla_resposta',null,array('class'=>'float-l span-3'), $this->arrOption)?>
+
+    <?php echo $this->formButton('btn_salvar_pergunta',$this->escape($this->translate('L_BTN_SALVAR')),array('class'=>'float-l clear-l push-3 verde'));?>
+    <?php echo $this->formButton('btn_limpar_pergunta',$this->escape($this->translate('L_BTN_LIMPAR')),array('class'=>'float-l push-3 azul','type'=>'reset'));?>
+    <?php echo $this->formButton('btn_cancelar_pergunta',$this->escape($this->translate('L_BTN_CANCELAR')),array('class'=>'float-l push-3 vermelho'));?>
+
+</form>

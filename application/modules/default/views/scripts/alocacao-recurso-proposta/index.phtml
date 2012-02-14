@@ -1,0 +1,139 @@
+<?php
+    $this->script('grid');
+    $this->script('numero');
+    $this->script('scriptFile',array('/alocacao-recurso-proposta/index.js'));
+?>
+<script type="text/javascript" defer="defer">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableDadosGerais").tablesorter({widthFixed: true, widgets: ['zebra']});
+    
+    $("#tableProjetosPrevistos").tablesorter({widthFixed: true, widgets: ['zebra']});
+ 
+});
+</script>
+<form method="post" id="formAlocacaoRecursoProposta">
+
+<!-- Campos hidden do projeto e da proposta que está sendo analisada -->
+<input type="hidden" id="cd_projeto_alocacao_recurso_proposta" name="cd_projeto_alocacao_recurso_proposta" value="<?php echo $this->cd_projeto ?>" />
+<input type="hidden" id="cd_proposta_alocacao_recurso_proposta" name="cd_proposta_alocacao_recurso_proposta" value="<?php echo $this->cd_proposta ?>" />
+<input type="hidden" id="soma_horas" name="soma_horas" />  
+<input type="hidden" id="soma_horas_mp" name="soma_horas_mp" />
+<input type="hidden" id="cd_contrato" name="cd_contrato" value="<?php echo $this->cd_contrato ?>">
+<input type="hidden" id="nu_horas_proposta" name="nu_horas_proposta" value="<?php echo $this->ni_horas_proposta_final ?>">
+<input type="hidden" id="nu_horas_modulo_proposta" name="nu_horas_modulo_proposta" value="<?php echo $this->ni_horas_modulo_proposta_final ?>">
+<input type="hidden" id="flagModuloProposta" name="flagModuloProposta" value="<?php echo $this->flagModuloProposta ?>">
+<input type="hidden" id="soma_total_contrato" name="soma_total_contrato" value="<?php echo $this->soma_total ?>">
+<input type="hidden" id="st_parcela_orcamento" name="st_parcela_orcamento" value="<?php echo $this->st_parcela_orcamento ?>">
+<input type="hidden" id="nu_horas_alocado_contrato_atual" name="nu_horas_alocado_contrato_atual" value="<?php echo $this->nu_horas_alocado_contrato_atual ?>">
+
+<div style="background-color:#fbfbfb;">
+<div class="highlight" style="padding:5px">
+	<h2><?php echo $this->escape($this->translate('L_VIEW_ALOCACAO_RECURSO_PROPOSTA')) ?></h2>
+</div>
+<div style="padding-top:8px; padding-left:10px; padding-right:10px;">
+	<table id="tableDadosGerais" cellspacing="1" class="tablesorter">
+		<thead>
+		<tr>
+            <th class="{sorter: false}"><?php echo $this->escape($this->translate('L_VIEW_PROJETO' )) ?>: <?php echo $this->tx_sigla_projeto ?></th>
+            <th class="{sorter: false}"><?php echo $this->escape($this->translate('L_VIEW_PROPOSTA')) ?>: <?php echo $this->cd_proposta ?></th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td><?php echo Base_Util::getTranslator('L_VIEW_SIGLA_UNID_METRICA_PROPOSTA',$this->unidadePadraoMetrica)  ?>:</td>
+			<td><?php echo $this->ni_horas_proposta ?></td>
+		</tr>
+		<?php if ($this->cd_proposta == 1 && $this->st_parcela_orcamento == 'S' && is_null($this->arrProposta['st_contrato_anterior'])) {?>
+		<tr>
+			<td><?php echo Base_Util::getTranslator('L_VIEW_SIGLA_UNID_METRICA_MODULO_PROPOSTA',$this->unidadePadraoMetrica) ?>:</td>
+			<td><?php echo $this->ni_horas_modulo_proposta ?></td>
+		</tr>
+		<tr>
+			<td><?php echo Base_Util::getTranslator('L_VIEW_SIGLA_UNID_METRICA_MODULO_PROPOSTA',$this->unidadePadraoMetrica) ?>:</td>
+			<td><?php echo $this->horas_alocadas_modulo_proposta ?></td>
+		</tr>
+		<?php } ?>
+		<tr>
+			<td><?php echo Base_Util::getTranslator('L_VIEW_SIGLA_UNID_METRICA_A_ALOCAR_PERIODO_CONTRATO',$this->unidadePadraoMetrica) ?>:</td>
+			<td><?php echo $this->soma_total ?></td>
+		</tr>
+		<tr>
+			<td><?php echo Base_Util::getTranslator('L_VIEW_SIGLA_UNID_METRICA_ALOCADA_PROPOSTA',$this->unidadePadraoMetrica) ?>:</td>
+			<td><?php echo $this->horas_alocadas ?></td>
+		</tr>
+		<tr>
+			<td><?php echo Base_Util::getTranslator('L_VIEW_SIGLA_UNID_METRICA_ALOCADA_PERIODO_CONTRATO',$this->unidadePadraoMetrica) ?>:</td>
+			<td><?php echo $this->nu_horas_alocado_contrato_atual ?></td>
+		</tr>
+		<tr>
+			<td><?php echo Base_Util::getTranslator('L_VIEW_SIGLA_UNID_METRICA_DIFERENCA_A_ALOCADAR_PERIODO_CONTRATO',$this->unidadePadraoMetrica) ?>:</td>
+			<td style="color:red"><?php echo round(round($this->soma_total,1) - round($this->nu_horas_alocado_contrato_atual,1),1) ?></td>
+		</tr>
+		<?php if ($this->st_parcela_orcamento == 'S' && is_null($this->arrProposta['st_contrato_anterior'])) { ?>
+		<tr>
+			<td><?php echo Base_Util::getTranslator('L_VIEW_SIGLA_UNID_METRICA_DIFERENCA_A_ALOCADAR_MODULO_PROPOSTA',$this->unidadePadraoMetrica) ?>:</td>
+			<td style="color:red"><?php echo round(round($this->ni_horas_modulo_proposta,1) - round($this->horas_alocadas_modulo_proposta,1),1) ?></td>
+		</tr>
+		<?php } else {?>
+		<tr>
+			<td><?php echo Base_Util::getTranslator('L_VIEW_SIGLA_UNID_METRICA_DIFERENCA_A_ALOCADAR_MODULO_PROPOSTA',$this->unidadePadraoMetrica) ?>:</td>
+			<td style="color:red">0</td>
+		</tr>
+		<?php } ?>
+		</tbody>
+	</table>
+	<hr />
+	<table id="tableProjetosPrevistos" cellspacing="1" class="tablesorter">
+		<thead>
+		<tr>
+            <th class="{sorter: false}"><?php echo $this->escape($this->translate('L_VIEW_GRID_LISTA')) ?></th>
+			<th class="{sorter: false}"><?php echo $this->unidadePadraoMetrica.' '.$this->escape($this->translate('L_VIEW_GRID_TOTAIS')); ?></th>
+			<th class="{sorter: false}"><?php echo $this->escape($this->translate('L_VIEW_GRID_CREDITOS')) ?></th>
+			<th class="{sorter: false}"><?php echo $this->escape($this->translate('L_VIEW_GRID_DEBITOS')) ?></th>
+			<th class="{sorter: false}"><?php echo $this->escape($this->translate('L_VIEW_GRID_SALDO')) ?></th>
+			<th class="{sorter: false}"><?php echo $this->unidadePadraoMetrica.' '.$this->escape($this->translate('L_VIEW_GRID_ALOCACAO')); ?></th>
+			<th class="{sorter: false}"><?php echo $this->unidadePadraoMetrica.''.$this->escape($this->translate('L_VIEW_GRID_MODULO_PROPOSTA')); ?></th>
+		</tr>
+		<tr>
+			<th colspan="5" class="{sorter: false}">&nbsp;</th>
+			<th class="center; {sorter: false}" style="color:red"><?php echo round(round($this->soma_total,1) - round($this->nu_horas_alocado_contrato_atual,1),1) ?></th>
+			<?php if ($this->st_parcela_orcamento == 'S' && is_null($this->arrProposta['st_contrato_anterior'])) {?>
+			<th class="{sorter: false};center;" style="color:red"><?php echo round(round($this->ni_horas_modulo_proposta,1) - round($this->horas_alocadas_modulo_proposta,1),1) ?></th>
+			<?php } else {?>
+			<th class="center; {sorter: false}" style="color:red">0</th>
+			<?php } ?>
+		</tr>
+		</thead>
+		<tbody>
+		<?php
+		foreach ($this->arrProjeto as $projeto): ?>
+		<tr>
+			<td style="padding-left:10px;"><?php echo $projeto->tx_projeto_previsto ?></td>
+			<td><?php echo $projeto->ni_horas_projeto_previsto ?></td>
+			<td><?php echo $this->arrHorasProjetoPrevisto[$projeto->cd_projeto_previsto]['credito']  ?></td>
+			<td><?php echo $this->arrHorasProjetoPrevisto[$projeto->cd_projeto_previsto]['debito']  ?></td>
+			<td>
+				<?php echo $this->arrHorasProjetoPrevisto[$projeto->cd_projeto_previsto]['total']  ?>
+				<input type="hidden" name="saldo[<?php echo $projeto->cd_projeto_previsto ?>]" value="<?php echo $this->arrHorasProjetoPrevisto[$projeto->cd_projeto_previsto]['total'] ?>">
+			</td>
+			<td>
+				<input type="text" name="cd_projeto_previsto[<?php echo $projeto->cd_projeto_previsto ?>]" id="cd_projeto_previsto[<?php echo $projeto->cd_projeto_previsto ?>]" size="15" maxlength="10" value="" onkeypress="return soNumerosComNegativoComPonto(event)">
+			</td>
+			<td>
+				<input type="text" name="modulo_proposta[<?php echo $projeto->cd_projeto_previsto ?>]" id="modulo_proposta[<?php echo $projeto->cd_projeto_previsto ?>]" size="10" maxlength="5" value="" onkeypress="return soNumerosComNegativoComPonto(event)">
+			</td>
+		</tr>
+		<?php endforeach; ?>
+		</tbody>
+	</table>
+</div>
+
+<hr />
+<div class="gradient-b" style="margin-top:5px;">
+	<?php echo $this->formButton('bt_cancelar_alocacao_recurso_proposta', mb_strtoupper($this->escape($this->translate('L_BTN_CANCELAR')), 'utf-8'), array('class' => 'float-l vermelho'), null);?>
+	<?php echo $this->formButton('bt_abrir_proposta_alocacao_recurso_proposta', mb_strtoupper($this->escape($this->translate('L_BTN_ABRIR_PROPOSTA')), 'utf-8'), array('class' => 'float-l azul', "onClick" => 'abreModalAlteracaoPropostaAlocacao()'), null);?>
+	<?php echo $this->formButton('bt_salvar_alocacao_recurso_proposta', mb_strtoupper($this->escape($this->translate('L_BTN_SALVAR')), 'utf-8'), array('class' => 'float-r verde'), null);?>
+</div>
+</div>
+</form>

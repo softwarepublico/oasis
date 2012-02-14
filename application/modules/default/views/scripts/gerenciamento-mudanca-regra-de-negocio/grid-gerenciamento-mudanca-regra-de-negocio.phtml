@@ -1,0 +1,75 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableGerenciamentoMudancaRegraDeNegocio").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableGerenciamentoMudancaRegraDeNegocio").tablesorterPager({container: $("#tableGerenciamentoMudancaRegraDeNegocioPager")}); 
+});
+</script>
+<table id="tableGerenciamentoMudancaRegraDeNegocio" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_PROJETO'  )) ?></th>
+			<th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_REGRA_DE_NEGOCIO')) ?></th>
+			<th class="span-1"><?php echo $this->escape($this->translate('L_VIEW_GRID_VERSAO'   )) ?></th>
+			<th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_SITUACAO' )) ?></th>
+			<th class="span-4"><?php echo $this->escape($this->translate('L_VIEW_GRID_ACAO'     )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+		
+			$fimProj = "";
+			if(strlen($res['tx_sigla_projeto']) >= 18){
+				$fimProj = "...";
+			}
+			$tx_sigla_projeto = substr($res['tx_sigla_projeto'],0,18).$fimProj; 
+
+			$fimReg = "";
+			if(strlen($res['tx_regra_negocio']) >= 33){
+				$fimReg = "...";
+			}
+			$tx_regra_negocio = substr($res['tx_regra_negocio'],0,33).$fimReg; 
+	?>
+		<tr>
+			<td title="<?php echo $res['tx_sigla_projeto']; 				?>"><?php echo $tx_sigla_projeto;				?></td>
+			<td title="<?php echo $res['tx_regra_negocio']; 				?>"><?php echo $tx_regra_negocio;		  		?></td>
+			<td title="<?php echo "Versão ".$res['ni_versao_regra_negocio'];?>"><?php echo $res['ni_versao_regra_negocio'];	?></td>
+			<td title="<?php echo $res['st_decisao_mudanca_desc']; 			?>"><?php echo $res['st_decisao_mudanca_desc'];	?></td>
+			<td style="text-align: center;">
+				<?php
+					if( empty($res['st_decisao_mudanca'] )){
+						$clickAnalise  = "cadastrarDecisaoMudancaRegraDeNegocio({$res['cd_projeto']},{$res['cd_item_controle_baseline']},'{$res['dt_gerencia_mudanca']}',{$res['cd_item_controlado']},'{$res['dt_versao_item_controlado']}','{$res['tx_sigla_projeto']}','{$res['tx_regra_negocio']}')";
+						echo $this->formButton('btn_analisar_pedido_mudanca_regra_de_negocio',$this->escape($this->translate('L_BTN_ANALISAR_PEDIDO')),array('class'=>'azul','onclick'=>"{$clickAnalise}"));
+
+					}else if( $res['st_decisao_mudanca'] === "S" && $res['st_execucao_mudanca'] == '' ){
+						$clickAbrirRegra  = "geraNovaVersaoRegraDeNegocio({$res['cd_projeto']},{$res['cd_item_controle_baseline']},'{$res['dt_gerencia_mudanca']}',{$res['cd_item_controlado']},'{$res['dt_versao_item_controlado']}');";
+						echo $this->formButton('btn_abrir_regra_mudanca_regra_de_negocio',$this->escape($this->translate('L_BTN_ABRIR_REGRA_DE_NEGOCIO')),array('class'=>'azul','onclick'=>"{$clickAbrirRegra}"));
+					}
+				?>
+			</td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo "<tr><td colspan='5' style='text-align: center;'>".$this->escape($this->translate('L_VIEW_SEM_REGISTRO'))."</td></tr>";
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableGerenciamentoMudancaRegraDeNegocioPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

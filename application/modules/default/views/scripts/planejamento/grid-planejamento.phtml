@@ -1,0 +1,74 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tablePlanejamento").tablesorter({
+                            widthFixed: true, 
+                            widgets: ['zebra'],
+    						headers:{
+    							0:{sorter: false},
+    							1:{sorter: false},
+    							2:{sorter: false},
+    							3:{sorter: false},
+    							4:{sorter: false},
+    							5:{sorter: false}
+    						}
+                        }); 
+});
+</script>
+<table id="tablePlanejamento" cellspacing="1" class="tablesorter" style="border-collapse: collapse; border: 1px solid #54BDCD; width:810px;">
+	<thead>
+		<tr>
+            <th class="span-6"><?php echo $this->escape($this->translate('L_VIEW_GRID_ETAPA'                )) ?></th>
+			<th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_DATA_INICIO'          )) ?></th>
+			<th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_DATA_TERMINO'         )) ?></th>
+			<th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_PORCENTAGEM_EXECUCAO' )) ?></th>
+			<th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_OBSERVACAO'           )) ?></th>
+			
+		</tr>
+		<tr>
+			<th class="span-6 center"><?php echo $this->escape($this->translate('L_VIEW_GRID_ATIVIDADES')) ?></th>
+			<th colspan="4"></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if(count($this->arrEtapa) > 0 && (count($this->arrAtividade) > 0)){
+		foreach ($this->arrEtapa as $etapa):
+	?>
+		<tr><td colspan="6" class="bold"> <?php echo $etapa['tx_etapa'] ?></td></tr>
+	<?php
+		foreach ($this->arrAtividade[$etapa['cd_etapa']] as $atividade):
+		$porcentagem     = "porcentagem_{$etapa['cd_etapa']}_{$atividade['cd_atividade']}";
+		$dtInicial       = "dtInicio_{$etapa['cd_etapa']}_{$atividade['cd_atividade']}";
+		$dtTermino       = "dtTermino_{$etapa['cd_etapa']}_{$atividade['cd_atividade']}";
+		$obs             = "obsAtividade_{$etapa['cd_etapa']}_{$atividade['cd_atividade']}";
+	?>
+		<tr>
+			<td> <?php echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$atividade['tx_atividade'] ?></td>
+			<!-- 
+			 <td> 
+				<input id="<?php echo $dtInicial ?>" class="float-l span-3" type="text" value="" name="<?php echo $dtInicial ?>"/>
+				<img id="<?php echo $dtInicial ?>" class="calendario float-l" style="margin-top: 0px;" alt="calendario" src="<?php echo $this->baseUrl();?>/public/img/calendario.gif"/>
+			</td>
+			<td> 
+				<input id="<?php echo $dtTermino ?>" class="float-l span-3" type="text" value="" name="<?php echo $dtTermino ?>"/>
+				<img id="<?php echo $dtTermino ?>" class="calendario float-l" style="margin-top: 0px;" alt="calendario" src="<?php echo $this->baseUrl();?>/public/img/calendario.gif"/>
+			</td>
+			 -->
+			 <td class="span-4"><?php echo $this->data($dtInicial,$atividade['dt_inicio_atividade'],array('class'=>'float-l span-2')) ?></td>
+			 <td class="span-4"><?php echo $this->data($dtTermino,$atividade['dt_fim_atividade'],array('class'=>'float-l span-2')) ?></td>
+			 <td><input type="text" id="<?php echo $porcentagem ?>" name="<?php echo $porcentagem ?>" value="<?php echo $atividade['nf_porcentagem_execucao'] ?>" class="float-l span-1" onKeyPress="return soNumeros(event)" /></td>
+			 <td><?php echo $this->formTextarea($obs,$atividade['tx_obs_atividade'],array('class'=>'float-l span-4 height-2')) ?></td>
+		</tr>
+	<?php
+			endforeach;
+		endforeach;
+	} else {
+		echo " <tr>
+					<td colspan='5' class='center'>".$this->escape($this->translate('L_VIEW_SEM_REGISTRO'))."</td>
+			  </tr>";
+	}
+	?>
+	</tbody>
+</table>
+<?php echo $this->formButton('btn_salvar_planejamento', $this->escape($this->translate('L_BTN_SALVAR')), array('class'=>'float-r clear-l verde','onclick'=>'salvaPlanejamento()')); ?>

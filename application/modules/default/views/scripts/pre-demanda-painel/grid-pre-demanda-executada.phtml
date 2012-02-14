@@ -1,0 +1,70 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tablePreDemandaExecutada").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tablePreDemandaExecutada").tablesorterPager({container: $("#pager_pre_demanda_executada")}); 
+});
+</script>
+<?php  echo $this->formHidden('mesAnoPreDemandaExecutada',$this->mesAno) ?>
+<table id="tablePreDemandaExecutada" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th><?php echo $this->escape($this->translate('L_VIEW_GRID_DATA_HORA'      )) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_SOLICITANTE'    )) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_OBJETO_EXECUTOR')) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_SOLICITACAO'    )) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_SITUACAO'       )) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_ACAO'           )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+	?>
+		<tr>
+			<td><a href="<?php echo $this->baseUrl()?>/pre-demanda-painel/pre-demanda-detalhes/cd_pre_demanda/<?php echo $res['cd_pre_demanda']?>/abaOrigem/pre-demanda-executada"><?php echo date('d/m/Y H:i:s', strtotime($res['dt_pre_demanda'])); ?></a></td>
+			<td><?php echo $res['tx_profissional'] ?></td>
+			<td><?php echo $res['tx_objeto'] ?></td>
+			<td><?php echo $res['ni_solicitacao']."/".$res['ni_ano_solicitacao'] ?></td>
+			<td><?php echo $res['situacao'] ?></td>
+			<td class="center">
+				<?php 
+					//se a pre-demanda ainda não foi dado aceite
+					if (is_null($res['st_aceite_pre_demanda'])): ?>
+						<button class="verde" onClick="registrarAceitePreDemanda('<?php echo $res['cd_pre_demanda']?>')" id="button_aceite_<?php echo $res['cd_pre_demanda']?>">
+                            <?php echo $this->escape($this->translate('L_BTN_ACEITAR_PRE_DEMANDA')) ?>
+                        </button>
+			  <?php endif; ?>
+			</td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo "  <tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr> ";
+	}
+	?>
+	</tbody>
+</table>
+<div id="pager_pre_demanda_executada" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

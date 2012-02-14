@@ -1,0 +1,70 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableInteracao").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableInteracao").tablesorterPager({container: $("#tableInteracaoPager"), size:05});
+});
+</script>
+<?php echo $this->formHidden('st_fechamento_caso_de_uso_hidden',(count($this->res) > 0)?$this->res[0]['st_fechamento_caso_de_uso']:""); ?>
+<table id="tableInteracao" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+			<th class="{sorter:false} span-1">&nbsp;</th>
+            <th class="span-1"><?php echo $this->escape($this->translate('L_VIEW_GRID_ORDEM')) ?>:</th>
+			<th class="span-4"><?php echo $this->escape($this->translate('L_VIEW_GRID_AGENTE')) ?>:</th>
+			<th class="span-4"><?php echo $this->escape($this->translate('L_VIEW_GRID_INTERACAO')) ?>:</th>
+		</tr>
+  </thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+	?>
+		<tr>
+			<td>
+				<?php if(is_null($res['st_fechamento_caso_de_uso'])): ?>
+					<img id="imgExcluir"
+                         height="13"
+                         width="13"
+                         style="cursor:pointer;"
+                         onclick="excluirInteracao('<?php echo $res['cd_interacao'] ?>','<?php echo $res['dt_versao_caso_de_uso'] ?>');"
+                         src="<?php echo $this->baseUrl()?>/public/img/del.png"
+                         alt="<?php echo $this->escape($this->translate('L_BTN_EXCLUIR')) ?>"/>
+				<?php endif; ?>
+            </td>
+			<td style="cursor:pointer;" onclick="ajaxRecuperaInteracao(<?php echo $res['cd_interacao'] ?>,'<?php echo $res['dt_versao_caso_de_uso'] ?>','<?php echo $res['st_fechamento_caso_de_uso'] ?>')">
+				<?php echo $res['ni_ordem_interacao'] ?>
+			</td>
+			<td style="cursor:pointer;" onclick="ajaxRecuperaInteracao(<?php echo $res['cd_interacao'] ?>,'<?php echo $res['dt_versao_caso_de_uso'] ?>','<?php echo $res['st_fechamento_caso_de_uso'] ?>')">
+				<?php echo $res['desc_interacao'] ?>
+			</td>
+			<td style="cursor:pointer;" onclick="ajaxRecuperaInteracao(<?php echo $res['cd_interacao'] ?>,'<?php echo $res['dt_versao_caso_de_uso'] ?>','<?php echo $res['st_fechamento_caso_de_uso'] ?>' )">
+				<?php echo $res['tx_interacao'] ?>
+			</td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo " <tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr> ";
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableInteracaoPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="05">05</option>
+			<option value="10">10</option>
+		</select>
+	</form>
+</div>

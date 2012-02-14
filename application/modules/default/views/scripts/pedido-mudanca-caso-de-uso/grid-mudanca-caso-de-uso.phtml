@@ -1,0 +1,69 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableMudancaCasoDeUso").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableMudancaCasoDeUso").tablesorterPager({container: $("#tableMudancaCasoDeUsoPager")}); 
+});
+</script>
+<table id="tableMudancaCasoDeUso" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th class="span-7"><?php echo $this->escape($this->translate('L_VIEW_GRID_CASO_DE_USO')) ?></th>
+			<th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_VERSAO'     )) ?></th>
+			<th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_SITUACAO'   )) ?></th>
+			<th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_ACAO'       )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+
+			$fim = "";
+			if(strlen($res['tx_caso_de_uso']) >= 75){
+				$fim = "...";
+			}
+			$tx_caso_de_uso = substr($res['tx_caso_de_uso'],0,75).$fim; 
+	?>
+		<tr>
+			<td ><?php echo $tx_caso_de_uso;				?></td>
+			<td ><?php echo $res['ni_versao_caso_de_uso'];	?></td>
+			<td ><?php echo $res['st_fechamento_caso_de_uso_desc'];?></td>
+			<td style="text-align: center;">
+				<?php
+					if( $res['st_fechamento_caso_de_uso_desc'] === 'Fechado'):
+						if (array_key_exists('possui_pedido', $res) && ($res["possui_pedido"] == "S")) :
+							echo $this->escape($this->translate('L_VIEW_PEDIDO_MUDANCA_SOLICITADO'));
+						else:
+							$click = "cadastrarMudancaCasoDeUso( '{$tx_caso_de_uso}', {$res['cd_caso_de_uso']}, '{$res['dt_versao_caso_de_uso']}')";
+							echo $this->formButton('btn_pedir_mudanca_caso_de_uso',$this->escape($this->translate('L_BTN_PEDIR_MUDANCA')),array('class'=>'verde','onclick'=>"{$click}"));
+						endif;
+					endif;
+				?>
+			</td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo " <tr>
+				<td colspan='4' style='text-align: center;'>".$this->escape($this->translate('L_VIEW_SEM_REGISTRO'))."</td>
+			  </tr>";
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableMudancaCasoDeUsoPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

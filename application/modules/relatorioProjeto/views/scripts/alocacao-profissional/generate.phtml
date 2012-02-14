@@ -1,0 +1,71 @@
+<?php
+//criando o objeto
+$objPdf = new Base_Tcpdf_Pdf();
+
+$arrKeywords = array(K_CREATOR_SYSTEM,
+                             Base_Util::getTranslator('L_TIT_REL_ALOCACAO_PROFISSIONAL'),
+                             Base_Util::getTranslator('L_VIEW_ALOCACAO'),
+                             Base_Util::getTranslator('L_VIEW_PROJETO'),
+                             Base_Util::getTranslator('L_VIEW_PROFISSIONAL'),
+                             Base_Util::getTranslator('L_VIEW_RELATORIO')
+                            );
+
+$objPdf->iniciaRelatorio(Base_Util::getTranslator('L_VIEW_RELATORIO').' '.$this->desc_relatorio, $arrKeywords);
+
+$objPdf->SetDisplayMode("real");
+// add a page
+$objPdf->AddPage();
+
+if($this->tipo_relatorio == 1){
+	relProjetoPorProfissional($this->arrProfissional,$objPdf);
+} else {
+	relProfissionalPorProjeto($this->arrProfissional,$objPdf);
+}
+
+
+
+//Close and output PDF document
+$objPdf->Output('relatorio_projeto_alocacao.pdf', 'I');
+
+function relProjetoPorProfissional($arrProfissional,$objPdf)
+{
+	$cd_projeto_aux      = 0;
+	foreach($arrProfissional as $key=>$value){
+		$objPdf->SetFont('', '',8);
+		if($cd_projeto_aux != $value['cd_projeto']){
+			$objPdf->Ln(4);
+			$objPdf->SetFont('', 'B',8);
+			$objPdf->Cell(PDF_MARGIN_LEFT, 6, $value['tx_sigla_projeto']."  -  ".$value['tx_projeto'], '', 0, 'L');
+			$objPdf->Ln(4);
+			$objPdf->SetFont('', '',8);
+			$objPdf->Cell(PDF_MARGIN_LEFT, 6, "    - ".$value['tx_profissional'].PHP_EOL, '', 0, 'L');
+			$objPdf->Ln(4);
+		} else {
+			$objPdf->Cell(PDF_MARGIN_LEFT, 6, "    - ".$value['tx_profissional'], '', 0, 'L');
+			$objPdf->Ln(4);
+		}
+		$cd_projeto_aux = $value['cd_projeto'];		
+	}
+}
+
+function relProfissionalPorProjeto($arrProfissional,$objPdf)
+{
+	$cd_profissional_aux = 0;
+	foreach($arrProfissional as $key=>$value){
+		$objPdf->SetFont('', '',8);
+		if($cd_profissional_aux != $value['cd_profissional']){
+			$objPdf->Ln(4);
+			$objPdf->SetFont('', 'B',8);
+			$objPdf->Cell(PDF_MARGIN_LEFT, 6, $value['tx_profissional'], '', 0, 'L');
+			$objPdf->Ln(4);
+			$objPdf->SetFont('', '',8);
+			$objPdf->Cell(PDF_MARGIN_LEFT, 6, "    - ".$value['tx_sigla_projeto']."  -  ".$value['tx_projeto'].PHP_EOL, '', 0, 'L');
+			$objPdf->Ln(4);
+		} else {
+			$objPdf->Cell(PDF_MARGIN_LEFT, 6, "    - ".$value['tx_sigla_projeto']."  -  ".$value['tx_projeto'], '', 0, 'L');
+			$objPdf->Ln(4);
+		}
+		$cd_profissional_aux = $value['cd_profissional'];		
+	}
+}
+?>

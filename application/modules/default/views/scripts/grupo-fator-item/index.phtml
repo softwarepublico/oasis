@@ -1,0 +1,18 @@
+<?php $this->script('grid'); ?>
+<div style="overflow:hidden;" id="grupo_fator_item">
+	<?php echo $this->formHidden('cd_item_grupo_fator') ?>
+    <label class="float-l span-3 right required"><?php echo $this->escape($this->translate('L_VIEW_GRUPO_FATOR')) ?>:</label>
+		<span class="float-l"><?php echo $this->formSelect('cd_grupo_fator_combo') ?></span>
+
+	<label class="float-l span-3 clear-l right required"><?php echo $this->escape($this->translate('L_VIEW_ITEM')) ?>:</label>
+		<span class="float-l"><?php echo $this->formText('tx_item_grupo_fator','',array('class'=>'span-10')) ?></span>
+
+	<label class="float-l span-3 clear-l right required"><?php echo $this->escape($this->translate('L_VIEW_NR_ORDEM')) ?>:</label>
+		<span class="float-l"><?php echo $this->soNumero('ni_ordem_item_grupo_fator', null, array('class'=>'span-3')) ?></span>
+
+	<button class="verde float-l clear-l push-3" id="salvarGrupoFatorItem"   name="salvarGrupoFatorItem"><?php echo $this->escape($this->translate('L_BTN_SALVAR')) ?></button>
+    <button class="verde float-l clear-l push-3" id="alterarGrupoFatorItem"  name="alterarGrupoFatorItem"><?php echo $this->escape($this->translate('L_BTN_ALTERAR')) ?></button>
+    <button class="vermelho float-l push-3" 	 id="cancelarGrupoFatorItem" name="cancelarGrupoFatorItem"><?php echo $this->escape($this->translate('L_BTN_CANCELAR')) ?></button>
+
+    <div class="float-l clear-l span-18 push-1"  id="gridGrupoFatorItem"></div>
+</div>

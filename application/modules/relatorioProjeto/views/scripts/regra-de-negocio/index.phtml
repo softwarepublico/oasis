@@ -1,0 +1,27 @@
+<?php 
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/regra-de-negocio/index.js'));
+?>
+<form id="formRelatorioProjetoRegraDeNegocio">
+
+	<label class="span-4 right float-l required" for="cd_contrato"><?php echo $this->translate('L_VIEW_CONTRATO') ?>:</label>
+		<?php echo $this->formSelect('cd_contrato',null,array('class'=>'float-l'),$this->arrContrato); ?>
+	
+    <label class="span-4 float-l clear-l right required" for="cd_projeto"><?php echo $this->translate('L_VIEW_PROJETO') ?>:</label>
+    	<?php echo $this->formSelect("cd_projeto",null,array('class'=>'float-l'), array(0=>Base_Util::getTranslator('L_VIEW_COMBO_SELECIONE'))); ?>
+    	
+    <label class="span-4 float-l clear-l right "><?php echo $this->translate('L_VIEW_REGRA_DE_NEGOCIO') ?>:</label>
+    
+    <input type="radio" class="float-l" name="tipo_relatorio" id="regras_todas" value="T" checked="checked"/>
+    <label class="bold span-7 float-l" for="regras_todas"><?php echo $this->translate('L_VIEW_ABERTOS_FECHADOS') ?> <i>(<?php echo $this->translate('L_VIEW_SEM_BASELINE') ?>)</i></label>
+
+	<label class="clear-l float-l span-4">&nbsp;</label>
+    <input type="radio" class="float-l " name="tipo_relatorio" id="regras_fechadas" value="F" />
+    <label class="bold span-3 float-l" for="regras_fechadas"><?php echo $this->translate('L_VIEW_FECHADAS') ?></label>
+
+	<label class="clear-l float-l span-4">&nbsp;</label>
+    <input type="radio" class="float-l " name="tipo_relatorio" id="regras_baseline" value="B" />
+    <label class="bold span-3 float-l" for="regras_baseline"><?php echo $this->translate('L_VIEW_BASELINE') ?></label>
+
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->translate('L_BTN_GERAR') ?></button>
+</form>

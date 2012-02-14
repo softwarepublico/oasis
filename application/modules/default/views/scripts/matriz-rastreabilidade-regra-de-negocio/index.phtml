@@ -1,0 +1,25 @@
+<?php
+    $this->script('scriptFile',array('/matriz-rastreabilidade-regra-de-negocio/index.js'));
+?>
+<form id="form_matriz_regra_de_negocio" class="divTab">
+	<?php echo $this->formHidden('cd_analise_matriz_rastreabilidade_regra_de_negocio'); ?>
+	<?php echo $this->formHidden('dt_analise_matriz_rastreabilidade_regra_de_negocio'); ?>
+
+	<label class="span-2 right float-l required" for="cd_contrato_matriz_regra_de_negocio"><?php echo $this->escape($this->translate('L_VIEW_CONTRATO')) ?>:</label>
+		<?php echo $this->formSelect('cd_contrato_matriz_regra_de_negocio',null,array('class'=>'float-l'),$this->arrContrato); ?>
+
+    <label class="span-2 right float-l clear-l required" for="cd_projeto_matriz_regra_de_negocio" ><?php echo $this->escape($this->translate('L_VIEW_PROJETO')) ?>:</label>
+    	<?php echo $this->formSelect("cd_projeto_matriz_regra_de_negocio", null, array('class'=>'float-l', 'style'=>'padding-left: 5px;'), array(0=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE')))); ?>
+
+	<div id="matriz_regra_de_negocio" style="padding: 5px; overflow: auto; margin-top: 20px; height: 350px; display:none;" class="span-18 push-2 float-l clear-l"></div>
+
+	<div id="div_analise_rastreabilidade_regra_de_negocio" class="float-l clear-l" style="display: none;">
+        <label class="span-2 right float-l required" for="tx_analise_matriz_rastreabilidade_regra_de_negocio" ><?php echo $this->escape($this->translate('L_VIEW_ANALISE')) ?>:</label>
+	    <?php echo $this->formTextarea("tx_analise_matriz_rastreabilidade_regra_de_negocio", null, array('class'=>'float-l span-15', 'style'=>'height: 80px;' )); ?>
+
+		<?php echo $this->formButton('btn_salvar_analise_matriz_rastreabilidade_regra_de_negocio', $this->escape($this->translate('L_BTN_SALVAR')), array('class'=>'verde float-l clear-l push-2'));?>
+		<?php echo $this->formButton('btn_fechar_analise_matriz_rastreabilidade_regra_de_negocio', $this->escape($this->translate('L_BTN_FECHAR_ANALISE')), array('class'=>'azul float-l push-2', 'style'=>'display: none;'));?>
+		<?php echo $this->formButton('btn_imprimir_analise_matriz_rastreabilidade_regra_de_negocio',$this->escape($this->translate('L_BTN_GERAR_RELATORIO')), array('class'=>'verde float-l push-2'));?>
+	</div>
+
+</form>

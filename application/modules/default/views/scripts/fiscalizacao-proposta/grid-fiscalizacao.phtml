@@ -1,0 +1,199 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableFiscalizacaoProposta").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableFiscalizacaoProposta").tablesorterPager({container: $("#tableFiscalizacaoPropostaPager")});
+});
+
+</script>
+<div style="margin-top: 10;">
+    <a href="#" onclick="window.open('<?php echo $this->baseUrl();?>/relatorioProjeto/checklist-proposta/generate/mes/<?php echo $this->mes_execucao ?>/ano/<?php echo $this->ano_execucao ?>/cd_contrato/<?php echo $this->cd_contrato ?>')"><?php echo $this->escape($this->translate('L_VIEW_CHECKLIST_PROPOSTA_MES')) ?></a>
+	<hr />
+	<a href="#" onclick="window.open('<?php echo $this->baseUrl();?>/relatorioProjeto/checklist-parcela/generate/mes/<?php echo $this->mes_execucao ?>/ano/<?php echo $this->ano_execucao ?>/cd_contrato/<?php echo $this->cd_contrato ?>')"><?php echo $this->escape($this->translate('L_VIEW_CHECKLIST_PARCELA_MES')) ?></a>
+</div>
+
+<table id="tableFiscalizacaoProposta" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+			<th style="width:100px"><?php echo $this->escape($this->translate('L_VIEW_GRID_PROJETO_PROPOSTA')) ?></th>
+            <?php if($this->perfil != K_CODIGO_PERFIL_GERENTE_PROJETO): ?>
+                <th style="width:20px;">&nbsp;</th>
+            <?php endif; ?>
+
+            <th style="width:10px;"><?php echo $this->escape($this->translate('L_VIEW_GRID_MODELO_DADOS'    )) ?></th>
+			<th style="width:10px;"><?php echo $this->escape($this->translate('L_VIEW_GRID_WIREFRAME'       )) ?></th>
+			<th style="width:10px;"><?php echo $this->escape($this->translate('L_VIEW_GRID_CASO_DE_USO'     )) ?></th>
+			<th style="width:10px;"><?php echo $this->escape($this->translate('L_VIEW_GRID_DICIONARIO_DADOS')) ?></th>
+			<th style="width:10px;"><?php echo $this->escape($this->translate('L_VIEW_GRID_HISTORICO_GERAL' )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+
+	$cd_perfil = $_SESSION['oasis_logged'][0]['cd_perfil'];
+	$heightModal = 250;
+	if($cd_perfil == K_CODIGO_PERFIL_COORDENADOR){
+		$heightModal = 300;
+	}
+	
+	if($this->arrProjeto){
+		
+		$projetoAux = 0;
+		foreach($this->arrProjeto as $res):
+	?>
+		<tr>
+	<?php
+			if($res['cd_projeto'] != $projetoAux){
+	?>
+			<td style="width:100px; text-align:left;"><?php echo "<b><i>".$res['tx_sigla_projeto']."</i></b><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"window.open('{$this->baseUrl()}/relatorioProjeto/documento-proposta/documento-proposta/cd_projeto/{$res['cd_projeto']}/cd_proposta/{$res['cd_proposta_order']}/tipo_proposta/completa')\">".$res['proposta']."</a>" ?></td>
+			<?php if($this->perfil != K_CODIGO_PERFIL_GERENTE_PROJETO): ?>
+            <td style="width:30px; text-align:center;"><br />
+                <img id="imgIncluir"
+                     height="14"
+                     width="14"
+                     style="cursor:pointer;"
+                     title="<?php echo $this->escape($this->translate('L_VIEW_INCLUIR_ACOMPANHAMENTO')) ?>"
+                     onclick="abreModalFiscalizacao(<?php echo $res['cd_projeto'] ?>,<?php echo $res['cd_proposta_order'] ?>,<?php echo $heightModal ?>);"
+                     src="<?php echo $this->baseUrl()?>/public/img/cor_icon_responder.gif"
+                     alt="<?php echo $this->escape($this->translate('L_VIEW_INCLUIR_ACOMPANHAMENTO')) ?>"/>
+				&nbsp;
+				<img id="imgPrint"
+                     height="14"
+                     width="14"
+                     style="cursor:pointer;"
+                     title="<?php echo $this->escape($this->translate('L_VIEW_IMPRIMIR_ACOMPANHAMENTO')) ?>"
+                     onclick="abreRelatorioFiscalizacao(<?php echo $res['cd_projeto'] ?>,<?php echo $res['cd_proposta_order'] ?>,<?php echo $cd_perfil ?>)"
+                     src="<?php echo $this->baseUrl()?>/public/img/printer.ico"
+                     alt="<?php echo $this->escape($this->translate('L_VIEW_IMPRIMIR_ACOMPANHAMENTO')) ?>"/>
+			</td>
+            <?php endif; ?>
+			<td style="width:70px; text-align:center;">
+				<br />
+				<?php if(array_key_exists('dt_documentacao_modelo_de_dados',$res)){ ?>
+                    <a href="<?php echo $this->baseUrl();?>/fiscalizacao-proposta/download/data/<?php echo $res['dt_documentacao_modelo_de_dados'] ?>/projeto/<?php echo $res['cd_projeto'] ?>/tipo/<?php echo $res['cd_tipo_documentacao_modelo_de_dados'] ?>"><?php echo $this->escape($this->translate('L_VIEW_VER_ARQUIVO')) ?></a>
+				<?php } else { ?>
+					<img id="imgIncluir"
+                         height="14"
+                         width="14"
+                         src="<?php echo $this->baseUrl()?>/public/img/decline.ico"
+                         alt="<?php echo $this->escape($this->translate('L_VIEW_NAO_ACOMPANHAMENTO')) ?>"/>
+				<?php }  ?>
+			</td>
+			<td style="width:50px; text-align:center;">
+				<br />
+				<?php if(array_key_exists('dt_documentacao_wireframe',$res) ){ ?>
+					<a href="<?php echo $this->baseUrl();?>/fiscalizacao-proposta/download/data/<?php echo $res['dt_documentacao_wireframe'] ?>/projeto/<?php echo $res['cd_projeto'] ?>/tipo/<?php echo $res['cd_tipo_documentacao_wireframe'] ?>"><?php echo $this->escape($this->translate('L_VIEW_VER_ARQUIVO')) ?></a>
+				<?php } else { ?>
+					<img id="imgIncluir"
+                         height="14"
+                         width="14"
+                         src="<?php echo $this->baseUrl()?>/public/img/decline.ico"
+                         alt="<?php echo $this->escape($this->translate('L_VIEW_NAO_ACOMPANHAMENTO')) ?>"/>
+				<?php }  ?>
+			</td>
+			<td style="width:70px; text-align:center;"><br />
+				<a href="#" onclick="window.open('<?php echo $this->baseUrl();?>/relatorioProjeto/caso-de-uso/generate/cd_projeto/<?php echo $res['cd_projeto'] ?>/cd_modulo/todos')"><?php echo $this->escape($this->translate('L_VIEW_VER_CASO_DE_USO')) ?></a>
+			</td>
+			<td style="width:80px; text-align:center;">
+				<a href="#" onclick="window.open('<?php echo $this->baseUrl();?>/relatorioProjeto/dicionario-de-dados/dicionario-de-dados/cd_projeto/<?php echo $res['cd_projeto'] ?>')"><?php echo $this->escape($this->translate('L_VIEW_VER_DICIONARIO_DADOS')) ?></a>
+			</td>
+			<td style="width:90px; text-align:center;"><br />
+				<a href="#" onclick="window.open('<?php echo $this->baseUrl();?>/relatorioProjeto/historico-projeto/generate/cd_projeto/<?php echo $res['cd_projeto'] ?>/cd_proposta/<?php echo $res['cd_proposta_order'] ?>')"><?php echo $this->escape($this->translate('L_VIEW_VER_HISTORICO_GERAL')) ?></a>
+			</td>
+	<?php
+			} else {
+	?>
+			<td style="width:100px; text-align:left;"><?php echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$res['proposta'] ?></td>
+			<td style="width:30px; text-align:center;">
+				<img id="imgIncluir" 
+                     height="14"
+                     width="14"
+                     style="cursor:pointer;"
+                     onclick="abreModalFiscalizacao(<?php echo $res['cd_projeto'] ?>,<?php echo $res['cd_proposta_order'] ?>,<?php echo $heightModal ?>);"
+                     src="<?php echo $this->baseUrl()?>/public/img/cor_icon_responder.gif"
+                     alt="<?php echo $this->escape($this->translate('L_VIEW_INCLUIR_ACOMPANHAMENTO')) ?>"/>
+				&nbsp;
+				<img id="imgPrint" 
+                     height="14"
+                     width="14"
+                     style="cursor:pointer;"
+                     onclick="abreRelatorioFiscalizacao(<?php echo $res['cd_projeto'] ?>,<?php echo $res['cd_proposta_order'] ?>,<?php echo $cd_perfil ?>)"
+                     src="<?php echo $this->baseUrl()?>/public/img/printer.ico"
+                     alt="<?php echo $this->escape($this->translate('L_VIEW_IMPRIMIR_ACOMPANHAMENTO')) ?>"/>
+			</td>
+			<td style="width:70px; text-align:center;">
+				<?php if(array_key_exists('dt_documentacao_modelo_de_dados',$res) ){ ?>
+					<a href="<?php echo $this->baseUrl();?>/fiscalizacao-proposta/download/data/<?php echo $res['dt_documentacao_modelo_de_dados'] ?>/projeto/<?php echo $res['cd_projeto'] ?>/tipo/<?php echo $res['cd_tipo_documentacao_modelo_de_dados'] ?>"><?php echo $this->escape($this->translate('L_VIEW_VER_ARQUIVO')) ?></a>
+				<?php } else { ?>
+					<img id="imgIncluir"
+                         height="14"
+                         width="14"
+                         src="<?php echo $this->baseUrl()?>/public/img/decline.ico"
+                         alt="<?php echo $this->escape($this->translate('L_VIEW_NAO_ACOMPANHAMENTO')) ?>"/>
+				<?php }  ?>
+			</td>
+			<td style="width:50px; text-align:center;">
+				<?php if(array_key_exists('dt_documentacao_wireframe',$res) ){ ?>
+					<a href="<?php echo $this->baseUrl();?>/fiscalizacao-proposta/download/data/<?php echo $res['dt_documentacao_wireframe'] ?>/projeto/<?php echo $res['cd_projeto'] ?>/tipo/<?php echo $res['cd_tipo_documentacao_wireframe'] ?>"><?php echo $this->escape($this->translate('L_VIEW_VER_ARQUIVO')) ?></a>
+				<?php } else { ?>
+					<img id="imgIncluir"
+                         height="14"
+                         width="14"
+                         src="<?php echo $this->baseUrl()?>/public/img/decline.ico"
+                         alt="<?php echo $this->escape($this->translate('L_VIEW_NAO_ACOMPANHAMENTO')) ?>"/>
+				<?php }  ?>
+			</td>
+			<td style="width:70px; text-align:center;">
+				<a href="#" onclick="window.open('<?php echo $this->baseUrl();?>/relatorioProjeto/caso-de-uso/generate/cd_projeto/<?php echo $res['cd_projeto'] ?>/cd_modulo/todos')"><?php echo $this->escape($this->translate('L_VIEW_VER_CASO_DE_USO')) ?></a>
+			</td>
+			<td style="width:80px; text-align:center; cursor:pointer;">
+				<a href="#" onclick="window.open('<?php echo $this->baseUrl();?>/relatorioProjeto/dicionario-de-dados/dicionario-de-dados/cd_projeto/<?php echo $res['cd_projeto'] ?>')"><?php echo $this->escape($this->translate('L_VIEW_VER_DICIONARIO_DADOS')) ?></a>
+			</td>
+			<td style="width:90px; text-align:center;">
+				<a href="#" onclick="window.open('<?php echo $this->baseUrl();?>/relatorioProjeto/historico/generate/cd_projeto/<?php echo $res['cd_projeto'] ?>')"><?php echo $this->escape($this->translate('L_VIEW_VER_HISTORICO_GERAL')) ?></a>
+			</td>
+	<?php } ?>
+		</tr>
+	<?php
+		$projetoAux = $res['cd_projeto'];
+		endforeach;
+	} else {
+        if($this->perfil != K_CODIGO_PERFIL_GERENTE_PROJETO){
+            echo " <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>";
+        } else {
+            echo " <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>";
+        }
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableFiscalizacaoPropostaPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

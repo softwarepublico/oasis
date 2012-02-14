@@ -1,0 +1,56 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableTipoProduto").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableTipoProduto").tablesorterPager({container: $("#tableTipoProdutoPager")}); 
+});
+</script>
+<table id="tableTipoProduto" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th class="{sorter: false}" width="15px">&nbsp;</th>
+            <th class="span-12"><?php echo $this->escape($this->translate('L_VIEW_GRID_TIPO_PRODUTO')) ?></th>
+			<th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_NR_ORDEM')) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res):
+		foreach ($this->res as $res):
+	?>
+		<tr>
+			<td><img id="imgExcluir" height="13" width="13" style="cursor:pointer;" onclick="excluirTipoProduto('<?php echo $res['cd_tipo_produto'] ?>');" src="<?php echo $this->baseUrl()?>/public/img/del.png" alt="<?php echo $this->escape($this->translate('L_BTN_EXCLUIR')) ?>"/></td>
+			<td onclick="recuperaTipoProduto(<?php echo $res['cd_tipo_produto'] ?>)" style="cursor: pointer;">
+				<?php echo $res['tx_tipo_produto'] ?>
+			</td>
+			<td onclick="recuperaTipoProduto(<?php echo $res['cd_tipo_produto'] ?>)" style="cursor: pointer;">
+				<?php echo $res['ni_ordem_tipo_produto'] ?>
+			</td>
+		</tr>
+	<?php
+		endforeach;
+	else:
+		echo " <tr>
+				<td></td>
+				<td></td>
+				<td></td>
+			  </tr>";
+	endif;
+	?>
+	</tbody>
+</table>
+<div id="tableTipoProdutoPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="05">05</option>
+			<option value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+		</select>
+	</form>
+</div>

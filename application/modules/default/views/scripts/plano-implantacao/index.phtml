@@ -1,0 +1,43 @@
+<?php
+ 	$this->script('mascara');
+	$this->script('calendario');
+	$this->script('validaData');
+    $this->script('scriptFile',array('/plano-implantacao/index.js'));
+?>
+<div style="margin-right:5px; padding-left:5px;">
+    <label class="right span-3 float-l"><?php echo $this->escape($this->translate('L_VIEW_NOME_PROJETO')) ?>:</label>
+	<p class="float-l clear-r bold"><?php echo $this->nomeProjeto; ?></p>
+	<label class="right span-3 float-l clear-l"><?php echo $this->escape($this->translate('L_VIEW_PROPOSTA')) ?>:</label>
+	<p class="float-l clear-r bold"><?php echo $this->cd_proposta; ?></p>
+	
+	<hr class="span-21" style="border-top: 1px solid rgb(84, 189, 205); visibility: visible; height: 6px;"/>
+	
+	<div style="margin-left:10px; margin-top: 10px;">
+		
+		<div id="div_descricao_plano">
+			<?php echo $this->formHidden( 'acao', $this->acao);	?>
+			<label class="right bold span-4 clear-l float-l required" for="tx_descricao_plano_implantacao" editor="editor" ><?php echo $this->escape($this->translate('L_VIEW_PLANO_IMPLANTACAO')) ?>:</label>
+			<?php
+				echo $this->editorHtml('tx_descricao_plano_implantacao', $this->descricaoPlanoImplantacao, array('class'=>'float-l','cols'=>'70','rows'=>'10','editor'=>K_EDITOR));
+				echo $this->formButton('btn_salvar_plano_implantacao', 'Salvar', array('class'=>'verde float-l clear-l push-4'));
+			?>
+		</div>
+		<div id="div_agenda_implantacao" >
+		
+			<label class="right bold span-4 clear-l float-l required" for="dt_agenda_plano_implantacao" ><?php echo $this->escape($this->translate('L_VIEW_DATA_AGENDA')) ?>:</label>
+			<?php
+				echo $this->formHidden('hidden_dt_agenda_plano_implantacao');
+				echo $this->data('dt_agenda_plano_implantacao',null,array('class'=>'span-3 float-l'));
+			?>
+			<label class="right bold span-4 clear-l float-l required" for="tx_agenda_plano_implantacao" editor="editor"><?php echo $this->escape($this->translate('L_VIEW_DETALHAMENTO')) ?>:</label>
+			<?php
+				echo $this->editorHtml( 'tx_agenda_plano_implantacao', null, array('class'=>'float-l','cols'=>'70','rows'=>'8','editor'=>K_EDITOR));
+
+				echo $this->formButton('btn_salvar_data_agenda', $this->escape($this->translate('L_BTN_SALVAR')), array('class'=>'verde float-l clear-l push-4'));
+				echo $this->formButton('btn_alterar_data_agenda', $this->escape($this->translate('L_BTN_SALVAR')), array('class'=>'verde float-l clear-l push-4','style'=>'display:none;'));
+				echo $this->formButton('btn_cancelar_data_agenda', $this->escape($this->translate('L_BTN_CANCELAR')), array('class'=>'vermelho float-l push-4','style'=>'display:none;'));
+			?>
+		</div> <!-- fim div_agenda_implantacao -->
+		<div class="span-15 clear-l float-l push-4" id="gridAgendaImplantacao"></div>
+	</div>
+</div>

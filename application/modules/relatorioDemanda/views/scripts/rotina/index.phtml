@@ -1,0 +1,22 @@
+<?php
+    $this->script('validaForm');
+    $this->script('mascara');
+    $this->script('calendario');
+    $this->script('scriptFile',array('/rotina/index.js'));
+?>
+<form id="formRelatorioRotina">
+
+    <label class="float-l span-4 right required" for="cd_objeto_contrato"><?php echo $this->escape($this->translate('L_VIEW_OBJETO_CONTRATO')) ?>:</label>
+    <?php echo $this->formSelect("cd_objeto_contrato",null,array('class'=>'float-l'),$this->arrObjetoContrato); ?>
+
+    <label class="float-l right clear-l span-4" for="cd_profissional"><?php echo $this->escape($this->translate('L_VIEW_PROFISSIONAL')) ?>:</label>
+    <?php echo $this->formSelect("cd_profissional",null,array('class'=>'float-l')); ?>
+
+    <label class="float-l clear-l span-4 required" for="dt_inicio"><?php echo $this->escape($this->translate('L_VIEW_DATA_INICIAL')) ?>:</label>
+		<span class="float-l"><?php echo $this->data("dt_inicio",null,array('class'=>'float-l span-3')); ?></span>
+
+    <label class="float-l clear-l span-4 required" for="dt_fim"><?php echo $this->escape($this->translate('L_VIEW_DATA_FINAL')) ?>:</label>
+		<span class="float-l"><?php echo $this->data("dt_fim",null,array('class'=>'float-l span-3')); ?></span>
+
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->escape($this->translate('L_BTN_GERAR')) ?></button>
+</form>

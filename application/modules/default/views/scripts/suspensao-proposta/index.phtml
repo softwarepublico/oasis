@@ -1,0 +1,33 @@
+<?php
+    $this->script('scriptFile',array('/suspensao-proposta/index.js'));
+?>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#config_hidden_suspensao_proposta").val('N');
+});
+
+function configSuspensaoProposta()
+{
+	if($("#config_hidden_suspensao_proposta").val() === 'N'){
+		//pesquisaPorObjetoAjax();
+		$("#config_hidden_suspensao_proposta").val('S');
+	}
+}
+</script>
+<div style="padding: 5px;">
+    <label class="span-3 float-l bold clear-l"><?php echo $this->escape($this->translate('L_VIEW_CONTRATO')) ?>:</label>
+		<?php echo $this->formSelect('cd_contrato_suspensao_proposta', null, array('class'=>'float-l'), $this->arrContratoProjeto); ?>
+	
+
+     <?php echo $this->flipFlop(array('name'=>'cd_projeto_proposta_suspensao_proposta_1',
+                                      'label'=>$this->escape($this->translate('L_VIEW_PROPOSTAS_EM_EXECUCAO')),
+                                      'value'=>$this->profissionais),
+                                array('name'=>'cd_projeto_proposta_suspensao_proposta_2',
+                                      'label'=>$this->escape($this->translate('L_VIEW_PROPOSTAS_SUSPENSAS')),
+                                      'value'=>$this->profissionais2),
+                                'add_suspensao_proposta',
+                                'remove_suspensao_proposta',8);
+     ?>
+</div>
+
+

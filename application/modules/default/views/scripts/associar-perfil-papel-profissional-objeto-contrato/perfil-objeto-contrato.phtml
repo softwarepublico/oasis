@@ -1,0 +1,18 @@
+<?php
+    $this->script('scriptFile',array('/associar-perfil-papel-profissional-objeto-contrato/perfil-objeto-contrato.js'));
+?>
+<div id="div_associar_perfil_profissional_objeto_contrato" style="margin-left:5px;">
+    <label class="span-3 float-l clear-l required" for="cd_objeto_associar_perfil_profissional_objeto_contrato"><?php echo $this->translate('L_VIEW_OBJETO'); ?>:</label>
+    <?php echo $this->formSelect('cd_objeto_associar_perfil_profissional_objeto_contrato', null, array('class'=>'float-l'), $this->arrTodosObjetoContratoAtivo); ?>
+
+    <label class="span-3 float-l clear-l required" for="cd_area_atuacao_associar_perfil_profissional_objeto_contrato"><?php echo $this->translate('L_VIEW_AREA_ATUACAO_TI'); ?>:</label>
+    <?php echo $this->formSelect('cd_area_atuacao_associar_perfil_profissional_objeto_contrato', null, array('class'=>'float-l'), $this->arrAreaAtuacaoTi); ?>
+
+    <?php
+		echo $this->flipFlop(array('name'=>'cd_perfil_profissional_objeto_contrato_1', 'label'=>$this->translate('L_VIEW_PERFIL_PROFISSIONAL')),
+							 array('name'=>'cd_perfil_profissional_objeto_contrato_2', 'label'=>$this->translate('L_VIEW_PERFIL_PROFISSIONAL_ASSOCIADO')),
+							 'add_perfil_profissional_objeto_contrato',
+							 'remove_perfil_profissional_objeto_contrato',8);
+    ?>
+    <div id="grid_associar_perfil_profissional_objeto_contrato" class="float-l clear-l " style="margin-top: 10px;"></div>
+</div>

@@ -1,0 +1,84 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableProdutoParcela").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableProdutoParcela").tablesorterPager({container: $("#pager-produto-parcela")}); 
+});
+</script>
+<?php
+	echo $this->formHidden('escondeExclusaoBotoes',$this->escondeExclusao);	
+?>
+<table id="tableProdutoParcela" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+			<?php if($this->escondeExclusao != "S"): ?>
+            <th class="{sorte: false}" width="15px">&nbsp;</th>
+			<?php endif; ?>
+			<th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_PRODUTOS')) ?></th>
+			<th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_TIPO'    )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+	?>
+		<tr>
+			<?php 
+			if($this->escondeExclusao != "S"): ?>
+                <td class="center"><img id="imgExcluir" height="13" style="cursor: pointer;" width="13" onclick="excluirProdutoParcela('<?php echo $res['cd_produto_parcela'] ?>');" src="<?php echo $this->baseUrl()?>/public/img/del.png" alt="<?php echo $this->escape($this->translate('L_BTN_EXCLUIR')) ?>"/></td>
+      <?php endif; ?>
+			<?php 
+			if($this->escondeExclusao != "S"){ ?>
+                <td onclick="recuperarProdutoParcela(<?php echo $res['cd_produto_parcela'] ?>)" style="cursor: pointer;">
+			<?php } else {?>
+			<td>
+			<?php } ?>
+				<?php echo $res['tx_produto_parcela'] ?>
+			</td>
+			<?php 
+			if($this->escondeExclusao != "S"){ ?>
+                <td onclick="recuperarProdutoParcela(<?php echo $res['cd_produto_parcela'] ?>)" style="cursor: pointer;">
+			<?php } else {?>
+			<td>
+			<?php } ?>
+				<?php echo $res['tx_tipo_produto'] ?>
+			</td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+
+		if($this->escondeExclusao != "S"){
+			echo "
+				<tr>
+					<td width='10'>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr>";
+		}else{
+			echo "
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr>";
+		}
+	}
+	?>
+	</tbody>
+</table>
+<div id="pager-produto-parcela" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

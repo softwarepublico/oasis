@@ -1,0 +1,114 @@
+<?php
+//criando o objeto
+$objPdf = new Base_Tcpdf_Pdf();
+
+$arrKeywords = array(K_CREATOR_SYSTEM,
+                             Base_Util::getTranslator('L_TIT_REL_ACEITE_PARCELA'),
+                             Base_Util::getTranslator('L_VIEW_ACEITE'),
+                             Base_Util::getTranslator('L_VIEW_PARCELA'),
+                             Base_Util::getTranslator('L_VIEW_RELATORIO')
+                            );
+
+//Inicia cabeçalho do relatório
+$objPdf->iniciaRelatorio(Base_Util::getTranslator('L_TIT_REL_ACEITE_PARCELA'), $arrKeywords);
+
+$objPdf->SetDisplayMode("real");
+// add a page
+$objPdf->AddPage();
+
+$fw[0] = 8;
+
+
+if(count($this->arrDadosProjeto) > 0){
+	$objPdf->SetFont('helvetica', 'B', $fw[0]);
+	$objPdf->Cell(75, 6, mb_strtoupper(Base_Util::getTranslator('L_VIEW_DADOS_PROJETO'),'utf-8'), 'B', 0, 'L');
+	$objPdf->ln(10);
+	
+	$objPdf->SetFont('helvetica', 'B', $fw[0]);
+	//Mostra a sigla do Projeto
+	$objPdf->Cell(180, 6, Base_Util::getTranslator('L_VIEW_SIGLA'), '', 0, 'L');
+	$objPdf->ln(5);
+	$objPdf->SetFont('helvetica', '', $fw[0]);
+	$objPdf->Cell(180, 6, $this->arrDadosProjeto['tx_sigla_projeto'], '', 0, 'L');
+	$objPdf->ln(7);
+	
+	//Mostra o nome do Projeto
+	$objPdf->SetFont('helvetica', 'B', $fw[0]);
+	$objPdf->Cell(180, 6, Base_Util::getTranslator('L_VIEW_NOME'), '', 0, 'L');
+	$objPdf->ln(5);	
+	$objPdf->SetFont('helvetica', '', $fw[0]);
+	$objPdf->MultiCell(180, 6, $this->arrDadosProjeto['tx_projeto'].PHP_EOL, '', 'J');
+	$objPdf->ln(7);	
+	
+	//Mostra a unidade gestora e o gestor do projeto
+	$objPdf->SetFont('helvetica', 'B', $fw[0]);
+	$objPdf->Cell(80, 6, Base_Util::getTranslator('L_VIEW_UNIDADE_GESTORA'), '', 0, 'L');
+	$objPdf->Cell(100, 6, Base_Util::getTranslator('L_VIEW_GESTOR_PROJETO'), '', 0, 'L');
+	$objPdf->ln(5);
+	$objPdf->SetFont('helvetica', '', $fw[0]);
+	$objPdf->Cell(80, 6, $this->arrDadosProjeto['tx_sigla_unidade'], '', 0, 'L');
+	$objPdf->Cell(100, 6, $this->arrDadosProjeto['tx_gestor_projeto'], '', 0, 'L');
+	$objPdf->ln(10);
+	
+	//Dados da Parcela	
+	$objPdf->SetFont('helvetica', 'B', $fw[0]);
+	$objPdf->Cell(75, 6, mb_strtoupper(Base_Util::getTranslator('L_VIEW_DADOS_PARCELA'),'utf-8'), 'B', 0, 'L');
+	$objPdf->ln(10);
+	
+	//Mostra Parcela	
+	$objPdf->SetFont('helvetica', 'B', $fw[0]);
+	if(count($this->arrDadosParcela) > 0){
+		foreach($this->arrDadosParcela as $value){
+            $arrValueMsg = array('value1'=>$value['ni_parcela'], 'value2'=>$value['data']);
+			$objPdf->Cell(180, 6, "     ".Base_Util::getTranslator('L_VIEW_PARCELA_NR_DT_PREVISAO', $arrValueMsg), '', 0, 'L');
+		}
+	} else {
+		$objPdf->Cell(180, 6, "     ".Base_Util::getTranslator('L_VIEW_SEM_PARCELA'), '', 0, 'L');
+	}
+	$objPdf->ln(7);
+	
+	//Mostra os Produtos
+	if(count($this->arrProdutoParcela) > 0){
+		$objPdf->Cell(180, 6, "     ".Base_Util::getTranslator('L_VIEW_PRODUTOS').":", '', 1, 'L');
+		$objPdf->SetFont('helvetica', '', $fw[0]);
+		foreach($this->arrProdutoParcela as $key=>$value){
+			$objPdf->MultiCell(180, 6, "       -". $value['tx_produto_parcela'].PHP_EOL, '', 'L', 0,1);
+		}
+	} else {
+		$objPdf->Cell(180, 6, "     ".Base_Util::getTranslator('L_VIEW_SEM_PRODUTO_PARCELA'), '', 0, 'L');
+	}
+	$objPdf->ln(7);
+	
+	$objPdf->SetFont('helvetica', 'B', $fw[0]);
+	$objPdf->Cell(180, 6, Base_Util::getTranslator('L_VIEW_AVALIACAO'), '', 0, 'L');
+	$objPdf->ln(7);
+	
+	$objPdf->SetFont('helvetica', '', $fw[0]);
+	$objPdf->Cell(180, 6, "( ) ".Base_Util::getTranslator('L_MSG_ALERT_PARCELA_ACEITA_PRODUTO_VINCULADO_TESTADO_APROVADO'), '', 1, 'L');
+	$objPdf->Cell(180, 6, "( ) ".Base_Util::getTranslator('L_MSG_ALERT_PARCELA_NAO_ACEITA_PRODUTO_VINCULADO_TESTADO_NAO_APROVADO'), '', 1, 'L');
+	$objPdf->ln(5);
+	
+	$objPdf->Cell(180, 6, Base_Util::getTranslator('L_MSG_ALERT_REAVALIACAO_PARCELA_APOS_EFETUAR_CORRECAO'), '', 1, 'L');
+	$objPdf->ln(5);
+	
+	$objPdf->Cell(180, 6, "", 'B', 1, 'L');
+	$objPdf->Cell(180, 6, "", 'B', 1, 'L');
+	$objPdf->Cell(180, 6, "", 'B', 1, 'L');
+	$objPdf->Cell(180, 6, "", 'B', 1, 'L');
+	$objPdf->ln(7);
+	
+	$objPdf->Cell(120, 6, "", 'B', 0, 'L');
+	$objPdf->Cell(20, 6, "", '', 0, 'L');
+	$objPdf->Cell(20, 6, "", 'B', 0, 'L');
+	$objPdf->Cell(20, 6, "", '', 1, 'L');
+	
+	$tx_gestor_projeto = ($this->tx_gestor_substituto == "") ? $this->arrDadosProjeto['tx_gestor_projeto'] : $this->tx_gestor_substituto;
+	$objPdf->Cell(140, 6, Base_Util::getTranslator('L_VIEW_GESTOR_PROJETO'). " - ".$tx_gestor_projeto, '', 0, 'L');
+	$objPdf->Cell(40, 6, Base_Util::getTranslator('L_VIEW_DATA'), '', 1, 'L');
+	
+} else {
+	$objPdf->writeHTML($objPdf->semRegistroParaConsulta(),true, 0, true, 0);
+}
+//Close and output PDF document
+$objPdf->Output('relatorio_documento_aceite.pdf', 'I');
+?>

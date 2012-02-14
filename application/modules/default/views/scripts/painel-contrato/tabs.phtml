@@ -1,0 +1,72 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#container_painel_contrato').show().tabs().triggerTab(1);
+    
+	$("#config_hidden_contratos").val('N');
+});
+
+function configAccordionContratos()
+{
+	if($("#config_hidden_contratos").val() === 'N'){
+		comboEmpresa('cd_empresa_lista_contrato','montaGridContrato()');
+		comboContratoAtivo('cd_contrato_objeto_contrato');
+		comboContratoAtivoObjeto('cd_contrato_penalidade');
+		comboGroupContrato('P', 'cd_contrato_projeto_previsto');
+		comboObjetoContratoAtivo('cd_objeto_nivel_servico');
+		$("#config_hidden_contratos").val('S');
+	}
+}
+</script>
+<div id="container_painel_contrato" style="display: none;">
+	<ul>
+		<li>
+            <a href="#aba_lista_contrato">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_LISTA')); ?></span>
+            </a>
+        </li>
+		<li style="display: none;" id="li-contrato">
+            <a href="#aba_contrato">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_CADASTRO')); ?></span>
+            </a>
+        </li>
+		<li id="li-objeto-contrato">
+            <a href="#aba_objeto_contrato">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_OBJETO_CONTRATO')); ?></span>
+            </a>
+        </li>
+		<li id="li-penalidade">
+            <a href="#aba_penalidade">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PENALIDADE')); ?></span>
+            </a>
+        </li>
+		<li id="li-projeto-previsto">
+            <a href="#aba_projeto_previsto">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PROJETO_PREVISTO')); ?></span>
+            </a>
+        </li>
+		<li id="li-nivel-servico">
+            <a href="#aba_nivel_servico">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_NIVEL_SERVICO')); ?></span>
+            </a>
+        </li>
+    </ul>
+
+	    <div id="aba_lista_contrato">
+	    	<div class="divTab"><?php echo $this->render('painel-contrato/index.phtml') ?></div>
+	    </div>
+	    <div id="aba_contrato" style="display: none;">
+	    	<div class="divTab"><?php echo $this->render('contrato/index.phtml') ?></div>
+	    </div>
+	    <div id="aba_objeto_contrato">
+	    	<div class="divTab"><?php echo $this->render('objeto-contrato/index.phtml') ?></div>
+	    </div>
+	    <div id="aba_penalidade">
+	    	<div class="divTab"><?php echo $this->render('penalidade/index.phtml') ?></div>
+	    </div>
+	    <div id="aba_projeto_previsto">
+	    	<div class="divTab"><?php echo $this->render('projeto-previsto/index.phtml') ?></div>
+	    </div>
+	    <div id="aba_nivel_servico">
+	    	<div class="divTab"><?php echo $this->render('nivel-servico/index.phtml') ?></div>
+	    </div>
+</div>

@@ -1,0 +1,14 @@
+<form id="formJustificativaSolicitacao">
+	<?php echo $this->formHidden('cd_objeto_justificativa_solicitacao'			, $this->cd_objeto);?>
+	<?php echo $this->formHidden('ni_solicitacao_justificativa_solicitacao'		, $this->ni_solicitacao);?>
+	<?php echo $this->formHidden('ni_ano_solicitacao_justificativa_solicitacao'	, $this->ni_ano_solicitacao);?>
+
+	<div class="float-l">
+        <label class="bold float-l span-3"><?php echo $this->escape($this->translate('L_VIEW_SOLICITACAO')) ?>:</label>
+		<span class="bold float-l" id="dados_solicitacao_justificativa_solicitacao"><?php echo $this->ni_solicitacao."/".$this->ni_ano_solicitacao?></span>
+	</div>
+	<div  class="float-l clear-l">
+		<label class="bold float-l span-3"><?php echo $this->escape($this->translate('L_VIEW_JUSTIFICATIVA')) ?>:</label>
+		<?php echo $this->formTextarea('tx_justificativa_solicitacao', null, array('class'=>'float-l', 'style' => 'width:430px; height:150px;')) ?>
+	</div>
+</form>

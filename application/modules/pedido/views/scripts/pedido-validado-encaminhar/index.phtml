@@ -1,0 +1,39 @@
+<?php
+    $this->script('tab');
+    $this->script('grid');
+    $this->script('validaForm');
+    $this->script('scriptFile', array('/pedido-validado-encaminhar/index.js'));
+?>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#container_autorizados_encaminhar').show().tabs();
+        $('#container_autorizados_encaminhar').triggerTab(1);
+    });
+</script>
+
+<div id="container_autorizados_encaminhar" style="display: none;">
+	<ul>
+        <li>
+            <a href="#pedido_autorizado">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PEDIDOS_VALIDADOS')) ?></span>
+            </a>
+        </li>
+        <li id="li_formulario_pedido" style="display:none">
+            <a href="#formulario">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_ENCAMINHAR')) ?></span>
+            </a>
+        </li>
+    </ul>
+    <div id="pedido_autorizado">
+		<div class="divTab">
+            <div class="boxTab height-2"></div>
+            <div id="grid_pedido_autorizado" class="float-l clear-l"></div>
+		</div>
+    </div>
+    <div id="formulario">
+		<div class="divTab">
+            <div id="form_historico_autorizado"></div>
+		</div>
+    </div>
+</div>

@@ -1,0 +1,67 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableHistorico").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableHistorico").tablesorterPager({container: $("#tableHistoricoPager"), size:5}); 
+});
+</script>
+<table id="tableHistorico" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th class="{sorter:false}">&nbsp;</th>
+            <th><?php echo $this->escape($this->translate('L_VIEW_GRID_PROJETO'     )) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_PROPOSTA'    )) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_DATA_INICIO' )) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_DATA_TERMINO')) ?></th>
+		</tr>
+	</thead>
+	
+	<tbody>
+	<?php
+	if($this->resu){
+			foreach ($this->resu as $res):
+	?>
+		<tr>
+			<td><img id="imgExcluir" height="13" width="13" style="cursor:pointer;" onclick="excluirHistorico('<?php echo $res['cd_historico'] ?>');" src="<?php echo $this->baseUrl()?>/public/img/del.png" alt="<?php echo $this->escape($this->translate('L_BTN_EXCLUIR')) ?>"/></td>
+			<td style="cursor:pointer;" onclick="recuperaHistorico(<?php echo $res['cd_historico'] ?>)">
+				<?php echo $res['tx_sigla_projeto'] ?>
+			</td>
+			<td style="cursor:pointer;" onclick="recuperaHistorico(<?php echo $res['cd_historico'] ?>)">
+				<?php echo ("Proposta Nº ".$res['cd_proposta']) ?>
+			</td>
+			<td style="cursor:pointer;" onclick="recuperaHistorico(<?php echo $res['cd_historico'] ?>)">
+				<?php echo date('d/m/Y',strtotime($res['dt_inicio_historico'])) ?>
+			</td>
+			<td style="cursor:pointer;" onclick="recuperaHistorico(<?php echo $res['cd_historico'] ?>)">
+				<?php echo date('d/m/Y',strtotime($res['dt_fim_historico'])) ?>
+			</td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo "	<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr>";
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableHistoricoPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="05">05</option>
+			<option value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+		</select>
+	</form>
+</div>

@@ -1,0 +1,8 @@
+<?php
+    $this->script('scriptFile',array('/rotina/index.js'));
+    echo $this->formRotina;
+    
+    echo $this->formButton('bt_salvar_rotina', $this->translate('L_BTN_SALVAR'), array('class'=>'verde float-l push-5 clear-l'));
+    echo $this->formButton('bt_cancelar_rotina',$this->translate('L_BTN_CANCELAR'),array('class'=>'vermelho float-l push-5'));
+?>
+<div id="gridRotina" class="float-l clear-l push-3"></div>

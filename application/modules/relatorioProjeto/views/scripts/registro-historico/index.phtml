@@ -1,0 +1,16 @@
+<?php 
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/registro-historico/index.js'));
+?>
+<form id="formRelatorioProjetoRegistroHistorico">
+    <label class="span-2 float-l clear-l right required" for="cd_contrato"><?php echo $this->translate('L_VIEW_CONTRATO') ?>:</label>
+		<?php echo $this->formSelect('cd_contrato',null,array('class'=>'float-l'),$this->arrContrato); ?>
+
+    <label class="span-2 float-l clear-l right required" for="mes"><?php echo $this->translate('L_VIEW_MES') ?>:</label>
+    	<?php echo $this->mesCombo("mes",null,array('class'=>'float-l')); ?>
+    	
+    <label class="span-2 float-l right clear-l required" for="ano"><?php echo $this->translate('L_VIEW_ANO') ?>:</label>
+    	<?php echo $this->anoCombo("ano",null,array('class'=>'float-l')); ?>
+    
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->translate('L_BTN_GERAR') ?></button>
+</form>

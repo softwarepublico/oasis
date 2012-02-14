@@ -1,0 +1,103 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableExecucaoRotina").tablesorter({widthFixed: true, widgets: ['zebra']})
+    $("#tableExecucaoRotina").tablesorterPager({container: $("#tableExecucaoRotinaPager")});
+});
+</script>
+<table id="tableExecucaoRotina" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th><?php echo $this->escape($this->translate('L_VIEW_GRID_DATA')) ?></th>
+            <th class="span-1 {sorter:false}">
+                <div class="float-l" style="margin-left: 18px;">T</div>
+            </th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_ROTINA')) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_HORA')) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_STATUS')) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_REGISTRAR')) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_FINALIZAR')) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if(count($this->res) > 0):
+		foreach ($this->res as $res):
+	?>
+		<tr>
+            <td><?php echo Base_Util::converterDate($res->dt_execucao_rotina, 'YYYY-MM-DD', 'DD/MM/YYYY') ?></td>
+            <td>
+
+                <!-- rotina para desenhar a bolinha do tempo de execução da rotina -->
+                <?php if (!is_null($res->cd_rotina)):
+                    $tempo = $this->escape($this->translate('L_VIEW_TEMPO_RESPOSTA'));
+                    $paramsDivTempoResposta = " title=\"{$tempo} {$this->arrTempoRespostaRotina[$res->cd_rotina]['tempo_resposta']}\" style=\"background-color: #{$this->arrTempoRespostaRotina[$res->cd_rotina]['cor']}\"";
+                ?>
+                <div class="circleColorTime float-l" <?php echo $paramsDivTempoResposta; ?>></div>
+                <?php endif; ?>
+
+            </td>
+			<td><?php echo $res->tx_rotina ?></td>
+			<td><?php echo $res->tx_hora_execucao_rotina ?></td>
+			<td>
+                <?php
+                    if ($res->st_fechamento_execucao_rotina == 'S'):
+                        echo  $this->escape($this->translate('L_VIEW_FECHADA'));
+                    else:
+                        echo  $this->escape($this->translate('L_VIEW_ABERTA'));
+                    endif;
+                ?>
+            </td>
+			<td class="center">
+				<button class="icon registrar_exec"
+                        onclick="abreTabHistoricoExecucaoRotina('<?php echo $res->dt_execucao_rotina ?>',<?php echo $res->cd_profissional ?>,<?php echo $res->cd_objeto ?>,<?php echo $res->cd_rotina ?>, 1)"
+                        id="button_registrar_<?php echo $res->cd_rotina?>"
+                        title="<?php echo $this->escape($this->translate('L_BTN_REGISTRAR_EXECUCAO')) ?>">
+                </button>
+			</td>
+            <td class="center">
+                <?php if(!is_null($res->st_historico) && is_null($res->st_fechamento_execucao_rotina)): ?>
+                            <button class="icon concluir_exec"
+                                    onClick="fecharExecucaoRotina('<?php echo $res->dt_execucao_rotina ?>',<?php echo $res->cd_profissional ?>,<?php echo $res->cd_objeto ?>,<?php echo $res->cd_rotina ?>)"
+                                    id="button_salvar_<?php echo $res->cd_rotina?>"
+                                    title="<?php echo $this->escape($this->translate('L_BTN_FINALIZAR_EXECUCAO')) ?>">
+                            </button>
+				<?php else: ?>
+                            &nbsp;
+				<?php endif; ?>
+			</td>
+		</tr>
+	<?php
+		endforeach;
+	else:
+		echo "<tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+			  </tr> ";
+	endif;
+	?>
+	</tbody>
+</table>
+<div id="tableExecucaoRotinaPager" class="pager">
+<form><img
+	src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png"
+	class="first" /> <img
+	src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png"
+	class="prev" /> <input type="text" class="pagedisplay" /> <img
+	src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png"
+	class="next" /> <img
+	src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png"
+	class="last" /> 
+	<select class="pagesize">
+		<option selected="selected" value="10">10</option>
+		<option value="20">20</option>
+		<option value="30">30</option>
+		<option value="40">40</option>
+		</select>
+	</form>
+</div>

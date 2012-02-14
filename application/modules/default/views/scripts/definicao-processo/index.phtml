@@ -1,0 +1,22 @@
+<?php
+    $this->script('scriptFile',array('/definicao-processo/index.js'));
+?>
+<div class="float-l" style="margin-left:10px;">
+    <label class="float-l bold span-4"><?php echo $this->escape($this->translate('L_VIEW_TIPO_PROCESSO')) ?>:</label>
+    	<?php echo $this->formSelect('st_definicao_processo', null, array('class'=>'float-l'), $this->comboTipoProcesso); ?>
+
+	<label class="float-l bold clear-l span-4"><?php echo $this->escape($this->translate('L_VIEW_PERFIL')) ?>:</label>
+        <?php echo $this->formSelect('cd_perfil_definicao_processo', null, array('class'=>'float-l'), $this->arrPerfilDefinicaoProcesso); ?>
+</div>
+<div class="clear-l float-l" style="margin-left:10px;">
+
+	<?php echo $this->flipFlop(array('name'=>'cd_funcionalidade_1', 
+                                     'label'=>$this->escape($this->translate('L_VIEW_FUNCIONALIDADES')),
+                                     'value'=>$this->funcionalidades),
+							   array('name'=>'cd_funcionalidade_2', 
+                                     'label'=>$this->escape($this->translate('L_VIEW_FUNCIONALIDADES_ASSOCIADAS')),
+                                     'value'=>$this->funcionalidades2),
+							   'addFuncionalidadeDefinicaoProcesso',
+							   'removeFuncionalidadeDefinicaoProcesso',8); ?>
+	<div class="accordionBottom" style="min-height: 10px;"></div>
+</div>

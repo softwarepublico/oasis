@@ -1,0 +1,31 @@
+<form id="formFechamentoSolicitacao" style="margin-left: 10px;">
+	<?php echo $this->formHidden('cd_objeto_fechamento_solicitacao', $this->cd_objeto); ?>
+	<?php echo $this->formHidden('ni_solicitacao_fechamento_solicitacao', $this->ni_solicitacao); ?>
+	<?php echo $this->formHidden('ni_ano_solicitacao_fechamento_solicitacao', $this->ni_ano_solicitacao); ?>
+
+	<div class="float-l span-14">
+        <label class="float-l span-4 bold"><?php echo $this->escape($this->translate('L_VIEW_SOLICITACAO')) ?>:</label>
+		<span class="float-l span-10 bold"><?php echo $this->ni_solicitacao."/".$this->ni_ano_solicitacao." (".$this->tx_objeto.")"?></span>
+	</div>
+
+	<div class="float-l span-15">
+		<label class="span-4 float-l required"><?php echo $this->escape($this->translate('L_VIEW_GRAU_SATISFACAO')) ?>:</label>
+
+		<input class="span-1 float-l" type="radio" id="st_grau_satisfacaoB" name="st_grau_satisfacao" value="O"/>
+		<label class="span-2 float-l" for="st_grau_satisfacaoB"><?php echo $this->escape($this->translate('L_VIEW_OTIMO')) ?></label>
+
+        <input class="span-1 float-l" type="radio" id="st_grau_satisfacaoB" name="st_grau_satisfacao" value="B" checked="checked"/>
+		<label class="span-2 float-l" for="st_grau_satisfacaoB"><?php echo $this->escape($this->translate('L_VIEW_BOM')) ?></label>
+
+		<input class="span-1 float-l" type="radio" id="st_grau_satisfacaoR" name="st_grau_satisfacao" value="R" />
+		<label class="span-2 float-l" for="st_grau_satisfacaoR"><?php echo $this->escape($this->translate('L_VIEW_REGULAR')) ?></label>
+
+		<input class="span-1 float-l" type="radio" id="st_grau_satisfacaoU" name="st_grau_satisfacao" value="U" />
+		<label class="span-2 float-l" for="st_grau_satisfacaoU"><?php echo $this->escape($this->translate('L_VIEW_RUIM')) ?></label>
+	</div>
+
+	<div class="float-l span-14">
+		<label class="float-l span-4"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACOES')) ?>:</label>
+		<?php echo $this->formTextarea('tx_obs_grau_satisfacao', '', array('style' => 'width:380px; height:120px;')) ?>
+	</div>
+</form>

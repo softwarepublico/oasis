@@ -1,0 +1,92 @@
+<script type="text/javascript" defer="defer">
+$(document).ready(function() {
+    // call the tablesorter plugin
+    $("#tableProjetosExecucao").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableProjetosExecucao").tablesorterPager({container: $("#pagerProjetosExecucao")});
+});
+</script>
+<table  id="tableProjetosExecucao" cellspacing="1" class="tablesorter">
+    <thead>
+        <tr>
+            <th width="40%"><?php echo $this->escape($this->translate('L_VIEW_GRID_SIGLA')) ?></th>
+            <th width="60%" colspan="3"><?php echo $this->escape($this->translate('L_VIEW_GRID_TESTE')) ?></th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php
+    if($this->gridProjetosExecucao){
+        foreach ($this->gridProjetosExecucao as $cd_projeto=>$tx_sigla_projeto):
+    ?>
+    <tr>
+        <td><?php echo $tx_sigla_projeto?></td>
+        <td style="text-align:center">
+            <div><?php echo $this->escape($this->translate('L_VIEW_REQUISITO')) ?></div>
+            <div>
+                <img
+                <?php if($this->permissao_requisito): ?>
+                     style="cursor:pointer"
+                     onclick="cadastraTeste('requisito' , <?php echo "{$cd_projeto} , '{$tx_sigla_projeto}'" ?>)"
+                     title="<?php echo $this->escape($this->translate('L_MSG_CADASTRA_TESTE_REQUISITO')) ?>"
+                <?php else: ?>
+                     style="cursor:not-allowed"
+                     title="<?php echo $this->escape($this->translate('L_MSG_ALERT_SEM_PERMISSAO_ACESSAR_LINK')) ?>"
+                <?php endif; ?>
+                     src="<?php echo $this->baseUrl(); ?>/public/img/u46.png" />
+            </div>
+        </td>
+        <td style="text-align:center">
+            <div><?php echo $this->escape($this->translate('L_VIEW_REGRA_DE_NEGOCIO')) ?></div>
+            <div>
+                <img
+                <?php if($this->permissao_regraNegocio): ?>
+                     style="cursor:pointer"
+                     onclick="cadastraTeste('regraNegocio' , <?php echo "{$cd_projeto} , '{$tx_sigla_projeto}'" ?>)"
+                     title="<?php echo $this->escape($this->translate('L_MSG_CADASTRA_TESTE_REGRA_DE_NEGOCIO')) ?>"
+                <?php else: ?>
+                     style="cursor:not-allowed"
+                     title="<?php echo $this->escape($this->translate('L_MSG_ALERT_SEM_PERMISSAO_ACESSAR_LINK')) ?>"
+                <?php endif; ?>
+                     src="<?php echo $this->baseUrl(); ?>/public/img/u46.png" />
+            </div>
+        </td>
+        <td style="text-align:center">
+            <div><?php echo $this->escape($this->translate('L_VIEW_CASO_DE_USO')) ?></div>
+            <div>
+                <img
+                <?php if($this->permissao_casoDeUso): ?>
+                     style="cursor:pointer"
+                     onclick="cadastraTeste('casoDeUso' , <?php echo "{$cd_projeto} , '{$tx_sigla_projeto}'" ?>)"
+                     title="<?php echo $this->escape($this->translate('L_MSG_CADASTRA_TESTE_CASO_DE_USO')) ?>"
+                <?php else: ?>
+                     style="cursor:not-allowed"
+                     title="<?php echo $this->escape($this->translate('L_MSG_ALERT_SEM_PERMISSAO_ACESSAR_LINK')) ?>"
+                <?php endif; ?>
+                     src="<?php echo $this->baseUrl(); ?>/public/img/u46.png" />
+            </div>
+        </td>
+    </tr>
+    <?php
+        endforeach;
+    } else {
+        echo '<tr>
+                    <td colspan="5" style="text-align:center"> '.$this->escape($this->translate('L_VIEW_SEM_REGISTRO')).' </td>
+              </tr>';
+    }
+    ?>
+    </tbody>
+</table>
+<div id="pagerProjetosExecucao" class="pager">
+    <form>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+        <input type="text" class="pagedisplay"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+        <select class="pagesize">
+            <option selected="selected"  value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+        </select>
+    </form>
+</div>

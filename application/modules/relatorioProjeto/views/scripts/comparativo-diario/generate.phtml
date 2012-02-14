@@ -1,0 +1,67 @@
+<?php
+//criando o objeto
+$objPdf = new Base_Tcpdf_Pdf("L");
+$arrKeywords = array(K_CREATOR_SYSTEM,
+                             Base_Util::getTranslator('L_TIT_REL_COMPARATIVO_DIARIO_HISTORICO'),
+                             Base_Util::getTranslator('L_VIEW_COMPARATIVO'),
+                             Base_Util::getTranslator('L_VIEW_UTIL'),
+                             Base_Util::getTranslator('L_VIEW_RELATORIO')
+                            );
+
+//Inicia cabeçalho do relatório
+$objPdf->iniciaRelatorio(Base_Util::getTranslator('L_TIT_REL_COMPARATIVO_DIARIO_HISTORICO'), $arrKeywords);
+// set font
+$objPdf->SetFont('helvetica', '', 10);
+// add a page
+$objPdf->AddPage();
+
+relatorioComparativoMensal($this->arrHeader, $this->arrTamHeader,$this->arrDescSemana, $this->arrQuantProf,$this->arrProfissional, $objPdf);
+
+//Close and output PDF document
+$objPdf->Output('relatorio_demanda_comparativo_diario.pdf', 'I');
+
+function relatorioComparativoMensal($header,$headerTam,$arrDescSemana,$arrQuantProf,$arrProfissional,$objPdf)
+{
+	// Colors, line width and bold font
+	$objPdf->SetDrawColor(50);
+	$objPdf->SetFillColor(240,240,240);
+	$objPdf->SetTextColor(0);
+	$objPdf->SetLineWidth(0.3);
+	$objPdf->SetFont('', 'B',9);
+	// Header
+	$w = $headerTam;
+	
+	for($i = 0; $i < count($header); $i++){
+		$objPdf->Cell($w[$i], 7, $arrDescSemana[$i], 1, 0, 'C', 1);
+	}
+	$objPdf->Ln();
+	for($i = 0; $i < count($header); $i++){
+		$objPdf->Cell($w[$i], 7, $header[$i], 1, 0, 'C', 1);
+	}
+
+	$objPdf->Ln();
+	// Color and font restoration
+	$objPdf->SetFillColor(240, 248, 255);
+	$objPdf->SetTextColor(0);
+	$objPdf->SetFont('','',8);
+
+	$fill = 0;
+	foreach($arrProfissional as $key=>$value){
+		$i = 0;
+		foreach($arrQuantProf[$key] as $conteudo){
+			$objPdf->Cell($w[$i], 7, $conteudo, 'LR', 0, 'C', $fill);
+			$i++;
+		}
+		$fill=!$fill;
+		$objPdf->Ln();
+	}
+	
+	$tam = 0;
+	foreach ($w as $value){
+		$tam += $value; 
+	}
+	
+	$objPdf->Cell($tam, 7, "", 'T', 0, 'C');
+}
+?>
+

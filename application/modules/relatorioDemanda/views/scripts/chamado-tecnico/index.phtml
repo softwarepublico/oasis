@@ -1,0 +1,17 @@
+<?php 
+    $this->script('autocomplete');
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/chamado-tecnico/index.js'));
+?>
+<form id="formRelatorioDemandaChamadoTecnico">
+    <label class="span-5 float-l right required" for="ni_ano_solicitacao"><?php echo $this->translate('L_VIEW_ANO') ?>:</label>
+    	<?php echo $this->anoCombo("ni_ano_solicitacao",null,array('class'=>'float-l')); ?>
+    
+    <label class="span-5 right clear-l float-l required" for="cd_objeto"><?php echo $this->translate('L_VIEW_OBJETO_CONTRATO') ?>:</label>
+		<?php echo $this->formSelect('cd_objeto',null,array('class'=>'float-l'),$this->arrObjeto); ?>
+    
+    <label class="span-5 float-l clear-l right required" for="ni_solicitacao"><?php echo $this->translate('L_VIEW_NUMERO_SOLICITACAO') ?>:</label>
+    	<?php echo $this->formText('ni_solicitacao',null,array('class'=>'span-3 float-l')) ?>
+
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->translate('L_BTN_GERAR') ?></button>
+</form>

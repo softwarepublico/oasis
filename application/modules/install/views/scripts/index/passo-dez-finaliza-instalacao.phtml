@@ -1,0 +1,50 @@
+<h2 class="center"><?php echo $this->escape($this->translate('L_MSG_SUCESS_INSTALACAO_SISTEMA')) ?></h2>
+<br />
+<div class="float-l clear-l span-21">
+	<?php
+		$arrArquivoConstantes = file($this->arqConst);
+		foreach($this->arrConstante as $const=>$valor){
+			foreach($arrArquivoConstantes as $key=>$string){
+				if(!empty($string)){
+					$pos = strpos(trim($string), $const);
+					if ($pos !== false) {
+						$define = 'define("'.$const.'","'.$valor.'");'.PHP_EOL;
+						$arrArquivoConstantes[$key] = $define;
+						break;
+					}
+				}
+			}
+		}
+		$stringDefine = "";
+		foreach($arrArquivoConstantes as $value){
+			if(!empty($value)){
+				$stringDefine .= $value;
+			}
+		}
+		$fp = fopen($this->arqConst, "w");
+		if(false === @fwrite($fp, $stringDefine)){
+			echo '<p style="margin-left: 30px; margin-top: -15px;" class="float-l clear-l span-20">
+					<label class="float-l">
+						<span>'.$this->escape($this->translate('L_MSG_ERRO_CONFIGURAR_ARQUIVO_INSTALADOR')).'</span>
+					</label>
+				</p>';
+		} else {
+			echo '<p style="margin-left: 30px; margin-top: -15px;" class="float-l clear-l span-20">
+					<label class="float-l">
+						<span>'.$this->escape($this->translate('L_MSG_SUCESS_REALIZACAO_CONFIGURACOES')).'</span>
+					</label>
+				</p>';
+		}
+		fclose($fp);
+	?>
+	<p style="margin-left: 30px; margin-top: -15px;" class="float-l clear-l span-20">
+		<label class="float-l">
+			<span><?php echo $this->escape($this->translate('L_MSG_BOM_FUNCIONAMENTO_LER_MANUAL_INFORMACOES_GERAIS')) ?></span>
+		</label>
+	</p>
+	<p style="margin-left: 30px; margin-top: -15px;" class="float-l clear-l span-20">
+		<label class="float-l">
+			<span><?php echo $this->translate('L_MSG_LINK_ACESSO_SISTEMA') ?></span>
+		</label>
+	</p>
+</div>

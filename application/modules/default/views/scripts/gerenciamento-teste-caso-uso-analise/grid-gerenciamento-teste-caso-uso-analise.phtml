@@ -1,0 +1,145 @@
+<script type="text/javascript" defer="defer">
+$(document).ready(function() {
+    // call the tablesorter plugin
+    $("#tableCasoDeUsoAnalise_gerenciamentoTeste").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableCasoDeUsoAnalise_gerenciamentoTeste").tablesorterPager({container: $("#pagerCasoDeUsoAnalise_gerenciamentoTeste")});
+
+});
+</script>
+<table  id="tableCasoDeUsoAnalise_gerenciamentoTeste" cellspacing="1" class="tablesorter">
+    <thead>
+        <tr>
+            <th class="{sorter: false}" width="35%"><?php echo $this->escape($this->translate('L_VIEW_GRID_ITEM_TESTE')) ?></th>
+            <th class="{sorter: false}" width="12%"><?php echo $this->escape($this->translate('L_VIEW_GRID_DATA_ULTIMA_HOMOLOGACAO')) ?></th>
+            <th class="{sorter: false}" width="53%"><?php echo $this->escape($this->translate('L_VIEW_GRID_RELATO_TESTE')) ?></th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php
+    if($this->res){
+        foreach ($this->res as $res):
+            $idLinha = "tr_{$res['cd_item_teste_caso_de_uso']}__{$res['cd_item_teste']}";
+            if($res['st_item_teste_caso_de_uso'] == "F"){
+                $res['tx_analise']                = '';
+                $res['cd_item_teste_caso_de_uso'] = '';
+                $res['qtd_arquivo']               = '';
+            }
+    ?>
+    <tr <?php echo ($res['st_obrigatorio']=='S')?' title="'.$this->escape($this->translate('L_MSG_ALERT_ITEM_TESTE_OBRIGATORIO')).'" ':''; ?> id="<?php echo $idLinha; ?>">
+        <td class="middle">
+            <?php
+                if($res['st_obrigatorio']=='S'):
+            ?>
+            <img src="<?php echo $this->baseUrl(); ?>/public/img/u42.png" title="<?php echo $this->escape($this->translate('L_MSG_ALERT_ITEM_TESTE_OBRIGATORIO')) ?>" />
+            <?php
+                endif;
+                if( (int)$res['qtd_arquivo']>0 ):
+                    $testoAnexo = $this->escape(Base_Util::getTranslator('L_MSG_ALERT_ITEM_TESTE_COM_XX_ANEXO', $res['qtd_arquivo']));
+            ?>
+            <img src="<?php echo $this->baseUrl(); ?>/public/img/anexo.png" title="<?php echo $testoAnexo; ?>" />
+            <?php
+                    echo "({$res['qtd_arquivo']})<br />";
+                elseif($res['st_obrigatorio']=='S'):
+                    echo "<br />";
+                endif;
+                echo "{$res['ni_ordem_item_teste']} - {$res['tx_item_teste']}";
+            ?>
+        </td>
+        <td class="center middle">
+            <?php echo date('d/m/Y', strtotime($res['dt_homologacao'])); ?>
+        </td>
+        <td style="text-align:center" class="span-3">
+            <input type="hidden"
+                   id="cd_item_teste_caso_de_uso__<?php echo $res['cd_item_teste'] ?>"
+                   name="cd_item_teste_caso_de_uso__<?php echo $res['cd_item_teste'] ?>"
+                   value="<?php echo $res['cd_item_teste_caso_de_uso']; ?>" />
+            <textarea id="tx_analise__<?php echo $res['cd_item_teste'] ?>"
+                      name="tx_analise__<?php echo $res['cd_item_teste'] ?>"
+                      class="float-l"
+                      style="height: 85px;width: 320px"><?php echo $res['tx_analise']; ?></textarea>
+            <div class="float-r" style="width: 95px">
+                <?php
+                if($res['st_item_teste_caso_de_uso'] != "F"){
+                    echo $this->formButton(
+                             "btn_solucionar_casoDeUso_analise_gerenciamentoTeste__{$res['cd_item_teste']}",
+                             (!is_null($res['st_solucao']) ? $this->escape($this->translate('L_BTN_RETORNAR')) : $this->escape($this->translate('L_BTN_SOLUCIONAR'))),
+                             array(
+                                 'class'    =>  'azul float-l',
+                                 'style'    =>  'width:91px',
+                                 'onclick'  =>  "salvarGerenciamentoTeste('casoDeUso_analise','{$idLinha}',$(this).parent().prev())"
+                        ));
+                    if( !is_null($res['st_solucao']) ){
+                        echo $this->formButton(
+                                 "btn_homologar_casoDeUso_analise_gerenciamentoTeste__{$res['cd_item_teste']}",
+                                 $this->escape($this->translate('L_BTN_HOMOLOGAR')),
+                                 array(
+                                     'class'    =>  'verde float-l',
+                                     'style'    =>  'margin-top:3px;width:91px',
+                                     'onclick'  =>  "salvarGerenciamentoTeste('casoDeUso_analise','{$idLinha}',$(this).parent().prev(),'H')"
+                            ));
+                    }
+                } else {
+                    echo $this->formButton(
+                             "btn_solucionar_casoDeUso_analise_gerenciamentoTeste__{$res['cd_item_teste']}",
+                             $this->escape($this->translate('L_BTN_SOLUCIONAR')),
+                             array(
+                                 'class'    =>  'azul float-l',
+                                 'style'    =>  'width:91px',
+                                 'onclick'  =>  "salvarGerenciamentoTeste('casoDeUso_analise','{$idLinha}',$(this).parent().prev())"
+                        ));
+                }
+                echo $this->formButton(
+                         "btn_upload_casoDeUso_analise_gerenciamentoTeste__{$res['cd_item_teste']}",
+                         $this->escape($this->translate('L_BTN_ANEXAR_IMAGEM')),
+                         array(
+                             'class'    =>  'float-l',
+                             'style'    =>  'margin-top:3px;width:91px',
+                             'onclick'  =>  'abreDialogUpload('. str_replace('"',"'",json_encode($res)) .',$(this).parent().prev(),\'casoDeUso_analise\')'
+                    ));
+                echo $this->formButton(
+                     "btn_historico_casoDeUso_analise_gerenciamentoTeste__{$res['cd_item_teste']}",
+                     $this->escape($this->translate('L_BTN_VER_HISTORICO')),
+                     array(
+                         'class'    =>  'float-l',
+                         'style'    =>  'margin-top:3px;width:91px',
+                         'onclick'  =>  'abreHistorico('. str_replace('"',"'",json_encode($res)) .',\'casoDeUso_analise\')'
+                ));
+                ?>
+            </div>
+        </td>
+    </tr>
+    <?php
+        endforeach;
+    } else {
+        echo '<tr><td colspan="3" style="text-align:center"> '.$this->escape($this->translate('L_VIEW_SEM_REGISTRO')).' </td></tr>';
+    }
+    ?>
+    </tbody>
+</table>
+<div id="pagerCasoDeUsoAnalise_gerenciamentoTeste" class="pager">
+    <form>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+        <input type="text" class="pagedisplay"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+        <select class="pagesize">
+            <option selected="selected"  value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+        </select>
+    </form>
+</div>
+<div class="clear">
+
+    <?php
+        echo $this->formButton(
+                 'btn_cancelar_casoDeUso_analise_gerenciamentoTeste',
+                 $this->escape($this->translate('L_BTN_CANCELAR')),
+                 array(
+                     'class' => 'vermelho float-r',
+                     'onclick' => "habilitaAbaGerenciamentoTeste('casoDeUso',true)"
+             ));
+     ?>
+</div>

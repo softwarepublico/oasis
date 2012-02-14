@@ -1,0 +1,66 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableAnaliseMedicao").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableAnaliseMedicao").tablesorterPager({container: $("#tableAnaliseMedicaoPager")}); 
+});
+</script>
+<table id="tableAnaliseMedicao" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th class="span-8"><?php echo $this->escape($this->translate('L_VIEW_GRID_MEDICAO'     )) ?></th>
+			<th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_BOX'         )) ?></th>
+			<th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_DATA_ANALISE')) ?></th>
+			<th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_ACAO'        )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res->valid()){
+		foreach ($this->res as $res):
+	?>
+		<tr>
+			<?php 
+			    $fim = "";
+				if(strlen($res->tx_medicao) >= 70){
+					$fim = "...";
+				}
+				$tx_medicao = substr($res->tx_medicao,0,70)
+			?>
+			<td style="cursor: pointer;" onClick="recuperaDadosAnaliseMedicao('<?php echo $res->dt_analise_medicao; ?>', <?php echo $res->cd_medicao; ?>, <?php echo $res->cd_box_inicio; ?>)"><?php echo $tx_medicao.$fim; ?></td>
+			<td style="cursor: pointer;" onClick="recuperaDadosAnaliseMedicao('<?php echo $res->dt_analise_medicao; ?>', <?php echo $res->cd_medicao; ?>, <?php echo $res->cd_box_inicio; ?>)"><?php echo $res->tx_titulo_box_inicio; ?></td>
+			<td style="cursor: pointer;" onClick="recuperaDadosAnaliseMedicao('<?php echo $res->dt_analise_medicao; ?>', <?php echo $res->cd_medicao; ?>, <?php echo $res->cd_box_inicio; ?>)"><?php echo date('d/m/Y', strtotime($res->dt_analise_medicao)); ?></td>
+			<td><?php
+				echo $this->formButton('btn_decisao', $this->escape($this->translate('L_BTN_DECISAO')), array('class'=>'verde','onclick'=>"gerarDecisao('{$res->dt_analise_medicao}',{$res->cd_medicao},{$res->cd_box_inicio})"));
+				?>
+			</td>
+			
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo " <tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			  </tr>";
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableAnaliseMedicaoPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="05">05</option>
+			<option value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+		</select>
+	</form>
+</div>

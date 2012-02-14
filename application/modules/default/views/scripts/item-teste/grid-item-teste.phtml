@@ -1,0 +1,59 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	// call the tablesorter plugin
+    $("#tableItemTeste").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableItemTeste").tablesorterPager({container: $("#tableItemTestePager")});
+});
+</script>
+<table id="tableItemTeste" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th width="7%"><?php echo $this->escape($this->translate('L_VIEW_GRID_ORDEM')) ?></th>
+            <th width="56%"><?php echo $this->escape($this->translate('L_VIEW_GRID_ITEM_TESTE')) ?></th>
+            <th width="10%" class="center"><?php echo $this->escape($this->translate('L_VIEW_GRID_ATIVO')) ?></th>
+            <th width="12%" class="center"><?php echo $this->escape($this->translate('L_VIEW_GRID_OBRIGATORIO')) ?></th>
+            <th width="25%"><?php echo $this->escape($this->translate('L_VIEW_GRID_TIPO_TESTE')) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+
+	if($this->res){
+		foreach ($this->res as $res):
+	?>
+		<tr onClick="redirecionaItemTeste(<?php echo $res['cd_item_teste'] ?>)" style="cursor:pointer;">
+			<td><?php echo $res['ni_ordem_item_teste'] ?></td>
+			<td><?php echo $res['tx_item_teste'] ?></td>
+			<td class="center"><?php echo ($res['st_item_teste']=='A')?"<img src=\"{$this->baseUrl()}/public/img/u42.png\">":""; ?></td>
+			<td class="center"><?php echo  ($res['st_obrigatorio']=='S')?"<img src=\"{$this->baseUrl()}/public/img/u42.png\">":""; ?></td>
+			<td><?php echo  $this->arrTipoItemTeste[$res['st_tipo_item_teste']]; ?></td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo '<tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>';
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableItemTestePager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

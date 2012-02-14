@@ -1,0 +1,107 @@
+<?php 
+	$this->script('tab'); 
+ 	$this->script('grid');
+?>
+<script type="text/javascript">
+	$(document).ready(function() { 
+		$('#container-gerenciarProjeto').show().tabs(); 
+	});
+</script>
+<div id="container-gerenciarProjeto" style="display: none;">
+	<ul>
+    <?php if (ChecaPermissao::possuiPermissao('gerenciar-projetos-solicitacao') === true): ?>
+    	<li>
+            <a href="#solicitacaoServico">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_SOLICITACOES')) ?></span>
+            </a>
+        </li>
+    <?php endif;?>
+    <?php if (ChecaPermissao::possuiPermissao('gerenciar-projetos-elaboracao') === true): ?>
+        <li>
+            <a href="#elaboracaoProposta">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_ELABORACAO_PROPOSTA')) ?></span>
+            </a>
+        </li>
+    <?php endif;?>
+    <?php if (ChecaPermissao::possuiPermissao('gerenciar-projetos-execucao-proposta') === true): ?>
+        <li>
+            <a href="#execucaoProposta">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_EXECUCAO_PROPOSTA')) ?></span>
+            </a>
+        </li>
+    <?php endif;?>
+    <?php if (ChecaPermissao::possuiPermissao('gerenciar-projetos-pre-projeto') === true): ?>
+        <li>
+            <a href="#preProjeto">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PRE_PROJETO')) ?></span>
+            </a>
+        </li>
+    <?php endif;?>
+    <?php if (ChecaPermissao::possuiPermissao('gerenciar-projetos-solicitacao') === true): ?>
+    	<li>
+            <a href="#consultaSolicitacaoServico">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_CONSULTA')) ?></span>
+            </a>
+        </li>
+        <li id="li-detalhe-solicitacao" style="display: none;">
+            <a href="#tab-detalhe-solicitacao">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_DETALHE_SOLICITACAO')) ?></span>
+            </a>
+        </li>
+    <?php endif;?>
+    <?php if (ChecaPermissao::possuiPermissao('calculadora-metrica') === true): ?>
+ 		<li>
+            <a href="#calculadoraMetrica" onclick="verificaExistenciaMetricaPadrao();">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_CALCULO_METRICA')) ?></span>
+            </a>
+        </li>
+    <?php endif;?>
+    <?php if (ChecaPermissao::possuiPermissao('status-projeto') === true): ?>
+		<li>
+            <a href="#statusProjeto">
+                <span><?php echo $this->escape($this->translate('L_VIEW_STATUS_PROJETO')) ?></span>
+            </a>
+        </li>
+    <?php endif;?>
+    
+    </ul>
+    	<?php if(ChecaPermissao::possuiPermissao('gerenciar-projetos-solicitacao') === true): ?>
+    <div id="solicitacaoServico">
+    	<?php echo $this->render('gerenciar-projetos-solicitacao/index.phtml') ?>
+    </div>
+	    <?php endif;?>
+	    <?php if(ChecaPermissao::possuiPermissao('gerenciar-projetos-elaboracao') === true): ?>
+    <div id="elaboracaoProposta">
+    	<?php echo $this->render('gerenciar-projetos-elaboracao/index.phtml') ?>
+    </div>
+	    <?php endif;?>
+	    <?php if(ChecaPermissao::possuiPermissao('gerenciar-projetos-execucao-proposta') === true): ?>
+    <div id="execucaoProposta">
+        <?php echo $this->render('gerenciar-projetos-execucao-proposta/index.phtml') ?>
+    </div>
+	    <?php endif;?>
+	    <?php if(ChecaPermissao::possuiPermissao('gerenciar-projetos-pre-projeto') === true): ?>
+    <div id="preProjeto">
+        <?php echo $this->render('gerenciar-projetos-pre-projeto/index.phtml') ?>
+    </div>
+	    <?php endif;?>
+    	<?php if(ChecaPermissao::possuiPermissao('gerenciar-projetos-solicitacao') === true): ?>
+    <div id="consultaSolicitacaoServico">
+    	<?php echo $this->render('gerenciar-projetos-solicitacao/solicitacao-servico-consulta.phtml') ?>
+    </div>
+    <div id="tab-detalhe-solicitacao">
+    	<div id="detalhe-solicitacao" class="clear divTab"></div>
+    </div>        
+	    <?php endif;?>
+        <?php if (ChecaPermissao::possuiPermissao('calculadora-metrica') === true): ?>
+    <div id="calculadoraMetrica">
+   	<?php echo $this->render('calculadora-metrica/calculadora.phtml') ?>
+    </div>        
+        <?php endif;?>
+        <?php if (ChecaPermissao::possuiPermissao('status-projeto') === true): ?>
+    <div id="statusProjeto">
+    	<?php echo $this->render('status-projeto/index.phtml') ?>
+    </div>        
+        <?php endif;?>
+
+</div>

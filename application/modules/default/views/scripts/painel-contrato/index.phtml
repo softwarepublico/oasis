@@ -1,0 +1,13 @@
+<?php
+    $this->script('scriptFile',array('/painel-contrato/index.js'));
+?>
+<div class="clear" style="background-color:fbfbfb; overflow:hidden; height:34px; border:1px solid rgb(84, 189, 205); background-color:rgb(230, 238, 238);">
+	<div class="span-17" style="padding-top:5px; padding-left:5px; overflow:hidden;">
+		<?php echo $this->formSelect('st_situacao_lista_contrato', null, array('class' => 'span-4 float-l', 'style' => 'margin-right: 10px;'), $this->comboSituacao) ?>
+		<?php echo $this->formSelect('cd_empresa_lista_contrato', null, array('class' => 'span-3 float-l')) ?>
+	</div>
+	<div class="float-r" style="padding:2px; height:36px;">
+        <?php echo $this->formButton('novo_contrato', $this->escape($this->translate('L_BTN_NOVO_CONTRATO')),array('class'=>'azul','style'=>'margin-top:4px;'))?>
+	</div>
+</div>
+<div id="grid_painel_contrato"></div>

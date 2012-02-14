@@ -1,0 +1,51 @@
+<?php
+	$this->script('tab'); 
+	$this->script('grid');
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/painel-demanda/index.js'));
+?>
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#containerDemanda').show().tabs(); 
+});
+</script>
+<div id="containerDemanda" style="display: none;">
+	<ul>
+    	<li>
+            <a href="#demanda-andamento">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_DEMANDAS_ANDAMENTO')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#demanda-executada">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_DEMANDAS_EXECUTADAS')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#demanda-concluida">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_DEMANDAS_CONCLUIDAS')) ?></span>
+            </a>
+        </li>
+        <li id="li-profissional-designado" style="display: none;">
+            <a href="#tab-profissional-designado">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PROFISSIONAL_DESIGNADO')) ?></span>
+            </a>
+        </li>
+        <!-- <li><a href="#demanda-consulta"><span><?php //echo $this->escape($this->translate('L_VIEW_ABA_CONSULTA')) ?></span></a></li> -->
+    </ul>
+    <div id="demanda-andamento">
+    	<?php echo $this->render('painel-demanda/demanda-andamento.phtml') ?>
+    </div>
+    <div id="demanda-executada">
+    	<?php echo $this->render('painel-demanda/demanda-executada.phtml') ?>
+    </div>
+    <div id="demanda-concluida">
+    	<?php echo $this->render('painel-demanda/demanda-concluida.phtml') ?>
+    </div>
+    <div id="tab-profissional-designado">
+    	<div id="profissional-designado" class="clear divTab"></div>
+    </div> 
+    <!-- <div id="demanda-consulta">
+    	<?php //echo $this->render('solicitacao-tipo-demanda/solicitacao-tipo-demanda-consulta.phtml') ?>
+    </div> -->
+</div>

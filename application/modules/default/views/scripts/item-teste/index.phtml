@@ -1,0 +1,20 @@
+<?php
+    $this->script('grid');
+    $this->script('validaForm');
+    $this->script('numero');
+    $this->script('scriptFile',array('/item-teste/index.js'));
+    
+    echo $this->form;
+?>
+<hr />
+<div id="gridItemTeste"></div>
+<script type="text/javascript">
+$(document).ready(function(){
+    var erroOrdem = '<?php echo $this->erroOrdem ?>';
+    if(erroOrdem!=''){
+        alertMsg(erroOrdem,3,function(){
+            redirecionaItemTeste();
+        });
+    }
+});
+</script>

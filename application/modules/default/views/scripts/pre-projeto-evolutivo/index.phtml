@@ -1,0 +1,8 @@
+<?php
+$this->script('scriptFile',array('/pre-projeto-evolutivo/index.js'));
+echo $this->form;
+echo $this->formButton('adicionarPreProjetoEvolutivo',$this->escape($this->translate('L_BTN_SALVAR')),  array('class'=>'verde buttonBar'));
+echo $this->formButton('alterarPreProjetoEvolutivo',  $this->escape($this->translate('L_BTN_SALVAR')),  array('class'=>'verde buttonBar'));
+echo $this->formButton('excluirPreProjetoEvolutivo',  $this->escape($this->translate('L_BTN_EXCLUIR')), array('class'=>'vermelho buttonBar'));
+echo $this->formButton('cancelarPreProjetoEvolutivo', $this->escape($this->translate('L_BTN_CANCELAR')),array('class'=>'azul buttonBar'));
+?>

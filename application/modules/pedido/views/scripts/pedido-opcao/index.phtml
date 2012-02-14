@@ -1,0 +1,29 @@
+<?php
+    $this->script('grid');
+    $this->script('validaForm');
+    $this->script('numero');
+    $this->script('scriptFile', array('/pedido-opcao/index.js'));
+?>
+
+<form id="form_opcao_resposta">
+
+    <label class="float-l span-2 bold required" for="cd_pergunta_pedido"><?php echo $this->escape($this->translate('L_VIEW_PERGUNTA')) ?>:</label>
+    <?php echo $this->formSelect("cd_pergunta_pedido",null,array('class'=>'float-l span-8'),array('0'=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE')))); ?>
+
+    <label id="lb_tx_ajuda_pergunta" class="float-l clear-l span-2 bold hide" for="cd_pergunta_pedido"><?php echo $this->escape($this->translate('L_VIEW_AJUDA')) ?>:</label>
+    <span id="tx_ajuda_pergunta" class="float-l span-19"></span>
+
+    <label class="float-l clear-l span-2 bold required" for="cd_resposta_pedido"><?php echo $this->escape($this->translate('L_VIEW_RESPOSTA')) ?>:</label>
+    <?php echo $this->formSelect("cd_resposta_pedido",null,array('class'=>'float-l span-8'),$this->respostas); ?>
+
+    <label class="float-l clear-l span-2 bold required" for="st_resposta_texto"><?php echo $this->escape($this->translate('L_VIEW_TIPO')) ?>:</label>
+    <?php echo $this->formSelect("st_resposta_texto",null,array('class'=>'float-l span-4'),$this->tipoResposta); ?>
+
+    <label class="float-l clear-l span-2 bold required" for="ni_ordem_apresenta"><?php echo $this->escape($this->translate('L_VIEW_ORDEM')) ?>:</label>
+    <?php echo $this->formText("ni_ordem_apresenta",null,array('class'=>'float-l span-1', 'maxlength'=>"1", 'onKeyPress'=>'return soNumeros(event)')); ?>
+
+    <?php echo $this->formButton('btn_salvar_opcao',$this->escape($this->translate('L_BTN_SALVAR')),array('class'=>'float-l clear-l push-2 verde'))?>
+    <?php echo $this->formButton('btn_cancelar_opcao',$this->escape($this->translate('L_BTN_CANCELAR')),array('class'=>'float-l push-2 vermelho'))?>
+</form>
+
+<div id="grid_opcao_resposta" class="float-l clear-l push-2"></div>

@@ -1,0 +1,18 @@
+<form id="formModalAcompanhamentoProposta" style="margin-left: 10px;">
+	<?php
+        echo $this->formHidden('cd_projeto', $this->cd_projeto);
+        echo $this->formHidden('cd_proposta', $this->cd_proposta);
+        echo $this->formHidden('cd_perfil');
+    ?>
+
+	<div class="float-l span-14">
+        <label class="float-l span-5 right required" ><?php echo $this->escape($this->translate('L_VIEW_ACOMPANHAMENTO_PROPOSTA')) ?>:</label>
+		<?php echo $this->formTextarea('tx_acompanhamento_proposta', null, array('style' => 'width:345px; height:150px;')) ?>
+	</div>
+	<?php if($_SESSION['oasis_logged'][0]['cd_perfil'] == K_CODIGO_PERFIL_COORDENADOR):	?>
+		<div class="float-l span-14">
+			<label class="float-l span-5 right"><?php echo $this->escape($this->translate('L_VIEW_RESTRITO')) ?>:</label>
+            <input type="checkbox" id="st_restrito" name="st_restrito" value="S" />
+		</div>
+	<?php endif; ?>
+</form>

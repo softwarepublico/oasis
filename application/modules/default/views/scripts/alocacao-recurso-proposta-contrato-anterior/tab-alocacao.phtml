@@ -1,0 +1,221 @@
+<?php
+//    $this->script('scriptFile',array('/alocacao-recurso-proposta-contrato-anterior/tab-alocacao.js'));
+?>
+<script type="text/javascript" defer="defer">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableDadosGerais"      ).tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableProjetosPrevistos").tablesorter({widthFixed: true, widgets: ['zebra']});
+
+    $("#bt_cancelar_alocacao_recurso_proposta_anterior").click(function() {
+		$('#container-proposta').triggerTab(4);
+		$("#li-alocacao").css("display", "none");
+	});
+
+	$("#bt_salvar_alocacao_recurso_proposta_anterior").click(function() {
+
+		if( !validaAlocacao() ){ return false; }
+
+		var postData = $('#formAlocacaoRecursoPropostaAnterior :input').serialize();
+
+		$.ajax({
+			type: "POST",
+			url: systemName+"/alocacao-recurso-proposta-contrato-anterior/salvar",
+			data: postData,
+			success: function(retorno){
+				alertMsg(retorno,2,"fechaTabAlocacao()");
+			}
+		});
+	});
+
+	if ($('#st_parcela_orcamento').val() == '') {
+		$('#formAlocacaoRecursoProposta :input').each(function(){
+			if(this.name.substr(0, 15) == 'modulo_proposta'){
+				this.disabled = true;
+			}
+		});
+	}
+});
+
+function verificaAlocacao()
+{
+    var resultado        = true;
+	var soma_horas       = 0;
+	var saldo            = 0;
+	var valor_alocado    = 0;
+
+	$('#tableProjetosPrevistos :input[id^=cd_projeto_previsto_]').each(function(){
+		if ($(this).val() > 0)
+		{
+			id = $(this).attr('id');
+			codigo = id.replace(/cd_projeto_previsto_/, "");
+
+			valor_alocado = $(this).val();
+			saldo         = $('#saldo_'+codigo).val();
+
+			if (parseFloat(valor_alocado) > parseFloat(saldo)){
+                var arrValues = new Array(valor_alocado,saldo);
+			  	//alertMsg("Valor Alocado ("+valor_alocado+") é Maior que o Saldo do Projeto ("+saldo+")!");
+                alertMsg(getTranslaterJsComVariaveis(i18n.L_VIEW_SCRIPT_VALOR_ALOCADO_MAIOR_SALDO_PROJETO, arrValues));
+				resultado = false;
+			}
+			soma_horas += parseFloat(valor_alocado);
+		}
+	});
+
+    $('#soma_horas').val(soma_horas);
+	return resultado;
+}
+
+function validaAlocacao()
+{
+     var resultado = verificaAlocacao();
+	 if (resultado == true){
+		 if (Math.abs(parseFloat($('#soma_horas').val())) < Math.abs(parseFloat($('#nu_horas_proposta').val()))){
+			var sobra = parseFloat($('#nu_horas_proposta').val()) - parseFloat($('#soma_horas').val());
+
+            var arrValueMsg = new Array(sobra);
+            //confirmMsg('Faltam '+sobra+' horas para completar proposta! Deseja prosseguir?', function(){
+            confirmMsg(getTranslaterJsComVariaveis(i18n.L_VIEW_SCRIPT_FALTAM_HORAS_COMPLETAR_PROPOSTA, arrValueMsg), function(){
+				resultado = true;
+			},function(){
+				resultado = false;
+			});
+		 }
+		 if (Math.abs(parseFloat($('#soma_horas').val())) > Math.abs(parseFloat($('#nu_horas_proposta').val()))){
+
+             var arrValueMsg2 = new array($('#soma_horas').val(),$('#nu_horas_proposta').val());
+			 if (parseFloat($('#soma_horas').val()) > 0){
+                alertMsg(getTranslaterJsComVariaveis(i18n.L_VIEW_SCRIPT_HORA_ALOCADA_MAIOR_HORA_PROPOSTA, arrValueMsg2));
+//				alertMsg("Número de Horas Alocado ("+$('#soma_horas').val()+") é maior que Horas da Proposta ("+$('#nu_horas_proposta').val()+")!");
+				resultado = false;
+			 }
+			 else{
+                 alertMsg(getTranslaterJsComVariaveis(i18n.L_VIEW_SCRIPT_HORA_ALOCADA_MENOR_HORA_PROPOSTA, arrValueMsg2));
+				//alertMsg("Número de Horas Alocado ("+$('#soma_horas').val()+") é menor que Horas da Proposta ("+$('#nu_horas_proposta').val()+")!");
+				resultado = false;
+			 }
+		 }
+		 if (parseFloat($('#soma_horas').val()) > parseFloat($('#soma_total_contrato').val())){
+             var arrValueMsg3 = new array($('#soma_horas').val(),$('#soma_total_contrato').val());
+             alertMsg(getTranslaterJsComVariaveis(i18n.L_VIEW_SCRIPT_HORAS_ALOCADAS_MAIOR_HORAS_ALOCADAS_DENTRO_CONTRATO, arrValueMsg3));
+//			 alertMsg("Número de Horas Alocado ("+$('#soma_horas').val()+") é maior que Horas a Serem Alocadas Dentro do Contrato ("+$('#soma_total_contrato').val()+")!");
+			 resultado = false;
+		 }
+
+		return resultado;
+	 }
+}
+
+function SomaHoras() {
+	var horas     = 0;
+	var total     = 0;
+
+	$('#tableProjetosPrevistos :input[id^=cd_projeto_previsto_]').each(function(){
+		if ($(this).val() > 0)
+		{
+			horas = $(this).val();
+
+			if (horas == ''){
+				horas = 0;
+			}
+			total += parseFloat(horas);
+		}
+	});
+
+	$('#total').val(total);
+}
+
+function fechaTabAlocacao()
+{
+	$('#container-proposta').triggerTab(4);
+	$("#li-alocacao").css("display", "none");
+	gridAlocacaoRecursoPropostaContratoAnteriorAjax();
+}
+
+</script>
+<form method="post" id="formAlocacaoRecursoPropostaAnterior">
+
+    <!-- Campos hidden do projeto e da proposta que está sendo analisada -->
+    <input type="hidden" id="cd_projeto_alocacao_recurso_proposta" name="cd_projeto_alocacao_recurso_proposta" value="<?php echo $this->cd_projeto ?>" />
+    <input type="hidden" id="cd_proposta_alocacao_recurso_proposta" name="cd_proposta_alocacao_recurso_proposta" value="<?php echo $this->cd_proposta ?>" />
+    <input type="hidden" id="soma_horas" name="soma_horas" />
+    <input type="hidden" id="cd_contrato" name="cd_contrato" value="<?php echo $this->cd_contrato ?>">
+    <input type="hidden" id="nu_horas_proposta" name="nu_horas_proposta" value="<?php echo $this->ni_horas_proposta_final ?>">
+    <input type="hidden" id="soma_total_contrato" name="soma_total_contrato" value="<?php echo $this->soma_total ?>">
+
+    <div style="background-color:#fbfbfb;">
+        <div class="highlight" style="padding:5px">
+            <h2><?php echo $this->escape($this->translate('L_VIEW_ALOCACAO_RECURSO_PROPOSTA_CONTRATO_ANTERIOR')) ?></h2>
+        </div>
+        <div style="padding-top:8px; padding-left:10px; padding-right:10px;">
+            <table id="tableDadosGerais" cellspacing="1" class="tablesorter">
+                <thead>
+                <tr>
+                    <th class="{sorter: false}"><?php echo $this->escape($this->translate('L_VIEW_GRID_PROJETO' )) ?>: <?php echo $this->tx_sigla_projeto ?></th>
+                    <th class="{sorter: false}"><?php echo $this->escape($this->translate('L_VIEW_GRID_PROPOSTA')) ?>: <?php echo $this->cd_proposta ?></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><?php echo Base_Util::getTranslator('L_VIEW_SIGLA_UNID_METRICA_PROPOSTA',$this->unidadePadraoMetrica) ?>:</td>
+                    <td><?php echo $this->ni_horas_proposta ?></td>
+                </tr>
+                <tr>
+                    <td><?php echo Base_Util::getTranslator('L_VIEW_SIGLA_UNID_METRICA_ALOCADA_PROPOSTA',$this->unidadePadraoMetrica) ?>:</td>
+                    <td><?php echo $this->horas_alocadas ?></td>
+                </tr>
+                <tr>
+                    <td><?php echo Base_Util::getTranslator('L_VIEW_SIGLA_UNID_METRICA_A_ALOCAR_PERIODO_CONTRATO', $this->unidadePadraoMetrica) ?>:</td>
+                    <td><?php echo $this->soma_total ?></td>
+                </tr>
+                <tr>
+                    <td><?php echo Base_Util::getTranslator('L_VIEW_SIGLA_UNID_METRICA_A_ALOCAR',$this->unidadePadraoMetrica) ?>:</td>
+                    <td><?php echo $this->soma_total ?></td>
+                </tr>
+                </tbody>
+            </table>
+            <hr />
+            <table id="tableProjetosPrevistos" cellspacing="1" class="tablesorter">
+                <thead>
+                <tr>
+                    <th class="{sorter: false} span-11"><?php echo $this->escape($this->translate('L_VIEW_GRID_LISTA')) ?></th>
+                    <th class="{sorter: false} span-2"><?php echo $this->unidadePadraoMetrica." ".$this->escape($this->translate('L_VIEW_GRID_TOTAIS')) ?></th>
+                    <th class="{sorter: false}"><?php echo $this->escape($this->translate('L_VIEW_GRID_CREDITOS')) ?></th>
+                    <th class="{sorter: false}"><?php echo $this->escape($this->translate('L_VIEW_GRID_DEBITOS' )) ?></th>
+                    <th class="{sorter: false}"><?php echo $this->escape($this->translate('L_VIEW_GRID_SALDO'   )) ?></th>
+                    <th class="{sorter: false} span-2"><?php echo $this->unidadePadraoMetrica." ".$this->escape($this->translate('L_VIEW_GRID_ALOCACAO')); ?></th>
+                </tr>
+                <tr>
+                    <th colspan="5" class="{sorter: false}">&nbsp;</th>
+                    <th class="center; {sorter: false}" style="color:red"><?php echo round((float)$this->soma_total - (float)$this->nu_horas_alocado_contrato_atual,1) ?></th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                foreach ($this->arrProjeto as $projeto): ?>
+                <tr>
+                    <td style="padding-left:10px;"><?php echo $projeto->tx_projeto_previsto ?></td>
+                    <td><?php echo $projeto->ni_horas_projeto_previsto ?></td>
+                    <td><?php echo $this->arrHorasProjetoPrevisto[$projeto->cd_projeto_previsto]['credito']  ?></td>
+                    <td><?php echo $this->arrHorasProjetoPrevisto[$projeto->cd_projeto_previsto]['debito']  ?></td>
+                    <td>
+                        <?php echo $this->arrHorasProjetoPrevisto[$projeto->cd_projeto_previsto]['total']  ?>
+                        <input type="hidden" id="saldo_<?php echo $projeto->cd_projeto_previsto ?>" name="saldo[<?php echo $projeto->cd_projeto_previsto ?>]" value="<?php echo $this->arrHorasProjetoPrevisto[$projeto->cd_projeto_previsto]['total'] ?>">
+                    </td>
+                    <td>
+                        <input type="text" id="cd_projeto_previsto_<?php echo $projeto->cd_projeto_previsto ?>" name="cd_projeto_previsto[<?php echo $projeto->cd_projeto_previsto ?>]" size="15" maxlength="10" value="">
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+
+        <hr />
+        <div class="gradient-b" style="margin-top:5px;">
+            <?php echo $this->formButton('bt_cancelar_alocacao_recurso_proposta_anterior', mb_strtoupper($this->escape($this->translate('L_BTN_CANCELAR')), 'utf-8'), array('class' => 'float-l vermelho'), null);?>
+            <?php echo $this->formButton('bt_salvar_alocacao_recurso_proposta_anterior', mb_strtoupper($this->escape($this->translate('L_BTN_SALVAR')), 'utf-8'), array('class' => 'float-r verde'), null);?>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,12 @@
+<div id="tabelaAtor" class="divTab">
+	<label class="float-l span-1 clear-l required" for="tx_ator">Ator:</label>
+   <?php
+		echo $this->formHidden('cd_ator');
+		echo $this->formText('tx_ator','',array('size'=>75, 'class'=>'span-9 float-l'));
+
+		echo $this->formButton('adicionarAtor', $this->escape($this->translate('L_BTN_SALVAR')), array('class' => 'verde', 'style' => 'margin-top:1px;'));
+		echo $this->formButton('alterarAtor', $this->escape($this->translate('L_BTN_ALTERAR')), array('class' => 'verde', 'style' => 'margin-top:1px;'));
+		echo $this->formButton('cancelarAtor', $this->escape($this->translate('L_BTN_CANCELAR')), array('class' => 'vermelho', 'style' => 'margin-top:1px;'));
+	?>
+	<div id="gridAtor" class="float-l span-12 clear-l push-1"></div>
+</div>

@@ -1,0 +1,35 @@
+<div id="div_detalhe_parecer_tecnico_proposta" style="margin-left: 10px;">
+
+	<label class="float-l span-5 bold"><?php echo $this->translate('L_VIEW_PROJETO') ?>:</label>
+		<span class="float-l bold"><?php echo $this->tx_sigla_projeto; ?></span>
+
+	<div class="float-l height-5 span-14" style="overflow-x: hidden; overflow-x: auto; text-align: justify;">
+
+	<?php foreach ($this->arrItemParecerTecnico as $itemParecerTecnico): ?>
+			<div class="float-l clear-l">
+
+			<label class="float-l clear-l span-5"><?php echo $itemParecerTecnico->tx_item_parecer_tecnico ?>:</label>
+			<span>
+			<?php foreach ($this->arrParecerTecnico as $avaliacao):
+					if ($itemParecerTecnico->cd_item_parecer_tecnico == $avaliacao->cd_item_parecer_tecnico):
+						echo $this->arrAvaliacao[$avaliacao->st_avaliacao];
+					endif;
+			?>
+			</span>
+			<?php endforeach; ?>
+			</div>
+	<?php endforeach; ?>
+	</div>
+
+	<div class="float-l">
+        <label class="span-5 float-l clear-l"><?php echo $this->escape($this->translate('L_VIEW_DATA_PARECER_TECNICO')) ?>:</label>
+			<span class="span-5 float-l"><?php echo $this->dt_parecer_tecnico_proposta ?></span>
+		<label class="span-5 float-l clear-l"><?php echo $this->escape($this->translate('L_VIEW_PROFISSIONAL')) ?>:</label>
+			<span class="span-9 float-l" style="text-align: justify;"><?php echo $this->profissional_parecer_tecnico_proposta ?></span>
+		<label class="span-5 float-l clear-l"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACOES')) ?>:</label>
+			<div class="span-9 float-l height-3" style="overflow-x: hidden; overflow-x: auto; margin-bottom: 5px;text-align: justify;">
+				<?php echo $this->tx_obs_parecer_tecnico_prop ?>
+			</div>
+	</div>
+
+</div>

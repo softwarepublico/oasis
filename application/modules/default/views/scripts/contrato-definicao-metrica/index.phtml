@@ -1,0 +1,44 @@
+<?php
+    $this->script('scriptFile',array('/contrato-definicao-metrica/index.js'));
+?>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#config_hidden_metrica_contrato").val('N');
+});
+
+function configAccordionMetricaContrato()
+{
+	if($("#config_hidden_metrica_contrato").val() === 'N'){
+		comboGroupContrato('P', 'cd_contrato_associa_metrica_contrato');
+		$("#config_hidden_metrica_contrato").val('S');
+	}
+}
+</script>
+<div style="margin-left:19px;">
+	<label class="float-l bold span-2"><?php echo $this->translate('L_VIEW_CONTRATO') ?>:</label>
+		<?php echo $this->formSelect('cd_contrato_associa_metrica_contrato', null, array('class'=>'float-l'), null); ?>
+
+	<div class="span-9 float-l clear-l">
+		<label class="bold"><?php echo $this->escape($this->translate('L_VIEW_DEFINICOES_METRICA')) ?></label>
+		<?php
+			echo $this->formSelect('cd_definicao_metrica', null, array('multiple' => 'multiple', 'size' => '5', 'class' => 'span-9', 'style' => 'height: 150px;'), $this->metricas)."<br>";
+		?>		
+	</div>
+	<div class="span-2" style="position:relative; left:16px; top:62px">
+		<?php
+			echo $this->formButton('add_metrica_contrato', '>>');
+			echo $this->formButton('remove_metrica_contrato', '<<', array('style' => 'margin-top:10px;'));
+		?>	
+	</div>
+	<div class="span-9">
+		<label class="bold"><?php echo $this->escape($this->translate('L_VIEW_DEFINICOES_METRICA_ASSOCIADAS')) ?></label>
+		<?php
+			echo $this->formSelect('cd_definicao_metrica2', null, array('multiple' => 'multiple', 'size' => '5', 'class' => 'span-9', 'style' => 'height: 150px;'), $this->metricas2);
+		?>		
+	</div>
+
+	<div id="gridMetricaAssociadaContrato" class="float-l clear-l span-20" style="padding-top:15px"></div>
+
+	<div class="float-l clear-l accordionBottom" style="min-height: 5px;"></div>
+
+</div>

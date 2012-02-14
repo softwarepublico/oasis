@@ -1,0 +1,78 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableBoxInicio").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableBoxInicio").tablesorterPager({container: $("#tableBoxInicioPager")}); 
+});
+</script>
+<table id="tableBoxInicio" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+			<th class="{sorter:false}" style="width: 10px;">&nbsp;</th>
+            <th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_NOME_BOX'  )) ?></th>
+			<th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_TITULO_BOX')) ?></th>
+			<th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_TIPO_BOX'  )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+	?>
+    <tr>
+		<td>
+            <img id="imgExcluir"
+                 height="13"
+                 width="13"
+                 style="cursor:pointer; text-align: center;"
+                 onclick="excluirBoxInicio('<?php echo $res['cd_box_inicio'] ?>');"
+                 src="<?php echo $this->baseUrl()?>/public/img/del.png"
+                 alt="<?php echo $this->escape($this->translate('L_BTN_EXCLUIR')) ?>"/>
+        </td>
+        <td onclick="redirecionaBoxInicio(<?php echo $res['cd_box_inicio'] ?>)" style="cursor:pointer;"><?php echo $res['tx_box_inicio'] ?></td>
+        <td onclick="redirecionaBoxInicio(<?php echo $res['cd_box_inicio'] ?>)" style="cursor:pointer;"><?php echo $res['tx_titulo_box_inicio'] ?></td>
+        <td onclick="redirecionaBoxInicio(<?php echo $res['cd_box_inicio'] ?>)" style="cursor:pointer;">
+            <?php 
+				switch ($res['st_tipo_box_inicio']) {
+					case "A":
+						echo $this->escape($this->translate('L_VIEW_AMBOS'));
+						break;
+					case "P":
+						echo $this->escape($this->translate('L_VIEW_PROJETO'));
+						break;
+					case "D":
+						echo $this->escape($this->translate('L_VIEW_DEMANDA'));
+						break;
+					default:
+						break;
+				}
+            ?>
+        </td>
+	</tr>	
+	<?php
+		endforeach;
+	} else {
+		echo " <tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+			   </tr>";
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableBoxInicioPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

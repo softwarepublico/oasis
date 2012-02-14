@@ -1,0 +1,13 @@
+<div id="tabOcorrenciaAdministrativa" style="overflow:hidden;">
+    <div class="clear boxTab">
+        <label class="float-l" style="margin-top:2px; font-size:20px;" id="mesAnoDesc"><?php echo $this->mesAno ?></label>
+        <label class="float-r" style="margin-top:2px;"><button id="nova_ocorrencia" class="azul"><?php echo $this->escape($this->translate('L_BTN_NOVA_OCORRENCIA')) ?></button></label>
+
+        <label class="float-r" style="margin-top:2px;"><?php echo $this->anoCombo('anoOcorrenciaAdministrativa',$this->anoComboValue,null,1) ?></label>
+        <label class="float-r" style="margin-top:2px;"><?php echo $this->mesCombo('mesOcorrenciaAdministrativa',$this->mesComboValue,array('style'=>'width:92px;')) ?></label>
+
+        <label class="float-r" style="margin-top:2px;"><?php echo $this->formSelect('cd_contrato_ocorrencia_adm','',array('class'=>'span-4')) ?></label>
+    </div>
+	<div id="gridOcorrenciaAdministrativa" class="float-l clear-l span-21"></div>
+</div>
+<div id="teste"></div>

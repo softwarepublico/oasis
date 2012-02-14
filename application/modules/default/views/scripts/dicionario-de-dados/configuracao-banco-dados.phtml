@@ -1,0 +1,32 @@
+<!-- O java script desta tela esta no phtml do index de execução da proposta -->
+<div style="overflow:hidden;" id="configuracao-banco-dados">
+
+    <label class="float-l span-6 clear-l right required" for="tx_adapter"><?php echo $this->escape($this->translate('L_VIEW_NOME_BANCO_DADOS')) ?>:</label>
+    <?php echo $this->formSelect('tx_adapter', $this->tx_adapter, array('class'=>'float-l'), $this->comboBancoDados) ?>
+    
+    <label class="float-l span-6 clear-l right required" for="tx_host"><?php echo $this->escape($this->translate('L_VIEW_SERVIDOR')) ?>:</label>
+    <?php echo $this->formText('tx_host', $this->tx_host, array('class'=>'float-l','maxlength'=>'100')) ?>
+
+    <label class="float-l span-6 clear-l right required" for="tx_port"><?php echo $this->escape($this->translate('L_VIEW_PORTA')) ?>:</label>
+    <?php echo $this->formText('tx_port', $this->tx_port, array('class'=>'float-l','maxlength'=>'100')) ?>
+    
+    <label class="float-l span-6 clear-l right required" for="tx_dbname"><?php echo $this->escape($this->translate('L_VIEW_NOME_BANCO_DADOS')) ?>:</label>
+    <?php echo $this->formText('tx_dbname', $this->tx_dbname, array('class'=>'float-l','maxlength'=>'100')) ?>
+
+    <div id="schema">
+        <label id="label_schema" class="float-l span-6 clear-l right" for="tx_schema"><?php echo $this->escape($this->translate('L_VIEW_SCHEMA')) ?>:</label>
+        <?php echo $this->formText('tx_schema', $this->tx_schema, array('class'=>'float-l','maxlength'=>'100')) ?>
+    </div>
+    
+    <label class="float-l span-6 clear-l right required" for="tx_username"><?php echo $this->escape($this->translate('L_VIEW_USUARIO_ACESSO')) ?>:</label>
+    <?php echo $this->formText('tx_username', $this->tx_username, array('class'=>'float-l','maxlength'=>'100')) ?>
+    
+    <label class="float-l span-6 clear-l right required" for="tx_password"><?php echo $this->escape($this->translate('L_VIEW_SENHA_ACESSO')) ?>:</label>
+    <?php echo $this->formPassword('tx_password', $this->tx_password, array('class'=>'float-l','maxlength'=>'100','renderPassword'=>true)); ?>
+
+    <?php
+        echo "<hr>";
+        echo $this->formButton('salvarConfigBanco', $this->escape($this->translate('L_BTN_SALVAR')),array('class' => 'float-l span-2 push-8 verde'));
+        echo $this->formButton('alterarConfigBanco', $this->escape($this->translate('L_BTN_ALTERAR')), array('class' => 'float-l span-2 push-8 verde'));
+    ?>
+</div>

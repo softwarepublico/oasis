@@ -1,0 +1,15 @@
+<?php
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/extrato-mensal/index.js'));
+?>
+<form id="formRelatorio">
+    <label class="float-l span-2 required right" for="cd_contrato"><?php echo $this->translate('L_VIEW_CONTRATO') ?>:</label>
+    	<p><?php echo $this->formSelect('cd_contrato', null, array('class','float-l'), $this->comboContrato) ?></p>
+
+    <label class="float-l span-2 required clear-l right" for="mes"><?php echo $this->translate('L_VIEW_MES') ?>:</label>
+    	<p><?php echo $this->mesCombo("mes",null,array('class','float-l')); ?></p>
+
+    <label class="float-l span-2 required clear-l right" for="ano"><?php echo $this->translate('L_VIEW_ANO') ?>:</label>
+    	<p><?php echo $this->anoCombo("ano",null,array('class','float-l')); ?></p>
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->translate('L_BTN_GERAR') ?></button>
+</form>

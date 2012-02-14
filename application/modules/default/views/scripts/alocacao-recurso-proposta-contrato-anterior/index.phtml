@@ -1,0 +1,8 @@
+<?php
+    $this->script('scriptFile',array('/alocacao-recurso-proposta-contrato-anterior/index.js'));
+?>
+<div id="tabelaControleAlteracaoProposta" class="divTab boxTab">
+    <label class=" float-l span-3 bold right" style="margin-top: 3px;"><?php echo $this->escape($this->translate('L_VIEW_CONTRATO_ATIVO')) ?>:</label>
+        <p class="float-l" style="margin-top: 3px;"><?php echo $this->formSelect('cd_contrato_atual', null, null, $this->arrContratoAtivo) ?></p>
+</div>
+<div id="gridAlocacaoRecursoPropostaContratoAnterior"></div>

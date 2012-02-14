@@ -1,0 +1,13 @@
+<?php
+    $this->script('numero');
+    $this->script('scriptFile',array('/planejamento/index.js'));
+?>
+<div id="formPlanejamento" class="divTab">
+	<label class="float-l span-2 right"><?php echo $this->escape($this->translate('L_VIEW_PROJETO')) ?>:</label>
+		<?php echo $this->formSelect('cd_projeto_planejamento',null,array('class'=>'float-l'),$this->comboProjeto) ?>
+    <label class="float-l clear-l span-2 right"><?php echo $this->escape($this->translate('L_VIEW_MODULO')) ?>:</label>
+		<?php echo $this->formSelect('cd_modulo_planejamento',null,array('class'=>'float-l'),array(0=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE')))) ?>
+	<label class="float-l clear-l span-2 right"><?php echo $this->escape($this->translate('L_VIEW_ETAPA')) ?>:</label>
+		<?php echo $this->formSelect('cd_etapa_planejamento',null,array('class'=>'float-l'),array(0=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE')))) ?>
+	<div id="gridPlanejamento" class="float-l clear-l span-20" style="display: none;"></div>
+</div>

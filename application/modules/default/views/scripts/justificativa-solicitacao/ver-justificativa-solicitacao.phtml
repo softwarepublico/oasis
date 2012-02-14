@@ -1,0 +1,10 @@
+<div>
+	<div class="float-l">
+		<label class="bold float-l span-3"><?php echo $this->escape($this->translate('L_VIEW_SOLICITACAO')) ?>:</label>
+		<span class="float-l"><?php echo $this->arrSolicitacao['ni_solicitacao']."/".$this->arrSolicitacao['ni_ano_solicitacao'] ?></span>
+	</div>
+	<div  class="float-l clear-l">
+		<label class="bold float-l span-3"><?php echo $this->escape($this->translate('L_VIEW_JUSTIFICATIVA')) ?>:</label>
+		<span class="float-l" style="text-align:justify"><?php echo $this->arrSolicitacao['tx_justificativa_solicitacao'] ?></span>
+	</div>
+</div>

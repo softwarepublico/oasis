@@ -1,0 +1,211 @@
+﻿<?php
+    $this->script('tab');
+    $this->script('validaForm');
+    $this->script('grid');
+    $this->script('editorHtml');
+    $this->script('scriptFile',array('/execucao-proposta/index.js',
+                                     '/situacao-projeto/index.js',
+                                     '/dicionario-de-dados/configuracao-banco-dados.js'));
+?>
+<script type="text/javascript">
+    var openAccordionExecucao = '<?php echo $this->openAccordion; ?>';
+</script>
+<?php
+    echo $this->formHidden("cd_projeto",$this->cd_projeto);
+    echo $this->formHidden("cd_proposta",$this->cd_proposta);
+?>
+<h2><?php echo $this->escape($this->translate('L_VIEW_EXECUCAO_PROPOSTA')) ?></h2>
+<div class="box span-11 border gradient">
+
+    <h3 class="highlight tarja-1"><?php echo $this->escape($this->translate('L_VIEW_RESUMO_PROPOSTA')) ?></h3>
+
+    <label class="bold span-4"><?php echo $this->escape($this->translate('L_VIEW_PROJETO')) ?>:</label>
+        <p class="span-6"><?php echo $this->tx_sigla_projeto ?></p>
+    <label class="bold span-4"><?php echo $this->escape($this->translate('L_VIEW_PROPOSTA')) ?>:</label>
+        <p class="span-6"><?php echo $this->cd_proposta ?></p>
+    <label class="bold span-4"><?php echo $this->escape($this->translate('L_VIEW_DATA_INICIO')) ?>:</label>
+        <p class="span-6"><?php echo $this->tx_mes_inicio_previsto."/".$this->ni_ano_inicio_previsto ?></p>
+    <label class="bold span-4"><?php echo $this->escape($this->translate('L_VIEW_DATA_TERMINO')) ?>:</label>
+        <p class="span-6"><?php echo $this->tx_mes_termino_previsto."/".$this->ni_ano_termino_previsto ?></p>
+    <label class="bold span-4"><?php echo $this->escape($this->translate('L_VIEW_OBJETO_CONTRATO')) ?>:</label>
+        <p class="span-6"><?php echo $this->solicitacao['tx_objeto'] ?></p>
+    <label class="bold span-4"><?php echo $this->escape($this->translate('L_VIEW_NUMERO_SOLICITACAO')) ?>:</label>
+        <p class="span-6">
+            <a href="#" onclick="abrePopupResumoSolicitacaoServico()">
+                <?php echo "{$this->solicitacao['ni_solicitacao']}/{$this->solicitacao['ni_ano_solicitacao']}" ?>
+            </a>
+        </p>
+    <label class="bold span-4"><?php echo $this->escape($this->translate('L_VIEW_DATA_SOLICITACAO')) ?>:</label>
+        <p class="span-6"><?php echo $this->solicitacao['dt_solicitacao'] ?></p>
+    <label class="bold span-4"><?php echo $this->escape($this->translate('L_VIEW_GESTOR_SOLICITANTE')) ?></label>
+        <p class="span-6"></p>
+
+    <hr style="width:420px;"/>
+
+    <label class="span-3" style="padding-left:45px;"><?php echo $this->escape($this->translate('L_VIEW_NOME')) ?>:</label>
+        <p class="span-6"><?php echo $this->solicitacao['tx_solicitante'] ?></p>
+    <label class="span-3" style="padding-left:45px;"><?php echo $this->escape($this->translate('L_VIEW_UNIDADE')) ?>:</label>
+        <p class="span-6"><?php echo $this->solicitacao['tx_sigla_unidade'] ?></p>
+    <label class="span-3" style="padding-left:45px;"><?php echo $this->escape($this->translate('L_VIEW_SALA')) ?>:</label>
+        <p class="span-6"><?php echo $this->solicitacao['tx_sala_solicitante'] ?></p>
+    <label class="span-3" style="padding-left:45px;"><?php echo $this->escape($this->translate('L_VIEW_TELEFONE')) ?>:</label>
+        <p class="span-6"><?php echo $this->solicitacao['tx_telefone_solicitante'] ?></p>
+</div>
+
+<?php if(ChecaPermissao::possuiPermissao('situacao-projeto') === true): ?>
+<div class="box border span-10 gradient" id="box_posicionamento"></div>
+<?php endif; ?>
+<hr />
+<?php echo $this->formHidden('config_hidden_caso_de_uso','N'); ?>
+<?php if(ChecaPermissao::possuiPermissao('caso-de-uso') === true): ?>
+<div id="caso_de_uso" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){config_form_caso_de_uso();}">
+    <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_CASO_DE_USO')) ?></span>
+</div>
+<div id="form_caso_de_uso" accordion="accordion" class="accordion hide">
+        <?php echo $this->render('caso-de-uso/index.phtml') ?>
+    <div id="btSalvarProposta" class="float-l" style=" margin-top: 4px;">
+        <label class="bold span-18 right float-l" style="color: red;"><?php echo Base_Util::getTranslator('L_MSG_ALERT_CLIQUE_PARA_REGISTRAR_OPERACAO', $this->escape($this->translate('L_BTN_CONFIRMAR'))) ?></label>
+            <?php echo $this->formButton('btn_confirmar_caso_de_uso', $this->escape($this->translate('L_BTN_CONFIRMAR')), array('class' => 'verde float-r')) ?>
+    </div>
+</div>
+<?php endif; ?>
+
+<?php echo $this->formHidden('config_hidden_dicionairo_dados','N'); ?>
+<?php if (ChecaPermissao::possuiPermissao('dicionario-de-dados') === true): ?>
+<div id="dicionario_de_dados" onclick="if($(this).hasClass('accordion-closed')){config_form_dicionario_de_dados()}" class="accordion-closed">
+    <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_DICIONARIO_DADOS')) ?></span>
+</div>
+<div id="form_dicionario_de_dados" accordion="accordion" class="hide accordion">
+        <?php echo $this->render('dicionario-de-dados/index.phtml') ?>
+    <div id="btSalvarProposta" class="float-l" style=" margin-top: 4px;">
+        <label class="bold span-18 right float-l" style="color: red;"><?php echo Base_Util::getTranslator('L_MSG_ALERT_CLIQUE_PARA_REGISTRAR_OPERACAO', $this->escape($this->translate('L_BTN_CONFIRMAR'))) ?></label>
+            <?php echo $this->formButton('btn_confirmar_dicionario_de_dados', $this->escape($this->translate('L_BTN_CONFIRMAR')), array('class' => 'verde float-r')) ?>
+    </div>
+</div>
+<?php endif; ?>
+
+<?php echo $this->formHidden('config_hidden_dados_tecnicos_aba_info_tec','N');
+       echo $this->formHidden('config_hidden_dados_tecnicos_aba_conhecimento','N');
+?>
+<?php if (ChecaPermissao::possuiPermissao('dados-tecnicos') === true): ?>
+	<div id="dados_tecnicos" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){config_form_dados_tecnicos();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_DADOS_TECNICOS')) ?></span>
+    </div>
+	<div id="form_dados_tecnicos" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('dados-tecnicos/index.phtml') ?>
+		<div id="btSalvarProposta" class="float-l" style=" margin-top: 4px;">
+			<label class="bold span-18 right float-l" style="color: red;"><?php echo Base_Util::getTranslator('L_MSG_ALERT_CLIQUE_PARA_REGISTRAR_OPERACAO', $this->escape($this->translate('L_BTN_CONFIRMAR'))) ?></label>
+			<?php echo $this->formButton('btn_confirmar_dados_tecnicos', $this->escape($this->translate('L_BTN_CONFIRMAR')), array('class' => 'verde float-r')) ?>
+		</div>
+	</div>
+<?php endif; ?>
+
+<?php if ((int)$this->cd_proposta > 1): ?>
+	<div id="objetivo_proposta" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_OBJETIVO_PROPOSTA')) ?></span>
+    </div>
+	<div id="form_objetivo_proposta" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('execucao-proposta/objetivo-proposta.phtml') ?>
+	</div>
+<?php endif; ?>
+
+<div id="descricao_proposta" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){}">
+    <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_DESCRICAO_PROJETO')) ?></span>
+</div>
+<div id="form_descricao_proposta" accordion="accordion" class="accordion hide">
+		<?php echo $this->render('execucao-proposta/descricao-projeto.phtml') ?>
+</div>
+
+	<?php echo $this->formHidden('config_hidden_alocar_profissional','N'); ?>
+<?php if (ChecaPermissao::possuiPermissao('associar-profissional-projeto') === true): ?>
+	<div id="alocar_profissionais" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){verificaStatusAccordionAlocarProfissional();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_ALOCAR_PROFISSIONAL')) ?></span>
+    </div>
+	<div id="form_alocar_profissionais" accordion="accordion" class="hide accordion">
+	<?php echo $this->render('associar-profissional-projeto/index.phtml') ?></div>
+<?php endif; ?>
+
+<div id="aplicacao_de_metrica" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){}">
+    <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_METRICA')) ?></span>
+</div>
+<div id="form_aplicacao_de_metrica" accordion="accordion" class="hide accordion">
+<?php echo $this->render('execucao-proposta/metrica.phtml') ?></div>
+
+<?php echo $this->formHidden('config_hidden_modulos','N'); ?>
+<div id="gerenciar_modulos" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){verificaStatusAccordionModulos();}">
+    <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_MODULO')) ?></span>
+</div>
+<div id="form_gerenciar_modulos" accordion="accordion" class="accordion hide">
+	<?php echo $this->render('execucao-proposta/modulo.phtml') ?>
+</div>
+
+<?php echo $this->formHidden('config_hidden_produtos','N'); ?>
+<div id="acrescentar_produtos" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){verificaStatusAccordionProdutos();}">
+    <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_PRODUTO')) ?></span>
+</div>
+<div id="form_acrescentar_produtos" accordion="accordion" class="hide accordion">
+	<?php echo $this->render('execucao-proposta/produtos.phtml') ?>
+</div>
+
+	<?php echo $this->formHidden('config_hidden_arquivos_proposta','N'); ?>
+<div id="arquivos_proposta" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){verificaStatusAccordionArquivosProposta();}" >
+    <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_ARQUIVO_PROPOSTA')) ?></span>
+</div>
+<div id="form_arquivos_proposta" accordion="accordion" class="hide accordion">
+	<?php echo $this->render('execucao-proposta/documentacao-projeto.phtml') ?>
+</div>
+
+	<?php echo $this->formHidden('config_hidden_regra_de_negocio','N'); ?>
+<?php if (ChecaPermissao::possuiPermissao('regra-negocio') === true): ?>
+    <div id="regra_negocio" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){verificaStatusAccordionRegraDeNegocio();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_REGRA_DE_NEGOCIO')) ?></span>
+    </div>
+    <div id="form_regra_negocio" accordion="accordion" class="hide accordion">
+        <?php echo $this->render('regra-negocio/index.phtml') ?>
+    </div>
+<?php endif; ?>
+
+	<?php echo $this->formHidden('config_hidden_plano_implantacao','N'); ?>
+<?php if (ChecaPermissao::possuiPermissao('plano-implantacao') === true): ?>
+    <div id="plano_implantacao" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){verificaStatusAccordionPlanoImplantacao();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_PLANO_IMPLANTACAO')) ?></span>
+    </div>
+    <div id="form_plano_implantacao" accordion="accordion" class="hide accordion">
+        <?php echo $this->render('plano-implantacao/index.phtml') ?>
+    </div>
+<?php endif; ?>
+<?php  if (ChecaPermissao::possuiPermissao('associar-requisito-regra-negocio') === true): ?>
+    <div id="associa_requisito_regra" class="accordion-closed" onclick="">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_REQUISITO_REGRA_DE_NEGOCIO')) ?></span>
+    </div>
+    <div id="form_associa_requisito_regra" accordion="accordion" class="hide accordion">
+        <?php echo $this->render('associar-requisito-regra-negocio/index.phtml') ?>
+    </div>
+<?php endif; ?>
+
+<?php if (ChecaPermissao::possuiPermissao('associar-requisito-caso-de-uso') === true): ?>
+    <div id="associa_requisito_caso-de-uso" class="accordion-closed" onclick="">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_REQUISITO_CASO_DE_USO')) ?></span>
+    </div>
+    <div id="form_associa_requisito_caso_de_uso" accordion="accordion" class="hide accordion">
+        <?php echo $this->render('associar-requisito-caso-de-uso/index.phtml') ?>
+    </div>
+<?php endif; ?>
+
+<!--
+    Esta div é usada para renderizar o conteúdo do link do Nr da Solicitação
+    para a visualização da solicitação de serviço
+-->
+<div class="float-l clear-l" id="div_desc_solicitacao_servico" style="display:none;">
+    <div style="padding: 10px;">
+        <div class="float-l">
+            <label class="bold span-3 float-l"><?php echo $this->escape($this->translate('L_VIEW_SOLICITACAO')) ?>:</label>
+            <span class="float-l span-11" style="text-align: justify;"><?php echo $this->solicitacao['tx_solicitacao']; ?></span>
+        </div>
+        <hr class="clear-l float-l push-3 span-11"/>
+        <div class="float-l">
+            <label class="bold span-3 float-l clear-l"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACAO')) ?>:</label>
+            <span class="float-l span-11" style="text-align: justify;"><?php echo $this->solicitacao['tx_obs_solicitacao']; ?></span>
+        </div>
+    </div>
+</div>

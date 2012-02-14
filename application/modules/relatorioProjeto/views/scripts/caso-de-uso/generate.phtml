@@ -1,0 +1,124 @@
+<?php
+//criando o objeto
+$objPdf = new Base_Tcpdf_Pdf();
+
+$arrKeywords = array(K_CREATOR_SYSTEM,
+                             Base_Util::getTranslator('L_TIT_REL_CASO_DE_USO'),
+                             Base_Util::getTranslator('L_VIEW_CASO_DE_USO'),
+                             Base_Util::getTranslator('L_VIEW_RELATORIO')
+                            );
+
+$objPdf->iniciaRelatorio(Base_Util::getTranslator('L_TIT_REL_CASO_DE_USO'), $arrKeywords);
+
+$objPdf->SetDisplayMode("real");
+$objPdf->SetTitle("Caso de Uso");
+
+// set font
+$objPdf->SetFont('helvetica', '', 8);
+
+// add a page
+if(count($this->arrResult) > 0){
+	$i = 0;
+	foreach($this->arrResult as $key=>$value){
+		$objPdf->AddPage();
+		$strTableCDU = "";
+		$objPdf->Cell(PDF_MARGIN_LEFT, 6, Base_Util::getTranslator('L_VIEW_PROJETO').": ".$this->arrResult[0]['tx_projeto'], '', 0, 'L');
+		$objPdf->Ln();
+		$objPdf->Cell(PDF_MARGIN_LEFT, 6, Base_Util::getTranslator('L_VIEW_MODULO').": ".$this->arrResult[0]['tx_modulo'], '', 0, 'L');
+		$objPdf->Ln(10);
+	
+		$strTableCDU .= '<table cellpadding="5" cellspacing="0" bordercolor="#CCCCCC" border="1">';
+		$strTableCDU .= '<tr>';
+		$strTableCDU .= '  <td bgcolor="'.Base_Tcpdf_Pdf::FILL_TITLE_TABLE.'" width="102px" style="text-align:center;"><b>'.Base_Util::getTranslator('L_VIEW_NOME_CASO_DE_USO').'</b></td>';
+		$strTableCDU .= '  <td width="408px">'.$value['tx_caso_de_uso'].'</td>';
+		$strTableCDU .= '</tr>';
+		$strTableCDU .= '<tr>';
+		$strTableCDU .= '  <td bgcolor="'.Base_Tcpdf_Pdf::FILL_TITLE_TABLE.'" width="102px" style="text-align:center;"><b>'.Base_Util::getTranslator('L_VIEW_DESCRICAO').'</b></td>';
+		$strTableCDU .= '  <td width="408px">'.$value['tx_descricao_caso_de_uso'].'</td>';
+		$strTableCDU .= '</tr>';
+
+		if(count($this->arrInteracao[$i]) > 0){
+			$tx_ator      = $this->arrInteracao[$i][0]['tx_ator'];
+			$strTableCDU .= '<tr>';
+			$strTableCDU .= '  <td bgcolor="'.Base_Tcpdf_Pdf::FILL_TITLE_TABLE.'" width="102px" style="text-align:center;"><b>'.Base_Util::getTranslator('L_VIEW_ATOR_ENVOLVIDO').'</b></td>';
+			$strTableCDU .= '  <td width="408px">'.$tx_ator.'</td>';
+			$strTableCDU .= '</tr>';
+			$quantCol = count($this->arrInteracao[$i])+1;
+			$strTableCDU .= '<tr>';
+				$strTableCDU .= '  <td bgcolor="'.Base_Tcpdf_Pdf::FILL_TITLE_TABLE.'" width="510px" style="text-align:center;" colspan="2"><b>'.Base_Util::getTranslator('L_VIEW_INTERACAO_ENTRE').'</b></td>';
+			$strTableCDU .= '</tr>';
+			$strTableCDU .= '<tr>';
+				$strTableCDU .= '  <td bgcolor="'.Base_Tcpdf_Pdf::FILL_TITLE_TABLE.'" width="255px" style="text-align:center;"><b>'.Base_Util::getTranslator('L_VIEW_ATOR').'</b></td>';
+		        $strTableCDU .= '  <td bgcolor="'.Base_Tcpdf_Pdf::FILL_TITLE_TABLE.'" width="255px" style="text-align:center;"><b>'.Base_Util::getTranslator('L_VIEW_SISTEMAS').'</b></td>';
+			$strTableCDU .= '</tr>';
+			foreach($this->arrInteracao[$i] as $chave=>$valor){
+				$strTableCDU .= '<tr>';
+				if($valor['st_interacao'] == "A"){
+					$strTableCDU .= '<td width="255px" style="text-align:justify;">'.$valor['tx_interacao'].'</td>';
+					$strTableCDU .= '<td width="255px">&nbsp;</td>';
+					$strTableCDU .= '</tr>';
+				} else {
+					$strTableCDU .= ' <td width="255px">&nbsp;</td>';
+		      		$strTableCDU .= ' <td width="255px" style="text-align:justify;">'.$valor['tx_interacao'].'</td>';
+					$strTableCDU .= '</tr>';
+				}
+			}
+		}
+		
+		if(count($this->arrComplementoExcecao[$i]) > 0){
+			$strTableCDU .= '<tr>';
+				$strTableCDU .= '  <td bgcolor="'.Base_Tcpdf_Pdf::FILL_TITLE_TABLE.'" width="510px" style="text-align:center;" colspan="2"><b>'.Base_Util::getTranslator('L_VIEW_EXCECOES').'</b></td>';
+			$strTableCDU .= '</tr>';
+			foreach($this->arrComplementoExcecao[$i] as $k=>$v){
+				$ex = "EX".substr("00".$v['ni_ordem_complemento'],-2);
+				$strTableCDU .= '<tr>';
+					$strTableCDU .= '  <td width="102px">'.$ex.'</td>';
+					$strTableCDU .= '  <td width="408px" style="text-align:justify;">'.strip_tags($v['tx_complemento']).'</td>';
+				$strTableCDU .= '</tr>';
+			}
+		}
+				
+		if(count($this->arrComplementoRegra[$i]) > 0){
+			$strTableCDU .= '<tr>';
+				$strTableCDU .= '  <td bgcolor="'.Base_Tcpdf_Pdf::FILL_TITLE_TABLE.'" width="510px" style="text-align:center;" colspan="2"><b>'.Base_Util::getTranslator('L_VIEW_REGRA').'</b></td>';
+			$strTableCDU .= '</tr>';
+			foreach($this->arrComplementoRegra[$i] as $q=>$b){
+				$re = "RE".substr("00".$b['ni_ordem_complemento'],-2);
+				$strTableCDU .= '<tr>';
+					$strTableCDU .= '  <td width="102px">'.$re.'</td>';
+					$strTableCDU .= '  <td width="408px" style="text-align:justify;">'.strip_tags($b['tx_complemento']).'</td>';
+				$strTableCDU .= '</tr>';
+			}
+		}
+		if(count($this->arrComplementoFluxoAlt[$i]) > 0){
+			$strTableCDU .= '<tr>';
+				$strTableCDU .= '  <td bgcolor="'.Base_Tcpdf_Pdf::FILL_TITLE_TABLE.'" width="510px" style="text-align:center;" colspan="2"><b>'.Base_Util::getTranslator('L_VIEW_FLUXO_ALTERNATIVO').'</b></td>';
+			$strTableCDU .= '</tr>';
+			foreach($this->arrComplementoFluxoAlt[$i] as $key=>$value){
+				$fa = "FA".substr("00".$value['ni_ordem_complemento'],-2);
+				$strTableCDU .= '<tr>';
+					$strTableCDU .= '  <td width="102px">'.$fa.'</td>';
+					$strTableCDU .= '  <td width="408px" style="text-align:justify;">'.strip_tags($value['tx_complemento']).'</td>';
+				$strTableCDU .= '</tr>';
+			}
+		}
+		$i++;
+		$strTableCDU .= '</table>';
+		
+		$objPdf->writeHTML($strTableCDU,true, 0, true, 0);
+	}
+} else {
+	$objPdf->AddPage();
+	$strTableCDU  = "";
+	$strTableCDU .= '<table cellpadding="5" cellspacing="0" bordercolor="#CCCCCC" border="1">';
+	$strTableCDU .= '<tr>';
+	$strTableCDU .= '  <td bgcolor="'.Base_Tcpdf_Pdf::FILL_TITLE_TABLE.'" width="508px" style="text-align:center;"><b>'.Base_Util::getTranslator('L_MSG_ALERT_PROPOSTA_PROJETO_SEM_CASO_USO').'</b></td>';
+	$strTableCDU .= '</tr>';
+	$strTableCDU .= '</table>';
+	$objPdf->writeHTML($strTableCDU,true, 0, true, 0);
+}
+// reset pointer to the last page
+$objPdf->lastPage();
+//Close and output PDF document
+$objPdf->Output('relatorio_caso_de_uso.pdf', 'I');
+?>

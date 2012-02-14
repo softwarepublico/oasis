@@ -1,0 +1,53 @@
+<?php
+    $this->script('scriptFile',array('/auth/index.js'));
+?>
+<div id="formObjeto">
+	<fieldset class="span-14 push-4 float-l">
+        <legend><?php echo $this->escape($this->translate('L_VIEW_ESCOLHA_OBJETO_CONTRATO')) ?></legend>
+		<div>
+			<?php
+				 echo $this->formHidden('cd_profissional',$this->cd_profissional);
+				 echo $this->formHidden('cd_perfil',$this->cd_perfil);
+				 echo $this->formHidden('st_inativo',$this->st_inativo);
+				foreach($this->arrObjetoProfissional as $key=>$value):
+				$checked = "";
+				if($value['st_objeto_padrao'] == "S"){
+					$checked = "checked='checked'";
+				}
+			?>
+			<input type="radio" value="<?php echo $value['cd_objeto'] ?>" <?php echo $checked ?> class="clear-l float-l span-1" id="cd_objeto_<?php echo $value['cd_objeto'] ?>" name="cd_objeto">
+			<label for="cd_objeto_<?php echo $value['cd_objeto'] ?>" class="bold float-l span-10">
+			<?php 
+			if($value['st_contrato'] == 'I'){
+				echo "{$value['tx_objeto']} ({$value['tx_numero_contrato']}) ***{$value['situacao']}*** ";
+			} else {
+				echo "{$value['tx_objeto']} ({$value['tx_numero_contrato']})";
+			}
+			
+			
+			?></label>
+			<script type="text/javascript">
+				$(document).ready(function(){
+					$('#cd_objeto_<?php echo $value['cd_objeto'] ?>').click(function(){
+						enviaObjetoContrato();
+					});
+				});
+			</script>
+			
+				<?php
+					endforeach;
+					if($this->cd_perfil == K_CODIGO_PERFIL_COORDENADOR || $this->cd_perfil == 0):
+				?>
+				<div id="id_contrato_inativo" style="display:none;">
+					<label class="float-l clear-l span-10">
+						<input type="checkbox"  id="contrato_inativo" name="contrato_inativo" value="S" />
+						<?php echo $this->escape($this->translate('L_VIEW_MOSTRAR_OBJETO_CONTRATO_INATIVO')) ?>
+					</label>
+				</div>
+				<?php endIf; ?>
+		</div>
+		<div class="float-l clear-l">
+            <?php echo $this->escape($this->translate('L_MSG_ALERT_TECLE_ENTER_CLIQUE_OBJETO_CONTRATO')) ?>
+		</div>
+	</fieldset>
+</div>

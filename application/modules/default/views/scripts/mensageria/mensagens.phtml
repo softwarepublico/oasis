@@ -1,0 +1,9 @@
+<div id="tabelaMensageria" class="divTab">
+	<div class="clear boxTab">
+		<button id="btn_nova_mensagem" class="azul float-r" style="margin-top:4px;"><?php echo $this->escape($this->translate('L_BTN_NOVA_MENSAGEM')) ?></button>
+		<label class="float-l bold" style="margin-top:2px; font-size:16px;" id="mesAnoMensageriaMensagens"><?php echo $this->mesAno ?></label>
+		<label class="float-r" style="margin-top:2px;"><?php echo $this->anoCombo('anoMensagens', $this->anoComboValue,null,1) ?></label>
+		<label class="float-r" style="margin-top:2px;"><?php echo $this->mesCombo('mesMensagens', $this->mesComboValue) ?></label>
+	</div>
+	<div id="gridMensageriaMensagens"></div>
+</div>

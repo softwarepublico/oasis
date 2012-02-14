@@ -1,0 +1,127 @@
+<script type="text/javascript" defer="defer">
+$(document).ready(function() {
+    // call the tablesorter plugin
+    $("#tableRegraNegocioSolucao_gerenciamentoTeste").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableRegraNegocioSolucao_gerenciamentoTeste").tablesorterPager({container: $("#pagerRegraNegocioSolucao_gerenciamentoTeste")});
+
+});
+</script>
+<table  id="tableRegraNegocioSolucao_gerenciamentoTeste" cellspacing="1" class="tablesorter">
+    <thead>
+        <tr>
+            <th class="{sorter: false}" width="20%"><?php echo $this->escape($this->translate('L_VIEW_GRID_ITEM_TESTE'  )) ?></th>
+            <th class="{sorter: false}" width="30%"><?php echo $this->escape($this->translate('L_VIEW_GRID_RELATO_TESTE')) ?></th>
+            <th class="{sorter: false}" width="50%"><?php echo $this->escape($this->translate('L_VIEW_GRID_SOLUCAO'     )) ?></th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php
+    if($this->res){
+        foreach ($this->res as $k=>$res):
+            $idLinha = "tr_{$res['cd_item_teste_regra_negocio']}__{$res['cd_item_teste']}";
+            if(!is_null($res['st_analise'])||!is_null($res['st_solucao'])):
+    ?>
+    <tr <?php echo ($res['st_obrigatorio']=='S')?' title="'.$this->escape($this->translate('L_MSG_ALERT_ITEM_TESTE_OBRIGATORIO')).'" ':''; ?> id="<?php echo $idLinha; ?>">
+        <td class="middle">
+            <?php
+                if($res['st_obrigatorio']=='S'):
+            ?>
+            <img src="<?php echo $this->baseUrl(); ?>/public/img/u42.png" title="<?php echo $this->escape($this->translate('L_MSG_ALERT_ITEM_TESTE_OBRIGATORIO')) ?>" />
+            <?php
+                endif;
+                if( (int)$res['qtd_arquivo']>0 ):
+                    $testoAnexo = $this->escape(Base_Util::getTranslator('L_MSG_ALERT_ITEM_TESTE_COM_XX_ANEXO', $res['qtd_arquivo']));
+            ?>
+            <img src="<?php echo $this->baseUrl(); ?>/public/img/anexo.png" title="<?php echo $testoAnexo; ?>" />
+            <?php
+                    echo "({$res['qtd_arquivo']})<br />";
+                elseif($res['st_obrigatorio']=='S'):
+                    echo "<br />";
+                endif;
+                echo "{$res['ni_ordem_item_teste']} - {$res['tx_item_teste']}";
+            ?>
+        </td>
+        <td style="text-align:center">
+            <input type="hidden"
+                   id="cd_item_teste_regra_negocio__<?php echo $res['cd_item_teste'] ?>"
+                   name="cd_item_teste_regra_negocio__<?php echo $res['cd_item_teste'] ?>"
+                   value="<?php echo $res['cd_item_teste_regra_negocio'] ?>" />
+            <textarea id="tx_analise__<?php echo $res['cd_item_teste'] ?>"
+                      name="tx_analise__<?php echo $res['cd_item_teste'] ?>"
+                      readonly="readonly"
+                      tabindex="-1"
+                      style="height: 85px;width: 90%;"><?php echo $res['tx_analise'] ?></textarea>
+        </td>
+        <td style="text-align:center">
+            <textarea id="tx_solucao__<?php echo $res['cd_item_teste'] ?>"
+                      name="tx_solucao__<?php echo $res['cd_item_teste'] ?>"
+                      onkeypress="verificaSePodeDigitar($('#tx_analise__<?php echo $res['cd_item_teste'] ?>'),$(this))"
+                      onfocus="verificaSePodeDigitar($('#tx_analise__<?php echo $res['cd_item_teste'] ?>'),$(this))"
+                      <?php if(trim($res['tx_analise']=='')||is_null($res['st_analise'])){echo'readonly="readonly"';} ?>
+                      class="float-l"
+                      style="height: 85px;width: 295px"><?php echo $res['tx_solucao'] ?></textarea>
+        <?php
+            echo $this->formButton(
+                     'btn_solucionado_regraNegocio_solucao_gerenciamentoTeste',
+                     $this->escape($this->translate('L_BTN_SOLUCIONADO')),
+                     array(
+                         'class'    =>  'azul float-r',
+                         'style'    =>  'width:91px',
+                         'onclick'  =>  "salvarGerenciamentoTeste('regraNegocio_solucao','{$idLinha}',$(this).prev())"
+                ));
+            if( (int)$res['qtd_arquivo']>0 ){
+                echo $this->formButton(
+                         'btn_download_regraNegocio_solucao_gerenciamentoTeste',
+                         $this->escape($this->translate('L_BTN_ABRIR_ANEXOS')),
+                         array(
+                             'class'    =>  'float-r',
+                             'style'    =>  'margin-top:3px;width:91px',
+                             'onclick'  =>  'abreDialogDownload('. str_replace('"',"'",json_encode($res)) .',\'regraNegocio_solucao\')'
+                    ));
+            }
+            echo $this->formButton(
+                     "btn_historico_regraNegocio_solucao_gerenciamentoTeste__{$res['cd_item_teste']}",
+                     $this->escape($this->translate('L_BTN_VER_HISTORICO')),
+                     array(
+                         'class'    =>  'float-r',
+                         'style'    =>  'margin-top:3px;width:91px',
+                         'onclick'  =>  'abreHistorico('. str_replace('"',"'",json_encode($res)) .',\'regraNegocio_solucao\')'
+                ));
+        ?>
+        </td>
+    </tr>
+    <?php
+            endif;
+        endforeach;
+    } else {
+        echo '<tr><td colspan="3" style="text-align:center"> '.$this->escape($this->translate('L_VIEW_SEM_REGISTRO')).' </td></tr>';
+    }
+    ?>
+    </tbody>
+</table>
+<div id="pagerRegraNegocioSolucao_gerenciamentoTeste" class="pager">
+    <form>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+        <input type="text" class="pagedisplay"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+        <select class="pagesize">
+            <option selected="selected"  value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+        </select>
+    </form>
+</div>
+<div class="clear">
+    <?php
+        echo $this->formButton(
+                 'btn_cancelar_regraNegocio_solucao_gerenciamentoTeste',
+                 $this->escape($this->translate('L_BTN_CANCELAR')),
+                 array(
+                     'class' => 'vermelho float-r',
+                     'onclick' => "habilitaAbaGerenciamentoTeste('regraNegocio',true)"
+             ));
+     ?>
+</div>

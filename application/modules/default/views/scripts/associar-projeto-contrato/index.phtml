@@ -1,0 +1,50 @@
+<?php
+    $this->script('scriptFile',array('/associar-projeto-contrato/index.js'));
+?>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#config_hidden_projeto_contrato").val('N');
+});
+
+function configAccordionProjetoContrato()
+{
+	if($("#config_hidden_projeto_contrato").val() === 'N'){
+		comboGroupContrato('P', 'cd_contrato_associar_projeto_contrato');
+		$("#config_hidden_projeto_contrato").val('S');
+	}
+}
+</script>
+<div style="margin-left:19px;">
+	<label class="bold float-l span-2"><?php echo $this->translate('L_VIEW_CONTRATO') ?>:</label>
+	<?php echo $this->formSelect( 'cd_contrato_associar_projeto_contrato', null ,array('class'=>'float-l'), null ); ?>
+	
+    <label class="bold float-l span-11  clear-l" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_PROJETOS')) ?></label>
+    <label class="bold float-l span-8 " style="margin-top:2px; margin-left: -10px;"><?php echo $this->escape($this->translate('L_VIEW_PROJETOS_VINCULADOS_CONTRATO')) ?></label>
+	<?php
+		echo $this->formSelect( 'projetos',
+		                        null, 
+		                        array(
+		                            'multiple' => 'multiple',
+	                                'class'    => 'span-9 float-l clear-l left',
+	                                'style'    => 'height: 150px;'
+		                        ));
+	?>	
+	<div class="span-2" style="position:relative; left:20px; top:62px">
+		<?php
+			echo $this->formButton('add_projeto_contrato', '>>');
+			echo $this->formButton('remove_projeto_contrato', '<<', array('style' => 'margin-top:10px;'));
+		?>	
+	</div>
+	<?php
+		echo $this->formSelect( 'projetos_associados',
+		                        null, 
+		                        array(
+		                            'multiple' => 'multiple',
+		                            'class'    => 'span-9 float-l left',
+		                            'style'    => 'height: 150px;'
+		                        ));
+	?>
+	
+	<div class="accordionBottom" style="min-height: 20px;"></div> 
+</div>

@@ -1,0 +1,67 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableOcorrenciaAdministrativa").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableOcorrenciaAdministrativa").tablesorterPager({container: $("#pager_ocorrencia_administrativa")}); 
+});
+</script>
+<?php  echo $this->formHidden('mesAnoOcorrenciaAdministrativa',$this->mesAno) ?>
+<table id="tableOcorrenciaAdministrativa" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+			<th class="{sorter:false}" style="width: 15px;">&nbsp;</th>
+			<th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_DATA'    )) ?></th>
+			<th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_CONTRATO')) ?></th>
+			<th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_OBJETO'  )) ?></th>
+			<th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_EVENTO'  )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res->valid()){
+		foreach ($this->res as $res):
+	?>
+		<tr>
+			<td><img id="imgExcluir" height="13" width="13" style="cursor:pointer;" onclick="excluirOcorrencia('<?php echo $res->dt_ocorrencia_administrativa ?>', <?php echo $res->cd_evento ?>, <?php echo $res->cd_contrato ?>);" src="<?php echo $this->baseUrl()?>/public/img/del.png" alt="<?php echo $this->escape($this->translate('L_BTN_EXCLUIR')) ?>"/></td>
+			<td onClick="recuperaOcorrencia('<?php echo $res->dt_ocorrencia_administrativa ?>', <?php echo $res->cd_evento ?>, <?php echo $res->cd_contrato ?>)" style="cursor:pointer;">
+				<?php echo Base_Util::converterDatetime($res->dt_ocorrencia_administrativa, 'YYYY-MM-DD', 'DD/MM/YYYY') ?>
+			</td>
+			<td onClick="recuperaOcorrencia('<?php echo $res->dt_ocorrencia_administrativa ?>', <?php echo $res->cd_evento ?>, <?php echo $res->cd_contrato ?>)" style="cursor:pointer;">
+				<?php echo $res->tx_numero_contrato ?>
+			</td>
+			<td onClick="recuperaOcorrencia('<?php echo $res->dt_ocorrencia_administrativa ?>', <?php echo $res->cd_evento ?>, <?php echo $res->cd_contrato ?>)" style="cursor:pointer;">
+				<?php echo $res->tx_objeto ?>
+			</td>
+			<td onClick="recuperaOcorrencia('<?php echo $res->dt_ocorrencia_administrativa ?>', <?php echo $res->cd_evento ?>, <?php echo $res->cd_contrato ?>)" style="cursor:pointer;">
+				<?php echo $res->tx_evento ?>
+			</td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo " <tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			  </tr>";
+	}
+	?>
+	</tbody>
+</table>
+<div id="pager_ocorrencia_administrativa" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

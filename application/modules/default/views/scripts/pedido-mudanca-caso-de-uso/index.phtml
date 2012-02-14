@@ -1,0 +1,9 @@
+<div class="clear boxTab">
+	<label class="bold span-2 float-l"><?php echo $this->escape($this->translate('L_VIEW_PROJETO')) ?>:</label>
+	<?php echo $this->formSelect('cmb_projeto_caso_uso','',array('class'=>'float-l'),$this->arrProjetosPedidoMudanca) ?>
+
+    <label class="bold span-2 float-l clear-l"><?php echo $this->escape($this->translate('L_VIEW_MODULO')) ?>:</label>
+	<?php echo $this->formSelect('cmb_projeto_caso_uso_modulo','',array('class'=>'float-l')) ?>
+</div>
+
+<div id="gridMudancaCasoDeUso"></div>

@@ -1,0 +1,54 @@
+<?php 
+	echo $this->formHidden('tab_origem',$this->tab_origem);
+    $this->script('scriptFile',array('/solicitacao-servico-consulta-objeto-demanda/detalhe-solicitacao.js'));
+?>
+<div class="box span-20 border gradient">
+	<h3 class="highlight tarja-1"><?php echo $this->escape($this->translate('L_VIEW_DETALHE_SOLICITACAO_EXECUTADA')) ?></h3>
+	<?php if (count($this->arrDemanda) > 0): ?>
+	<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_SOLICITACAO_SERVICO')) ?>:</label>
+        <p class="span-6"><?php echo (!is_null($this->arrDemanda['ni_solicitacao']))?"{$this->arrDemanda['ni_solicitacao']}/{$this->arrDemanda['ni_ano_solicitacao']}":$this->arrDemanda['cd_demanda'] ?></p>
+	<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_DATA_HORA_DEMANDA')) ?>:</label>
+        <p class="span-6"><?php echo date('d/m/Y H:i:s', strtotime($this->arrDemanda['dt_demanda'])) ?></p>
+	<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_SOLICITANTE')) ?>:</label>
+        <p class="span-6"><?php echo $this->arrDemanda['tx_solicitante_demanda'] ?></p>
+	<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_UNIDADE')) ?>:</label>
+        <p class="span-6"><?php echo $this->arrDemanda['tx_sigla_unidade'] ?></p>
+	<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_DESCRICAO')) ?>:</label>
+        <div class="span-14" style="text-align: justify; margin-left: 10px;"><?php echo $this->arrDemanda['tx_demanda'] ?></div>
+	<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_OBJETO_EXECUTOR')) ?>:</label>
+        <p class="span-6"><?php echo $this->arrDemanda['tx_objeto'] ?></p>
+	<?php else: ?>
+	<label class="bold span-11" style="text-align: center;">
+        *** <?php echo $this->escape($this->translate('L_MSG_ALERT_SOLICITACAO_SERVICO_AGUARDANDO_ENCAMINHAMENTO')) ?> ***
+    </label>
+	<?php endif ?>
+	<label class="bold clear-l float-l span-4">
+        <?php echo $this->escape($this->translate('L_VIEW_HISTORICO_EXECUCAO')) ?>
+    </label>
+	<div class="span-19 float-l clear-l height-10 border" style="overflow-x: hidden; overflow-x: auto; margin-left:18px; margin-bottom: 5px;">
+		<?php
+			if(count($this->arrHistorico) > 0):
+				$cd_nivel_servico = -1;
+				foreach($this->arrHistorico as $historico): 
+					if($historico['cd_nivel_servico'] != $cd_nivel_servico):
+		?>
+                        <label class="float-l"><?php echo "<b>".$historico['tx_nivel_servico']."</b>" ?></label>
+              <?php endif;?>
+				<ul class="clear-l span-18">
+					<li class="clear-l float-l push-1 span-17" style="text-align: justify;">
+						<?php echo date('d/m/Y H:i:s', strtotime($historico['dt_inicio']))."&nbsp;a&nbsp;".date('d/m/Y H:i:s', strtotime($historico['dt_fim']))." &nbsp;&nbsp;(".$historico['tx_profissional'].")<br />".$historico['tx_historico'] ?>
+					</li>
+				</ul>
+		<?php  
+				$cd_nivel_servico = $historico['cd_nivel_servico'];
+				endforeach;
+			else: ?>
+			<label style="color: red; text-align: center;">
+                <?php echo $this->escape($this->translate('L_MSG_ALERT_SEM_HISTORICO_REGISTRADO_PROFISSIONAL')) ?>
+            </label>
+		<?php endif; ?>
+	</div>
+	<br />	
+	<hr style="width:780px;"/>
+	<?php echo $this->formButton('bt_fechar_tab_solicitacao_demanda', mb_strtoupper($this->escape($this->translate('L_BTN_FECHAR')), 'utf-8'), array('class' => 'float-r azul'), null)?>
+</div>

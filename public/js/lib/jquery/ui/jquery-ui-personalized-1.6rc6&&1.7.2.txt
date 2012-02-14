@@ -1,0 +1,20 @@
+/**
+ * Pacote personalizado do JQuery
+ * para interface visual do sistema
+ *
+ * @since:   17/10/2008
+ * @file:    jquery-ui-personalized-1.6.rc6.min.js
+ * @access:  public
+ *
+ * @content: Core
+ * @content:     UI Core
+ * @content: Interation
+ * @content:     Draggable
+ * @content:     Resizable
+ * @content:     Sortable
+ * @content: Widgets
+ * @content:     Dialog
+ * @content: Effects
+ * @content:     Effects Core
+ * @content:     Effects Hignlight
+ */

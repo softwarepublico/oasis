@@ -1,0 +1,58 @@
+<script type="text/javascript">
+<!--
+$(document).ready(function(){
+	$('#bt_retornar_solicitacao').click(function(){
+		window.location.href = systemName+'/coordenador-pre-demanda\#<?php echo $this->abaorigem ?>';
+	});
+});
+//-->
+</script>
+<div class="box span-21 border gradient">
+    <h3 class="highlight tarja-1"><?php echo $this->escape($this->translate('L_VIEW_DETALHE_SOLICITACAO_EXECUTADA')) ?></h3>
+	
+    <label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_DATA_HORA_DEMANDA')) ?>:</label>
+    <p class="span-6"><?php echo date('d/m/Y H:i:s', strtotime($this->arrDemanda['dt_hora_demanda'])) ?></p>
+	
+    <label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_SOLICITANTE')) ?>:</label>
+    <p class="span-6"><?php echo $this->arrDemanda['tx_solicitante_demanda'] ?></p>
+	
+    <label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_UNIDADE')) ?>:</label>
+    <p class="span-6"><?php echo $this->arrDemanda['tx_sigla_unidade'] ?></p>
+	
+    <label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_DESCRICAO')) ?>:</label>
+    <div class="span-15" style="text-align: justify; margin-left: 10px;"><?php echo $this->arrDemanda['tx_demanda'] ?></div>
+	
+    <label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_OBJETO_EXECUTOR')) ?>:</label>
+    <p class="span-6"><?php echo $this->arrDemanda['tx_objeto'] ?></p>
+	
+    <label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_SITUACAO')) ?>:</label>
+    <p class="span-6"><?php echo $this->situacao ?></p>
+	
+    <label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_AVALIACAO')) ?>:</label>
+    <p class="span-15" style="text-align: justify;"><?php echo $this->avaliacao ?></p>
+	
+    <label class="bold clear-l float-l span-4"><?php echo $this->escape($this->translate('L_VIEW_HISTORICO_EXECUCAO')) ?></label>
+	<div class="span-20 float-l clear-l height-10 border" style="overflow-x: hidden; overflow-x: auto; margin-left:18px; margin-bottom: 5px;">
+		<?php
+			if(count($this->arrHistorico) > 0){
+				$cd_nivel_servico = -1;
+				foreach($this->arrHistorico as $historico): 
+					if($historico['cd_nivel_servico'] != $cd_nivel_servico){?>
+                        <label class="float-l"><?php echo "<b>".$historico['tx_nivel_servico']."</b>" ?></label>
+		<?php       } ?>
+                    <ul class="clear-l span-18">
+                        <li class="clear-l float-l push-1 span-17" style="text-align: justify;">
+                            <?php echo date('d/m/Y H:i:s', strtotime($historico['dt_inicio']))."&nbsp;a&nbsp;".date('d/m/Y H:i:s', strtotime($historico['dt_fim']))." &nbsp;&nbsp;(".$historico['tx_profissional'].")<br />".$historico['tx_historico'] ?>
+                        </li>
+                    </ul>
+		<?php  
+                    $cd_nivel_servico = $historico['cd_nivel_servico'];
+				endforeach;
+			} else { ?>
+                <label style="color: red; text-align: center;"><?php echo $this->escape($this->translate('L_MSG_ALERT_SEM_HISTORICO_REGISTRADO_PROFISSIONAL')) ?></label>
+		<?php } ?>
+	</div>
+	<br />	
+	<hr style="width:815px;"/>
+	<?php echo $this->formButton('bt_retornar_solicitacao', mb_strtoupper($this->escape($this->translate('L_BTN_RETORNAR')), 'utf-8'), array('class' => 'float-l azul'), null)?>
+</div>

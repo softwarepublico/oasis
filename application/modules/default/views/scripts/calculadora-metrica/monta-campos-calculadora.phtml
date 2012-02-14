@@ -1,0 +1,24 @@
+<?php if($this->res): ?>
+        <div id="div_sub_item_metrica" style="padding: 10px;" class="float-l border">
+            <?php foreach( $this->res as $item=>$subItens ): ?>
+                <span class="azul float-l clear-l" style="line-height:20px; text-decoration: underline;"><?php echo $item; ?></span>
+                    <?php foreach( $subItens as $subItem):
+                            $arrDadosSubItem = explode("|",$subItem['tx_variavel_sub_item_metrica']);
+                    ?>
+                        <label class="span-8 float-l clear-l"><?php echo $arrDadosSubItem[0]; ?>:<br /><span class="small azul" style="line-height:8px;"><?php echo $subItem['tx_sub_item_metrica']; ?></span></label>
+                        <?php echo $this->formText($subItem['tx_variavel_sub_item_metrica'], '', array('class' => 'span-2 float-l', 'style'=>'margin-top:7px;', 'onKeyPress'=>'return soNumerosComPonto(event)', 'maxlength'=>'9' )); ?>
+                    <?php endforeach;?>
+
+            <?php endforeach;?>
+            <div class="highlight clear" style="padding:5px; margin-top: 15px; ">
+	            <?php echo $this->formButton("calcular_valor_metrica", $this->escape($this->translate('L_BTN_CALCULAR')), array('class'=>'float-r clear azul', 'style'=>'margin-bottom: 5px; margin-right: 8px;')); ?>
+                <?php echo $this->formText("valor_total_calculo_metrica", '', array('class'=>'float-r span-2 right', 'readonly'=>'readonly', 'style'=>'margin-right: 10px;')); ?>
+                <span class="bold float-r" style="color:#FFFFFF; margin-top: 3px; margin-right:10px;"><?php echo $this->unidadePadraoMetrica; ?>:</span>
+
+				<span id="tx_calculo_metrica" class="bold azul float-l clear-l" style="color:#FFFFFF; margin-top: 3px; margin-right:10px; font-size: 12px;"></span>
+
+            </div>
+        </div>
+<?php else: ?>
+    <span class="float-l clear-l" style="color:red; line-height:20px; "><?php echo $this->escape($this->translate('L_MSG_ALERT_SEM_ITEM_CADASTRADO_METRICA')) ?></span>
+<?php endif; ?>

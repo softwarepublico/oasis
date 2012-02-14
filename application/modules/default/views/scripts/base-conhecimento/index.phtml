@@ -1,0 +1,28 @@
+<?php
+    $this->script('grid');
+    $this->script('tab');
+    $this->script('editorHtml');
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/base-conhecimento/index.js'));
+?>
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#container-baseConhecimento').show().tabs(); 
+});
+</script>
+<div id="container-baseConhecimento" style="display: none;">
+	<ul>
+        <li><a href="#pesquisaConhecimento"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_PESQUISA_BASE_CONHECIMENTO')) ?></span></a></li>
+		<li><a href="#cadastraConhecimento"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_CADASTRAR_BASE_CONHECIMENTO')) ?></span></a></li>
+		<li id="li-base-conhecimento-solucao" style="display:none"><a href="#verConhecimento"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_SOLUCAO')) ?></span></a></li>
+    </ul>
+    <div id="pesquisaConhecimento">
+        <?php echo $this->render('base-conhecimento/pesquisa-conhecimento.phtml') ?>
+    </div>
+	<div id="cadastraConhecimento">
+		<?php echo $this->render('base-conhecimento/cadastra-conhecimento.phtml') ?>
+	</div>
+	<div id="verConhecimento">
+		<div id="base-conhecimento-solucao" class="divTab"></div>
+	</div>
+</div>

@@ -1,0 +1,76 @@
+<script type="text/javascript" language="javascript" src="<?php echo $this->baseUrl(); ?>/public/js/modules/default/execucao-rotina/historico-execucao-rotina.js"></script>
+<script type="text/javascript" language="javascript" src="<?php echo $this->baseUrl(); ?>/public/js/modules/default/execucao-rotina/executa-rotina.js"></script>
+<div id="tabHistoricoExecucaoRotina">
+	<?php
+		echo $this->formHidden('tab_origem'                  ,$this->tab_origem);
+		echo $this->formHidden('cd_rotina'                   ,$this->arrDadosExecucao[0]['cd_rotina']);
+		echo $this->formHidden('cd_objeto'                   ,$this->arrDadosExecucao[0]['cd_objeto']);
+		echo $this->formHidden('cd_profissional'             ,$this->arrDadosExecucao[0]['cd_profissional']);
+		echo $this->formHidden('dt_execucao_rotina'          ,$this->arrDadosExecucao[0]['dt_execucao_rotina']);
+		echo $this->formHidden('dt_historico_execucao_rotina',null);
+	?>
+	<label class="bold clear-l float-l span-5"><?php echo $this->escape($this->translate('L_VIEW_ROTINA')) ?>:</label>
+		<p class="float-l span-5"><?php echo $this->arrDadosRotina[0]['tx_rotina'] ?></p>
+	<label class="bold clear-l float-l span-5"><?php echo $this->escape($this->translate('L_VIEW_HORA')) ?>:</label>
+		<p class="span-16 float-l "><?php echo $this->arrDadosRotina[0]['tx_hora_inicio_rotina'] ?></p>
+	<label class="bold clear-l float-l span-5"><?php echo $this->escape($this->translate('L_VIEW_PERIODICIDADE')) ?>:</label>
+		<p class="span-16 float-l ">
+            <?php
+            switch ($this->arrDadosRotina[0]['st_periodicidade_rotina'])
+            {
+                case 'D':
+                    echo $this->escape($this->translate('L_VIEW_PERIODICIDADE_DIARIA'));
+                    break;
+                case 'S':
+                    echo $this->escape($this->translate('L_VIEW_PERIODICIDADE_SEMANAL'));
+                    break;
+                case 'M':
+                    echo $this->escape($this->translate('L_VIEW_PERIODICIDADE_MENSAL'));
+                    break;
+                default:
+                    break;
+            }
+            ?>
+        </p>
+	<label class="bold clear-l float-l span-5"><?php echo $this->escape($this->translate('L_VIEW_PRAZO_EXECUCAO_HORAS')) ?>:</label>
+		<p class="span-16 float-l "><?php echo $this->arrDadosRotina[0]['ni_prazo_execucao_rotina'] ?></p>
+	<hr style="width: 829px; border-top: 1px solid #54BDCD; visibility: visible; display: block;" />
+	<label class="bold clear-l float-l span-5"><?php echo $this->escape($this->translate('L_VIEW_OBJETO')) ?>:</label>
+		<p class="span-16 float-l "><?php echo $this->arrDadosRotina[0]['tx_objeto'] ?></p>
+	<label class="bold span-5 float-l"><?php echo $this->escape($this->translate('L_VIEW_DATA')) ?>:</label>
+		<p class="span-5 float-l "><?php echo date('d/m/Y', strtotime($this->arrDadosExecucao[0]['dt_execucao_rotina'])) ?></p>
+	<label class="bold clear-l float-l span-5"><?php echo $this->escape($this->translate('L_VIEW_PROFISSIONAL')) ?>:</label>
+		<p class="span-16 float-l "><?php echo $this->arrDadosExecucao[0]['tx_profissional'] ?></p>
+	<label class="bold clear-l float-l span-5"><?php echo $this->escape($this->translate('L_VIEW_SITUACAO')) ?>:</label>
+		<p class="span-16 float-l ">
+                <?php
+                    if ($this->arrDadosExecucao[0]['st_fechamento_execucao_rotina'] == 'S') {
+                        echo  $this->escape($this->translate('L_VIEW_FECHADA'));
+                    }else{
+                        echo  $this->escape($this->translate('L_VIEW_ABERTA'));
+                    }
+                ?>
+        </p>
+	<hr style="width: 829px; border-top: 1px solid #54BDCD; visibility: visible; display: block;" />
+		<label class="bold span-5 float-l required" for="dt_historico_rotina"><?php echo $this->escape($this->translate('L_VIEW_DATA_HORA')) ?>:</label>
+            <p class="span-6 float-l"><?php echo $this->DataHora('dt_historico_rotina',
+                                                         null,
+                                                         array(
+                                                             'class' => 'span-5 float-l',
+                                                             'style' => 'margin-right: 10px;',
+                                                             null)) ?>
+            </p>
+        <label class="bold span-5 required" for="tx_historico_execucao_rotina"><?php echo $this->escape($this->translate('L_VIEW_HISTORICO_EXECUCAO')) ?>:</label>
+            <p class="span-6"><?php echo $this->formTextarea('tx_historico_execucao_rotina', $this->tx_historico_execucao_rotina, array('style' => 'width:550px; height:50px;', 'class' => 'span-4')) ?></p>
+
+        <div class="float-l span-20" id="gridHistoricoExecucaoRotina"></div>
+
+        <hr style="width:780px;"/>
+
+        <?php echo $this->formButton('btn_cancelar_historico_execucao_rotina', mb_strtoupper($this->escape($this->translate('L_BTN_CANCELAR')), 'utf-8'), array('class' => 'float-l vermelho'), null)?>
+		<?php 
+        if (is_null($this->arrDadosExecucao[0]['st_fechamento_execucao_rotina'])) {
+            echo $this->formButton('bt_registrar_historico_execucao_rotina', mb_strtoupper($this->escape($this->translate('L_BTN_REGISTRAR_EXECUCAO')), 'utf-8'), array('class' => 'float-r verde'), null);
+        }
+        ?>
+</div>

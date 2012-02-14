@@ -1,0 +1,30 @@
+<form id="formParecerTecnicoProposta">
+	<?php echo $this->formHidden('cd_projeto_parecer_tecnico_proposta', $this->cd_projeto); ?>
+	<?php echo $this->formHidden('cd_proposta_parecer_tecnico_proposta', $this->cd_proposta); ?>
+
+	<span class="float-l bold"><?php echo $this->tx_projeto; ?> (<?php echo $this->escape($this->translate('L_VIEW_PROPOSTA')) ?> <?php echo $this->cd_proposta; ?>)</span>
+
+	<div id="div_itens_parecer_tecnico_proposta" class="float-l clear-l">
+		<?php foreach ($this->listaItemParecerTecnico as $nome): ?>
+				<label class="clear-l span-3 float-l right required" for="cd_item_parecer_tecnico_<?php echo $nome->cd_item_parecer_tecnico ?>" title="<?php echo $nome->tx_descricao ?>" ><?php echo $nome->tx_item_parecer_tecnico ?>:</label>
+					<input class="span-1 float-l" type="radio" id="cd_item_parecer_tecnico_<?php echo $nome->cd_item_parecer_tecnico ?>" name="cd_item_parecer_tecnico[<?php echo $nome->cd_item_parecer_tecnico ?>]" value="OK">
+                        <label class="span-1 float-l" for = "ok"><?php echo $this->escape($this->translate('L_VIEW_OK')) ?></label>
+					<input class="span-1 float-l" type="radio" id="cd_item_parecer_tecnico_<?php echo $nome->cd_item_parecer_tecnico ?>" name="cd_item_parecer_tecnico[<?php echo $nome->cd_item_parecer_tecnico ?>]" value="NO">
+                        <label class="span-2 float-l" for = "nao_ok"><?php echo $this->escape($this->translate('L_VIEW_NAO_OK')) ?></label>
+					<input class="span-1 float-l" type="radio" id="cd_item_parecer_tecnico_<?php echo $nome->cd_item_parecer_tecnico ?>" name="cd_item_parecer_tecnico[<?php echo $nome->cd_item_parecer_tecnico ?>]" value="NA">
+                        <label class="span-2 float-l clear-r" for = "nao_aplica"><?php echo $this->escape($this->translate('L_VIEW_NAO_APLICA')) ?></label>
+		<?php endforeach; ?>
+	</div>
+	
+	<div id="div_observacao_parecer_tecnico_proposta"  class="float-l clear-l">
+		<label class="float-l span-3 right required" for="tx_obs_parecer_tecnico_prop"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACOES')) ?>:</label>
+		<?php echo $this->formTextarea('tx_obs_parecer_tecnico_prop', null, array('class'=>'float-l ' ,'style' => 'width:400px; height:80px;')) ?>
+	</div>
+
+	<div id="div_situacao_parecer_tecnico_proposta"  class="float-l clear-l">
+		<label class="float-l span-3 right required" for="st_parecer_tecnico_proposta"><?php echo $this->escape($this->translate('L_VIEW_TIPO_AVALIACAO')) ?>:</label>
+			<input class="span-1 float-l" type="radio" id="st_parecer_tecnico_proposta" name="st_parecer_tecnico_proposta" value="A"><label class="span-3 float-l" for = "ok">Atendido</label>
+			<input class="span-1 float-l" type="radio" id="st_parecer_tecnico_proposta" name="st_parecer_tecnico_proposta" value="N"><label class="span-3 float-l" for = "ok">Não Atendido</label>
+	</div>
+
+</form>

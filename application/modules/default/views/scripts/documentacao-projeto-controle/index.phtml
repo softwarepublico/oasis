@@ -1,0 +1,30 @@
+<?php
+    $this->script('validaForm');
+    $this->script('uploadAjax');
+    $this->script('scriptFile',array('/documentacao-projeto-controle/index.js'));
+?>
+<div id="formDocumentacaoProjetoControle">
+    <label class="float-l right span-3 required"><?php echo $this->translate('L_VIEW_CONTRATO') ?>:</label>
+        <?php echo $this->formSelect('cd_contrato_documentacao',null,array('class'=>'float-l'), null); ?>
+    <label class="float-l right span-3 required clear-l"><?php echo $this->translate('L_VIEW_PROJETO') ?>:</label>
+        <?php echo $this->formSelect('cd_projeto_documentacao',null,array('class'=>'float-l'), null); ?>
+    <label class="float-l right span-3 required clear-l"><?php echo $this->escape($this->translate('L_VIEW_DOCUMENTACAO')) ?>:</label>
+        <?php echo $this->formSelect('cd_tipo_documentacao',null,array('class'=>'float-l'), $this->arrComboTipoDocumentacao); ?>
+    <div id="divExtensaoDocumentacaoProjetoControle" style="display: none;">
+		<label class="span-3 float-l clear-l right"><?php echo $this->escape($this->translate('L_VIEW_EXTENSOES')) ?>:</label>
+	    	<span class="span-6 float-l bold" id="extensoesDocumentacaoProjetoControle"></span>
+	</div>
+    <label class="span-3 float-l clear-l right required clear-l" for="tx_arq_documentacao_projeto"><?php echo $this->escape($this->translate('L_VIEW_ARQUIVO')) ?>:</label>
+		<?php echo $this->formFile('tx_arq_documentacao_projeto',array('class'=>'float-l span-3','size'=>'50')); ?>
+    
+    <img id="imgLoadDocumentacaoProjetoControle" name="imgLoadDocumentacaoProjetoControle" alt="<?php echo $this->escape($this->translate('L_VIEW_AGUARDE')) ?>"
+         src="<?php echo $this->baseUrl()?>/public/img/ajax-loader.gif" width="220px" height="19px"
+         class="float-l clear-l push-3" style="display:none;" />
+
+        <?php echo $this->formButton(
+                'btn_upload_documento',
+                $this->escape($this->translate('L_BTN_ANEXAR_ARQUIVO')),
+                array('class'=>'float-l clear-l verde push-3','onclick'=>'return _fnUploadDocumentacaoProjetoControle()')); ?>
+    
+    <div id="gridDocumentacaoProjetoControle" class="float-l clear-l push-2" style="display:none;"></div>
+</div>

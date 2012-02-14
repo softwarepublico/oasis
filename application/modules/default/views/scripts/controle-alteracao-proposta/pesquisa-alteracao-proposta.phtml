@@ -1,0 +1,75 @@
+<script type="text/javascript" defer="defer">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableControleAlteracaoProposta").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableControleAlteracaoProposta").tablesorterPager({container: $("#pager_alteracao_proposta")}); 
+ 
+});
+</script>
+<table  id="tableControleAlteracaoProposta" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th><?php echo $this->escape($this->translate('L_VIEW_GRID_PROPOSTA')) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_MES_ANO')) ?></th>
+			<th class="span-4"><?php echo $this->tx_sigla_unidade_metrica; ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_ALTERACAO')) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_SITUACAO')) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res):
+		foreach ($this->res as $res):
+	?>
+	<tr>
+		<td><?php echo $res['cd_proposta']?></td>
+		<td><?php if (!is_null($res['ni_mes_proposta'])) { echo $this->arrayMeses[$res['ni_mes_proposta']] . "/" . $res['ni_ano_proposta']; } else { echo ""; }?></td>
+		<td><?php echo $res['ni_horas_proposta'] ?></td>
+		<?php if ($res['st_encerramento_proposta'] == "S"): ?>
+                    <td><?php echo $this->escape($this->translate('L_VIEW_NAO_APLICA')) ?></td>
+                    <td><?php echo $this->escape($this->translate('L_VIEW_ENCERRADA' )) ?></td>
+		<?php else:
+				if ($res['st_homologacao_proposta'] == "A"):?>
+					<td>
+                        <button onClick="abreModalAlteracaoProposta('<?php echo $res['cd_projeto']?>', '<?php echo $res['cd_proposta']?>')"
+                                class="azul"
+                                id="bt_abrir_proposta_<?php echo $res['cd_projeto']?>_<?php echo $res['cd_proposta']?>">
+                            <?php echo $this->escape($this->translate('L_BTN_ABRIR_PROPOSTA')) ?>
+                        </button>
+                    </td>
+					<td><?php echo $this->escape($this->translate('L_VIEW_PROCESSADA')) ?></td>
+		<?php   else: ?>
+					<td><?php echo $this->escape($this->translate('L_VIEW_NAO_APLICA')) ?></td>
+					<td><?php echo $this->escape($this->translate('L_VIEW_EM_PROCESSAMENTO')) ?></td>
+		<?php      endif;
+		     endif; ?>
+	</tr>
+	<?php
+		endforeach;
+	else:
+		echo " <tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr> ";
+	endif;
+	?>
+	</tbody>
+</table>
+<div id="pager_alteracao_proposta" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

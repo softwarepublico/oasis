@@ -1,0 +1,46 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableBaseline").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableBaseline").tablesorterPager({container: $("#tableBaselinePager")}); 
+});
+</script>
+<table id="tableBaseline" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_DATA')) ?></th>
+			<th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_STATUS')) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+	?>
+		<tr>
+            <td title="<?php echo $this->escape($this->translate('L_VIEW_DATA_GERACAO_BASELINE')) ?>"><?php echo date('d/m/Y H:i:s', strtotime($res['dt_baseline']));?></td>
+			<td title="<?php echo $this->escape($this->translate('L_VIEW_STATUS_BASELINE')) ?>"><?php echo $res['st_ativa_desc'];  ?></td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo "<tr> <td colspan='2' style='text-align: center;'>".$this->escape($this->translate('L_VIEW_SEM_REGISTRO'))."</td> </tr>";
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableBaselinePager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="5">05</option>
+			<option value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+		</select>
+	</form>
+</div>

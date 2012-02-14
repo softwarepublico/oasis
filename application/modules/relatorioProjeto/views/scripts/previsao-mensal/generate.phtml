@@ -1,0 +1,135 @@
+<?php
+//Verificando a orientação da pagina
+$orientation = ($this->quantMes < 6)?"P":"L";
+//criando o objeto
+$objPdf  = new Base_Tcpdf_Pdf($orientation);
+$objUtil = new Base_Controller_Action_Helper_Util();
+
+$arrKeywords = array(K_CREATOR_SYSTEM,
+                     Base_Util::getTranslator('L_TIT_REL_PREVISAO_MENSAL'),
+                     Base_Util::getTranslator('L_VIEW_PREVISAO'),
+                     Base_Util::getTranslator('L_VIEW_MENSAL'),
+                     Base_Util::getTranslator('L_VIEW_RELATORIO')
+                    );
+//Inicia cabeçalho do relatório
+$objPdf->iniciaRelatorio(Base_Util::getTranslator('L_TIT_REL_PREVISAO_MENSAL'), $arrKeywords);
+
+if($orientation == 'P'){
+	$objPdf->SetDisplayMode("real");
+}
+// set font
+// add a page
+$objPdf->AddPage();
+
+//Paramêtros da tela
+$objPdf->SetFont('helvetica', 'B', 9);
+$objPdf->Cell(18,6, Base_Util::getTranslator('L_VIEW_MES_INICIAL').":",'','R');
+$objPdf->SetFont('helvetica', '', 9);
+$objPdf->Cell(18,6,$objUtil->getMes($this->arrParam['mesInicial']),'','L');
+$objPdf->SetFont('helvetica', 'B', 9);
+$objPdf->Cell(18,6, Base_Util::getTranslator('L_VIEW_ANO_INICIAL').":",'','R');
+$objPdf->SetFont('helvetica', '', 9);
+$objPdf->Cell(18,6,$this->arrParam['anoInicial'],'','L');
+$objPdf->Ln(4);
+
+$objPdf->SetFont('helvetica', 'B', 9);
+$objPdf->Cell(18,6, Base_Util::getTranslator('L_VIEW_MES_FINAL').":",'','R');
+$objPdf->SetFont('helvetica', '', 9);
+$objPdf->Cell(18,6,$objUtil->getMes($this->arrParam['mesFinal']),'','L');
+$possui = "S";
+
+$objPdf->SetFont('helvetica', 'B', 9);
+$objPdf->Cell(18,6, Base_Util::getTranslator('L_VIEW_ANO_FINAL').":",'','R');
+$objPdf->SetFont('helvetica', '', 9);
+$objPdf->Cell(18,6,(!empty($this->arrParam['anoFinal']))?$this->arrParam['anoFinal']:$this->arrParam['anoInicial'],'','L');
+$possui = "S";
+
+$objPdf->Ln(8);
+//Column titles
+$header = $this->arrHeader;
+
+relatorioPrevisaoMensal($header, $this->arrHeaderTam, $this->arrPrevisaoMensal, $this->arrProjetos,$objPdf, $this->arrParam, $this->arrTotalHoras);
+
+//Close and output PDF document
+$objPdf->Output('relatorio_projeto_previsao_mensal.pdf', 'I');
+
+function relatorioPrevisaoMensal($header,$headerTam, $arrPrevisaoMensal, $arrProjeto,$objPdf, $arrParam,$arrTotalHoras)
+{
+//	$objPdf = new Base_Tcpdf_Pdf();
+	// Colors, line width and bold font
+	$objPdf->SetDrawColor(50);
+	$objPdf->SetFillColor(240,240,240);
+	$objPdf->SetTextColor(0);
+	$objPdf->SetLineWidth(0.3);
+	$objPdf->SetFont('', 'B',9);
+	// Header
+	$w = $headerTam;
+	for($i = 0; $i < count($header); $i++)
+		$objPdf->Cell($w[$i], 7, $header[$i], 1, 0, 'C', 1);
+	$objPdf->Ln();
+	// Color and font restoration
+	$objPdf->SetFillColor(240, 248, 255);
+	$objPdf->SetTextColor(0);
+	$objPdf->SetFont('','',8);
+	
+	// Data
+	$fill = 0;
+	$horas_total_projeto = 0;
+
+	$objCDM = new ContratoDefinicaoMetrica();
+
+	foreach($arrPrevisaoMensal as $key=>$value){
+		$i = 1;
+		$objPdf->Cell($w[0], 6, $value['tx_sigla_projeto'], 'LR', 0, 'L', $fill);
+		
+		$arrDadosMetricaPadrao = array();
+		$arrDadosMetricaPadrao = $objCDM->getSiglaUnidadeMetricaPadraoContratoAtivoProjeto($value['cd_projeto']);
+
+		foreach($arrProjeto[$value['cd_projeto']] as $conteudo){
+
+
+			foreach($conteudo as $valor){
+				if($valor['horas_total_projeto'] != "---"){
+					$objPdf->Cell($w[$i], 6, $valor['horas_total_projeto'].' '.$arrDadosMetricaPadrao['tx_sigla_unidade_metrica'], 'LR', 0, 'C', $fill);
+				} else {
+					$horas_total_projeto += 0;
+					$objPdf->Cell($w[$i], 6, $valor['horas_total_projeto'], 'LR', 0, 'C', $fill);
+				}
+				$i++;
+			}
+		}
+		$objPdf->Ln();
+		$fill=!$fill;
+	}
+	rodapeRelatorio($horas_total_projeto,$w,$objPdf,$arrTotalHoras, $arrTotalHoras);
+}
+
+function rodapeRelatorio($horas_total_projeto,$w,$objPdf, $arrTotalHoras)
+{
+	$objPdf->SetFont('helvetica', 'B', 8);
+	$quant = count($w);
+	//$quant -= 1;
+	$objPdf->Cell($w[0], 6,$arrTotalHoras[0], 'LRTB', 0, 'C', 0);
+	for($i=1;$i < $quant;$i++){
+		$objPdf->Cell($w[$i], 6,($arrTotalHoras[$i] == 0)?"0":$arrTotalHoras[$i], 'LRTB', 0, 'C', 0);
+	}
+	$objPdf->Ln();	
+}
+
+function mesCabecalhoRelatorio($w,$objPdf,$arrParam)
+{
+	$objPdf->SetFont('helvetica', 'B', 8);
+	
+	$mesInicial = $arrParam['mesInicial'];
+	$anoInicial = $arrParam['anoInicial'];
+	
+	$quant = count($w);
+	$objPdf->Cell($w[0], 6, Base_Util::getTranslator('L_VIEW_TOTAL'), 'LTB', 0, 'C',0);
+	$quant -= 1;
+	for($i=1;$i < $quant;$i++){
+		$objPdf->Cell($w[$i], 6,"", 'TB', 0, 'C', 0);
+	}
+	$objPdf->Cell($w[$quant], 6, $horas_total_projeto, 'TBR', 0, 'C', 0);
+	$objPdf->Ln();	
+}
+?>

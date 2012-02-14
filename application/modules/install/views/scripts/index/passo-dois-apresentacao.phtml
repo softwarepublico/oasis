@@ -1,0 +1,72 @@
+<script language="javascript" type="text/javascript">
+	$(document).ready(function(){
+		$('#btn_voltar_passo1').click(function(){
+			$('#container-install').triggerTab(1);
+		});
+
+		$('#btn_avancar_passo3').click(function(){
+			passoTresLicenca();
+		});
+	});
+</script>
+<h2 class="center">2. <?php echo $this->escape($this->translate('L_VIEW_INFORMACOES_BASICAS')) ?></h2>
+<br />
+<div class="float-l clear-l span-21">
+	<h3 class="float-l span-5 push-1" style="text-decoration:underline;"><?php echo $this->escape($this->translate('L_VIEW_O_QUE_E_OASIS')) ?></h3>
+	<p class="float-l clear-l span-17" style="margin-left: 85px; text-decoration:none; text-align:justify;">
+        <?php echo $this->escape($this->translate('L_MSG_APRESENTACAO_SISTEMA_OASIS')) ?>
+	</p>
+</div>
+<hr>
+<div class="float-l clear-l span-21">
+	<h3 class="float-l span-5 push-1" style="text-decoration:underline;"><?php echo $this->escape($this->translate('L_VIEW_REQUISITOS')) ?></h3>
+	<ul class="float-l clear-l" style="margin-left: 85px; text-decoration:none; text-align:justify;">
+		<li>www Server (<a target="_blank" href="http://www.apache.org/">Apache 2.2</a> ou superior);</li>
+		<li>Linguagem de Programação(<a target="_blank" href="http://www.php.net/">PHP 5.2</a> ou superior); e</li>
+		<li>Banco de Dados (<a target="_blank" href="http://www.postgresql.org/">PostgreSQL 8.3</a> ou superior). </li>
+	</ul>
+</div>
+<div class="float-l clear-l span-21">
+	<h3 class="float-l span-5 push-1" style="text-decoration:underline;">Antes de Instalar:</h3>
+	<ul class="float-l clear-l span-17" style="margin-left: 85px; text-decoration:none; text-align:justify;">
+		<li>Instale corretamente o servidor WEB, o PHP e o banco de dados PostgreSQL;</li>
+		<li>Configure o servidor WEB habilitando o modulo de rescrita de URL (<i>rewrite_module</i>) e permissão de sobrepor (<i>allowOverride ALL</i>);</li>
+
+        <li>
+            Configure o PHP habilitando as extenções <i>php_mbstring</i> e as extenções referentes ao banco a ser utilizado:
+            <ul style="list-style: circle;">
+                <li>
+                    Para utilização do OASIS com <b>PostgreSQL</b> habilite as extenções <i>php_pdo_pgsql</i> e <i>php_pgsql</i>
+                </li>
+                <li>
+                    Para utilização do OASIS com <b>MySql</b> habilite as extenções <i>php_pdo_mysql</i> e <i>php_mysql</i> e habilite no servidor MySQl a propriedade <b>sql_mode</b> para aceitar "PIPES_AS_CONCAT"
+                </li>
+                <li>
+                    Para utilização do OASIS com <b>Sql Server</b> habilite as extenção <i>php_mssql</i> e a extenção <i>php_sqlsrv</i> devendo ser baixada
+                    no site da <a target="_blank" href="http://www.microsoft.com/sqlserver/2005/en/us/PHP-Driver.aspx">Microsoft</a>
+                </li>
+            </ul>
+        </li>
+
+        <li>Crie um banco de dados com a codificação UTF8;</li>
+		<li>Conceda permissões de leitura, escrita e gravação de forma recursiva aos diretórios <span class="bold">/documentacao</span> e
+			<span class="bold">/img/svg</span> localizados no diretório '/public' e <span class="bold">/configuration</span> localizado no diretório: 'oasis/application'; e
+		</li>
+		<li>Habilite o uso do <span class="bold">cookies</span> e do <span class="bold">JavaScript</span> no seu navegador (Firefox).</li>
+	</ul>
+</div>
+<div class="float-l clear-l span-21">
+	<h3 class="float-l span-5 push-1" style="text-decoration:underline;"><?php echo $this->escape($this->translate('L_VIEW_INSTALACAO')) ?>:</h3>
+	<p class="float-l clear-l span-17" style="margin-left: 85px; text-decoration:none; text-align:justify;">
+		<?php echo $this->escape($this->translate('L_MSG_SIGA_DEMAIS_INSTRUCOES_ASSISTENTE_INSTALACAO')) ?>
+	</p>
+</div>
+<!-- Botões da tela -->
+<div class="float-l clear-l span-10" style="margin-top:40px;">
+	<span class="float-l right"><?php echo $this->formButton('btn_voltar_passo1',$this->escape($this->translate('L_BTN_ANTERIOR')),array('class'=>'verde right')); ?></span>
+	<label class="float-l bold right"> <<< <?php echo $this->escape($this->translate('L_VIEW_DEFINIR_IDIOMA')) ?></label>
+</div>
+<div class="float-r span-10" style="margin-top:40px;">
+	<span class="float-r right"><?php echo $this->formButton('btn_avancar_passo3',$this->escape($this->translate('L_BTN_PROXIMO')),array('class'=>'verde right')); ?></span>
+	<label class="float-r bold right"><?php echo $this->escape($this->translate('L_VIEW_TERMOS_LICENCA')) ?> >>></label>
+</div>

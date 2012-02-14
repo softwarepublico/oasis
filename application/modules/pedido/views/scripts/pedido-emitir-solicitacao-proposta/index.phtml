@@ -1,0 +1,52 @@
+<?php
+    $this->script('mascara');
+    $this->script('tab');
+    $this->script('grid');
+    $this->script('validaForm');
+    $this->script('scriptFile', array('/pedido-emitir-solicitacao-proposta/index.js'));
+?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#container_emitir_solicitacao_proposta').show();
+    });
+</script>
+<div id="container_emitir_solicitacao_proposta" style="display: none;">
+    <ul>
+        <li><a href="#pedido_solicitacao">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PEDIDOS')) ?></span>
+            </a>
+        </li>
+        <li><a href="#pedido_formulario"
+               ><span><?php echo $this->escape($this->translate('L_VIEW_ABA_FORMULARIO')) ?></span>
+            </a>
+        </li>
+        <li><a href="#pedido_historico">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_HISTORICO')) ?></span>
+            </a>
+        </li>
+        <li><a href="#emitir_solicitacao">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_SOLICITACAO_PROPOSTA')) ?></span>
+            </a>
+        </li>
+    </ul>
+    <div id="pedido_solicitacao">
+        <div class="divTab">
+            <div id="grid_solicitacao" class="float-l clear-l"></div>
+        </div>
+    </div>
+    <div id="pedido_formulario">
+        <div class="divTab">
+            <div id="formulario_pedido" class="float-l clear-l"></div>
+        </div>
+    </div>
+    <div id="pedido_historico">
+        <div class="divTab">
+            <div id="historico_pedido" class="float-l clear-l"></div>
+        </div>
+    </div>
+    <div id="emitir_solicitacao">
+        <div class="divTab">
+            <div id="solicitacao_pedido" class="float-l clear-l"></div>
+        </div>
+    </div>
+</div>

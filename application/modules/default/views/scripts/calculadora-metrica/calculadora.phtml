@@ -1,0 +1,14 @@
+<?php
+    $this->script('numero');
+    $this->script('scriptFile',array('/calculadora-metrica/index.js'));
+?>
+<div class="divTab">
+	<div class="boxTab">
+        <label class="float-l span-2 bold"><?php echo $this->escape($this->translate('L_VIEW_METRICA')) ?>:</label>
+		<?php echo $this->formSelect('cd_definicao_metrica', '', array('class'=>'float-l', 'disabled'=>'disabled'), $this->arrMetrica); ?>
+	</div>
+	
+	<!-- div para apresentação dos campos da metrica -->
+	<div id="montagemMetrica" class="float-l clear-l" style="margin-top:20px; display:none;"></div>
+
+</div>

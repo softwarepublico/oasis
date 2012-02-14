@@ -1,0 +1,19 @@
+<?php
+	$this->script('validaForm');
+	$this->script('mascara');
+	$this->script('calendario');
+	$this->script('validaData');
+    $this->script('scriptFile',array('/custo-contrato-tipo-demanda/index.js'));
+ ?>
+<form id="formRelatorioCustoDemandaServico">
+    <label class="float-l span-2 right required" for="cd_contrato"><?php echo $this->escape($this->translate('L_VIEW_CONTRATO')) ?>:</label>
+        <?php echo $this->formSelect("cd_contrato",null,array('class'=>'float-l'),$this->arrContrato); ?>
+
+    <label class="float-l span-2 right clear-l" for="dt_inicial"><?php echo $this->escape($this->translate('L_VIEW_DATA_INICIAL')) ?>:</label>
+        <?php echo $this->data("dt_inicial",null,array('class'=>'float-l span-3')); ?>
+    
+    <label class="float-l span-2 right clear-l" for="dt_final"><?php echo $this->escape($this->translate('L_VIEW_DATA_FINAL')) ?>:</label>
+        <?php echo $this->data("dt_final",null,array('class'=>'float-l span-3')); ?>
+
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->escape($this->translate('L_BTN_GERAR')) ?></button>
+</form>

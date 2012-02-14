@@ -1,0 +1,74 @@
+<div class="boxTab">
+<?php
+    if($this->params['st_obrigatorio']=='S'):
+?>
+<img src="<?php echo $this->baseUrl(); ?>/public/img/u42.png" title="<?php echo $this->escape($this->translate('L_MSG_ALERT_ITEM_TESTE_OBRIGATORIO')) ?>" />
+<?php
+    endif;
+    if( (int)$this->params['qtd_arquivo'] > 0 ):
+
+        $testoAnexo = $this->escape(Base_Util::getTranslator('L_MSG_ALERT_ITEM_TESTE_COM_XX_ANEXO', $this->params['qtd_arquivo']));
+?>
+<img src="<?php echo $this->baseUrl(); ?>/public/img/anexo.png" title="<?php echo $testoAnexo; ?>" />
+<?php
+        echo "({$this->params['qtd_arquivo']})<br />";
+    elseif($this->params['st_obrigatorio']=='S'):
+        echo "<br />";
+    endif;
+?>
+<p class="bold"><?php echo $this->params['ni_ordem_item_teste'].' - '.$this->params['tx_item_teste']; ?></p>
+</div>
+<script type="text/javascript" defer="defer">
+$(document).ready(function() {
+    // call the tablesorter plugin
+    $("#tableFormDownloadFile_gerenciamentoTeste").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableFormDownloadFile_gerenciamentoTeste").tablesorterPager({container: $("#pagerFormDownloadFile_gerenciamentoTeste")});
+
+});
+</script>
+<table  id="tableFormDownloadFile_gerenciamentoTeste" cellspacing="1" class="tablesorter">
+    <thead>
+        <tr>
+            <th width="40%"><?php echo $this->escape($this->translate('L_VIEW_GRID_TIPO_ARQUIVO'    )) ?></th>
+            <th width="20%"><?php echo $this->escape($this->translate('L_VIEW_GRID_DATA_ARQUIVO'    )) ?></th>
+            <th width="40%"><?php echo $this->escape($this->translate('L_VIEW_GRID_DOWNLOAD_ARQUIVO')) ?></th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php
+    if($this->res){
+        foreach ($this->res as $k=>$res):
+    ?>
+    <tr>
+        <td class="center"><?php echo $res['tx_tipo_documentacao'] ?></td>
+        <td class="center"><?php echo date('d/m/Y',strtotime(substr($res['data'],0,8))) ?></td>
+    <!--<td class="center"><?php //echo $res['data']?></td>-->
+        <td class="center">
+            <a href="<?php echo "{$this->baseUrl()}/gerenciamento-teste/download/cd/{$res['cd_arquivo_item_teste_default']}/tipo/{$this->params['st_tipo_item_teste']}"; ?>" title="<?php echo $this->escape($this->translate('L_MSG_ALERT_CLIQUE_PARA_EFETUAR_DOWNLOAD_ARQUIVO')) ?>">
+                <?php echo $this->escape(Base_Util::getTranslator('L_MSG_ALERT_CLIQUE_PARA_BAIXAR_ARQUIVO', $k+1)) ?>
+            </a>
+        </td>
+    </tr>
+    <?php
+        endforeach;
+    } else {
+        echo '<tr><td colspan="3" style="text-align:center"> '.$this->escape($this->translate('L_VIEW_SEM_REGISTRO')).' </td></tr>';
+    }
+    ?>
+    </tbody>
+</table>
+<div id="pagerFormDownloadFile_gerenciamentoTeste" class="pager">
+    <form>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+        <input type="text" class="pagedisplay"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+        <select class="pagesize">
+            <option selected="selected"  value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+        </select>
+    </form>
+</div>

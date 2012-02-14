@@ -1,0 +1,19 @@
+<?php
+	$this->script('editorHtml');
+	$this->script('validaForm');
+	$this->script('tab');
+	$this->script('grid');
+	$this->script('mascara');
+	$this->script('validaData');
+	$this->script('calendario');
+    $this->script('scriptFile',array('/acompanhamento-fiscalizacao/index.js'));
+?>
+
+<?php if (ChecaPermissao::possuiPermissao('analise-execucao-projeto') === true): ?>
+    <?php echo $this->render('analise-execucao-projeto/index.phtml') ?>
+<?php endif; ?>
+
+<?php if (ChecaPermissao::possuiPermissao('acompanhamento-fiscalizacao-documentacao') === true): ?>
+    <?php echo $this->render('acompanhamento-fiscalizacao-documentacao/index.phtml') ?>
+<?php endif; ?>
+

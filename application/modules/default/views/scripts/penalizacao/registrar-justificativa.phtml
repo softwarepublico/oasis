@@ -1,0 +1,38 @@
+<script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl();?>/public/js/modules/default/penalizacao/registrar-justificativa.js"></script>
+
+
+<div id="dadosPenalidade">
+    <h2><?php echo $this->escape($this->translate('L_VIEW_DADOS_PENALIDADE'))?></h2>
+
+    <label class="float-l clear-l span-4 bold" ><?php echo $this->escape($this->translate('L_VIEW_DATA_PENALIZACAO'))?>:</label>
+    <span class="float-l span-16" style="text-align: justify;">
+        <?php echo date('d/m/Y', strtotime($this->arrPenalidade['dt_penalizacao'])) ?>
+    </span>
+    <label class="float-l clear-l span-4 bold" ><?php echo $this->escape($this->translate('L_VIEW_PENALIDADE'))?>:</label>
+    <span class="float-l span-16 " style="text-align: justify;"><?php echo $this->arrPenalidade['tx_penalidade'] ?></span>
+    <label class="float-l clear-l span-4 bold"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACAO'))?>:</label>
+    <span class="float-l span-16 " style="margin-bottom: 10px; text-align: justify;">
+        <span class="float-l span-12 clear-l"><?php echo $this->arrPenalidade['tx_obs_penalizacao'] ?></span>
+    </span>
+</div>
+<hr class="visible"/>
+<div id="registroJustificativa" style="margin-top: 10px;">
+    <?php
+        echo $this->formHidden('cd_penalidade',$this->dadosPenalidade['cd_penalidade']);
+        echo $this->formHidden('dt_penalizacao',$this->dadosPenalidade['dt_penalizacao']);
+        echo $this->formHidden('cd_contrato',$this->dadosPenalidade['cd_contrato']);
+    ?>
+
+    <label class="float-l span-4 bold required" for="dt_justificativa"><?php echo $this->escape($this->translate('L_VIEW_DATA_JUSTIFICATIVA'))?>:</label>
+        <?php echo $this->data('dt_justificativa',($this->arrPenalidade['dt_justificativa'])? date('d/m/Y',strtotime($this->arrPenalidade['dt_justificativa'])) : date('d/m/Y'),array('class'=>'calendario-input float-l')); ?>
+    <label class="float-l span-4 clear-l bold required" for="tx_justificativa_penalizacao"><?php echo $this->escape($this->translate('L_VIEW_JUSTIFICATIVA'))?>:</label>
+        <?php echo $this->formTextarea('tx_justificativa_penalizacao',$this->arrPenalidade['tx_justificativa_penalizacao'],array('class'=>'float-l height-5 span-12')) ?>
+</div>
+<?php
+    if($this->buttonRegistrar){
+        echo $this->formButton('btn_salvar_justificativa',$this->escape($this->translate('L_BTN_REGISTRAR_JUSTIFICATIVA')),array('class'=>'float-l verde clear-l push-4'));
+        echo $this->formButton('btn_cancelar_justificativa',$this->escape($this->translate('L_BTN_CANCELAR')),array('class'=>'float-l vermelho push-4'));
+    } else {
+        echo $this->formButton('btn_cancelar_justificativa',$this->escape($this->translate('L_BTN_CANCELAR')),array('class'=>'float-l vermelho push-4 clear-l'));
+    }
+ ?>

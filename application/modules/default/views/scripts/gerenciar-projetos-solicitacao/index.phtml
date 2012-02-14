@@ -1,0 +1,13 @@
+<?php
+	$this->script("validaForm");
+    $this->script('scriptFile',array('/gerenciar-projetos-solicitacao/index.js',
+                                     '/proposta/index.js'));
+?>
+<div id="tabelaSolicitacao divTab">
+	<div class="clear boxTab">
+		<label class="float-l bold" style="margin-top:2px; font-size:16px;" id="mesAnoProjetoSolicitacao"><?php echo $this->mesAno ?></label>
+		<label class="float-r" style="margin-top:2px;"><?php echo $this->anoCombo('ano', $this->anoComboValue,null,1) ?></label>
+		<label class="float-r" style="margin-top:2px;"><?php echo $this->mesCombo('mes', $this->mesComboValue) ?></label>
+	</div>
+	<div id="gridSolicitacao"></div>
+</div>

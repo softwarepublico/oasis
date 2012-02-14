@@ -1,0 +1,38 @@
+<?php 
+	$this->script('tab'); 
+	$this->script('grid');
+    $this->script('scriptFile',array('/pre-demanda-painel/index.js'));
+?>
+<script type="text/javascript">
+	$(document).ready(function() { 
+		$('#containerPreDemandaPainel').show().tabs(); 
+	});
+</script>
+<div id="containerPreDemandaPainel" style="display: none;">
+	<ul>
+    	<?php if (ChecaPermissao::possuiPermissao('pre-demanda-andamento') === true): ?>
+    	<li>
+            <a href="#pre-demanda-andamento">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PRE_DEMANDA_ANDAMENTO')) ?></span>
+            </a>
+        </li>
+    	<?php endif;?>
+    	<?php if (ChecaPermissao::possuiPermissao('pre-demanda-executada') === true): ?>
+        <li>
+            <a href="#pre-demanda-executada">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PRE_DEMANDA_EXECUTADA')) ?></span>
+            </a>
+        </li>
+        <?php endif;?>
+    </ul>
+    <?php if (ChecaPermissao::possuiPermissao('pre-demanda-andamento') === true): ?>
+    <div id="pre-demanda-andamento">
+    	<?php echo $this->render('pre-demanda-andamento/index.phtml') ?>
+    </div>
+    <?php endif;?>
+    <?php if (ChecaPermissao::possuiPermissao('pre-demanda-executada') === true): ?>
+    <div id="pre-demanda-executada">
+    	<?php echo $this->render('pre-demanda-painel/pre-demanda-executada.phtml') ?>
+    </div>
+    <?php endif;?>
+</div>

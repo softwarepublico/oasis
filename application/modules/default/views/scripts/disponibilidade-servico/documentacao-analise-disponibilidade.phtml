@@ -1,0 +1,27 @@
+<div id="form_documento_analise_disp_servico">
+
+	<?php echo $this->formHidden('cd_disponibilidade_servico_documentacao') ?>
+	<?php echo $this->formHidden('cd_objeto_disponibilidade_servico_documentacao') ?>
+
+    <label class="span-3 float-l clear-l required" for="cd_tipo_documentacao_disp_servico" ><?php echo $this->escape($this->translate('L_VIEW_DOCUMENTACAO')) ?>:</label>
+		<?php echo $this->formSelect('cd_tipo_documentacao_disp_servico', null, array('class' => 'float-l'), $this->arrTipoDocumentoAnaliseDispServico); ?>
+
+    <div id="divExtensao" style="display: none;">
+		<label class="span-3 float-l clear-l "><?php echo $this->escape($this->translate('L_VIEW_EXTENSOES')) ?>:</label>
+	    	<span class="span-6 float-l bold" id="extensoes"></span>
+	</div>
+
+	<label class="span-3 float-l clear-l required" for="tx_arquivo_disp_servico"><?php echo $this->escape($this->translate('L_VIEW_ARQUIVO')) ?>:</label>
+		<?php echo  $this->formFile('tx_arquivo_disp_servico',array('class'=>'float-l span-3','size'=>'50')); ?>
+	<img id="imgLoadAnaliseDisponibilidade" name="imgLoadAnaliseDisponibilidade" alt="<?php echo $this->escape($this->translate('L_VIEW_AGUARDE')) ?>"
+         src="<?php echo $this->baseUrl()?>/public/img/ajax-loader.gif" width="220px" height="19px"
+         class="float-l clear-l push-3" style="display:none;" />
+
+	<button class="float-l verde clear-l push-3" onclick="return _fnUploadDocumentacaoDispServico();"><?php echo $this->escape($this->translate('L_BTN_ANEXAR_ARQUIVO')) ?></button>
+	<button id="btn_cancelar_anexo_documentacao_disp_servico" class="float-l vermelho push-3"><?php echo $this->escape($this->translate('L_BTN_CANCELAR')) ?></button>
+
+	<div id="grid_documentacao_analise_disponibilidade" class="float-l clear-l"></div>
+</div>
+
+
+

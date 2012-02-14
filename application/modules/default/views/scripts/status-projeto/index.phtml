@@ -1,0 +1,17 @@
+<?php
+    $this->script('scriptFile',array('/status-projeto/index.js'));
+?>
+<div class="divTab" id="formStatusProjeto">
+	<div class="boxTab">
+        <label class="float-l span-2 bold"><?php echo $this->escape($this->translate('L_VIEW_PROJETO')) ?>:</label>
+		<?php echo $this->formSelect('cd_projeto_status', '', array('class'=>'float-l'), $this->projetoCombo); ?>
+
+        <label class="float-l span-2 clear-l bold"><?php echo $this->escape($this->translate('L_VIEW_STATUS')) ?>:</label>
+		<?php echo $this->formSelect('cd_status_projeto', '', array('class'=>'float-l') ); ?>
+        
+   		<label class="span-2 float-l clear-l"><?php echo $this->formButton('btn_salvar_status_projeto', $this->escape($this->translate('L_BTN_SALVAR')), array('class' => 'float-l azul'), null)?></label>
+
+    </div>
+	
+
+</div>

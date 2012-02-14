@@ -1,0 +1,74 @@
+<fieldset>
+    <legend><?php echo $this->escape($this->translate('L_VIEW_HISTORICO_SOLICITACAO')) ?></legend>
+	<div class="float-l span-6">
+		<h3><?php echo $this->escape($this->translate('L_VIEW_DATA_HORA')) ?></h3>
+		<?php echo date('d/m/Y H:i:s', strtotime($this->pedido->dt_solicitacao_pedido))?>
+	</div>
+	<div>
+		<h3><?php echo $this->escape($this->translate('L_VIEW_SITUACAO')) ?></h3>
+		<?php echo $this->situacao[$this->pedido->st_situacao_pedido]?>
+	</div>
+	<br />
+<?php
+	$pergunta = 0;
+	foreach($this->formulario as $rs) {
+		if($pergunta != $rs->cd_pergunta_pedido) {
+			if($pergunta)
+				echo '</div><br />';
+			$pergunta = $rs->cd_pergunta_pedido;
+			echo '<div>';
+			echo "<h3 class='span-12'>{$rs->tx_titulo_pergunta}</h3>";
+		}
+		if($rs->st_resposta_texto == 'T')
+			echo '<span class="span-12 height-4">' . nl2br($rs->tx_descricao_resposta) . '</span>';
+		else {
+			echo '<label class="float-l">';
+			echo $rs->tx_titulo_resposta;
+			if($rs->st_resposta_texto == 'S')
+				echo ' - ' . $rs->tx_descricao_resposta;
+			echo '</label><br class="clear-l" />';
+		}
+	}
+	if($pergunta)
+		echo '</div><br />';
+?>
+	<div>
+		<h3 class="span-12"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACOES')) ?>:</h3>
+		<span class="span-12 height-4">
+			<?php echo nl2br($this->pedido->tx_observacao_pedido)?>
+		</span>
+	</div>
+	<br />
+	<?php if(count($this->historico)):?>
+	<div>
+		<?php $this->script('grid')?>
+		<script type="text/javascript">
+		$(document).ready(function() {
+		    $("#pedidos").tablesorter({widthFixed: true, widgets: ['zebra']});
+		});
+		</script>
+		<h2 class="span-12"><?php echo $this->escape($this->translate('L_VIEW_HISTORICO')) ?></h2>
+		<table cellspacing="1" id="pedidos" class="tablesorter">
+			<thead>
+				<tr>
+					<th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_DATA_HORA')) ?></th>
+					<th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_SITUACAO' )) ?></th>
+					<th><?php echo $this->escape($this->translate('L_VIEW_GRID_OBSERVACAO')) ?></th>
+				</tr>
+			</thead>
+			<tbody>
+			<?php foreach($this->historico as $rs): ?>
+				<tr>
+					<td><?php echo date('d/m/Y H:i:s', strtotime($rs->dt_registro_historico))?></td>
+					<td><?php echo $rs->st_acao_historico_desc?></td>
+					<td><?php echo nl2br($rs->tx_descricao_historico)?></td>
+				</tr>
+			<?php endforeach; ?>
+			</tbody>
+		</table>
+	</div>
+	<br />
+	<?php endif; ?>
+	<br />
+	<button type="button" onclick="location.href = '<?php echo $this->baseUrl()?>/pedido/pedido-relatorio'" class="span-2 azul"><?php echo $this->escape($this->translate('L_BTN_VOLTAR')) ?></button>
+</fieldset>

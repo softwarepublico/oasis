@@ -1,0 +1,28 @@
+<?php
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/conteudo-baseline/index.js'));
+?>
+<form id="formRelatorioProjetoConteudoBaseline">
+
+	<label class="span-2 float-l right required" for="cd_contrato"><?php echo $this->translate('L_VIEW_CONTRATO') ?>:</label>
+		<?php echo $this->formSelect('cd_contrato',null,array('class'=>'float-l'),$this->arrContrato); ?>
+
+    <label class="span-2 float-l clear-l right required" for="cd_projeto"><?php echo $this->translate('L_VIEW_PROJETO') ?>:</label>
+    	<?php echo $this->formSelect("cd_projeto",null,array('class'=>'float-l'), array(0=>Base_Util::getTranslator('L_VIEW_COMBO_SELECIONE'))); ?>
+
+    <label class="span-2 float-l clear-l right required" for="dt_baseline"><?php echo $this->translate('L_VIEW_BASELINE') ?>:</label>
+    	<?php echo $this->formSelect("dt_baseline",null,array('class'=>'float-l'), array(0=>Base_Util::getTranslator('L_VIEW_COMBO_SELECIONE'))); ?>
+    	
+    <label class="span-2 float-l clear-l right required" ><?php echo $this->translate('L_VIEW_CONTEUDO') ?>:</label>
+    	<input class="float-l" type="checkbox" id="chk_requisito" name="chk_requisito" value="S" checked="checked"/>
+    		<span class="float-l bold span-3" style="margin-top: 2px;"><?php echo $this->translate('L_VIEW_REQUISITO') ?></span>
+    	<input class="float-l" type="checkbox" id="chk_regra_negocio" name="chk_regra_negocio" value="S" />
+    		<span class="float-l bold" style="margin-top: 2px;"><?php echo $this->translate('L_VIEW_REGRA_DE_NEGOCIO') ?></span>
+    <label class="span-2 float-l clear-l right" ></label>
+    	<input class="float-l" type="checkbox" id="chk_proposta" name="chk_proposta" value="S" />
+    		<span class="float-l bold span-3" style="margin-top: 2px;"><?php echo $this->translate('L_VIEW_PROPOSTA') ?></span>
+    	<input class="float-l" type="checkbox" id="chk_caso_uso" name="chk_caso_uso" value="S" />
+    		<span class="float-l bold" style="margin-top: 2px;"><?php echo $this->translate('L_VIEW_CASO_DE_USO') ?></span>
+    
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button" ><?php echo $this->translate('L_BTN_GERAR') ?></button>
+</form>

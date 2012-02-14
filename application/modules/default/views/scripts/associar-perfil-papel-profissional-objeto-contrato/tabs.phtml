@@ -1,0 +1,24 @@
+<?php
+$this->script('scriptFile',array('/associar-perfil-papel-profissional-objeto-contrato/index.js'));
+?>
+<div id="container_associar_perfil_papel_profissional_objeto_contrato" style="display: none;">
+    <ul>
+        <li>
+            <a href="#aba_associar_perfil_profissional_obj_contrato">
+                <span><?php echo $this->translate('L_VIEW_ABA_ASSOCIAR_PERFIL_PROFISSIONAL_OBJETO_CONTRATO'); ?></span>
+            </a>
+        </li>
+        <li id="li_associar_papel_profissional_obj_contrato">
+            <a href="#aba_associar_papel_profissional_obj_contrato">
+                <span><?php echo $this->translate('L_VIEW_ABA_ASSOCIAR_PAPEL_PROFISSIONAL_OBJETO_CONTRATO'); ?></span>
+            </a>
+        </li>
+    </ul>
+    <div id="aba_associar_perfil_profissional_obj_contrato">
+        <div class="divTab"><?php echo $this->render('associar-perfil-papel-profissional-objeto-contrato/perfil-objeto-contrato.phtml') ?></div>
+    </div>
+    <div id="aba_associar_papel_profissional_obj_contrato">
+        <div class="divTab"><?php echo $this->render('associar-perfil-papel-profissional-objeto-contrato/papel-objeto-contrato.phtml') ?></div>
+    </div>
+</div>
+<div class="accordionBottom" style="min-height: 20px;"></div>

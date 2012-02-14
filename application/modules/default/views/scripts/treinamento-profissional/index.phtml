@@ -1,0 +1,21 @@
+<?php
+    $this->script('scriptFile',array('/treinamento-profissional/index.js'));
+?>
+
+<label class="bold float-l span-3" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_OBJETO')) ?>:</label>
+<?php 
+    echo $this->formSelect( 'cd_objeto', null ,array('class'=>'span-6 float-l'), $this->arrTipoObjetoContrato );
+?>
+<label class="bold float-l span-3 clear-l" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_TREINAMENTO')) ?>:</label>
+<?php 
+    echo $this->formSelect( 'cd_treinamento', null ,array('class'=>'span-6 float-l'), $this->arrTreinamento );
+?>
+
+<?php
+    echo $this->flipFlop(array('name'=>'cd_profissional_1', 'label'=>$this->escape($this->translate('L_VIEW_PROFISSIONAIS'))),
+                         array('name'=>'cd_profissional_2', 'label'=>$this->escape($this->translate('L_VIEW_PROFISSIONAIS_TREINAMENTO'))),
+						 'add_treinamento_profissional',
+						 'remove_treinamento_profissional',8);
+?>
+
+<div id="gridTreinamentoProfissional" class="float-l span-20"></div>

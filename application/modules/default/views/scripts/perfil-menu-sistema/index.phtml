@@ -1,0 +1,22 @@
+<?php
+    $this->script('scriptFile',array('/perfil-menu-sistema/index.js'));
+?>
+<div>
+    <label class="float-l span-3 clear-l"><?php echo $this->escape($this->translate('L_VIEW_PERFIL')) ?>:</label>
+    <?php
+    echo $this->formSelect("cd_perfil_sistema", null, null, $this->perfis);
+    ?>
+</div>
+<div style="clear-l">
+    <label class="float-l span-3 clear-l"><?php echo $this->escape($this->translate('L_VIEW_TIPO_MENU')) ?>:</label>
+    <?php
+    echo $this->formSelect("st_perfil_menu", null, null, array("0"=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE')),
+                                                               "D"=>$this->escape($this->translate('L_VIEW_COMBO_DEMANDA')),
+                                                               "P"=>$this->escape($this->translate('L_VIEW_COMBO_PROJETO'))));
+    ?>
+</div>
+<div id="treeviewMenu" style="display:none;">
+    <?php
+    echo $this->render('perfil-menu-sistema/treeview.phtml');
+    ?>
+</div>

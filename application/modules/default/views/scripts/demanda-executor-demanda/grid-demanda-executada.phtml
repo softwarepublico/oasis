@@ -1,0 +1,65 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableDemandaExecutada").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableDemandaExecutada").tablesorterPager({container: $("#pager_demanda_executada")}); 
+});
+</script>
+<?php  echo $this->formHidden('mesAnoDemandaExecutada',$this->mesAno) ?>
+<table id="tableDemandaExecutada" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_DATA_HORA_DEMANDA'   )) ?></th>
+			<th class="span-4"><?php echo $this->escape($this->translate('L_VIEW_GRID_DATA_HORA_FECHAMENTO')) ?></th>
+			<th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_NUMERO'              )) ?></th>
+			<th class="span-4"><?php echo $this->escape($this->translate('L_VIEW_GRID_DETALHE_DEMANDA'     )) ?></th>
+			<th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_NIVEL_SERVICO'       )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+			$numero = (!is_null($res['ni_solicitacao'])) ? "{$res['ni_solicitacao']}/{$res['ni_ano_solicitacao']}" : $res['cd_demanda'];
+	?>
+		<tr>
+			<td>
+				<a class="float-l" href="<?php echo $this->baseUrl()?>/demanda-executor-demanda/demanda-executada-detalhes/cd_demanda/<?php echo $res['cd_demanda'] ?>/cd_nivel_servico/<?php echo $res['cd_nivel_servico'] ?>/abaOrigem/demanda-executada">
+                    <?php echo date('d/m/Y H:i:s', strtotime($res['dt_demanda'])) ?>
+                </a>
+				<button class="icon imprimir" onclick="abrePopUp('<?php echo $this->baseUrl()?>/relatorioDemanda/demanda-detalhe/demanda-detalhe/cd_objeto/<?php echo $res['cd_objeto']?>/ni_solicitacao/<?php echo $res['ni_solicitacao']?>/ni_ano_solicitacao/<?php echo $res['ni_ano_solicitacao']?>/cd_demanda/<?php echo $res['cd_demanda']?>');" title="<?php echo $this->escape($this->translate('L_VIEW_IMPRIMIR_RELATORIO_DEMANDA'))?>"></button>
+			</td>
+            <td><?php echo date('d/m/Y H:i:s', strtotime($res['dt_fechamento_demanda'])) ?></td>
+			<td><?php echo $numero ?></td>
+			<td><?php echo substr(strip_tags($res['tx_demanda']),0,30)."..." ?></td>
+			<td><?php echo $res['tx_nivel_servico'] ?></td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo " <tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr> ";
+	}
+	?>
+	</tbody>
+</table>
+<div id="pager_demanda_executada" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

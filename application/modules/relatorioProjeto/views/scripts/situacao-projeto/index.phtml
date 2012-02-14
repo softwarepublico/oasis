@@ -1,0 +1,10 @@
+<?php 
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/situacao-projeto/index.js'));
+?>
+<form id="formRelatorioProjetoSituacao">
+    <label class="span-2 float-l right clear-l required" for="cd_situacao"><?php echo $this->translate('L_VIEW_SITUACAO') ?>:</label>
+    	<?php echo $this->formSelect("cd_situacao", null, array('class'=>'float-l'), $this->comboSituacao); ?>
+    	
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->translate('L_BTN_GERAR') ?></button>
+</form>

@@ -1,0 +1,18 @@
+<?php
+    $this->script('scriptFile',array('/medicao/medicao-medida.js'));
+?>
+<div id="conteiner_medicao_medida" class="divTab">
+
+    <label class="bold float-l span-3" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_MEDICAO')) ?>:</label>
+	<?php echo $this->formSelect( 'cmb_medicao_medida', null ,array('class'=>'span-6 float-l'), null ); ?>
+
+    <?php
+        echo $this->flipFlop(array('name'=>'medida_1',
+                                   'label'=>$this->escape($this->translate('L_VIEW_MEDIDA'))),
+                             array('name'=>'medida_2',
+                                   'label'=>$this->escape($this->translate('L_VIEW_MEDIDA_ASSOCIADA'))),
+                             'add',
+                             'remove',8);
+    ?>
+	<div id="gridMedicaoMedida" class="float-l span-20"></div>
+</div>

@@ -1,0 +1,261 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableSolicitacoesServDesk").tablesorter({widthFixed: true, widgets: ['zebra']}) 
+    $("#tableSolicitacoesServDesk").tablesorterPager({container: $("#tableSolicitacoesServDeskPager")}); 
+});
+</script>
+<table id="tableSolicitacoesServDesk" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th width="10%"><?php echo $this->escape($this->translate('L_VIEW_GRID_SOLICITACAO'          )) ?></th>
+			<th width="15%"><?php echo $this->escape($this->translate('L_VIEW_GRID_UNIDADE'              )) ?></th>
+<!--			<th width="15%"><?php //echo $this->escape($this->translate('L_VIEW_GRID_TIPO_SOLICITACAO'     )) ?></th>-->
+			<th width="15%"><?php echo $this->escape($this->translate('L_VIEW_GRID_OBJETO'     )) ?></th>
+			<th width="30%"><?php echo $this->escape($this->translate('L_VIEW_GRID_DESCRICAO_SOLICITACAO')) ?></th>
+			<th width="15%"><?php echo $this->escape($this->translate('L_VIEW_GRID_STATUS'               )) ?></th>
+			<th width="15%"><?php echo $this->escape($this->translate('L_VIEW_GRID_ACAO'                 )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+ 	if($this->res):
+		foreach ($this->res as $res):
+	?>
+		<tr>
+			<td><a href="<?php echo $this->baseUrl()?>/solicitacao-service-desk/editar/cd_objeto/<?php echo $res['cd_objeto']?>/ni_solicitacao/<?php echo $res['ni_solicitacao']?>/ni_ano_solicitacao/<?php echo $res['ni_ano_solicitacao']?>"><?php echo $res['solicitacao'] ?></a></td>
+			<td><?php echo $res['tx_sigla_unidade'] ?></td>
+			<td><?php echo $res['tx_objeto'] ?></td>
+			<td><?php 
+					$con = "";
+					if(strlen(strip_tags($res['tx_solicitacao'])) > 50):
+						$con = "...";
+					endif;
+					$res['tx_solicitacao'] = substr(strip_tags($res['tx_solicitacao']),0,50).$con; 
+					echo $res['tx_solicitacao'];
+					?>
+			 </td>
+			<td>
+				<?php
+				  /**
+				 * Se o objeto do contrato estipulou período para leitura de solicitação de serviço, faz-se os cálculos
+				 * do tempo para leitura de cada solicitação. Se não, mostra apenas um texto indicando que não há tempo
+				 * limite para a leitura
+				 */
+				  if ($res['st_necessita_justificativa'] == "S") :
+					  /*
+					 * Se a solicitação não foi lida, verifica se a hora da emissão da solicitação está dentro do período
+					 * indicado no cadastro do objeto do contrato. Se não estiver, verifica se o tempo calculado para leitura da
+					 * solicitação foi ultrapassado (($res['minutos_para_leitura'] < 0)). Se foi, será mostrado o texto de justi-
+					 * ficativa pendente, se não, será mostrado os minutos restantes para leitura. Se estiver, verifica se o tempo
+					 * para leitura da solicitação é maior que o tempo estabelecido para leitura no cadastro do objeto do contrato.
+					 * Se o tempo for maior, mostra a indicação de justificativa pendente. Se não for maior, indica os minutos
+					 * restantes para leitura.
+					 */
+				      if (is_null($res['dt_leitura_solicitacao'])) :
+						  if ($res['hora_no_periodo'] == false) :
+							if ($res['minutos_para_leitura'] < 0) {
+								echo "Justificativa Pendente";
+							}else{
+								echo $res['minutos_para_leitura']." ".$this->escape($this->translate('L_VIEW_MINUTOS_PARA_LEITURA'));
+							}
+						  else:
+							  if ($res['minutos_para_leitura'] > $res['ni_minutos_justificativa']) : ?>
+						<?php
+								  echo $this->escape($this->translate('L_VIEW_JUSTIFICATIVA_PENDENTE'));
+							  else :
+								  echo ($res['ni_minutos_justificativa']-$res['minutos_para_leitura'])." ".$this->escape($this->translate('L_VIEW_MINUTOS_PARA_LEITURA'));
+							  endif;
+						  endif;
+					  else :
+						/*
+					   * Se a solicitação foi lida, verifica se a hora da emissão da solicitação está dentro do período
+					   * indicado no cadastro do objeto do contrato. Se estiver, calcula a diferença real entre a hora
+					   * da emissão da solicitação. Se a solicitação não foi justificada, verifica se a quantidade
+					   * de minutos até a leitura da solicitação é maior que o tempo indicado para leitura no cadastro
+					   * do objeto do contrato. Se for maior, mostra a indicação de justificativa pendente. Se a solicitação foi
+					   * justificada, verifica se a justificativa foi analisada. Se não foi analisada, mostra o botão para
+					   * analisar a justificativa. Se foi, mostra o botão para ver a análise registrada.
+					   * Se não estiver no período, calcula a diferença real entre a hora da emissão da solicitação.
+					   * Se a solicitação não foi justificada, verifica se a quantidade
+					   * de minutos até a leitura da solicitação é maior que o tempo calculado para leitura da solicitação.
+					   * Se for maior, mostra a indicação de justificativa pendente. Se a solicitação foi
+					   * justificada, verifica se a justificativa foi analisada. Se não foi analisada, mostra o botão para
+					   * analisar a justificativa. Se foi, mostra o botão para ver a análise registrada.
+					   */
+						if ($res['hora_no_periodo'] == true) :
+							$minutosAteLeitura = $this->datediff($res['dt_solicitacao'], $res['dt_leitura_solicitacao']);
+							if(is_null($res['dt_justificativa'])):
+								if($minutosAteLeitura > $res['ni_minutos_justificativa']): ?>
+					<?php
+									echo $this->escape($this->translate('L_VIEW_JUSTIFICATIVA_PENDENTE'));
+								endif;
+							else:
+								if (is_null($res['st_aceite_just_solicitacao'])):
+					?>
+                                                                <font color="green">
+                                      <?php                  
+                                        echo $this->escape($this->translate('L_VIEW_AGUARDANDO_ANALISE_JUSTIFICATIVA'));
+                                      ?>          
+                                         </font> 
+					<?php
+								else:
+					?>
+									<button class="azul" onClick="abreTabAnalisarJustificativa('<?php echo $res['cd_objeto']?>', '<?php echo $res['ni_solicitacao']?>', '<?php echo $res['ni_ano_solicitacao']?>','1')" id="button_ver_analise_justificativa_<?php echo $res['cd_objeto']?>_<?php echo $res['ni_solicitacao']?>_<?php echo $res['ni_ano_solicitacao']?>">
+                                        <?php echo $this->escape($this->translate('L_BTN_VER_ANALISE_JUSTIFICATIVA')) ?>
+                                    </button>
+					<?php
+								endif;
+							endif;
+						else:
+							$minutosAteLeitura = $this->datediff($res['dt_solicitacao'], $res['dt_leitura_solicitacao']);
+							if (is_null($res['dt_justificativa'])):
+								if ($minutosAteLeitura > $res['minutos_para_leitura']): ?>
+					<?php
+									echo "Justificativa Pendente";
+								endif;
+							else:
+								if (is_null($res['st_aceite_just_solicitacao'])):
+					?>
+
+                                    <font color="green">
+                                      <?php                  
+                                        echo $this->escape($this->translate('L_VIEW_AGUARDANDO_ANALISE_JUSTIFICATIVA'));
+                                      ?>          
+                                         </font> 
+       
+					<?php
+								else:
+					?>
+									<button class="azul" onClick="abreTabAnalisarJustificativa('<?php echo $res['cd_objeto']?>', '<?php echo $res['ni_solicitacao']?>', '<?php echo $res['ni_ano_solicitacao']?>','1')" id="button_ver_analise_justificativa_<?php echo $res['cd_objeto']?>_<?php echo $res['ni_solicitacao']?>_<?php echo $res['ni_ano_solicitacao']?>">
+                                        <?php echo $this->escape($this->translate('L_BTN_VER_ANALISE_JUSTIFICATIVA')) ?>
+                                    </button>
+					<?php
+                                endif;
+							endif;
+						endif; //if ($res['hora_no_periodo'] == true)
+					  endif; //if (is_null($res['dt_leitura_solicitacao']))
+				  else:
+					echo $res['minutos_para_leitura'];
+				  endif;//$res['st_necessita_justificativa']  ?>
+			</td>
+            <td>
+                <?php
+                if((!is_null($res['st_homologacao']))){  
+                        ?>
+                <font color="blue">
+                  <?php                  
+
+                    echo $this->escape($this->translate('L_VIEW_CONCLUIDA'));
+                  ?>          
+                     </font> 
+                  <?php
+   
+                }
+                else{
+
+                    if((!is_null($res['st_aceite']))){  
+                        ?>
+                <font color="green">
+                        <?php                  
+								  echo $this->escape($this->translate('L_VIEW_AGUARDANDO_HOMOLOGACAO'));
+                        ?>          
+                  </font> 
+                  <?php
+                    }
+                    else{
+                        if((!is_null($res['st_fechamento']))){  
+                              if($res['st_solicitacao'] > 2) {
+                                  if (!is_null($res['dt_grau_satisfacao'])){
+                                            ?>
+                                    <font color="blue">
+                                      <?php                  
+                                        echo $this->escape($this->translate('L_VIEW_CONCLUIDA'));
+                                      ?>          
+                                         </font> 
+                                      <?php
+                                   }  
+                                  
+                                  else{
+                ?>
+
+                                    <font color="green">
+                                      <?php                  
+                                        echo $this->escape($this->translate('L_VIEW_AGUARDANDO_FECHAR_SOLICITACAO'));
+                                      ?>          
+                                         </font> 
+                                         
+                <?php              
+                                  }
+                                } 
+                               }
+                               else{
+                                   if($res['st_solicitacao'] > 2) {
+                                       if (!is_null($res['dt_leitura_solicitacao'])){
+                                                ?>
+                                            <font color="green">
+                                                <?php                  
+
+                                              echo $this->escape($this->translate('L_VIEW_AGUARDANDO_EXECUCAO'));
+                                                    ?>          
+                                              </font> 
+                                              <?php
+                                       }      
+                                        else{
+                                                ?>
+                                            <font color="green">
+                                                <?php                  
+
+                                              echo $this->escape($this->translate('L_VIEW_AGUARDANDO_LEITURA'));
+                                                    ?>          
+                                              </font> 
+                                              <?php
+                                            
+                                        }
+                                   }
+                                   else{
+                                     ?>
+                                        <font color="green">
+                                     <?php                  
+        								  echo $this->escape($this->translate('L_VIEW_AGUARDANDO_ACEITE'));
+                                      ?>          
+                                     </font> 
+                                      <?php
+                                   }
+                               }
+                        }
+                    
+                }   
+                ?>
+            </td>
+		</tr>
+	<?php
+		endforeach;
+	else:
+		echo "  <tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr> ";
+	endif;
+	?>
+	</tbody>
+</table>
+<div id="tableSolicitacoesServDeskPager" class="pager">
+    <form>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first" />
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev" />
+        <input type="text" class="pagedisplay" />
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next" />
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last" />
+        <select class="pagesize">
+            <option selected="selected" value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+		</select>
+	</form>
+</div>

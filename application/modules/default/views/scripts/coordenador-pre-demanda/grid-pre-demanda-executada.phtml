@@ -1,0 +1,77 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableCOPreDemandaExecutada").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableCOPreDemandaExecutada").tablesorterPager({container: $("#pager-executada")}); 
+});
+</script>
+<?php  echo $this->formHidden('mesAnoCoodenadorExecutada',$this->mesAno) ?>
+<table id="tableCOPreDemandaExecutada" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th width="15%"><?php echo $this->escape($this->translate('L_VIEW_GRID_DATA_HORA'      )) ?></th>
+			<th width="10%"><?php echo $this->escape($this->translate('L_VIEW_GRID_OBJETO_EXECUTOR')) ?></th>
+			<th width="30%"><?php echo $this->escape($this->translate('L_VIEW_GRID_DESCRICAO'      )) ?></th>
+			<th width="10%"><?php echo $this->escape($this->translate('L_VIEW_GRID_SOLICITACAO'    )) ?></th>
+			<th width="15%"><?php echo $this->escape($this->translate('L_VIEW_GRID_SITUACAO'       )) ?></th>
+			<th width="20%">&nbsp;</th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+	?>
+		<tr>
+			<td>
+				<a href="<?php echo $this->baseUrl()?>/coordenador-pre-demanda/solicitacao-executada-detalhes/cd_demanda/<?php echo $res['cd_demanda'] ?>/abaOrigem/demandas-executadas">
+                    <?php echo date('d/m/Y H:i:s', strtotime($res['dt_pre_demanda'])); ?>
+                </a>
+			</td>
+			<td><?php echo $res['tx_objeto'] ?></td>
+			<td><?php echo substr(strip_tags($res['tx_pre_demanda']),0,30)."..." ?></td>
+			<td><?php echo $res['ni_solicitacao']."/".$res['ni_ano_solicitacao'] ?></td>
+			<td><?php echo $res['situacao'] ?></td>
+			<td class="center">
+				<?php if(!is_null($res['st_aceite_pre_demanda']) && is_null($res['st_grau_satisfacao']) && is_null($res['st_reabertura_pre_demanda'])){ ?>
+                            <button id="btn_fechar_<?php echo $res['cd_pre_demanda'] ?>" class="verde" onclick="abreModalFechamentoSolicitacao('<?php echo $res['ni_solicitacao'] ?>', '<?php echo $res['ni_ano_solicitacao'] ?>', '<?php echo $res['cd_objeto'] ?>', '<?php echo $res['tx_objeto'] ?>');">
+                                <?php echo $this->escape($this->translate('L_BTN_FECHAR')) ?>
+                            </button>
+                            <button id="btn_reabrir_<?php echo $res['cd_pre_demanda'] ?>" class="vermelho" onclick="abreModalReaberturaPreDemanda('<?php echo $res['cd_pre_demanda'] ?>', '<?php echo $res['ni_solicitacao'] ?>', '<?php echo $res['ni_ano_solicitacao'] ?>', '<?php echo $res['cd_objeto'] ?>');">
+                                <?php echo $this->escape($this->translate('L_BTN_REABRIR')) ?>
+                            </button>
+				<?php } else { ?>
+                            &nbsp;
+				<?php } ?>
+			</td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo " <tr>
+					<td width=\"15%\">&nbsp;</td>
+					<td width=\"10%\">&nbsp;</td>
+					<td width=\"30%\">&nbsp;</td>
+					<td width=\"10%\">&nbsp;</td>
+					<td width=\"15%\">&nbsp;</td>
+					<td width=\"20%\">&nbsp;</td>
+				</tr> ";
+	}
+	?>
+	</tbody>
+</table>
+<div id="pager-executada" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

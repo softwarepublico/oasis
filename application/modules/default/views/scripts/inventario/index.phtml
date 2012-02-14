@@ -1,0 +1,52 @@
+<?php
+    $this->script('scriptFile',array('/inventario/index.js'));
+    $this->script('tab');
+    $this->script('editorHtml');
+    $this->script('validaForm');
+    $this->script('grid');
+?>
+<div id="container-inventario" style="display: none;">
+	<ul>
+		<li>
+            <a href="#lista-inventario">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_INVENTARIOS')) ?></span>
+            </a>
+        </li>
+		<li id="li_novo_inventario" style="display: none;">
+            <a href="#inventario">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_INVENTARIO')) ?></span>
+            </a>
+        </li>
+		<li>
+            <a href="#item-inventariado">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_DADOS_INVENTARIADO')) ?></span>
+            </a>
+        </li>
+		<li>
+            <a href="#form-inventario">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_DADOS_INVENTARIO')) ?></span>
+            </a>
+        </li>
+    </ul>
+	
+    <div id="lista-inventario">
+		<div class="divTab">
+			<?php echo $this->render('inventario/pesquisa-inventario.phtml') ?>
+		</div>
+    </div>
+    <div id="inventario">
+		<div class="divTab">
+	    	<?php echo $this->render('inventario/inventario.phtml') ?>
+		</div>
+    </div>
+    <div id="item-inventariado">
+		<div class="divTab">
+			<?php echo $this->render('inventario/item-inventariado.phtml') ?>
+		</div>
+    </div>
+    <div id="form-inventario">
+		<div class="divTab">
+			<?php echo $this->render('inventario/form-inventario.phtml') ?>
+		</div>
+    </div>
+</div>

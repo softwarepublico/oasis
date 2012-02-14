@@ -1,0 +1,67 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableBaseConhecimento").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableBaseConhecimento").tablesorterPager({container: $("#tableBaseConhecimentoPager"), size:5}); 
+});
+</script>
+<table id="tableBaseConhecimento" cellspacing="1" class="tablesorter" style="border-collapse:collapse">
+	<thead>
+		<tr>
+            <th class="span-4"><?php echo $this->escape($this->translate('L_VIEW_GRID_AREA_CONHECIMENTO')) ?></th>
+			<th class="span-4"><?php echo $this->escape($this->translate('L_VIEW_GRID_ASSUNTO' )) ?></th>
+			<th class="span-4"><?php echo $this->escape($this->translate('L_VIEW_GRID_PROBLEMA')) ?></th>
+			<th class="span-6"><?php echo $this->escape($this->translate('L_VIEW_GRID_SOLUCAO' )) ?></th>
+		</tr>
+  </thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+			$tx_area_conhecimento = (strlen(strip_tags($res['tx_area_conhecimento'])) > 35)	? substr(strip_tags($res['tx_area_conhecimento'	]),0,35)."..." : strip_tags($res['tx_area_conhecimento'	]);
+			$tx_assunto			  = (strlen(strip_tags($res['tx_assunto'		  ])) > 30) ? substr(strip_tags($res['tx_assunto'			]),0,30)."..." : strip_tags($res['tx_assunto'			]);
+			$tx_problema		  = (strlen(strip_tags($res['tx_problema'		  ])) > 30) ? substr(strip_tags($res['tx_problema'			]),0,30)."..." : strip_tags($res['tx_problema'			]);
+			$tx_solucao			  = (strlen(strip_tags($res['tx_solucao'		  ])) > 55) ? substr(strip_tags($res['tx_solucao'			]),0,55)."..." : strip_tags($res['tx_solucao'			]);
+	?>
+		<tr>
+			<td style="cursor:pointer;" onclick="abreTabBaseConhecimentoSolucao(<?php echo $res['cd_base_conhecimento']  ?>)">
+				<?php echo $tx_area_conhecimento;  ?>
+			</td>
+			<td style="cursor:pointer;" onclick="abreTabBaseConhecimentoSolucao(<?php echo $res['cd_base_conhecimento']  ?>)">
+				<?php echo $tx_assunto; ?>
+			</td>
+			<td style="cursor:pointer;" onclick="abreTabBaseConhecimentoSolucao(<?php echo $res['cd_base_conhecimento']  ?>)">
+				<?php echo $tx_problema; ?>
+			</td>
+			<td style="cursor:pointer;" onclick="abreTabBaseConhecimentoSolucao(<?php echo $res['cd_base_conhecimento']  ?>)">
+				<?php echo $tx_solucao; ?>
+			</td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo " <tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr> ";
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableBaseConhecimentoPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="05">05</option>
+			<option value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+		</select>
+	</form>
+</div>

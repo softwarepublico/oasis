@@ -1,0 +1,39 @@
+<?php 
+	$this->script('tab'); 
+	$this->script('grid'); 
+	$this->script('validaForm'); 
+	$this->script('numero');
+    $this->script('scriptFile',array('/grupo-fator/index.js',
+                                     '/grupo-fator-item/index.js'));
+?>
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#container-grupoFator').show().tabs(); 
+});
+</script>
+<div id="container-grupoFator" class="span-21" style="display: none;">
+	<ul>
+        <li>
+            <a href="#grupoFator">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_GRUPO_FATOR')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#itemGrupoFator">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_ITEM_GRUPO_FATOR')) ?></span>
+            </a>
+        </li>
+    </ul>
+    <div id="grupoFator">
+    	<div style="overflow:hidden;" id="grupo-fator">
+	    	<?php echo $this->formGrupoFator; ?>
+	    	 <button class="verde float-l clear-l push-3" id="salvarGrupoFator" name="salvarGrupoFator"><?php echo $this->escape($this->translate('L_BTN_SALVAR'   )) ?></button>
+	    	 <button class="verde float-l clear-l push-3" id="alterarGrupoFator" name="alterarGrupoFator"><?php echo $this->escape($this->translate('L_BTN_ALTERAR')) ?></button>
+	    	 <button class="vermelho float-l push-3" id="cancelarGrupoFator" name="cancelarGrupoFator"><?php echo $this->escape($this->translate('L_BTN_CANCELAR'  )) ?></button>
+	    	 <div class="float-l clear-l span-18 push-1" id="gridGrupoFator"></div>
+	    </div>
+    </div>
+    <div id="itemGrupoFator">
+        <?php echo $this->render('grupo-fator-item/index.phtml') ?>
+    </div>
+</div>

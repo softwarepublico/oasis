@@ -1,0 +1,62 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableReuniaoGeral").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableReuniaoGeral").tablesorterPager({container: $("#tableReuniaoGeralPager"), size:5});
+});
+</script>
+<table id="tableReuniaoGeral" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th class="{sorter: false}" width="10px">&nbsp;</th>
+			<th width="10px"><?php echo $this->escape($this->translate('L_VIEW_GRID_DATA' )) ?></th>
+			<th width="90px"><?php echo $this->escape($this->translate('L_VIEW_GRID_LOCAL_REUNIAO')) ?></th>
+			<th width="90px"><?php echo $this->escape($this->translate('L_VIEW_GRID_PAUTA')) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+			foreach ($this->res as $res):
+	?>
+		<tr>
+			<td><img id="imgExcluir" height="13" width="13" style="cursor:pointer;" onclick="excluirReuniaoGeral('<?php echo $res['cd_reuniao_geral'] ?>');" src="<?php echo $this->baseUrl()?>/public/img/del.png" alt="<?php echo $this->escape($this->translate('L_BTN_EXCLUIR')) ?>"/></td>
+			<td style="cursor:pointer;" onclick="recuperaReuniaoGeral(<?php echo $res['cd_reuniao_geral'] ?>)">
+				<?php echo $this->resData[$res['cd_reuniao_geral']] ?>
+			</td>
+			<td style="cursor:pointer;" onclick="recuperaReuniaoGeral(<?php echo $res['cd_reuniao_geral'] ?>)">
+				<?php echo $res['tx_local_reuniao'] ?>
+			</td>
+			<td style="cursor:pointer;" onclick="recuperaReuniaoGeral(<?php echo $res['cd_reuniao_geral'] ?>)">
+				<?php echo $res['tx_pauta'] ?>
+			</td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo "	<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr>";
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableReuniaoPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="05">05</option>
+			<option value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

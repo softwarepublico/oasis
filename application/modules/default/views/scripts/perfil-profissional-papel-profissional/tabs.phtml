@@ -1,0 +1,89 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#container_perfil_papel_profissional').show().tabs().triggerTab(1);
+
+	$("#config_hidden_perfil_papel_profissional").val('N'); 
+});
+</script>
+<div id="container_perfil_papel_profissional" style="display: none;">
+<?php 
+	$permPerfilProf 	 = "N";
+	$permPapelProf 		 = "N";
+	$permPerfilPapelProf = "N";
+?>
+	<ul>
+		<?php if( ChecaPermissao::possuiPermissao('perfil-profissional') === true ): $permPerfilProf = "S"; ?>
+        	<li>
+                <a href="#aba_perfil_profissional">
+                    <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PERFIL_PROFISSIONAL')) ?></span>
+                </a>
+            </li>
+		<?php endif; ?>
+		<?php if( ChecaPermissao::possuiPermissao('papel-profissional') === true ): $permPapelProf = "S"; ?>
+	        <li id="li-papel-profissional">
+                <a href="#aba_papel_profissional">
+                    <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PAPEL_PROFISSIONAL')) ?></span>
+                </a>
+            </li>
+		<?php endif; ?>
+		<?php if( ChecaPermissao::possuiPermissao('perfil-profissional-papel-profissional') === true ): $permPerfilPapelProf = "S"; ?>
+                <li id="li-perfil-profissional-papel-profissional">
+                    <a href="#aba_perfil_papel_profissional">
+                        <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PAPEL_PROFISSIONAL_PERFIL_PROFISSIONAL')) ?></span>
+                    </a>
+                </li>
+		<?php endif; ?>
+    </ul>
+		<?php if( ChecaPermissao::possuiPermissao('perfil-profissional') === true ): ?>
+		    <div id="aba_perfil_profissional">
+		    	<div class="divTab"><?php echo $this->render('perfil-profissional/index.phtml') ?></div>
+		    </div>
+		<?php endif; ?>
+		<?php if( ChecaPermissao::possuiPermissao('papel-profissional') === true ): ?>
+		    <div id="aba_papel_profissional">
+		    	<div class="divTab"><?php echo $this->render('papel-profissional/index.phtml') ?></div>
+		    </div>
+		<?php endif; ?>
+		<?php if( ChecaPermissao::possuiPermissao('perfil-profissional-papel-profissional') === true ): ?>
+		    <div id="aba_perfil_papel_profissional">
+		    	<div class="divTab"><?php echo $this->render('perfil-profissional-papel-profissional/index.phtml') ?></div>
+		    </div>
+		<?php endif; ?>
+</div>
+<div class="accordionBottom" style="min-height: 20px;"></div>
+
+<script>
+<!--
+var perm_perfil_prof		= '<?php echo $permPerfilProf; 		?>';
+var perm_papel_prof		    = '<?php echo $permPapelProf; 		?>';
+var perm_perfil_papel_prof	= '<?php echo $permPerfilPapelProf; ?>';
+
+function configAccordionPerfilPapelProfissional()
+{
+	if( $("#config_hidden_perfil_papel_profissional").val() === "N" ){
+		if (perm_perfil_prof === 'S'){
+            comboAreaAtuacao('cd_area_atuacao_perfil_profissional');
+			if ($("#cd_area_atuacao_perfil_profissional").val() != "0" && $("#cd_area_atuacao_perfil_profissional").val() != null ) {
+                alert($("#cd_area_atuacao_perfil_profissional").val());
+				montaGridPerfilProfissional();
+			}
+		}
+
+		if (perm_papel_prof === 'S'){
+			comboAreaAtuacao('cd_area_atuacao_papel_profissional');
+		}
+
+		if (perm_perfil_papel_prof === 'S'){
+			comboAreaAtuacao('cd_area_atuacao_associa_perfil_papel_profissional');
+			if ($("#cd_area_atuacao_associa_perfil_papel_profissional").val() != "0" && $("#cd_area_atuacao_associa_perfil_papel_profissional").val() != null) {
+				getPerfilProfissionalAjax();
+			}
+		}
+        
+		$("#config_hidden_perfil_papel_profissional").val('S');
+	}
+    
+    $("#config_hidden_associar_perfil_papel_profissional_objeto_contrato").val('N');
+}
+//-->
+</script>

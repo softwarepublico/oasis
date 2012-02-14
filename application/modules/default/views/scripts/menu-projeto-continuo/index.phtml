@@ -1,0 +1,83 @@
+<?php 
+	$this->script('editorHtml'); 
+	$this->script('validaForm'); 
+	$this->script('tab'); 
+	$this->script('grid'); 
+	$this->script('mascara');
+	$this->script('validaData');
+	$this->script('calendario');
+    $this->script('scriptFile',array('/menu-projeto-continuo/index.js',
+                                     '/projeto-continuado/index.js',
+                                     '/modulo-continuado/index.js',
+                                     '/historico-projeto-continuado/index.js'));
+?>
+
+
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#container-menuProjetoContinuo').show().tabs(); 
+});
+</script>
+<div id="container-menuProjetoContinuo" style="display: none;">
+	<ul>
+    	<li>
+            <a href="#projetoContinuo">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PROJETO_CONTINUO')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#moduloContinuo">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_MODULO_CONTINUO')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#historicoProjetoContinuo">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_HISTORICO_PROJETO_CONTINUO')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#uploadDocsProjetoContinuo">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_DOCUMENTACAO_PROJETO_CONTINUO')) ?></span>
+            </a>
+        </li>
+    </ul>
+    <div id="projetoContinuo">
+    	<div class="clear" style="overflow: hidden;">
+			<?php 
+				echo $this->projetoContinuo;
+				echo $this->formButton('adicionarProjetoContinuo',$this->escape($this->translate('L_BTN_SALVAR')),array('class'=>'verde float-l clear-l push-4'));
+	    		echo $this->formButton('alterarProjetoContinuo',$this->escape($this->translate('L_BTN_ALTERAR')),array('class'=>'azul float-l clear-l push-4'));
+	    		echo $this->formButton('cancelarProjetoContinuo',$this->escape($this->translate('L_BTN_CANCELAR')),array('class'=>'vermelho float-l push-4'));
+			?>
+			<div id="gridProjetoContinuado" class="span-13 clear-l push-4"></div>
+    	</div>
+    </div>
+    <div id="moduloContinuo">
+        <div class="clear" style="overflow: hidden;">
+			<?php 
+				echo $this->moduloContinuo;
+				echo $this->formButton('adicionarModuloContinuo',$this->escape($this->translate('L_BTN_SALVAR')),array('class'=>'verde float-l clear-l push-3'));
+	    		echo $this->formButton('alterarModuloContinuo',$this->escape($this->translate('L_BTN_ALTERAR')),array('class'=>'azul float-l clear-l push-3'));
+	    		echo $this->formButton('cancelarModuloContinuo',$this->escape($this->translate('L_BTN_CANCELAR')),array('class'=>'vermelho float-l push-3'));
+			?>
+			<div id="gridModuloContinuo" class="clear-l float-l span-15 push-3"></div>
+        </div>
+    </div>
+    <div id="historicoProjetoContinuo">
+        <div class="clear" style="overflow: hidden;">
+			<?php 
+				echo $this->historicoContinuado;
+				echo $this->formButton('adicionarHistoricoProjetoContinuo',$this->escape($this->translate('L_BTN_SALVAR')),array('class'=>'verde float-l clear-l push-4'));
+	    		echo $this->formButton('alterarHistoricoProjetoContinuo',$this->escape($this->translate('L_BTN_ALTERAR')),array('class'=>'azul float-l clear-l push-4'));
+	    		echo $this->formButton('cancelarHistoricoProjetoContinuo',$this->escape($this->translate('L_BTN_CANCELAR')),array('class'=>'vermelho float-l push-4'));
+			?>
+			<div id="gridHistoricoContinuo" class="clear-l float-l push-4 span-15"></div>
+        </div>
+    </div>
+    <div id="uploadDocsProjetoContinuo">
+        <div class="clear" style="overflow: hidden;">
+			<?php echo $this->render('documentacao-projeto-continuo/index.phtml') ?>
+			<div id="gridUploadDocsProjetoContinuo" class="clear-l float-l push-4 span-15"></div>
+        </div>
+    </div>
+</div>

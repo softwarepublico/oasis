@@ -1,0 +1,31 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#container-parcela').show().tabs(); 
+    $('#config_hidden_controle_parcela').val('N');
+});
+function configControleParcela()
+{
+	executaControleParcelaAjax();
+    $('#config_hidden_controle_parcela').val('S');
+}
+</script>
+<div id="container-parcela" style="display: none;">
+	<ul>
+    	<li>
+            <a href="#etapaControleParcela">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_ETAPAS_CONTROLE')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#extratoMensal">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_EXTRATO_MENSAL')) ?></span>
+            </a>
+        </li>
+    </ul>
+    <div id="etapaControleParcela">
+    	<?php echo $this->render('controle-parcela/etapa-controle.phtml') ?>
+    </div>
+    <div id="extratoMensal">
+    	<?php echo $this->render('fechamento-extrato-mensal/index.phtml') ?>
+    </div>
+</div>

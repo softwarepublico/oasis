@@ -1,0 +1,30 @@
+<?php
+$this->script('scriptFile',array('/analise-execucao-projeto/index.js'));
+?>
+
+<?php echo $this->formHidden('config_hidden_analise_execucao_projeto','N'); ?>
+<div id="analise-execucao-projeto" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){verificaConfigAccordionAnaliseExecucaoProjeto();}">
+    <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_ANALISE_EXECUCAO')) ?></span>
+</div>
+<div id="form_analise_execucao_projeto" accordion="accordion" class="hide accordion">
+    <div id="container-analise_execucao_projeto" style="display: none;">
+        <ul>
+            <li>
+                <a href="#projetosExecucao" >
+                    <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PROJETO_EXECUCAO')) ?></span>
+                </a>
+            </li>
+            <li id="li_aba_analise_execucao_projeto" style="display: none;">
+                <a href="#analiseExecucao">
+                    <span><?php echo $this->escape($this->translate('L_VIEW_ABA_ANALISE_EXECUCAO')) ?></span>
+                </a>
+            </li>
+        </ul>
+        <div id="projetosExecucao">
+            <?php echo $this->render('analise-execucao-projeto/projetos-execucao.phtml') ?>
+        </div>
+        <div id="analiseExecucao">
+            <?php echo $this->render('analise-execucao-projeto/analise-execucao.phtml') ?>
+        </div>
+    </div>
+</div>

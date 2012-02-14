@@ -1,0 +1,46 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableFormInventario").tablesorter({
+    						headers:{
+    							0:{sorter: false},
+    							1:{sorter: false},
+    							2:{sorter: false},
+    							3:{sorter: false},
+    							4:{sorter: false},
+    							5:{sorter: false}
+    						}
+    }); 
+    $("#tableFormInventario").tablesorter({widthFixed: true, widgets: ['zebra']});
+	
+});
+</script>
+<table id="tableFormInventario" cellspacing="1" class="tablesorter" style="border-collapse: collapse; border: 1px solid #54BDCD; width:810px;">
+	<thead>
+		<tr>
+			<th class="span-6 center"><?php echo $this->escape($this->translate('L_VIEW_GRID_DESCRICAO')) ?></th>
+			<th class="span-3 center"><?php echo $this->escape($this->translate('L_VIEW_GRID_VALORES' )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+    
+    if(count($this->arrItemInventariado) > 0){
+		foreach ($this->arrItemInventariado as $itemInventariado):
+            $valor = "valor_{$this->arrParItem['cd_item_inventario']}_{$this->arrParItem['cd_item_inventariado']}_{$this->arrParItem['cd_subitem_inventario']}_{$itemInventariado['cd_subitem_inv_descri']}";
+	?>
+            <tr>
+                <td> <?php echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$itemInventariado['tx_subitem_inv_descri'] ?></td>
+                <td><input type="text" id="<?php echo $valor ?>" name="<?php echo $valor ?>" value="<?php echo $itemInventariado['tx_valor_subitem_inventario'] ?>" class="float-l span-9"  /></td>
+            </tr>
+	<?php
+		endforeach;
+	} else {
+		echo "<tr>
+					<td colspan='2' class='center'>".$this->escape($this->translate('L_VIEW_SEM_REGISTRO'))."</td>
+			  </tr>";
+	}
+	?>
+	</tbody>
+</table>
+<?php echo $this->formButton('btn_salvar_form_inventario', $this->escape($this->translate('L_BTN_SALVAR')), array('class'=>'float-r clear-l verde','onclick'=>'salvaFormInventario()')); ?>

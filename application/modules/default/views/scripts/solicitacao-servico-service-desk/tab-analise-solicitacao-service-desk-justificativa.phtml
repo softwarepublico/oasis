@@ -1,0 +1,59 @@
+<script type="text/javascript" language="javascript" src="<?php echo $this->baseUrl() ?>/public/js/modules/default/solicitacao-servico-service-desk/tab-solicitacao-service-desk-justificativa.js"></script>
+<div class="divTab">
+
+	<div id="form_analise_solicitacao_service_desk_justificativa">
+
+		<input type="hidden" id="cd_objeto" name="cd_objeto" value="<?php echo $this->arrDados['cd_objeto'] ?>"/>
+		<input type="hidden" id="ni_solicitacao" name="ni_solicitacao" value="<?php echo $this->arrDados['ni_solicitacao'] ?>"/>
+		<input type="hidden" id="ni_ano_solicitacao" name="ni_ano_solicitacao" value="<?php echo $this->arrDados['ni_ano_solicitacao'] ?>"/>
+		<input type="hidden" id="tab_origem" name="tab_origem" value="<?php echo $this->tab_origem ?>"/>
+
+		<div class="box span-20 border gradient">
+			<h3 class="highlight tarja-1">Detalhes da solicitação</h3>
+			<label class="bold span-4">Objeto do Contrato:</label><p class="span-6"><?php echo $this->arrDados['tx_objeto'] ?></p>
+			<label class="bold span-4">Data da solicitação:</label><p class="span-6"><?php echo $this->arrDados['dt_solicitacao'] ?></p>
+			<label class="bold span-4">Tipo de solicitação:</label><p class="span-6"><?php echo $this->arrDados['st_solicitacao'] ?></p>
+			<label class="bold span-4">Gestor solicitante</label><p class="span-6"></p>
+			<hr style="width:780px;"/>
+			<label class="span-3" style="padding-left:45px;">Nome:</label><p class="span-6"><?php echo $this->arrDados['tx_solicitante'] ?></p>
+			<label class="span-3" style="padding-left:45px;">Unidade:</label><p class="span-6"><?php echo $this->arrDados['tx_sigla_unidade'] ?></p>
+			<label class="span-3" style="padding-left:45px;">Sala:</label><p class="span-6"><?php echo $this->arrDados['tx_sala_solicitante'] ?></p>
+			<label class="span-3" style="padding-left:45px;">Telefone:</label><p class="span-6"><?php echo $this->arrDados['tx_telefone_solicitante'] ?></p>
+			<hr style="width:780px;"/>
+			<label class="bold span-5">Descrição da Solicitação:</label>
+				<p class="span-14" style="text-align: justify;"><?php echo $this->arrDados['tx_solicitacao'] ?></p>
+			<label class="bold span-5">Prazo de Atendimento (dias):</label>
+				<p class="span-6"><?php echo $this->arrDados['ni_prazo_atendimento'] ?></p>
+			<label class="bold span-5">Observações:</label>
+				<p class="span-14" style="text-align: justify;"><?php echo $this->arrDados['tx_obs_solicitacao'] ?></p>
+			<hr style="width:780px;"/>
+			<br>
+			<label class="bold span-5">Justificativa:</label>
+				<p class="span-14" style="text-align: justify;"><?php echo $this->arrDados['tx_justificativa_solicitacao'] ?></p>
+			<?php if (is_null($this->arrDados['st_aceite_just_solicitacao'])) : ?>
+			<label class="bold span-5 float-l clear-l">Aceite de Justificativa:</label>
+				<p class="span-3 float-l"><input class="span-1 float-l" type="radio" id="st_aceite_just_solicitacao" name="st_aceite_just_solicitacao" value="S">Sim</p>
+				<p class="span-3 float-l"><input class="span-1 float-l" type="radio" id="st_aceite_just_solicitacao" name="st_aceite_just_solicitacao" value="N">Não</p>
+			<label class=" bold span-5 float-l clear-l ">Observação:</label>
+				<?php echo $this->formTextarea('tx_obs_aceite_just_solicitacao', '', array('style' => 'width:550px; height:100px; margin-top: 3px;','class'=>'float-l')) ?>
+			<?php else:?>
+			<label class="bold span-5 float-l clear-l">Aceite de Justificativa:</label>
+				<p class="span-14" style="text-align: justify;"><?php echo $this->st_aceite ?></p>
+			<label class=" bold span-5 float-l clear-l ">Observação:</label>
+				<p class="span-14" style="text-align: justify;"><?php echo $this->arrDados['tx_obs_aceite_just_solicitacao'] ?></p>
+			<?php endif;?>
+			<br>
+			<br>
+			<div style="margin-top: 15px;" class="float-l clear-l push-4">
+			<?php
+				if (is_null($this->arrDados['st_aceite_just_solicitacao'])) :
+					echo $this->formButton('btn_salvar_analise_solicitacao_service_desk_justificativa','Salvar',array('class'=>'verde clear-l float-l'));
+					echo $this->formButton('btn_cancelar_analise_solicitacao_service_desk_justificativa','Cancelar',array('class'=>'vermelho float-l'));
+				else:
+					echo $this->formButton('btn_cancelar_analise_solicitacao_service_desk_justificativa','Voltar',array('class'=>'azul float-l'));
+				endif;
+			?>
+			</div>
+		</div>
+	</div>
+</div>

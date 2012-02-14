@@ -1,0 +1,31 @@
+<?php 
+	$this->script('validaForm');
+	$this->script('mascara');
+	$this->script('calendario');
+	$this->script('validaData');
+    $this->script('scriptFile',array('/historico-projeto/index.js'));
+?>
+<form id="formRelatorio">
+
+	<label class="span-3 float-l required" for="cd_contrato"><?php echo $this->translate('L_VIEW_CONTRATO') ?>:</label>
+		<?php echo $this->formSelect('cd_contrato',null,array('class'=>'float-l'),$this->arrContrato); ?>
+
+    <label class="span-3 float-l required clear-l" for="cd_projeto"><?php echo $this->translate('L_VIEW_PROJETO') ?>:</label>
+    	<?php echo $this->formSelect("cd_projeto",null,array('class'=>'float-l'),array(0=>Base_Util::getTranslator('L_VIEW_COMBO_SELECIONE'))); ?>
+
+    <label class="span-3 float-l clear-l" for="cd_proposta"><?php echo $this->translate('L_VIEW_PROPOSTA') ?>:</label>
+    	<?php echo $this->formSelect("cd_proposta",null,array('class'=>'float-l'),array(0=>Base_Util::getTranslator('L_VIEW_COMBO_SELECIONE'))); ?>
+
+    <label class="span-3 float-l clear-l" for="cd_profissional"><?php echo $this->translate('L_VIEW_PROFISSIONAL') ?>:</label>
+    	<?php echo $this->formSelect("cd_profissional",null,array('class'=>'float-l'),array(0=>Base_Util::getTranslator('L_VIEW_COMBO_SELECIONE'))); ?>
+
+    <label class="span-3 float-l clear-l" for="dt_inicio"><?php echo $this->translate('L_VIEW_DATA_INICIO') ?>:</label>
+    	<?php echo $this->data("dt_inicio",null,array('class'=>'float-l span-3')); ?>
+
+    <label class="span-3 float-l clear-l" for="dt_fim"><?php echo $this->translate('L_VIEW_DATA_FINAL') ?>:</label>
+    	<?php echo $this->data("dt_fim",null,array('class'=>'float-l span-3')); ?>
+
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->translate('L_BTN_GERAR') ?></button>
+    <?php echo $this->objDataDiff->comparaDataInicioFim("dt_inicio","dt_fim") ?>
+</form>
+    	

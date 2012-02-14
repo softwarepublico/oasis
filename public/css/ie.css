@@ -1,0 +1,62 @@
+/* ie.css */
+body {text-align:center;}
+.container {text-align:left;}
+* html .column {overflow-x:hidden;}
+* html legend {margin:-18px -8px 16px 0;padding:0;}
+ol {margin-left:2em;}
+sup {vertical-align:text-top;}
+sub {vertical-align:text-bottom;}
+html>body p code *{white-space:normal;}
+hr {margin:-8px auto 11px;}
+
+dl dt {font-weight:bold; display:block;}
+dd {margin-bottom:1.1em;}
+button{ 
+    line-height:13px;
+    font-size: 1.2em;
+}
+/* normalizando componentes select*/
+/* elementos com bordas de 2px tem 8px a menos na largura */
+textarea.span-1, input.span-1 {width:24px;}
+textarea.span-2, input.span-2 {width:64px;}
+textarea.span-3, input.span-3 {width:104px;}
+textarea.span-4, input.span-4 {width:144px;}
+textarea.span-5, input.span-5 {width:184px;}
+textarea.span-6, input.span-6 {width:224px;}
+textarea.span-7, input.span-7 {width:264px;}
+textarea.span-8, input.span-8 {width:304px;}
+textarea.span-9, input.span-9 {width:344px;}
+textarea.span-10, input.span-10 {width:384px;}
+textarea.span-11, input.span-11 {width:424px;}
+textarea.span-12, input.span-12 {width:464px;}
+textarea.span-13, input.span-13 {width:504px;}
+textarea.span-14, input.span-14 {width:544px;}
+textarea.span-15, input.span-15 {width:584px;}
+textarea.span-16, input.span-16 {width:624px;}
+textarea.span-17, input.span-17 {width:664px;}
+textarea.span-18, input.span-18 {width:704px;}
+textarea.span-19, input.span-19 {width:744px;}
+textarea.span-20, input.span-20 {width:784px;}
+textarea.span-21, input.span-21 {width:824px;}
+textarea.span-22, input.span-22 {width:864px;}
+textarea.span-23, input.span-23 {width:904px;}
+
+.calendario-input{
+    width:84px;
+}
+
+.clear {
+	clear: both !important;
+}
+
+.clear-r {
+	clear: right !important;
+}
+
+.clear-l {
+	clear: left !important;
+}
+
+.clear-n {
+	clear: none !important;
+}

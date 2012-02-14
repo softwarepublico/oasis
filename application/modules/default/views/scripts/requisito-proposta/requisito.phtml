@@ -1,0 +1,40 @@
+<div id="div_novo_requisito" class="divTab">
+	
+	<?php echo $this->formHidden('ni_versao_requisito',null) ?>
+	<?php echo $this->formHidden('dt_versao_requisito',null) ?>
+	<?php echo $this->formHidden('cd_requisito',null) ?>
+	
+    <label class="bold right float-l span-4 required" for="tx_usuario_solicitante" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_USUARIO_SOLICITANTE')) ?>:</label>
+	<?php echo $this->formText( 'tx_usuario_solicitante', null ,array('class'=>'span-13 float-l', 'maxlength'=>'200') ); ?>
+	
+	<label class="bold right float-l span-4 clear-l required" for="tx_nivel_solicitante" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_NIVEL_SOLICITANTE')) ?>:</label>
+	<?php echo $this->formText( 'tx_nivel_solicitante', null ,array('class'=>'span-13 float-l', 'maxlength'=>'100') ); ?>
+
+	<label class="bold right float-l span-4 clear-l required" for="tx_requisito" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_REQUISITO')) ?>:</label>
+	<?php echo $this->formText( 'tx_requisito', null ,array('class'=>'span-13 float-l', 'maxlength'=>'100') ); ?>
+	
+	<label class="bold right float-l span-4 clear-l required" for="st_prioridade_requisito" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_PRIORIDADE_REQUISITO')) ?>:</label>
+	<?php echo $this->formSelect( 'st_prioridade_requisito', null ,array('class'=>'span-4 float-l','maxlength'=>'100'), array('0'=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE')),
+                                                                                                                              'B'=>$this->escape($this->translate('L_VIEW_COMBO_BAIXA')),
+                                                                                                                              'M'=>$this->escape($this->translate('L_VIEW_COMBO_MEDIA')),
+                                                                                                                              'A'=>$this->escape($this->translate('L_VIEW_COMBO_ALTA'))) ); ?>
+	
+	<label class="bold right float-l span-4 clear-l required" for="st_requisito" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_STATUS_REQUISITO')) ?>:</label>
+	<?php echo $this->formSelect( 'st_requisito', null ,array('class'=>'span-4 float-l'), array('0'=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE')),
+                                                                                                'S'=>$this->escape($this->translate('L_VIEW_COMBO_SUBMETIDO')),
+                                                                                                'A'=>$this->escape($this->translate('L_VIEW_COMBO_APROVADO')),
+                                                                                                'C'=>$this->escape($this->translate('L_VIEW_COMBO_COMPLETADO'))) ); ?>
+	
+	<!-- para validadar o editorHtml com a função validaForm() deve-se adicionar a tag EDITOR="EDITOR" -->
+	<label class="bold right float-l span-4 clear-l required" for="tx_descricao_requisito" editor="editor" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_DESCRICAO')) ?>:</label>
+	<?php echo $this->editorHtml( 'tx_descricao_requisito', null, array('class'=>'float-l','cols'=>'61','rows'=>'13','editor'=>K_EDITOR)); ?>
+
+	<input type="checkbox" id="st_tipo_requisito" name="st_tipo_requisito" class=" bold span-1 float-l push-4 clear-l" style="margin-top: 3px;">
+	<label class="bold right float-l push-4 span-3"><?php echo $this->escape($this->translate('L_VIEW_NAO_FUNCIONAL')) ?></label>
+	
+	<?php
+		echo $this->formButton('btn_salvar_requisito', $this->escape($this->translate('L_BTN_SALVAR')), array('class'=>'verde float-l clear-l push-4'));
+		echo $this->formButton('btn_alterar_requisito', $this->escape($this->translate('L_BTN_SALVAR')), array('class'=>'verde float-l clear-l push-4','style'=>'display:none;'));
+		echo $this->formButton('btn_cancelar_requisito', $this->escape($this->translate('L_BTN_CANCELAR')), array('class'=>'vermelho float-l push-4'));
+	 ?>
+</div>

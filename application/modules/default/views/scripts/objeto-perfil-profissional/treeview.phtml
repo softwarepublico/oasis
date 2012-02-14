@@ -1,0 +1,10 @@
+<script type="text/javascript" src="<?php echo $this->baseUrl()?>/public/js/modules/default/objeto-perfil-profissional/treeview.js"></script>
+
+<hr class="span-20" style="border-top: 1px solid rgb(84, 189, 205); visibility: visible; height: 6px;"/>
+<?php
+$menu                          = $this->treeviewMenu("treeviewObjetoPerfilProfissional", $this->data, true, $this->menuPerfis);
+$possuiPermissoesParaOPerfil   = $this->possuiPermissoesParaOPerfil;
+?>
+<script type="text/javascript">
+    var possuiPermissoesParaPerfil    = '<?php echo $possuiPermissoesParaOPerfil; ?>';
+</script>

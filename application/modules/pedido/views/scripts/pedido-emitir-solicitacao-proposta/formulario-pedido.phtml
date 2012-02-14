@@ -1,0 +1,31 @@
+<div style="overflow-x: auto; padding: 5px; height: 400px; width: 820px;" class="border">
+    <?php
+    if($this->formulario->valid()):
+        $pergunta = 0;
+        foreach($this->formulario as $rs) {
+            if($pergunta != $rs['cd_pergunta_pedido']) {
+                if($pergunta)
+                    echo '</div>';
+                $pergunta = $rs['cd_pergunta_pedido'];
+                echo '<div class="span-20 clear-l float-l">';
+                echo "<label class=\"bold float-l clear-l\"><span>{$rs['tx_titulo_pergunta']}</span></label>";
+            }
+            if($rs['st_resposta_texto'] == 'T')
+                echo '<label class="span-12 float-l clear-l"><span>' . nl2br($rs['tx_descricao_resposta']) . '</span></label>';
+            else {
+                echo '<label class="float-l clear-l"><span>';
+                echo $rs['tx_titulo_resposta'];
+                if($rs['st_resposta_texto'] == 'S')
+                    echo ' - ' . $rs['tx_descricao_resposta'];
+                echo '</span></label>';
+            }
+        }
+        if($pergunta)
+            echo '</div>';
+    ?>
+    <?php else: ?>
+        <div>
+            <h3 class="span-12 vermelho"><?php echo $this->escape($this->translate('L_VIEW_QUESTIONARIO_NAO_RESPONDIDO')) ?></h3>
+        </div>
+    <?php endif; ?>
+</div>

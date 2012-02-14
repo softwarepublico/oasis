@@ -1,0 +1,48 @@
+<?php 
+	$this->script('tab'); 
+	$this->script('grid'); 
+	$this->script('editorHtml');
+	$this->script('mascara');
+	$this->script('validaData');
+	$this->script('calendario');
+	$this->script('validaForm');
+	$this->script('numero');
+    $this->script('scriptFile',array('/menu-reuniao-geral/index.js',
+                                     '/reuniao-geral/index.js',
+                                     '/reuniao-geral-profissional/index.js'));
+?>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#container-menuReuniaoGeral').show().tabs();
+});
+</script>
+<div id="container-menuReuniaoGeral" style="display: none;">
+	<ul>
+        <li>
+            <a href="#reuniao-geral">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_REUNIAO_GERAL')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#reuniao-geral-profissional">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_REUNIAO_GERAL_PROFISSIONAL')) ?></span>
+            </a>
+        </li>
+    </ul>
+    <div id="reuniao-geral">
+        <div class="clear" style="overflow: hidden;">
+        	<?php
+        		echo $this->formReuniaoGeral;
+	    		echo $this->formButton('adicionarReuniaoGeral',$this->escape($this->translate('L_BTN_SALVAR')),array('class'=>'verde float-l clear-l push-3'));
+	    		echo $this->formButton('alterarReuniaoGeral',$this->escape($this->translate('L_BTN_ALTERAR')),array('class'=>'verde float-l clear-l push-3'));
+	    		echo $this->formButton('cancelarReuniaoGeral',$this->escape($this->translate('L_BTN_CANCELAR')),array('class'=>'vermelho float-l push-3'));
+        	?>
+        	<div id="gridReuniaoGeral" class="float-l clear-l push-3 span-13" ></div>
+        </div>
+    </div>
+    <div id="reuniao-geral-profissional">
+        <div class="clear" style="overflow: hidden;">
+        <?php echo $this->render('reuniao-geral-profissional/index.phtml'); ?>
+        </div>
+    </div>
+</div>

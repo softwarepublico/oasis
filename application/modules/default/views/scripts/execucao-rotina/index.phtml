@@ -1,0 +1,30 @@
+<?php
+	$this->script('tab');
+	$this->script('grid');
+	$this->script('validaForm');
+?>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#container_painel_rotina').show().tabs();
+});
+</script>
+<div id="container_painel_rotina" style="display: none;">
+	<ul>
+		<li id="li-execucao_rotina">
+            <a href="#aba_execucao_rotina">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_EXECUCAO_ROTINA')); ?></span>
+            </a>
+        </li>
+		<li id="li-historico-rotina" style="display: none;">
+            <a href="#aba_historico_rotina">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_HISTORICO_ROTINA')); ?></span>
+            </a>
+        </li>
+    </ul>
+	    <div id="aba_execucao_rotina">
+	    	<div class="divTab"><?php echo $this->render('execucao-rotina/execucao-rotina.phtml') ?></div>
+	    </div>
+	    <div id="aba_historico_rotina" style="display: none;">
+            <div class="divTab" id="historico_rotina"></div>
+	    </div>
+</div>

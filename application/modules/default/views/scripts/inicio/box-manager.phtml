@@ -1,0 +1,62 @@
+<div id="boxManager">
+    <div>
+		<?php if( count($this->arrBoxes) > 0 ){ ?>
+			<table id="boxes" style="width:285px;border: 2px solid #DFF0F2">
+				<thead>
+					<tr class="gradient">
+						<td colspan="2" style="font-style:italic">
+							<input  type="checkbox"
+									name="ck_marca_todos"
+									id="ck_marca_todos"
+									onchange="marcaTodos(this.checked)"
+                                    value="" /><?php echo $this->escape($this->translate('L_VIEW_MOSTRAR_TODOS')) ?>
+							</td>
+						<td style="font-weight:bold"><?php echo $this->escape($this->translate('L_VIEW_TITULO_BOX')) ?></td>
+					</tr>
+				</thead>
+				<tbody>
+				<?php
+				$html = "";
+
+				foreach($this->arrBoxes as $key => $box){
+					if($key%2==0){
+						$html .= '<tr style="background-color:#fbfbfb">';
+					} else {
+						$html .= '<tr style="background-color:#DFF0F2">';
+					}
+					$html .= '<td>';
+					if( $box['mostra'] ){
+						$html .= '<input class="ck_box" type="checkbox" name="ck_'. $box['id'] .'" id="ck_'. $box['id'] .'" value="" checked="checked" />';
+					} else {
+						$html .= '<input class="ck_box" type="checkbox" name="ck_'. $box['id'] .'" id="ck_'. $box['id'] .'" value="" />';
+					}
+					$html .= "</td>";
+					$html .= '<td style="font-style:italic">';
+
+	//                $tam = strlen($res['st_tipo_box_inicio']);
+	//                for($i=0;$i<$tam;$i++){
+	//                    if( isset($res['st_tipo_box_inicio'][$i]) ){
+	//                        $e     = ( !isset($res['st_tipo_box_inicio'][$i+1]) )?' e ':',  ';
+	//                        $tipo .= $e . $this->comboTipoBox[ $res['st_tipo_box_inicio'][$i] ];
+	//                    }
+	//                }
+	//                $tipo = substr($tipo,2);
+	//                $html .= $tipo;
+
+					$html .= $box['tipo'];
+
+					$html .= "</td>";
+					$html .= '<td style="font-weight:bold">';
+					$html .= $box['titulo'];
+					$html .= "</td>";
+				}
+				echo $html;
+				?>
+				</tbody>
+			</table>
+		<?php }else{ 
+			echo $this->escape($this->translate('L_MSG_ALERT_PERFIL_SEM_BOX_ASSOCIADO'));
+			}
+		?>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+<?php $this->script('ganttChart') ?>
+<script type="text/javascript" src="<?php echo $this->baseUrl()?>/public/js/planejamento/index.js"></script>
+<div id="formPlanejamento" class="divTab">
+	<label class="float-l span-2 right"><?php echo $this->escape($this->translate('L_VIEW_PROJETO')) ?>:</label>
+		<?php echo $this->formSelect('cd_projeto_planejamento_grafico',null,array('class'=>'float-l'),$this->comboProjeto) ?>
+	<label class="float-l clear-l span-2 right"><?php echo $this->escape($this->translate('L_VIEW_MODULO')) ?>:</label>
+		<?php echo $this->formSelect('cd_modulo_planejamento_grafico',null,array('class'=>'float-l'),array(0=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE')))) ?>
+	
+	<div class="Gantt float-l clear-l" style="overflow-y:scroll; height:350px;" id="GanttChart"></div>
+</div>
+<script>
+	var g = new Gantt(document.getElementById('GanttChart'));
+	g.AddTaskDetail(new Task('2/11/2008', '2/19/2008', '<b>Sample task 1 1</b>', 'Dathq', 50));
+	//g.AddTaskDetail(new Task('2/16/2008', '2/19/2008', '... Sample task 1.1', 'Dathq, Thanhdo', 30));
+	//g.AddTaskDetail(new Task('2/12/2008', '3/2/2008', 'Sample task 2', 'Hanhnd', 60));
+	//g.AddTaskDetail(new Task('2/11/2008', '2/16/2008', '<i>Sample task 3<i>', 'Dathq', 50));
+	//g.AddTaskDetail(new Task('2/11/2008', '2/19/2008', '<b>Sample task 1 1</b>', 'Dathq', 50));
+	//g.AddTaskDetail(new Task('2/16/2008', '2/19/2008', '... Sample task 1.1', 'Dathq, Thanhdo', 30));
+	//g.AddTaskDetail(new Task('2/12/2008', '3/2/2008', 'Sample task 2', 'Hanhnd', 60));
+	//g.AddTaskDetail(new Task('2/11/2008', '2/16/2008', '<i>Sample task 3<i>', 'Dathq', 50));
+	//g.AddTaskDetail(new Task('2/11/2008', '2/19/2008', '<b>Sample task 1 1</b>', 'Dathq', 50));
+	//g.AddTaskDetail(new Task('2/16/2008', '2/19/2008', '... Sample task 1.1', 'Dathq, Thanhdo', 30));
+	//g.AddTaskDetail(new Task('2/12/2008', '3/2/2008', 'Sample task 2', 'Hanhnd', 60));
+	//g.AddTaskDetail(new Task('2/11/2008', '2/16/2008', '<i>Sample task 3<i>', 'Dathq', 50));
+
+	//g.AddTaskDetail(new Task('2/11/2008', '2/19/2008', '<b>Sample task 1 1</b>', 'Dathq', 50));
+	//g.AddTaskDetail(new Task('2/16/2008', '2/19/2008', '... Sample task 1.1', 'Dathq, Thanhdo', 30));
+	//g.AddTaskDetail(new Task('2/12/2008', '3/2/2008', 'Sample task 2', 'Hanhnd', 60));
+	//g.AddTaskDetail(new Task('5/11/2008', '14/20/2008', '<i>Hudson 3<i>', 'Nil', 97));
+
+	g.Draw();
+</script>

@@ -1,0 +1,57 @@
+<?php
+    $this->script('scriptFile',array('/criar-parcela/index.js'));
+?>
+<div class="box span-10 border" style="margin-left: 22px;">
+	<?php
+		echo $this->formHidden('cd_parcela');
+		echo $this->formHidden('ni_parcela_hidden');
+		echo $this->formHidden('cd_horas_disponivel');
+		echo $this->formHidden('cd_horas_disponivel_antigo');
+		echo $this->formHidden('proxima_parcela_hidden',$this->proximaParcela);
+	?>
+    <label class="bold span-4"><?php echo $this->translate('L_VIEW_PROJETO') ?>:</label>
+    <p><?php echo $this->nomeProjeto; ?></p>
+    <label class="bold span-4"><?php echo $this->escape($this->translate('L_VIEW_PROPOSTA')) ?>:</label>
+    <p><?php echo $this->cd_proposta; ?></p>
+    <div class="highlight clear">
+        <h3 class="span-4"><?php echo $this->escape(Base_Util::getTranslator('L_VIEW_PAINEL_UNIDADE_METRICA_VARIAVEL', $this->unidadePadraoMetrica)) ?></h3>
+        <hr style="width: 380px" />
+        <div class="span-4">
+            <label class="bold"><?php echo $this->escape(Base_Util::getTranslator('L_VIEW_SIGLA_UNID_METRICA_PROJETO', $this->unidadePadraoMetrica)) ?>:</label>
+            <p>(<?php echo $this->escape($this->translate('L_VIEW_CALCULADO_METRICA')) ?>)</p>
+            <p class="clear-l large"><span id="quantidadeHorasTotal"><?php echo $this->quantidadeHorasTotal; ?></span></p>
+        </div>
+        <div class="span-5">
+            <label class="bold"><?php echo $this->escape($this->translate('L_VIEW_CRIACAO_PARCELA')) ?>:</label>
+            <p><span id="porcentagemParcelaOrcamento"></span></p>
+            <p class="clear-l large"><span id="porcentagemHorasProposta"><?php echo $this->porcentagemHorasProposta; ?></span></p>
+        </div>
+        <hr style="width: 380px" />
+        <label class="span-4"><?php echo $this->escape($this->translate('L_VIEW_SALDO_DISPONIVEL')) ?>:</label>
+        <p class="large bold" style="font-size:2em"><span id="horasPropostaTotal"></span> <?php echo $this->unidadePadraoMetrica; ?></p>
+    </div>
+</div>
+<div class="box span-10 border" style="padding-bottom:3px;">
+    <div>
+        <div class="span-10">
+            <label class="bold span-4" style="width: 162px;"><?php echo $this->escape($this->translate('L_VIEW_NUMERO_PARCELA')) ?>:</label>
+            <p class="span-5"><span id="proximaParcela"></span></p>
+			<label class="bold required" style="width: 162px;"><?php echo $this->escape($this->translate('L_VIEW_PREVISAO_EXECUCAO')) ?>:</label>
+				<?php
+					echo $this->mesCombo('mes', $this->mesComboValue, array('style'=>'margin-right:5px;','descricaoMes'=>$this->escape($this->translate('L_VIEW_COMBO_MES'))));
+					echo $this->anoCombo('ano', $this->anoComboValue,array('descricaoAno'=>'Ano'));
+				?>
+            <label class="bold span-4 required" style="width: 162px;"><?php echo $this->escape(Base_Util::getTranslator('L_VIEW_QTD_VARIAVEL', $this->unidadePadraoMetrica)) ?>:</label>
+            <?php echo $this->formText("horas_parcela","",array('size'=>10,'onKeyPress'=>'return soNumerosComNegativoComPonto(event)'));?>
+        </div>
+        <hr style="width: 380px" />
+        <button type="button" class="cinza float-r" id="btnAddParcela">[+] <?php echo $this->escape($this->translate('L_BTN_ADICIONAR_PARCELA'  )) ?></button>
+        <button type="button" class="cinza float-r" id="btnAlterarParcela">[+] <?php echo $this->escape($this->translate('L_BTN_ALTERAR_PARCELA')) ?></button>
+    </div>
+</div>
+
+<div class="hide box span-10 border" id="parcelas"></div>
+<div class="accordionBottom">
+	<label class="bold span-18 right float-l" style="color: red;"><?php echo Base_Util::getTranslator('L_MSG_ALERT_CLIQUE_PARA_REGISTRAR_OPERACAO', $this->escape($this->translate('L_BTN_CONFIRMAR'))) ?></label>
+	<button type="button" class="verde" id="bt_confirmar_parcela" name="bt_confirmar_parcela"><?php echo $this->escape($this->translate('L_BTN_CONFIRMAR')) ?></button>
+</div>

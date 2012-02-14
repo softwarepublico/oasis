@@ -1,0 +1,64 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableProfissionalAssociado").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableProfissionalAssociado").tablesorterPager({container: $("#tableProfissionalAssociadoPager"), size:05}); 
+});
+</script>
+
+<table id="tableProfissionalAssociado" cellspacing="1" class="tablesorter" style="border-collapse:collapse">
+	<thead>
+		<tr>
+            <th class="span-6"><?php echo $this->escape($this->translate('L_VIEW_GRID_PROFISSIONAL'       )) ?></th>
+			<th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_PERFIL_PROFISSIONAL')) ?></th>
+			<th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_RECEBE_EMAIL'       )) ?></th>
+			<th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_OBJETO_PADRAO'      )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+			$checked_st_recebe_email  = ($this->arrFlag[$res['cd_profissional']]['st_recebe_email']  == "S")?"checked":"";
+			$checked_st_objeto_padrao = ($this->arrFlag[$res['cd_profissional']]['st_objeto_padrao'] == "S")?"checked":"";
+	?>
+		<tr>
+			<td><?php echo $res['tx_profissional'];?></td>
+			<td>
+				<?php echo $this->formSelect($res['cd_profissional'], $this->arrFlag[$res['cd_profissional']]['cd_perfil_profissional'], array('class'=>'span-5', 'onchange'=>"gravaPerfilProfissional({$this->cd_objeto}, {$res['cd_profissional']}, this.value )"), $this->arrPerfilProfissional ) ?>
+				<?php echo $this->formHidden("cd_perfil_profissional_{$res['cd_profissional']}", $this->arrFlag[$res['cd_profissional']]['cd_perfil_profissional']) ?>
+			</td>
+			<td>
+				<input type="checkbox" id="st_recebe_email_<?php echo $res['cd_profissional'] ?>" name="st_recebe_email_<?php echo $res['cd_profissional'] ?>" value="S" onclick="gravaRecebeEmail(<?php echo $res['cd_profissional'] ?>, this.checked)" <?php echo $checked_st_recebe_email ?>>
+			</td>
+			<td>
+				<input type="checkbox" id="st_objeto_padrao_<?php echo $res['cd_profissional'] ?>" name="st_objeto_padrao_<?php echo $res['cd_profissional'] ?>" value="S" onclick="gravaObjetoPadrao(<?php echo $res['cd_profissional'] ?>, this.checked, this.id)" <?php echo $checked_st_objeto_padrao ?>>
+			</td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo "  
+			<tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			</tr> ";
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableProfissionalAssociadoPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="05">05</option>
+			<option value="10">10</option>
+		</select>
+	</form>
+</div>
+<div class="accordionBottom" style="min-height: 20px;"></div>

@@ -1,0 +1,39 @@
+<?php
+    $this->script('uploadAjax');
+    $this->script('scriptFile',array('/disponibilidade-servico/index.js'));
+?>
+<div id="container-disponibilidade-servico" style="display: none;">
+	<ul>
+		<li>
+            <a href="#analises_disponibilidade" onclick="desabilitaAbasDispServico();">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_ANALISE_DISPONIBILIDADE')) ?></span>
+            </a>
+        </li>
+		<li id="li_nova_analise_disponibilidade" style="display: none;">
+            <a href="#analise">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_ANALISE')) ?></span>
+            </a>
+        </li>
+		<li id="li_documento_analise_disponibilidade" style="display: none;">
+            <a href="#documento">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_DOCUMENTACAO')) ?></span>
+            </a>
+        </li>
+    </ul>
+	
+    <div id="analises_disponibilidade">
+		<div class="divTab">
+			<?php echo $this->render('disponibilidade-servico/pesquisa-analise-disponibilidade.phtml') ?>
+		</div>
+    </div>
+    <div id="analise">
+		<div class="divTab">
+	    	<?php echo $this->render('disponibilidade-servico/analise-disponibilidade.phtml') ?>
+		</div>
+    </div>
+    <div id="documento">
+		<div class="divTab">
+	    	<?php echo $this->render('disponibilidade-servico/documentacao-analise-disponibilidade.phtml') ?>
+		</div>
+    </div>
+</div>

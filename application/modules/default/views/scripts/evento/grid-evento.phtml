@@ -1,0 +1,58 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableEvento").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableEvento").tablesorterPager({container: $("#tableEventoPager")}); 
+});
+</script>
+<table id="tableEvento" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+			<th class="{sorter:false}" style="width: 15px;">&nbsp;</th>
+            <th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_EVENTO')) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+	?>
+		<tr>
+			<td><img id="imgExcluir" 
+                     height="13"
+                     width="13"
+                     style="cursor:pointer;"
+                     onclick="excluirEvento('<?php echo $res['cd_evento'] ?>');"
+                     src="<?php echo $this->baseUrl()?>/public/img/del.png"
+                     alt="<?php echo $this->escape($this->translate('L_BTN_EXCLUIR')) ?>"/>
+            </td>
+			<td onClick="recuperaEvento(<?php echo $res['cd_evento'] ?>)" style="cursor:pointer;">
+				<?php echo $res['tx_evento'] ?>
+			</td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo " <tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			  </tr>";
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableEventoPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

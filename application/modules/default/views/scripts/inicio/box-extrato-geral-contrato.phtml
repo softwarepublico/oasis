@@ -1,0 +1,64 @@
+<li id="box-extrato-geral-contrato" class="boxList float-l boxGrande">
+	<div class="portlet">
+		<div class="portlet-header"><?php echo $this->titulo_box_extrato_geral_contrato; ?>
+			<a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button" unselectable="on" style="-moz-user-select: none;">
+				<span class="ui-icon ui-icon-closethick imgCloseBox" unselectable="on" style="-moz-user-select: none;">close</span>
+			</a>
+		</div>
+		<div class="portlet-content">
+			<div class="gap-3" style="padding-top:5px">
+				<div class="float-l span-6">
+                    <label class="float-l bold span-7 center"><?php echo $this->escape($this->translate('L_VIEW_ALOCADO')) ?></label>
+					<span class="highlight span-4 float-l clear-l" style="margin:0 0 0 61px;text-align: center; color:white;font-size:2em;cursor:default;-moz-border-radius:10px">
+						<?php echo number_format($this->valorAlocado,1,',','.'); ?>
+					</span>        
+					<label class="float-l bold span-7 center"><?php echo $this->escape($this->translate('L_VIEW_EXECUTADO')) ?></label>
+					<span class="highlight span-4 float-l clear-l" style="margin:0 0 0 61px; text-align: center;color:white;font-size:2em;cursor:default;-moz-border-radius:10px">
+						<?php echo number_format($this->valorExecutado,1,',','.'); ?>
+					</span>
+					<label class="float-l bold span-7 center"><?php echo $this->escape($this->translate('L_VIEW_NAO_EXECUTADO')) ?></label>
+					<span class="highlight span-4 float-l clear-l" style="margin:0 0 0 61px; text-align: center;color:white;font-size:2em;cursor:default;-moz-border-radius:10px">
+						<?php echo number_format(($this->valorAlocado-$this->valorExecutado),1,',','.'); ?>
+					</span>
+				</div>
+
+				<div class="float-l span-6">
+					<label class="float-l bold span-7 center"><?php echo $this->escape($this->translate('L_VIEW_PLANEJADO')) ?></label>
+					<span class="highlight span-4 float-l clear-l" style="margin:0 0 0 61px;text-align: center; color:white;font-size:2em;cursor:default;-moz-border-radius:10px">
+						<?php echo number_format($this->totalValorParcelaMesesRestantes,1,',','.'); ?>
+					</span>        
+					<label class="float-l bold span-7 center"><?php echo $this->escape($this->translate('L_VIEW_NAO_ALOCADO')) ?></label>
+					<span class="highlight span-4 float-l clear-l" style="margin:0 0 0 61px; text-align: center;color:white;font-size:2em;cursor:default;-moz-border-radius:10px">
+						<?php echo number_format($this->totalValorParcelaMesesRestantesNaoAlocado,1,',','.'); ?>
+					</span>
+					<label class="float-l bold span-7 center"><?php echo $this->escape($this->translate('L_VIEW_ALOCADO')) ?></label>
+					<span class="highlight span-4 float-l clear-l" style="margin:0 0 0 61px; text-align: center;color:white;font-size:2em;cursor:default;-moz-border-radius:10px">
+						<?php echo number_format(($this->valorAlocado-$this->valorExecutado),1,',','.'); ?>
+					</span>
+					<label class="float-l bold span-7 center"><?php echo $this->escape($this->translate('L_VIEW_NAO_ALOCADO_PROPOSTA')) ?></label>
+					<span class="highlight span-4 float-l clear-l" style="margin:0 0 0 61px;text-align: center; color:white;font-size:2em;cursor:default;-moz-border-radius:10px">
+						<?php echo number_format($this->valorDiferencaAlocacaoAlteracaoProposta,1,',','.'); ?>
+					</span>        
+				</div>
+
+				<div class="float-l span-6">
+					<label class="float-l bold span-7 center"><?php echo $this->escape($this->translate('L_VIEW_SALDO_CONTRATO')) ?></label>
+					<label class="float-l bold span-7 center"><?php echo $this->escape($this->translate('L_VIEW_A_ALOCAR')) ?></label>
+					<span class="highlight span-4 float-l clear-l" style="margin:0 0 0 61px; text-align: center;color:white;font-size:2em;cursor:default;-moz-border-radius:10px">
+						<?php echo number_format(($this->ni_horas_previstas-$this->valorAlocado),1,',','.'); ?>
+					</span>
+					<label class="float-l bold span-7 center"><?php echo $this->escape($this->translate('L_VIEW_NAO_ALOCADO')) ?></label>
+					<span class="highlight span-4 float-l clear-l" style="margin:0 0 0 61px; text-align: center;color:white;font-size:2em;cursor:default;-moz-border-radius:10px">
+						<?php echo number_format(($this->totalValorParcelaMesesRestantesNaoAlocado+$this->valorDiferencaAlocacaoAlteracaoProposta),1,',','.'); ?>
+					</span>
+					<label class="float-l bold span-7 center"><?php echo $this->escape($this->translate('L_VIEW_LIVRE')) ?></label>
+					<span class="highlight span-4 float-l clear-l" style="margin:0 0 0 61px; text-align: center;color:white;font-size:2em;cursor:default;-moz-border-radius:10px">
+						<?php echo number_format(($this->ni_horas_previstas-$this->valorAlocado)-($this->totalValorParcelaMesesRestantes - (($this->valorAlocado - $this->valorExecutado))),1,',','.'); ?>
+					</span>
+				</div>
+
+				<label class="center"><?php echo $this->escape(Base_Util::getTranslator('L_VIEW_TOTAL_SIGLA_METRICA_VARIAVEL_CONTRATO', $this->tx_sigla_metrica_padrao)) ?>: <span class="bold center"><?php echo $this->ni_horas_previstas?></span></label>
+			</div>
+		</div>
+	</div>
+</li>

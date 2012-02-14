@@ -1,0 +1,12 @@
+<?php 
+    $this->script('validaForm'); 
+    $this->script('grid');
+    $this->script('scriptFile',array('/evento/index.js'));
+    
+    echo $this->formEvento;
+?>
+<button class="verde buttonBar" id="salvarEvento" name="salvarEvento"><?php echo $this->escape($this->translate('L_BTN_SALVAR')) ?></button>
+<button class="azul buttonBar" id="alterarEvento" name="alterarEvento"><?php echo $this->escape($this->translate('L_BTN_ALTERAR')) ?></button>
+<button class="vermelho buttonBar" id="cancelarEvento" name="cancelarEvento"><?php echo $this->escape($this->translate('L_BTN_CANCELAR')) ?></button>
+<hr />
+<div class="push-3 float-l span-10" id="gridEvento"></div>

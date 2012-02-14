@@ -1,0 +1,56 @@
+<?php
+    $this->script('scriptFile',array('/fale-conosco/index.js'));
+?>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#container_fale_conosco').show().tabs().triggerTab(1);
+	$("#config_hidden_fale_conosco").val('N');
+});
+
+function configAccordionFaleConosco()
+{
+    if($("#config_hidden_fale_conosco").val() === 'N'){
+        gridFaleConoscoMensagemAberta();
+        gridFaleConoscoMensagemPendente();
+        gridFaleConoscoMensagemRespondida();
+        $("#config_hidden_fale_conosco").val('S');
+    }
+}
+</script>
+<div id="container_fale_conosco" style="display: none;">
+	<ul>
+        <li>
+            <a href="#aba_fale_conosco_aberta">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_MENSAGEM_ABERTA')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#aba_fale_conosco_pendente">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_MENSAGEM_PENDENTE')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#aba_fale_conosco_respondida">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_MENSAGEM_RESPONDIDA')) ?></span>
+            </a>
+        </li>
+        <li id="li-resposta-fale-conosco" style="display:none">
+            <a href="#aba_resposta_fale_conosco">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_RESPOSTA')) ?></span>
+            </a>
+        </li>
+    </ul>
+	
+    <div id="aba_fale_conosco_aberta">
+        <div class="divTab"><?php echo $this->render('fale-conosco/mensagem-aberta.phtml') ?></div>
+    </div>
+    <div id="aba_fale_conosco_pendente">
+        <div class="divTab"><?php echo $this->render('fale-conosco/mensagem-pendente.phtml') ?></div>
+    </div>
+    <div id="aba_fale_conosco_respondida">
+        <div class="divTab"><?php echo $this->render('fale-conosco/mensagem-respondida.phtml') ?></div>
+    </div>
+    <div id="aba_resposta_fale_conosco" style="display:none">
+        <div class="divTab" id="respostaFaleConosco"></div>
+    </div>
+</div>

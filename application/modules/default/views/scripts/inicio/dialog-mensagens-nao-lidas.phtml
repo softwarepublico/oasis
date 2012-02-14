@@ -1,0 +1,17 @@
+<div id="div_msg" style="padding:5px">
+	<?php
+		$count					= 1;
+		$codMensagens			= '';
+		foreach($this->objMensagens as $msg):
+			$codMensagens .= $msg->cd_mensageria."|";
+	?>
+            <span class="bold" style="text-decoration: underline;"><?php echo $this->escape($this->translate('L_VIEW_MENSAGEM')) ?><?php echo $count?></span>
+			<p><?php echo $msg->tx_mensagem ?></p>
+			<br>
+	<?php
+		endforeach;
+		//retira o ultimo pipe
+		$codMensagens = substr($codMensagens, 0, -1);
+	?>
+		<input type="hidden" id="cd_mensagens_nao_lidas" name="cd_mensagens_nao_lidas" value="<?php echo $codMensagens ?>"/>
+</div>

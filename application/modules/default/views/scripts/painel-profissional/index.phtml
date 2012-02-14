@@ -1,0 +1,29 @@
+<?php
+    $this->script('scriptFile',array('/painel-profissional/index.js'));
+?>
+<script type="text/javascript">
+$(document).ready(function() { 
+	$("#config_hidden_profissionais").val('N');
+});
+
+function configAccordionProfissionais()
+{
+	if($("#config_hidden_profissionais").val() === 'N'){
+		montaGridProfissional();
+	}
+	$("#config_hidden_profissionais").val('S');
+}
+</script>
+
+<div class="clear" style="background-color:fbfbfb; overflow:hidden; height:34px; border:1px solid rgb(84, 189, 205); background-color:rgb(230, 238, 238);">
+	<div class="span-17" style="padding-top:5px; padding-left:5px; overflow:hidden;">
+        <label class=" float-l span-2 right" style="margin-top: 3px;"><?php echo $this->escape($this->translate('L_VIEW_STATUS')) ?>:</label>
+    		<?php echo $this->formSelect('st_inativo_lista', "", array('class' => 'span-4 float-l', 'style' => 'margin-right: 10px;'), $this->comboSituacao) ?>
+		<label class=" float-l span-2 right" style="margin-top: 3px;"><?php echo $this->escape($this->translate('L_VIEW_EMPRESA')) ?>:</label>
+        	<?php echo $this->formSelect('cd_empresa_lista', "", array('class' => 'span-7 float-l'), $this->comboEmpresa) ?>
+	</div>
+	<div class="float-r" style="padding:2px; height:36px;">
+		<button id="novo_profissional" class="azul" style="margin-top:4px;"><?php echo $this->escape($this->translate('L_BTN_NOVO_PROFISSIONAL')) ?></button>
+	</div>
+</div>
+<div id="gridProfissional"></div>

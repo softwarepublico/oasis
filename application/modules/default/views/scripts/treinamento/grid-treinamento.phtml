@@ -1,0 +1,59 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableTreinamento").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableTreinamento").tablesorterPager({container: $("#tableTreinamentoPager")}); 
+});
+</script>
+<table id="tableTreinamento" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+			<th class="{sorter: false}" style="width: 10px;">&nbsp;</th>
+			<th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_TREINAMENTO')) ?></th>
+			<th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_OBSERVACAO' )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res):
+		foreach ($this->res as $res):
+	?>
+		<tr>
+			<td><img id="imgExcluir" height="13" width="13" style="cursor:pointer; text-align: center;" onclick="excluirTreinamento('<?php echo $res['cd_treinamento'] ?>');" src="<?php echo $this->baseUrl()?>/public/img/del.png" alt="<?php echo $this->escape($this->translate('L_BTN_EXCLUIR')) ?>"/></td>
+			<td onClick="recuperaTreinamento(<?php echo $res['cd_treinamento'] ?>)" style="cursor:pointer;"><?php echo $res['tx_treinamento'] ?></td>
+			<?php 
+			    $fim = "";
+				if(strlen($res['tx_obs_treinamento']) >= 60){
+					$fim = "...";
+				}
+				$tx_obs_treinamento = substr($res['tx_obs_treinamento'],0,60) 
+			?>
+			<td onClick="recuperaTreinamento(<?php echo $res['cd_treinamento'] ?>)" style="cursor:pointer;"><?php echo $tx_obs_treinamento.$fim ?></td>
+		</tr>
+	<?php
+		endforeach;
+	else:
+		echo " <tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			  </tr>";
+	endif;
+	?>
+	</tbody>
+</table>
+<div id="tableTreinamentoPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

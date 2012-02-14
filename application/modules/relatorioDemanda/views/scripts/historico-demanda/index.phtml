@@ -1,0 +1,24 @@
+<?php 
+	$this->script('validaForm');
+	$this->script('mascara');
+	$this->script('calendario');
+	$this->script('validaData');
+    $this->script('scriptFile',array('/historico-demanda/index.js'));
+?>
+<form id="formRelatorioDemandaHistorico">
+
+     <label class="float-l span-4 right required" for="cd_objeto_contrato"><?php echo $this->escape($this->translate('L_VIEW_OBJETO_CONTRATO')) ?>:</label>
+    <?php echo $this->formSelect("cd_objeto_contrato",null,array('class'=>'float-l'),$this->arrObjetoContrato); ?>
+     
+    <label class="span-4 float-l right clear-l" for="cd_profissional"><?php echo $this->escape($this->translate('L_VIEW_PROFISSIONAL')) ?>:</label>
+    	<?php echo $this->formSelect("cd_profissional",null,array('class'=>'float-l'),$this->arrProfissional); ?>
+
+    <label class="span-4 float-l right clear-l required" for="dt_inicio"><?php echo $this->escape($this->translate('L_VIEW_DATA_INICIAL')) ?>:</label>
+    	<?php echo $this->data("dt_inicio",null,array('class'=>'float-l span-3')); ?>
+
+    <label class="span-4 float-l right clear-l" for="dt_fim"><?php echo $this->escape($this->translate('L_VIEW_DATA_FINAL')) ?>:</label>
+    	<?php echo $this->data("dt_fim",null,array('class'=>'float-l span-3')); ?>
+
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->translate('L_BTN_GERAR') ?></button>
+    <?php echo $this->objDataDiff->comparaDataInicioFim("dt_inicio","dt_fim") ?>
+</form>

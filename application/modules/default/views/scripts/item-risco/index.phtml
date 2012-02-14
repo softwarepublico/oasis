@@ -1,0 +1,24 @@
+<?php
+    $this->script('scriptFile',array('/item-risco/index.js'));
+?>
+<div id="item_risco">
+    <?php echo $this->formHidden( 'cd_item_risco' ); ?>
+    <label class="bold float-l span-5 clear-l required" for="cd_area_atuacao_ti_item_risco" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_AREA_ATUACAO_TI')); ?>:</label>
+    	<?php echo $this->formSelect('cd_area_atuacao_ti_item_risco', null, array('class' => 'float-l'),$this->arrObjeto); ?>
+    <label class="bold float-l span-5 clear-l required" for="cd_etapa_item_risco" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_ETAPA')); ?>:</label>
+    	<?php echo $this->formSelect('cd_etapa_item_risco', null, array('class' => 'float-l'),array('0'=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE')))); ?>
+    <label class="bold float-l span-5 clear-l required" for="cd_atividade_item_risco" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_ATIVIDADE')); ?>:</label>
+    	<?php echo $this->formSelect('cd_atividade_item_risco', null, array('class' => 'float-l'), array('0'=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE')))); ?>
+    <label class="bold float-l span-5 clear-l required" for="tx_item_risco" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_ITEM_RISCO')); ?>:</label>
+    	<?php echo $this->formText( 'tx_item_risco', null, array('class' => 'float-l span-11')); ?>
+    	
+    <label class="bold float-l span-5  clear-l" for="tx_descricao_item_risco" editor="editor" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_DESCRICAO')); ?>:</label>
+    <?php
+        echo $this->editorHtml( 'tx_descricao_item_risco', null, array('class'=>'float-l','cols'=>'56','rows'=>'13','editor'=>K_EDITOR));
+    	echo $this->formButton('btn_salvar' , $this->escape($this->translate('L_BTN_SALVAR')),  array('class' => 'verde float-l clear-l push-5',    'style'   => 'display:none', 'onclick' => 'salvarItemRisco();'));
+    	echo $this->formButton('btn_alterar', $this->escape($this->translate('L_BTN_ALTERAR')), array('class' => 'azul float-l clear-l push-5',     'style'   => 'display:none', 'onclick' => 'salvarItemRisco();'));
+    	echo $this->formButton('btn_excluir', $this->escape($this->translate('L_BTN_EXCLUIR')), array('class' => 'vermelho float-l push-5', 'style'   => 'display:none', 'onclick' => 'excluirItemRisco();'));
+    ?>
+</div>
+<hr />
+<div id="gridItemRisco"></div>

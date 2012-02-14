@@ -1,0 +1,62 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableProjetoContinuado").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableProjetoContinuado").tablesorterPager({container: $("#tableProjetoContinuadoPager"), size:5}); 
+});
+</script>
+<table id="tableProjetoContinuado" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th class="{sorter: false}" width="10px">&nbsp;</th>
+            <th width="30px"><?php echo $this->escape($this->translate('L_VIEW_GRID_OBJETO')) ?></th>
+			<th width="30px"><?php echo $this->escape($this->translate('L_VIEW_GRID_PROJETO_CONTINUO')) ?></th>
+			<th width="20px"><?php echo $this->escape($this->translate('L_VIEW_GRID_PRIORIDADE')) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+			foreach ($this->res as $res):
+	?>
+		<tr>
+			<td><img id="imgExcluir" height="13" width="13" style="cursor:pointer;" onclick="excluirProjetoContinuado('<?php echo $res['cd_projeto_continuado'] ?>');" src="<?php echo $this->baseUrl()?>/public/img/del.png" alt="<?php echo $this->escape($this->translate('L_BTN_EXCLUIR')) ?>"/></td>
+			<td style="cursor:pointer;" onclick="recuperaDadosProjetoContinuo(<?php echo $res['cd_projeto_continuado'] ?>);">
+				<?php echo $res['tx_objeto'] ?>
+			</td>
+			<td style="cursor:pointer;" onclick="recuperaDadosProjetoContinuo(<?php echo $res['cd_projeto_continuado'] ?>);">
+				<?php echo $res['tx_projeto_continuado'] ?>
+			</td>
+			<td style="cursor:pointer;" onclick="recuperaDadosProjetoContinuo(<?php echo $res['cd_projeto_continuado'] ?>);">
+				<?php echo $res['desc_prioridade_projeto_continuado'] ?>
+			</td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo "	<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr>";
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableProjetoContinuadoPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="05">05</option>
+			<option value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

@@ -1,0 +1,59 @@
+<?php
+    $this->script('uploadAjax');
+    $this->script('scriptFile',array('/gerenciamento-teste/index.js'));
+?>
+<script type="text/javascript">
+var permissao_casoDeUso                = <?php echo $this->permissao_casoDeUso; ?>;
+var permissao_casoDeUso_analise        = <?php echo $this->permissao_casoDeUso_analise; ?>;
+var permissao_casoDeUso_solucao        = <?php echo $this->permissao_casoDeUso_solucao; ?>;
+var permissao_casoDeUso_homologacao    = <?php echo $this->permissao_casoDeUso_homologacao; ?>;
+
+var permissao_requisito                = <?php echo $this->permissao_requisito; ?>;
+var permissao_requisito_analise        = <?php echo $this->permissao_requisito_analise; ?>;
+var permissao_requisito_solucao        = <?php echo $this->permissao_requisito_solucao; ?>;
+var permissao_requisito_homologacao    = <?php echo $this->permissao_requisito_homologacao; ?>;
+
+var permissao_regraNegocio             = <?php echo $this->permissao_regraNegocio; ?>;
+var permissao_regraNegocio_analise     = <?php echo $this->permissao_regraNegocio_analise; ?>;
+var permissao_regraNegocio_solucao     = <?php echo $this->permissao_regraNegocio_solucao; ?>;
+var permissao_regraNegocio_homologacao = <?php echo $this->permissao_regraNegocio_homologacao; ?>;
+
+</script>
+<div id="container-gerenciamento_teste" style="display: none;">
+    <input type="hidden" value="" id="cd_projeto" name="cd_projeto" />
+    <ul>
+        <li><a href="#projetosExecucaoTeste" onclick="habilitaAbaGerenciamentoTeste()"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_PROJETO_EXECUCAO')) ?></span></a></li>
+
+        <li id="li_aba_casoDeUso" style="display: none;"><a href="#casoDeUso" onclick="habilitaAbaGerenciamentoTeste('casoDeUso',true)"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_CASO_DE_USO')) ?></span></a></li>
+            <li id="li_aba_casoDeUso_analise" style="display: none;"><a href="#casoDeUso_analise"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_RELATO_TESTE'       )) ?></span></a></li>
+            <li id="li_aba_casoDeUso_solucao" style="display: none;"><a href="#casoDeUso_solucao"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_SOLUCAO'            )) ?></span></a></li>
+            <li id="li_aba_casoDeUso_homologacao" style="display: none;"><a href="#casoDeUso_homologacao"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_HOMOLOGACAO')) ?></span></a></li>
+
+        <li id="li_aba_requisito" style="display: none;"><a href="#requisito" onclick="habilitaAbaGerenciamentoTeste('requisito',true)"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_REQUISITO')) ?></span></a></li>
+            <li id="li_aba_requisito_analise" style="display: none;"><a href="#requisito_analise"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_RELATO_TESTE'       )) ?></span></a></li>
+            <li id="li_aba_requisito_solucao" style="display: none;"><a href="#requisito_solucao"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_SOLUCAO'            )) ?></span></a></li>
+            <li id="li_aba_requisito_homologacao" style="display: none;"><a href="#requisito_homologacao"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_HOMOLOGACAO')) ?></span></a></li>
+
+        <li id="li_aba_regraNegocio" style="display: none;"><a href="#regraNegocio" onclick="habilitaAbaGerenciamentoTeste('regraNegocio',true)"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_REGRA_DE_NEGOCIO')) ?></span></a></li>
+            <li id="li_aba_regraNegocio_analise" style="display: none;"><a href="#regraNegocio_analise"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_RELATO_TESTE'       )) ?></span></a></li>
+            <li id="li_aba_regraNegocio_solucao" style="display: none;"><a href="#regraNegocio_solucao"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_SOLUCAO'            )) ?></span></a></li>
+            <li id="li_aba_regraNegocio_homologacao" style="display: none;"><a href="#regraNegocio_homologacao"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_HOMOLOGACAO')) ?></span></a></li>
+    </ul>
+
+    <div id="projetosExecucaoTeste"><?php echo $this->render('gerenciamento-teste/projetos-execucao.phtml'); ?></div>
+
+    <div id="casoDeUso"><?php echo $this->render('gerenciamento-teste-caso-uso/index.phtml'); ?></div>
+    <div id="casoDeUso_analise"><?php echo $this->render('gerenciamento-teste-caso-uso-analise/index.phtml'); ?></div>
+    <div id="casoDeUso_solucao"><?php echo $this->render('gerenciamento-teste-caso-uso-solucao/index.phtml'); ?></div>
+    <div id="casoDeUso_homologacao"><?php echo $this->render('gerenciamento-teste-caso-uso-homologacao/index.phtml'); ?></div>
+
+    <div id="requisito"><?php echo $this->render('gerenciamento-teste-requisito/index.phtml'); ?></div>
+    <div id="requisito_analise"><?php echo $this->render('gerenciamento-teste-requisito-analise/index.phtml'); ?></div>
+    <div id="requisito_solucao"><?php echo $this->render('gerenciamento-teste-requisito-solucao/index.phtml'); ?></div>
+    <div id="requisito_homologacao"><?php echo $this->render('gerenciamento-teste-requisito-homologacao/index.phtml'); ?></div>
+
+    <div id="regraNegocio"><?php echo $this->render('gerenciamento-teste-regra-negocio/index.phtml'); ?></div>
+    <div id="regraNegocio_analise"><?php echo $this->render('gerenciamento-teste-regra-negocio-analise/index.phtml'); ?></div>
+    <div id="regraNegocio_solucao"><?php echo $this->render('gerenciamento-teste-regra-negocio-solucao/index.phtml'); ?></div>
+    <div id="regraNegocio_homologacao"><?php echo $this->render('gerenciamento-teste-regra-negocio-homologacao/index.phtml'); ?></div>
+</div>

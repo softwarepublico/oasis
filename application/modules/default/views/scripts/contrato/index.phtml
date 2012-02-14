@@ -1,0 +1,11 @@
+<?php
+    $this->script('scriptFile',array('/contrato/index.js'));
+
+    echo $this->formContrato;
+?>
+<hr />
+<?php
+    echo $this->formButton('submitbuttonContrato', $this->escape($this->translate('L_BTN_SALVAR')), array('class'=>'verde float-l clear-l push-4'));
+    echo $this->formButton('bt_cancelar_contrato', $this->escape($this->translate('L_BTN_CANCELAR')) ,array('class'=>'azul float-l push-4'));
+    echo $this->formButton('bt_excluir_contrato',  $this->escape($this->translate('L_BTN_EXCLUIR')) ,array('class'=>'vermelho float-l push-4 hide'));
+?>

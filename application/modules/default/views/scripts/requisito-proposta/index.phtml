@@ -1,0 +1,39 @@
+<?php
+$this->script('scriptFile',array('/requisito-proposta/index.js'));
+?>
+<div id="container-requisitos" style="display: none;">
+	<ul>
+        <li>
+            <a href="#aba_requisitos">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_REQUISITOS')) ?></span>
+            </a>
+        </li>
+        <li id="li_aba_novo_requisito" style="display: none;">
+            <a href="#aba_novo_requisito">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_NOVO_REQUISITO')) ?></span>
+            </a>
+        </li>
+        <li onclick="limpaSeletoresAbaDependenciaRequisito()">
+            <a href="#aba_dependencia_requisito" >
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_DEPENDENCIA_REQUISITO')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#aba_fechamento_versao_requisito" >
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_FECHAMENTO_VERSAO')) ?></span>
+            </a>
+        </li>
+    </ul>
+    <div id="aba_requisitos">
+    	<?php echo $this->render('requisito-proposta/requisitos.phtml') ?>
+    </div>
+    <div id="aba_novo_requisito">
+    	<?php echo $this->render('requisito-proposta/requisito.phtml') ?>
+    </div>
+    <div id="aba_dependencia_requisito">
+    	<?php echo $this->render('requisito-proposta/dependencia-requisito.phtml') ?>
+    </div>
+    <div id="aba_fechamento_versao_requisito">
+    	<?php echo $this->render('requisito-proposta/fechamento-versao-requisito.phtml') ?>
+    </div>
+</div>

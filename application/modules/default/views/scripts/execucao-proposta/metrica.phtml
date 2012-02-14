@@ -1,0 +1,44 @@
+<div class="float-l span-21" style="padding-bottom: 20px;">
+	<div class="highlight span-5 float-r" style="padding:5px;" id="horasTotais">
+        <p class="center"><?php echo $this->escape(Base_Util::getTranslator('L_VIEW_TOTAL_SIGLA_METRICA_VARIAVEL_PROJETO', $this->unidadePadraoMetrica)) ?>:<br />
+            <span id="valor_total_horas_metrica_dinamica" class="large-2 bold">
+                <?php echo $this->resProposta->ni_horas_proposta." ".$this->unidadePadraoMetrica; ?>
+            </span>
+        </p>
+	</div>
+
+    <label class="span-4 float-l"><?php echo $this->escape($this->translate('L_VIEW_NOME_PROJETO')) ?>:</label>
+	<span class="span-11 float-l bold " ><?php echo $this->arrDescricaoProjeto["tx_projeto"] ?></span>
+	<label class="span-4 float-l clear-l"><?php echo $this->escape($this->translate('L_VIEW_SIGLA')) ?>:</label>
+	<span class="span-11 float-l bold "><?php echo $this->arrDescricaoProjeto["tx_sigla_projeto"] ?></span>
+
+	<hr style="border-top:1px solid #54BDCD; visibility:visible; height: 6px;" class="span-21"/>
+	
+	<div class="float-l span-21" style="padding-left:13px;">
+		<?php if( !$this->semRegistroMetrica ): ?>
+			<?php foreach( $this->arrMetricas as $key=>$metrica ): ?>
+					<div class="float-l span-10 border" style="padding: 10px 0px 10px 5px; overflow-y: scroll; height: 250px; margin-top: 5px;" >
+					<?php foreach($metrica as $nomeMetrica=>$dadosMetrica ): ?>
+						<span class="azul float-l clear-l center span-9" style="line-height:20px; text-decoration: underline;"><?php echo $nomeMetrica; ?></span>
+						<?php foreach( $dadosMetrica as $key=>$item ):
+							$arrDadosSubItem = explode("|",$item['tx_variavel_sub_item_metrica']); ?>
+						<?php if( $key === "ni_horas_proposta_metrica"): ?>
+							<div class="highlight clear" style="padding:5px; margin-top: 15px; margin-right: 5px;">
+								<?php echo $this->formText(null, $item, array('class' => 'span-2 float-r', 'disabled'=>'disabled' )); ?>
+								<label class="span-6 float-r clear-l right bold"><?php echo $this->escape($this->translate('L_VIEW_TOTAL_UNIDADE_REGISTRADA')) ?>:</label>
+							</div>
+						<?php else: ?>
+							<div class="float-l clear-l">
+								<label class="span-7 float-l clear-l"><?php echo $arrDadosSubItem[0]; ?>:<br /><span class="small azul" style="line-height:8px;"><?php echo $item['tx_sub_item_metrica']; ?></span></label>
+								<?php echo $this->formText(null, $item['valor'], array('class' => 'span-2 float-l', 'style'=>'margin-top:7px; margin-left: 9px;', 'disabled'=>'disabled' )); ?>
+							</div>
+							<?php endif; ?>
+						<?php endforeach; ?>
+					</div>
+				<?php endforeach; ?>
+			<?php endforeach; ?>
+		<?php else: ?>
+                   <span class="span-21 float-l center bold" style="color: red; margin-top: 10px;"><?php echo $this->escape($this->translate('L_MSG_ALERT_SEM_REGISTRO_CALCULO_METRICA_PROJETO')) ?></span>
+		<?php endif; ?>
+	</div>
+</div>

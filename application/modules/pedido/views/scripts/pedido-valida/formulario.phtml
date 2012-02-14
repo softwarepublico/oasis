@@ -1,0 +1,105 @@
+<div class="boxTab height-3">
+	<div class="float-l span-6">
+		<h3><?php echo $this->escape($this->translate('L_VIEW_DATA_HORA')) ?></h3>
+		<?php echo date('d/m/Y H:i:s', strtotime($this->pedido->dt_solicitacao_pedido)); ?>
+	</div>
+	<div>
+		<h3><?php echo $this->escape($this->translate('L_VIEW_SITUACAO')) ?></h3>
+		<?php echo $this->pedido->st_situacao_pedido_desc; ?>
+	</div>
+</div>
+<br />
+
+<h2 class="span-12"><?php echo $this->escape($this->translate('L_VIEW_QUESTIONARIO')) ?></h2>
+<div style="overflow-x: auto; padding: 5px; height: 250px;" class="border">
+    <?php
+	$pergunta = 0;
+    foreach($this->formulario as $rs) {
+        if($pergunta != $rs['cd_pergunta_pedido']) {
+            if($pergunta)
+                echo '</div>';
+            $pergunta = $rs['cd_pergunta_pedido'];
+            echo '<div class="span-20 clear-l float-l">';
+            echo "<label class=\"bold float-l clear-l\"><span>{$rs['tx_titulo_pergunta']}</span></label>";
+        }
+        if($rs['st_resposta_texto'] == 'T')
+            echo '<label class="span-12 float-l clear-l"><span>' . nl2br($rs['tx_descricao_resposta']) . '</span></label>';
+        else {
+            echo '<label class="float-l clear-l"><span>';
+            echo $rs['tx_titulo_resposta'];
+            if($rs['st_resposta_texto'] == 'S')
+                echo ' - ' . $rs['tx_descricao_resposta'];
+            echo '</span></label>';
+        }
+    }
+    if($pergunta)
+        echo '</div>';
+    ?>
+</div>
+<br />
+<?php if(count($this->historico)):?>
+<div class="float-l clear-l">
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#historicoPedido").tablesorter({widthFixed: true, widgets: ['zebra']});
+        $("#historicoPedido").tablesorterPager({container: $("#historicoPedidoPager")});
+    });
+    </script>
+    <h2 class="span-12">Histórico</h2>
+    <table cellspacing="1" id="historicoPedido" class="tablesorter">
+        <thead>
+            <tr>
+                <th class="span-3" ><?php echo $this->escape($this->translate('L_VIEW_GRID_DATA_HORA' )) ?></th>
+                <th class="span-4" ><?php echo $this->escape($this->translate('L_VIEW_GRID_SITUACAO'  )) ?></th>
+                <th class="span-14"><?php echo $this->escape($this->translate('L_VIEW_GRID_OBSERVACAO')) ?></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach($this->historico as $rs): ?>
+            <?php $rs['dt_registro_historico'] = strtotime($rs['dt_registro_historico']); ?>
+            <tr>
+                <td><?php echo date('d/m/Y H:i:s', $rs['dt_registro_historico'])?></td>
+                <td><?php echo $rs['st_acao_historico_desc']?></td>
+                <td><?php echo nl2br($rs['tx_descricao_historico'])?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+    <div id="historicoPedidoPager" class="pager">
+        <form>
+            <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+            <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+            <input type="text" class="pagedisplay"/>
+            <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+            <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+            <select class="pagesize">
+                <option selected="selected"  value="10">10</option>
+                <option value="20">20</option>
+            </select>
+        </form>
+    </div>
+</div>
+<?php endif; ?>
+
+<?php if(strpos('AQ', $this->pedido['st_situacao_pedido']) !== false): ?>
+    <div class="float-l clear-l height-1"></div>
+    <h2 class="float-l clear-l"><?php echo $this->escape($this->translate('L_VIEW_ATUALIZAR_SOLICITACAO')) ?></h2>
+
+    <form id="formulario_validar_pedido">
+        <?php echo $this->formHidden('cd_solicitacao_pedido', $this->pedido->cd_solicitacao_pedido)?>
+        
+        <label class="float-l clear-l span-5 bold required"><?php echo $this->escape($this->translate('L_VIEW_ACAO')) ?>:</label>
+        <label for="situacaoV" class="span-3 float-l"><input type="radio" name="status" id="situacaoV" value="V"> <?php echo $this->escape($this->translate('L_VIEW_VALIDAR'  )) ?></label>
+        <label for="situacaoC" class="span-3 float-l"><input type="radio" name="status" id="situacaoC" value="C"> <?php echo $this->escape($this->translate('L_VIEW_COMPLETAR')) ?></label>
+
+        <label class="float-l clear-l span-5 bold required"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACOES')) ?> (<?php echo $this->escape($this->translate('L_VIEW_ANALISE')) ?>):</label>
+        <?php echo $this->formTextarea('tx_descricao_historico', '', array('class'=>'float-l', 'style' => 'width:555px; height:150px;'))?>
+
+        <?php echo $this->formButton('btn_encaminhar_comite',
+                                     $this->escape($this->translate('L_BTN_ENCAMINHAR')),
+                                     array('class'=>'float-l clear-l verde push-5','onclick'=>'validarPedido()')); ?>
+        <?php echo $this->formButton('btn_cancelar_validacao_pedido',
+                                     $this->escape($this->translate('L_BTN_CANCELAR')),
+                                     array('class'=>'float-l vermelho push-5','onclick'=>'desabilitaAbaValidarPedido()')); ?>
+    </form>
+<?php endif;?>

@@ -1,0 +1,34 @@
+<?php 
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/alterar-senha/index.js'));
+?>
+<div id="formAlterarSenha">
+	<fieldset class="span-14 push-4 float-l">
+        <legend><?php echo $this->escape($this->translate('L_VIEW_ALTERAR_SENHA')) ?></legend>
+			<?php 
+				if($this->tx_nome_usuario){
+					echo $this->formHidden('tx_email_institucional',$this->tx_email_institucional);
+					echo "<label class=\"float-l span-4 clear-l right \">".$this->escape($this->translate('L_VIEW_USUARIO')).":</label>";
+					echo "<label class='bold float-l span-9'>{$this->tx_nome_usuario}</label>";
+				} else {
+					echo "<label class=\"float-l span-4 clear-l right required \" for=\"tx_profissional\">".$this->escape($this->translate('L_VIEW_USUARIO')).":</label>";
+					echo $this->formText('tx_email_institucional', '', array('class'=>'float-l span-7','maxlength'=>'100'));
+				}
+			?>
+		<div>
+			<?php
+				if($this->nova_senha != 'S'):
+			?>
+            <label class="float-l span-4 clear-l right"><?php echo $this->escape($this->translate('L_VIEW_SENHA_ATUAL')) ?>:</label>
+				<?php echo $this->formPassword('tx_senha', '', array('class'=>'float-l','maxlength'=>'50','onkeypress'=>'checarCapsLock(event,$(this))')) ?>
+			<?php endif; ?>
+			<label class="float-l span-4 clear-l right required" for="tx_nova_senha"><?php echo $this->escape($this->translate('L_VIEW_NOVA_SENHA')) ?>:</label>
+				<?php echo $this->formPassword('tx_nova_senha', '', array('class'=>'float-l','maxlength'=>'50','onkeypress'=>'checarCapsLock(event,$(this))')) ?>
+		</div>
+		<label class="float-l span-4 clear-l right required" for="tx_senha_confirmada"><?php echo $this->escape($this->translate('L_VIEW_CONFIRMAR_NOVA_SENHA')) ?>:</label>
+			<?php 
+				  echo $this->formPassword('tx_senha_confirmada', '', array('class'=>'float-l','maxlength'=>'50','onkeypress'=>'checarCapsLock(event,$(this))'));	
+				  echo $this->formButton('btn_salvar_senha',$this->escape($this->translate('L_BTN_SALVAR')),array('class'=>'verde float-l span-2 clear-l push-4'));
+			?>
+	</fieldset>
+</div>

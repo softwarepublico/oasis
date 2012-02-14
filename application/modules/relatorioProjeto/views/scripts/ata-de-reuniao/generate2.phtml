@@ -1,0 +1,61 @@
+<?php
+//criando o objeto
+$objPdf = new Base_Tcpdf_Pdf();
+
+$arrKeywords = array(K_CREATOR_SYSTEM,
+                             Base_Util::getTranslator('L_TIT_REL_ATA_REUNIAO'),
+                             Base_Util::getTranslator('L_VIEW_REUNIAO'),
+                             Base_Util::getTranslator('L_VIEW_ATA'),
+                             Base_Util::getTranslator('L_VIEW_RELATORIO')
+                            );
+
+$objPdf->iniciaRelatorio(Base_Util::getTranslator('L_TIT_REL_ATA_REUNIAO'), $arrKeywords);
+$objPdf->SetDisplayMode("real");
+
+// add a page
+$objPdf->AddPage();
+
+
+//Mostra o nome do Projeto e a Sigla
+$objPdf->SetFont('helvetica', 'B', 8);
+$objPdf->Cell(PDF_MARGIN_LEFT, 4, mb_strtoupper(Base_Util::getTranslator('L_VIEW_PROJETO'), 'utf-8').":", '', 0, 'L');
+$objPdf->Ln(4);
+$objPdf->Cell(PDF_MARGIN_LEFT, 4, mb_strtoupper(Base_Util::getTranslator('L_VIEW_SIGLA'), 'utf-8').":", '', 0, 'L');
+$objPdf->Ln(6);
+
+//Mostra
+$objPdf->Cell(PDF_MARGIN_LEFT, 4, mb_strtoupper(Base_Util::getTranslator('L_VIEW_DATA'), 'utf-8').":", '', 0, 'L');
+$objPdf->Ln(4);
+$objPdf->Cell(PDF_MARGIN_LEFT, 4, mb_strtoupper(Base_Util::getTranslator('L_VIEW_LOCAL'), 'utf-8').":", '', 0, 'L');
+$objPdf->Ln(6);
+
+//Mostra participantes
+$objPdf->Cell(180, 4, mb_strtoupper(Base_Util::getTranslator('L_VIEW_PARTICIPANTES_VARIAVEL', Base_Util::getTranslator('L_VIEW_UNIDADE')), 'utf-8'), 'B', 0, 'L');
+$objPdf->Ln(50);
+
+//Mostra Pauta
+$objPdf->SetFont('helvetica', 'B', 8);
+$objPdf->Cell(180, 4, mb_strtoupper(Base_Util::getTranslator('L_VIEW_PAUTA'), 'utf-8'), 'B', 0, 'L');
+$objPdf->Ln(50);
+
+//Mostra Ata
+$objPdf->SetFont('helvetica', 'B', 8);
+$objPdf->Cell(180, 4, mb_strtoupper(Base_Util::getTranslator('L_VIEW_ATA'), 'utf-8'), 'B', 0, 'L');
+
+// reset pointer to the last page
+$objPdf->lastPage();
+
+/*
+ $style = array(
+    'border' => true,
+    'padding' => 4,
+    'fgcolor' => array(0,0,0),
+    'bgcolor' => false, //array(255,255,255)
+);
+$objPdf->writeQRCcode('Juliano Buzanello', 'L');
+ 
+//$objPdf->writeQRCcode($code, $level, $x, $y, $w, $h, $style, $align);
+ */
+//Close and output PDF document
+$objPdf->Output('relatorio_ata_da_reuniao_branco.pdf', 'I');
+?>

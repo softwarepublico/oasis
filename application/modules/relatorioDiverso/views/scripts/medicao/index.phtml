@@ -1,0 +1,11 @@
+<?php
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/medicao/index.js'));
+?>
+<form id="formRelatorioMedicao">
+
+    <label class="span-2 float-l clear-l right required" for="cd_medicao"><?php echo $this->escape($this->translate('L_VIEW_MEDICAO')) ?>:</label>
+    	<?php echo $this->formSelect("cd_medicao",null,array('class'=>'float-l','style'=>'width: 600px;'), $this->comboMedicao); ?>
+    
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->escape($this->translate('L_BTN_GERAR')) ?></button>
+</form>

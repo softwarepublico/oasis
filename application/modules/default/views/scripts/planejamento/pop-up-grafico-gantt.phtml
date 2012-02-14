@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <title><?php echo $this->escape($this->translate('L_VIEW_GRAFICO_GANTT')) ?></title>
+        <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl();?>/public/js/lib/jquery/jquery-1.3.2.min.js"></script>
+        <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl();?>/public/js/modules/default/planejamento/grafico-gantt.js"></script>
+        <link rel="stylesheet" href="<?php echo $this->baseUrl();?>/public/js/lib/ganttChart/ganttChart.css" type="text/css" media="print, projection, screen" />
+        <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl();?>/public/js/lib/ganttChart/ganttChart.js"></script>
+		<script>
+			verificaBrowser();
+            $(document).ready(function(){
+                var g = new Gantt(document.getElementById('GanttChart'),'<?php echo $this->tx_sigla_projeto ?>');
+				<?php
+					$script = "";
+					if(count($this->arrDados) > 0){
+						foreach($this->arrDados as $key=>$value){
+							$script  .= "g.AddTaskDetail(new Task('{$value['dt_inicio']}','{$value['dt_fim']}','{$value['tx_modulo']}','',{$value['porcentagem']},'1'));\n";
+							if($this->gantt_filtro != "M"){
+								foreach($value['dados_etapa'] as $chave=>$valor){
+									$script  .= "g.AddTaskDetail(new Task('{$valor['dt_inicio_etapa']}','{$valor['dt_fim_etapa']}','{$valor['tx_etapa']}','',{$valor['porcentagem_etapa']},'2'));\n";
+									if($this->gantt_filtro != "E"){
+										foreach($valor['dados_atividade'] as $chaveAtividade=>$valorAtividade){
+											$script  .= "g.AddTaskDetail(new Task('{$valorAtividade['dt_inicio_atividade']}','{$valorAtividade['dt_fim_atividade']}','{$valorAtividade['tx_atividade']}','',{$valorAtividade['nf_porcentagem_execucao']},3));\n";
+										}
+									}
+								}
+							}
+						}
+						echo $script;
+					} else {
+						echo 'semRegistro();';
+					}
+				?>
+                g.Draw();
+            });
+        </script>
+    </head>
+    <body scroll="auto">
+		<!-- Cabeçalho do gráfico de Gantt não pode passar de 120px -->
+		<div id="cabecalho" style="width: 700px; text-align: center; font-family: helvetica" >
+			<p><img src="<?php echo $this->baseUrl();?>/public/img/logoRetratoDesenvolvimento.png" /></p>
+			<p><?php echo K_HEADER_COORDENACAO ?></p>
+			<p><b><?php echo $this->escape($this->translate('L_VIEW_GRAFICO_GANTT')) ?></b></p>
+			<p style="text-align: right; font-size: 13px; margin-top: -32px;"><?php echo date('d/m/Y H:i');?></p>
+		</div>
+        <div class="float-l clear-l" id="GanttChart"></div>
+        <p id="sem_registro"></p>
+		<div id="footer" style="width: 700px; font-family: helvetica; font-size: 10px; float:left;" >
+			<p>Fonte: <?php echo K_CREATOR_SYSTEM ." - ". K_TITLE_SYSTEM?></p>
+		</div>
+		<div id="print_instrucao" style="float:left;">
+			<?php echo $this->formButton('btn_print', $this->escape($this->translate('L_BTN_IMPRIMIR')),array('onClick'=>'imprimirRelatorio();'));?>
+			<br />
+			<p id="intrucao"></p>
+		</div>
+    </body>
+</html>

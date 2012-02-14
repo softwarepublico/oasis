@@ -1,0 +1,75 @@
+<?php 
+	$this->script('tab');
+	$this->script('grid');
+    $this->script('scriptFile',array('/solicitacao-servico-service-desk/index.js'));
+?>
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#container-solicitacao-servico-service-desk').show().tabs(); 
+});
+</script>
+<div id="container-solicitacao-servico-service-desk" style="display: none;">
+	<ul>
+    	<li>
+            <a href="#solicitacoesServicoServiceDesk">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_SOLICITACOES_SERVICE_DESK')) ?></span>
+            </a>
+        </li>
+		<?php if(ChecaPermissao::possuiPermissao('solicitacao-servico-service-desk-consulta-objeto-demanda') === true): ?>
+			<li>
+                <a href="#consultaSolicitacaoServiceDesk">
+                    <span><?php echo $this->escape($this->translate('L_VIEW_ABA_CONSULTA_TIPO_DEMANDA')) ?></span>
+                </a>
+            </li>
+			<li id="li-profissional-designado" style="display: none;">
+                <a href="#tab-profissional-designado">
+                    <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PROFISSIONAL_DESIGNADO')) ?></span>
+                </a>
+            </li>
+		<?php endif;?>
+    	<?php if(ChecaPermissao::possuiPermissao('solicitacao-servico-service-desk-consulta-objeto-projeto') === true): ?>    	
+			<li>
+                <a href="#consultaSolicitacaoServiceDeskObjetoProjeto">
+                    <span><?php echo $this->escape($this->translate('L_VIEW_ABA_CONSULTA_TIPO_PROJETO')) ?></span>
+                </a>
+            </li>
+	    <?php endif;?>        
+        <li id="li-detalhe-solicitacao" style="display: none;">
+            <a href="#tab-detalhe-solicitacao-service-desk">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_DETALHE_SOLICITACAO')) ?></span>
+            </a>
+        </li>
+        <li id="li-analise-solicitacao-justificativa" style="display: none;">
+            <a href="#tab-analise-solicitacao-service-desk-justificativa">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_ANALISE_JUSTIFICATIVA')) ?></span>
+            </a>
+        </li>
+    </ul>
+	
+    <div id="solicitacoesServicoServiceDesk">
+    	<?php echo $this->render('solicitacao-servico-service-desk/solicitacao-servico-service-desk.phtml') ?>
+    </div>
+
+    <?php if(ChecaPermissao::possuiPermissao('solicitacao-servico-service-desk-consulta-objeto-demanda') === true): ?>    	
+		<div id="consultaSolicitacao">
+			<?php echo $this->render('solicitacao-servico-service-desk-consulta-objeto-demanda/solicitacao-servico-service-desk-consulta.phtml') ?>
+		</div>
+		<div id="tab-profissional-designado">
+			<div id="profissional-designado" class="clear divTab"></div>
+		</div>
+    <?php endif;?>
+
+    <?php if(ChecaPermissao::possuiPermissao('solicitacao-servico-service-desk-consulta-objeto-projeto') === true): ?>    	
+		<div id="consultaSolicitacaoObjetoProjeto">
+			<?php echo $this->render('solicitacao-servico-service-desk-consulta-objeto-projeto/solicitacao-servico-service-desk-consulta.phtml') ?>
+		</div>
+    <?php endif;?>
+
+    <div id="tab-detalhe-solicitacao-service-desk">
+    	<div id="detalhe-solicitacao-service-desk" class="clear divTab"></div>
+    </div>
+
+	<div id="tab-analise-solicitacao-service-desk-justificativa">
+    	<div id="div-analise-solicitacao-service-desk-justificativa" class="clear divTab"></div>
+	</div>
+</div>

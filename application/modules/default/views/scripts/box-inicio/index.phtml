@@ -1,0 +1,24 @@
+<?php
+    $this->script('scriptFile',array('/box-inicio/index.js'));
+?>
+<div id="formBoxInicio" class="divTab">
+		<?php echo $this->formHidden('cd_box_inicio') ?>
+
+    <label class="float-l span-3 clear-l right required" for="tx_box_inicio"><?php echo $this->escape($this->translate('L_VIEW_NOME_BOX')) ?>:</label>
+		<?php echo $this->formText('tx_box_inicio', null, array('class'=>'float-l span-4')) ?>
+
+    <label class="float-l span-3 clear-l right required" for="tx_titulo_box_inicio"><?php echo $this->escape($this->translate('L_VIEW_TITULO_BOX')) ?>:</label>
+		<?php echo $this->formText('tx_titulo_box_inicio', null, array('class'=>'float-l span-4')) ?>
+
+    <label class="float-l span-3 clear-l right required" for="st_tipo_box_inicio"><?php echo $this->escape($this->translate('L_VIEW_TIPO_BOX')) ?>:</label>
+		<?php echo $this->formSelect('st_tipo_box_inicio',null,array('class'=>'float-l span-4 height-4','multiple'=>'multiple'),$this->comboTipoBox) ?>
+
+    <div class="float-l clear-l">
+		<?php
+			echo $this->formButton('adicionarBoxInicio', $this->escape($this->translate('L_BTN_SALVAR')),array('class' => 'verde push-3'));
+			echo $this->formButton('cancelarBoxInicio',  $this->escape($this->translate('L_BTN_CANCELAR')), array('class' => 'vermelho push-3'));
+			echo $this->formButton('alterarBoxInicio',  $this->escape($this->translate('L_BTN_ALTERAR')), array('class' => 'azul push-3'));
+		?>
+	</div>
+	<div id="gridBoxInicio" class="float-l clear-l span-21"></div>
+</div>

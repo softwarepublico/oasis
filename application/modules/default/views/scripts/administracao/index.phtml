@@ -1,0 +1,112 @@
+<?php 
+    $this->script('tab');
+    $this->script('grid');
+    $this->script('validaForm');
+    $this->script('numero');
+    $this->script('mascara');
+    $this->script('calendario');
+    $this->script('validaData');
+    $this->script('editorHtml');
+    $this->script('treeview');
+    $this->script('scriptFile',array('/administracao/index.js'));
+    $this->script('scriptFile',array('/projeto-legado/index.js'));
+    
+?>
+<?php if(ChecaPermissao::possuiPermissao('perfil') === true): ?>
+	<?php echo $this->formHidden('config_hidden_perfil','N') ?>
+	<div id="perfil" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){configAccordionPerfil();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_PERFIL_MENU')) ?></span>
+    </div>
+	<div id="form_perfil" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('perfil/tabs.phtml') ?>
+	</div>
+<?php endif; ?>
+
+<?php if(ChecaPermissao::possuiPermissao('funcionalidade') === true): ?>
+	<?php echo $this->formHidden('config_hidden_funcionalidade','N') ?>
+	<div id="funcionalidade" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){configAccordionFuncionalidade();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_FUNCIONALIDADE')) ?></span>
+    </div>
+	<div id="form_funcionalidade" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('funcionalidade/tabs.phtml') ?>
+	</div>
+<?php endif; ?>
+	
+<?php if(ChecaPermissao::possuiPermissao('definicao-processo') === true): ?>
+	<?php echo $this->formHidden('config_hidden_processo_sistema','N') ?>
+	<div id="processo_sistema" class="accordion-closed" onclick="/*if($(this).hasClass('accordion-closed')){configAccordionProcessoSistema();}*/">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_DEFINIR_PROCESSO')) ?></span>
+    </div>
+	<div id="form_processo_sistema" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('definicao-processo/index.phtml') ?>
+	</div>
+<?php endif; ?>
+
+<?php if(ChecaPermissao::possuiPermissao('metrica') === true): ?>
+	<?php echo $this->formHidden('config_hidden_metrica','N') ?>
+	<div id="metrica" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){configAccordionMetrica();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_DEFINIR_METRICA')) ?></span>
+    </div>
+	<div id="form_metrica" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('metrica/index.phtml') ?>
+	</div>
+<?php endif; ?>
+
+<?php echo $this->formHidden('config_hidden_box','N') ?>
+<?php if(ChecaPermissao::possuiPermissao('administracao') === true): ?>
+	<div id="box" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed') && ($('#config_hidden_box').val() == 'N')){configbox();}">
+		<span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_DEFINIR_BOX')) ?></span>
+	</div>
+	<div id="form_box" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('administracao/tab_box.phtml') ?>
+	</div>
+<?php endif; ?>
+
+<?php echo $this->formHidden('config_hidden_mensageria','N'); ?>
+<?php if (ChecaPermissao::possuiPermissao('mensageria') === true): ?>
+	<div id="mensageria" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){verificaConfigAccordionMensageria();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_MENSAGERIA')) ?></span>
+    </div>
+	<div id="form_mensageria" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('mensageria/index.phtml') ?>
+	</div>
+<?php endif; ?>
+
+<?php echo $this->formHidden('config_hidden_fale_conosco','N') ?>
+<?php //if(ChecaPermissao::possuiPermissao('fale-conosco') === true): ?>
+	<div id="accordion_fale_conosco" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed') && ($('#config_hidden_fale_conosco').val() == 'N')){configAccordionFaleConosco();}">
+		<span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_FALE_CONOSCO')) ?></span>
+	</div>
+	<div id="form_accordion_fale_conosco" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('fale-conosco/tabs.phtml') ?>
+	</div>
+<?php //endif; ?>
+
+<?php if(ChecaPermissao::possuiPermissao('log') === true): ?>
+	<div id="accordion_log" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){ }">
+		<span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_REGISTRO_LOG')) ?></span>
+	</div>
+	<div id="form_accordion_log" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('log/index.phtml') ?>
+		<div class="accordionBottom" style="min-height: 20px;"></div>
+	</div>
+<?php endif; ?>
+
+<?php if(ChecaPermissao::possuiPermissao('projeto-legado') === true): ?>
+	<div id="accordion_projeto_legado" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){ }">
+		<span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_CADASTRAR_PROJETO_LEGADO')) ?></span>
+	</div>
+	<div id="form_accordion_projeto_legado" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('projeto-legado/index.phtml') ?>
+		<div class="accordionBottom" style="min-height: 20px;"></div>
+	</div>
+<?php endif; ?>
+
+<div id="accordion_exec_select" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){ }">
+    <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_EXECUTA_SELECT')) ?></span>
+</div>
+<div id="form_accordion_exec_select" accordion="accordion" class="hide accordion">
+    <?php echo $this->render('administracao/executa-select.phtml') ?>
+    <div class="accordionBottom" style="min-height: 20px;"></div>
+</div>
+

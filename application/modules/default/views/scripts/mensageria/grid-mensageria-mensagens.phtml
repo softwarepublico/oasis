@@ -1,0 +1,88 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableMensagens").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableMensagens").tablesorterPager({container: $("#tableMensagensPager")}); 
+});
+</script>
+<table id="tableMensagens" cellspacing="1" class="tablesorter" style="border-collapse:collapse">
+	<thead>
+		<tr>
+            <th class="{sorter: false}" style="width: 10px;">&nbsp;</th>
+            <th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_OBJETO')) ?></th>
+			<th class="span-4"><?php echo $this->escape($this->translate('L_VIEW_GRID_PERFIL')) ?></th>
+			<th class="span-8"><?php echo $this->escape($this->translate('L_VIEW_GRID_MENSAGEM')) ?></th>
+			<th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_POSTAGEM')) ?></th>
+			<th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_ENCERRAMENTO')) ?></th>
+			<th class="{sorter: false} span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_ENVIADA_LIDA')) ?></th>
+			<th class="{sorter: false} span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_PORCENTAGEM_LIDA')) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+	?>
+		<tr>
+			<td><img id="imgExcluir" height="13" width="13" style="cursor:pointer; text-align: center;" onclick="excluirMensagem('<?php echo $res['cd_mensageria'] ?>');" src="<?php echo $this->baseUrl()?>/public/img/del.png" alt="<?php echo $this->escape($this->translate('L_BTN_EXCLUIR')) ?>"/></td>
+			<?php
+				$fimObj = "";
+				if( strlen(strip_tags($res['tx_objeto'])) >= 15 ){
+					$fimObj = "...";
+				}
+				$tx_objeto = substr(strip_tags($res['tx_objeto']),0,15)
+			?>
+			<td title="<?php echo $res['tx_objeto']; ?>" style="cursor: pointer;" onClick="recuperaDadosDaMensagem(<?php echo $res['cd_mensageria'] ?>)"><?php echo $tx_objeto.$fimObj; ?></td>
+			<?php
+				$fimPerfil = "";
+				if( strlen(strip_tags($res['tx_perfil'])) >= 15 ){
+					$fimPerfil = "...";
+				}
+				$tx_perfil = substr(strip_tags($res['tx_perfil']),0,15)
+			?>
+			<td title="<?php echo $res['tx_perfil']; ?>" style="cursor: pointer;" onClick="recuperaDadosDaMensagem(<?php echo $res['cd_mensageria'] ?>)"><?php echo $tx_perfil.$fimPerfil; ?></td>
+			<?php 
+			    $fim = "";
+				if( strlen(strip_tags($res['tx_mensagem'])) >= 40 ){
+					$fim = "...";
+				}
+				$tx_mensagem = substr(strip_tags($res['tx_mensagem']),0,40)
+			?>
+			<td title="<?php echo strip_tags($res['tx_mensagem']); ?>" style="cursor: pointer;" onClick="recuperaDadosDaMensagem(<?php echo $res['cd_mensageria'] ?>)"><?php echo $tx_mensagem.$fim ?></td>
+			<td title="<?php echo $this->escape($this->translate('L_MSG_DATA_INICIO_VIGENCIA_MENSAGEM')) ?>"		style="cursor: pointer;" onClick="recuperaDadosDaMensagem(<?php echo $res['cd_mensageria'] ?>)"><?php echo Base_Util::converterDate(substr($res['dt_postagem'], 0, 10), 'YYYY-MM-DD', 'DD/MM/YYYY')?></td>
+			<td title="<?php echo $this->escape($this->translate('L_MSG_DATA_TERMINO_VIGENCIA_MENSAGEM')) ?>"		style="cursor: pointer;" onClick="recuperaDadosDaMensagem(<?php echo $res['cd_mensageria'] ?>)"><?php echo Base_Util::converterDate(substr($res['dt_encerramento'], 0, 10), 'YYYY-MM-DD', 'DD/MM/YYYY')?></td>
+			<td title="<?php echo $this->escape($this->translate('L_MSG_PARA_ATUALIZAR_DADOS_ATUALIZE_PAGINA')) ?>"	style="cursor: pointer;" onClick="recuperaDadosDaMensagem(<?php echo $res['cd_mensageria'] ?>)"><?php echo $res['estatistica']['enviadas']." / ".$res['estatistica']['lidas']; ?></td>
+			<td title="<?php echo $this->escape($this->translate('L_MSG_PARA_ATUALIZAR_DADOS_ATUALIZE_PAGINA')) ?>"	style="cursor: pointer;" onClick="recuperaDadosDaMensagem(<?php echo $res['cd_mensageria'] ?>)"><?php echo $res['estatistica']['porcentagem_lidas']; ?></td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo " <tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			  </tr>";
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableMensagensPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

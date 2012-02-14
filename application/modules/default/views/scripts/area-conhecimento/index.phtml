@@ -1,0 +1,18 @@
+<?php 
+    $this->script('validaForm');
+    $this->script('grid');
+    $this->script('scriptFile',array('/area-conhecimento/index.js'));
+?>
+<div id="formAreaConhecimento">
+	<?php 
+		echo $this->formHidden('cd_area_conhecimento');
+	?>
+    <label class="float-l span-5 clear-l right required" for="tx_area_conhecimento"><?php echo $this->escape($this->translate('L_VIEW_AREA_CONHECIMENTO')) ?>:</label>
+		<?php echo $this->formText('tx_area_conhecimento', '', array('class'=>'float-l span-10','maxlength'=>'50')) ?>
+	<?php 
+		echo $this->formButton('btn_salvar_conhecimento',$this->escape($this->translate('L_BTN_SALVAR')),array('class'=>'verde buttonBar'));
+		echo $this->formButton('btn_alterar_conhecimento',$this->escape($this->translate('L_BTN_ALTERAR')),array('class'=>'verde buttonBar'));
+		echo $this->formButton('btn_cancelar_conhecimento',$this->escape($this->translate('L_BTN_CANCELAR')),array('class'=>'vermelho buttonBar'));
+	?>
+</div>
+<div class="float-l clear-l span-10 push-5" id="gridAreaConhecimento"></div>

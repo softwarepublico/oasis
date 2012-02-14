@@ -1,0 +1,22 @@
+<?php 
+    $this->script('validaForm');
+    $this->script('mascara');
+    $this->script('calendario');
+    $this->script('validaData');
+    $this->script('scriptFile',array('/justificativa-solicitacao/index.js'));
+?>
+<form id="formRelatorioJustificativaSolicitacao">
+
+    <label class="span-3 float-l clear-l right required" for="cd_objeto"><?php echo $this->escape($this->translate('L_VIEW_OBJETO')); ?>:</label>
+    	<?php echo $this->formSelect("cd_objeto",null,array('class'=>'float-l'),$this->arrObjeto); ?>
+
+    <label class="span-3 float-l clear-l right required" for="dt_inicio"><?php echo $this->escape($this->translate('L_VIEW_DATA_INICIO')); ?>:</label>
+		<?php echo $this->data("dt_inicio",null,array('class'=>'float-l span-3')); ?>
+
+    <label class="span-3 float-l clear-l right required" for="dt_fim"><?php echo $this->escape($this->translate('L_VIEW_DATA_FINAL')); ?>:</label>
+		<?php echo $this->data("dt_fim",null,array('class'=>'float-l span-3')); ?>
+
+    <?php $this->datediff('dt_inicio','dt_fim', 'comparaDataInicioFim'); ?>
+
+    <?php echo $this->formButton('btn_gerar', $this->escape($this->translate('L_BTN_GERAR')), array('class'=>'buttonBar verde')); ?>
+</form>

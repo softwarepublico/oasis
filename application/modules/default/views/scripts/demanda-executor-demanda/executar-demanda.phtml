@@ -1,0 +1,89 @@
+<?php
+	$this->script("grid");
+	$this->script("validaData");
+	$this->script("validaForm");
+    $this->script('scriptFile',array('/demanda-executor-demanda/index.js',
+                                     '/demanda-executor-demanda/exucuta-demanda.js'));
+?>
+<form method="post" id="formRegistrarExecucaoDemanda">
+	<input type="hidden" id="cd_demanda"               name="cd_demanda"               value="<?php echo $this->demanda['cd_demanda'] ?>"/>
+	<input type="hidden" id="cd_nivel_servico"         name="cd_nivel_servico"         value="<?php echo $this->cd_nivel_servico ?>"/>
+	<input type="hidden" id="dt_demanda_nivel_servico" name="dt_demanda_nivel_servico" value="<?php echo date('d/m/Y H:i:s', strtotime( $this->demanda['dt_demanda_nivel_servico'])) ?>"/>
+
+   	<input type="hidden" id="cd_profissional_logado"   name="cd_profissional_logado"    value="<?php echo $this->cd_profissional_logado ?>"/>
+
+    
+    <h2><?php echo $this->escape($this->translate('L_VIEW_REGISTRO_HISTORICO_DEMANDA')) ?></h2>
+
+	<div class="box span-20 border gradient">
+        <?php echo $this->formHidden('cd_historico_execucao_demanda') ?>
+
+        <h3 class="highlight tarja-1"><?php echo $this->escape($this->translate('L_VIEW_DETALHE_DEMANDA')) ?></h3>
+
+        <hr style="width:780px;"/>
+		
+        <label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_NUMERO')) ?>:</label>
+            <p class="span-6"><?php echo $numero = (!is_null($this->demanda['ni_solicitacao'])) ? "{$this->demanda['ni_solicitacao']}/{$this->demanda['ni_ano_solicitacao']}" : $this->demanda['cd_demanda']; ?></p>
+		
+        <label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_DATA_HORA_DEMANDA')) ?>:</label>
+            <p class="span-6"><?php echo date('d/m/Y H:i:s', strtotime($this->demanda['dt_demanda'])) ?></p>
+		
+        <label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_DATA_HORA_NIVEL_SERVICO')) ?>:</label>
+            <p class="span-6"><?php echo date('d/m/Y H:i:s', strtotime( $this->demanda['dt_demanda_nivel_servico'])) ?></p>
+		
+        <label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_NIVEL_SERVICO')) ?>:</label>
+            <p class="span-14"><?php echo $this->demanda['tx_nivel_servico'] ?></p>
+		
+        <label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_SOLICITANTE')) ?>:</label>
+            <p class="span-6"><?php echo $this->demanda['tx_solicitante_demanda'] ?></p>
+		
+        <label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_UNIDADE')) ?>:</label>
+            <p class="span-6"><?php echo $this->demanda['tx_sigla_unidade'] ?></p>
+		
+        <label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_DESCRICAO')) ?>:</label>
+            <div class="span-14" style="text-align: justify;margin-left: 10px;"><?php echo $this->demanda['tx_demanda'] ?></div>
+		
+        <label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACAO')) ?>:</label>
+            <p class="span-14" style="text-align: justify;"><?php echo $this->demanda['tx_obs_nivel_servico'] ?></p>
+			
+		<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_HISTORICO_EXECUCAO')) ?></label>
+            <p class="span-6"></p>
+		
+        <hr style="width:780px;"/>
+
+		<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_OBJETO_EXECUTOR')) ?>:</label>
+            <p class="span-6"><?php echo $this->demanda['tx_objeto'] ?></p>
+
+		<label class="bold span-5 required" for="dt_inicio"><?php echo $this->escape($this->translate('L_VIEW_INICIO')) ?>:</label>
+            <p class="span-6"><?php echo $this->DataHora('dt_inicio',
+                                                         null,
+                                                         array(
+                                                             'class' => 'span-5 float-l',
+                                                             'style' => 'margin-right: 10px;',
+                                                             'onblur'=>"comparaDataHoraInicioFim('dt_demanda_nivel_servico','dt_inicio','".$this->escape($this->translate('L_MSG_DATA_INICIO_EXECUCAO_DEMANDA_MENOR_DATA_NIVEL_SERVICO'))."','"
+                                                                                                                                          .$this->escape($this->translate('L_MSG_HORA_INICIO_EXECUCAO_DEMANDA_MENOR_HORA_NIVEL_SERVICO'))."')"),
+                                                         null) ?>
+            </p>
+
+		<label class="bold span-5 required" for="dt_fim"><?php echo $this->escape($this->translate('L_VIEW_FIM')) ?>:</label>
+            <p class="span-6"><?php echo $this->DataHora('dt_fim',
+                                                         null,
+                                                         array(
+                                                             'class' => 'span-5 float-l',
+                                                             'style' => 'margin-right: 10px;',
+                                                             'onblur'=>"comparaDataHoraInicioFim('dt_inicio','dt_fim', '".$this->escape($this->translate('L_MSG_DATA_FIM_EXECUCAO_DEMANDA_MENOR_DATA_INICIO'))."', '"
+                                                                                                                         .$this->escape($this->translate('L_MSG_HORA_FIM_EXECUCAO_DEMANDA_MENOR_HORA_INICIO'))."')"),
+                                                         null) ?>
+            </p>
+
+		<label class="bold span-5 required" for="tx_historico"><?php echo $this->escape($this->translate('L_VIEW_HISTORICO_EXECUCAO')) ?>:</label>
+            <p class="span-6"><?php echo $this->formTextarea('tx_historico', $this->tx_execucao_demanda, array('style' => 'width:550px; height:50px;', 'class' => 'span-4')) ?></p>
+
+        <div class="float-l span-20" id="gridHistoricoDemandaExecutada"></div>
+
+        <hr style="width:780px;"/>
+
+        <?php echo $this->formButton('bt_cancelar_execucao_demanda', mb_strtoupper($this->escape($this->translate('L_BTN_CANCELAR')), 'utf-8'), array('class' => 'float-l vermelho'), null)?>
+		<?php echo $this->formButton('bt_registrar_execucao_demanda',mb_strtoupper($this->escape($this->translate('L_BTN_REGISTRAR_EXECUCAO')), 'utf-8'), array('class' => 'float-r verde'), null)?>
+	</div>
+</form>

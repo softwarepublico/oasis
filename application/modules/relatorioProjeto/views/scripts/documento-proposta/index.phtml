@@ -1,0 +1,25 @@
+<?php 
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/documento-proposta/index.js'));
+?>
+<form id="formRelatorio">
+	<label class="span-2 float-l required" for="cd_contrato"><?php echo $this->translate('L_VIEW_CONTRATO') ?>:</label>
+		<?php echo $this->formSelect('cd_contrato',null,array('class'=>'float-l'),$this->arrContrato); ?>
+    <?php echo $this->formHidden('tem_parcela_orcamento',null,array('class'=>'float-l'),null); ?>
+    <label class="span-2 float-l clear-l required" for="cd_projeto"><?php echo $this->translate('L_VIEW_PROJETO') ?>:</label>
+    	<?php echo $this->formSelect("cd_projeto",null,array('class'=>'float-l'),array(0=>Base_Util::getTranslator('L_VIEW_COMBO_SELECIONE'))); ?>
+    <label class="span-2 float-l clear-l required" for="cd_proposta"><?php echo $this->translate('L_VIEW_PROPOSTA') ?>:</label>
+    	<p><?php echo $this->formSelect("cd_proposta",null,array('class'=>'float-l'), array(0=>Base_Util::getTranslator('L_VIEW_COMBO_SELECIONE'))); ?></p>
+        <div id="chk_parcela_orcamento" style="display: none">
+            <label class="span-5 float-l clear-l" for="st_parcela_orcamento"><?php echo $this->translate('L_MENU_MOSTRAR_PARCELAS_ORCAMENTO') ?>:</label>
+            <p><input id="st_parcela_orcamento" class="float-l" type="checkbox" value="S" name="st_parcela_orcamento"></p>
+        </div>
+        <fieldset class="clear-l">
+		<legend><?php echo $this->translate('L_VIEW_TIPO_PROPOSTA') ?></legend>
+			<p class="float-l"><input type="radio" name="tipo_proposta" id="tipo_proposta_completa" value="C" checked="checked" /></p>
+		<label class="span-3 float-l" for="tipo_proposta_completa"><?php echo $this->translate('L_VIEW_COMPLETA') ?></label>
+			<p class="float-l clear-l"><input type="radio" name="tipo_proposta" id="tipo_proposta_resumida" value="R" /></p>
+		<label class="span-3 float-l" for="tipo_proposta_resumida"><?php echo $this->translate('L_VIEW_RESUMIDA') ?></label>
+	</fieldset>
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->translate('L_BTN_GERAR') ?></button>
+</form>

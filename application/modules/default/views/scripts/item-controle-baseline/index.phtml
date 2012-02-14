@@ -1,0 +1,19 @@
+<?php 
+    $this->script('grid');
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/item-controle-baseline/index.js'));
+?>
+<div id="item_controle_baseline">
+    <?php echo $this->formHidden( 'cd_item_controle_baseline' ); ?>
+
+    <label class="bold float-l span-5 clear-l required" for="tx_item_controle_baseline" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_ITEM_CONTROLE_BASELINE')) ?>:</label>
+    <?php echo $this->formText( 'tx_item_controle_baseline', null, array('class' => 'float-l span-10')); ?>
+    
+    <?php
+    	echo $this->formButton('btn_salvar' , $this->escape($this->translate('L_BTN_SALVAR')),  array('class' => 'verde buttonBar',    'style'   => 'display:none', 'onclick' => 'salvarItemControleBaseline();'));
+    	echo $this->formButton('btn_alterar', $this->escape($this->translate('L_BTN_ALTERAR')), array('class' => 'azul buttonBar',     'style'   => 'display:none', 'onclick' => 'salvarItemControleBaseline();'));
+    	echo $this->formButton('btn_excluir', $this->escape($this->translate('L_BTN_EXCLUIR')), array('class' => 'vermelho buttonBar', 'style'   => 'display:none', 'onclick' => 'excluirItemControleBaseline();'));
+    ?>
+</div>
+<hr />
+<div class="push-5 float-l span-10" id="gridItemControleBaseline"></div>

@@ -1,0 +1,29 @@
+<!-- Scripts da tela do caso de uso -->
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#container-tabBox').show().tabs();
+});
+/**
+ * função de configuração das funções
+ * de inicialização
+ */
+function configbox() {
+	//Inicialização Box Início
+		montaGridBoxInicio();
+		$('#config_hidden_box').val('S');
+}
+</script>
+<div id="container-tabBox" style="display: none;">
+	<ul>
+    	<li><a href="#boxInicio"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_BOX_INICIO')) ?></span></a></li>
+        <li><a href="#perfilBoxInicio"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_PERFIL_BOX_INICIO')) ?></span></a></li>
+    </ul>
+    <div id="boxInicio">
+    	<?php echo $this->render('box-inicio/index.phtml') ?>
+    </div>
+    <div id="perfilBoxInicio">
+		<div class="divTab">
+			<?php echo $this->render('perfil-box-inicio/index.phtml') ?>
+		</div>
+    </div>
+</div>

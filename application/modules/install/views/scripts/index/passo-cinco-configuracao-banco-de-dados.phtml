@@ -1,0 +1,120 @@
+<script language="javascript" type="text/javascript">
+$(document).ready(function(){
+	$('#btn_voltar_passo4').click(function(){
+		$('#container-install').triggerTab(4);
+	});
+	$('#btn_avancar_passo6').click(function(){
+		if( !validaForm('#formConfiguracoesBancoDeDados') ){
+			return false;
+		}
+		validaConfigBanco();
+	});
+
+	$('#tx_adapter').change(function(){
+		getSchema($(this).val());
+	});
+
+	if($('#tx_adapter').val() != 0){
+		getSchema($('#tx_adapter').val());
+	}
+});
+
+function getSchema(tx_adapter)
+{
+    switch(tx_adapter){
+        case "Pdo_Pgsql":
+            $('#label_schema').addClass('required').show();
+            $('#label_port'  ).show();
+            $('#lb_tx_dbname').html(i18n.L_VIEW_SCRIPT_NOME_BANCO_DADOS+":");
+            $('#tx_port'     ).val('5432');
+            $('#tx_schema'   ).val('oasis').show();
+            $('#tx_port'     ).show();
+            $('#tx_dbname'   ).val('')
+                              .removeClass('span-15')
+                              .addClass('span-5');
+            break;
+        case "Oracle":
+            $('#label_schema').addClass('required');
+            $('#lb_tx_dbname').html('TSNAME:');
+            $('#tx_dbname'   ).val('(DESCRIPTION = (ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = 255.255.255.255)(PORT = 1521)) ) (CONNECT_DATA = (SID = DBDSNV) ) )')
+                              .removeClass('span-5')
+                              .addClass('span-15');
+            $('#schema'      ).show();
+            $('#tx_port'     ).hide();
+            $('##label_port' ).hide();
+            break;
+        case "Sqlsrv":
+        case "Pdo_Mssql":
+            $('#tx_schema' ).val('dbo');
+            $('#label_port').show();
+            $('#tx_port'   ).val('1433');
+            break;
+        case "Pdo_Mysql":
+            $('#label_schema').hide();
+            $('#label_port'  ).show();
+            $('#tx_schema'   ).hide().val('oasis');
+            $('#tx_port'     ).val('3306');
+            break;
+    }
+}
+
+/**
+ * Validação dos dados do banco de dados
+ */
+function validaConfigBanco()
+{
+    //caso o atapter for Mysql deve adicionar o nome do banco para o schema
+    //para ser salvo na constante K_SCHEMA
+    if($('#tx_adapter').val() == 'Pdo_Mysql'){
+        $('#tx_schema').val($('#tx_dbname').val());
+    }
+    
+	$.ajax({
+		type: "POST",
+		url: systemName+"/"+systemNameModule+"/index/valida-conexao",
+		data: $('#formConfiguracoesBancoDeDados :input').serialize(),
+		dataType: 'json',
+		success: function(retorno){
+			if(retorno['error'] == true){
+				alertMsg(retorno['msg'],retorno['type']);
+			} else {
+				alertMsg(retorno['msg'],retorno['type'],"passoSeisConfiguracaoConstantes()");
+			}
+		}
+	});
+}
+</script>
+<h2 class="center">5 - <?php echo $this->escape($this->translate('L_VIEW_CONFIGURACAO_BANCO_DADOS')) ?></h2>
+<br />
+<div class="float-l clear-l span-21" id="formConfiguracoesBancoDeDados">
+	<label class="float-l clear-l span-5 right required" for="tx_adapter"><?php echo $this->escape($this->translate('L_VIEW_BANCO_DADOS')) ?>:</label>
+		<?php echo $this->formSelect('tx_adapter',$_SESSION['oasis_install']['banco_dados']['tx_adapter'],array('class'=>'float-l'),$this->arrBancoDeDados); ?>
+	
+    <label class="float-l clear-l span-5 right required" for="tx_host"><?php echo $this->escape($this->translate('L_VIEW_SERVIDOR')) ?>:</label>
+		<?php echo $this->formText('tx_host',$_SESSION['oasis_install']['banco_dados']['tx_host'],array('class'=>'float-l span-5')) ?>
+	
+    <label id="lb_tx_dbname"class="float-l clear-l span-5 right required" for="tx_dbname"><?php echo $this->escape($this->translate('L_VIEW_NOME_BANCO_DADOS')) ?>:</label>
+		<?php echo $this->formText('tx_dbname',$_SESSION['oasis_install']['banco_dados']['tx_dbname'],array('class'=>'float-l span-5')) ?>
+	
+	<div id="schema">
+		<label id="label_schema" class="float-l clear-l span-5 right hide" for="tx_schema"><?php echo $this->escape($this->translate('L_VIEW_SCHEMA')) ?>:</label>
+			<?php echo $this->formText('tx_schema', $_SESSION['oasis_install']['banco_dados']['tx_schema'], array('class'=>'float-l span-5 hide')) ?>
+		<label id="label_port" class="float-l clear-l span-5 right required" for="tx_port"><?php echo $this->escape($this->translate('L_VIEW_PORTA')) ?>:</label>
+			<?php echo $this->formText('tx_port',$_SESSION['oasis_install']['banco_dados']['tx_port'],array('class'=>'float-l span-5')) ?>
+	</div>
+	<label class="float-l clear-l span-5 right required" for="tx_username"><?php echo $this->escape($this->translate('L_VIEW_USUARIO')) ?>:</label>
+		<?php  echo $this->formText('tx_username',$_SESSION['oasis_install']['banco_dados']['tx_username'],array('class'=>'float-l span-5')) ?>
+	<label class="float-l clear-l span-5 right required" for="tx_password"><?php echo $this->escape($this->translate('L_VIEW_SENHA_USUARIO')) ?>:</label>
+		<?php echo $this->formPassword('tx_password',$_SESSION['oasis_install']['banco_dados']['tx_password'],array('class'=>'float-l span-5')) ?>
+	<label class="float-l clear-l span-5 right"><?php echo $this->escape($this->translate('L_MSG_ALERT_DESEJA_DADOS_EXEMPLO')) ?></label>
+		<input type="checkbox" value="S" id="checkbox_dados_exemplo" name="checkbox_dados_exemplo" class="float-l" />
+</div>
+<!-- Botões da tela -->
+<div class="float-l clear-l span-10" style="margin-top:40px;">
+	<span class="float-l right"><?php echo $this->formButton('btn_voltar_passo4',$this->escape($this->translate('L_BTN_ANTERIOR')),array('class'=>'verde right')); ?></span>
+	<label class="float-l bold right"> <<< <?php echo $this->escape($this->translate('L_VIEW_VERIFICACAO_PERMISSOES')) ?></label>
+</div>
+<div class="float-r span-10" style="margin-top:40px;">
+	<span class="float-r right"><?php echo $this->formButton('btn_avancar_passo6',$this->escape($this->translate('L_BTN_PROXIMO')),array('class'=>'verde right')); ?></span>
+	<label class="float-r bold right"><?php echo $this->escape($this->translate('L_VIEW_CONFIGURACOES_GERAIS')) ?> >>></label>
+</div>

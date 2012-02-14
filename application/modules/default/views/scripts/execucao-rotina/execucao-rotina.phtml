@@ -1,0 +1,14 @@
+<?php
+    $this->script('mascara');
+    $this->script('calendario');
+    $this->script('validaData');
+    $this->script('scriptFile',array('/execucao-rotina/execucao-rotina.js'));
+    echo $this->formHidden('cd_profissional_execucao_rotina',$_SESSION["oasis_logged"][0]["cd_profissional"]);
+?>
+<div class="clear" style="background-color:fbfbfb; overflow:hidden; height:34px; border:1px solid rgb(84, 189, 205); background-color:rgb(230, 238, 238);">
+    <div style="margin-top:6px">
+        <label class="bold float-l span-2 right" style="margin-left:5px;"><?php echo $this->escape($this->translate('L_VIEW_DATA')) ?>:</label>
+            <?php echo $this->data('dt_execucao_rotina',date('d/m/Y'),array('class'=>'float-l', 'onBlur'=>'ajaxGridExecucaoRotina()'));?>
+    </div>
+</div>
+<div id="grid_execucao_rotina"></div>

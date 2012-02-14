@@ -1,0 +1,12 @@
+<form id="formReabrirPreDemanda" style="margin-left: 10px;">
+	<?php echo $this->formHidden('cd_pre_demanda', $this->cd_pre_demanda); ?>
+	<?php echo $this->formHidden('cd_objeto', $this->cd_objeto); ?>
+	<?php echo $this->formHidden('ni_solicitacao', $this->ni_solicitacao); ?>
+	<?php echo $this->formHidden('ni_ano_solicitacao', $this->ni_ano_solicitacao); ?>
+	<?php echo $this->formHidden('cd_demanda', $this->cd_demanda); ?>
+
+	<div class="float-l span-14">
+        <label class="float-l span-4 required" for="tx_obs_reabertura_pre_demanda"><?php echo $this->escape($this->translate('L_VIEW_MOTIVO_REABERTURA')) ?>:</label>
+		<?php echo $this->formTextarea('tx_obs_reabertura_pre_demanda', $this->tx_obs_aceite_pre_demanda, array('style' => 'width:380px; height:140px;')) ?>
+	</div>
+</form>

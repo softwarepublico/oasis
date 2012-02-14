@@ -1,0 +1,41 @@
+<script type="text/javascript" language="javascript" src="<?php echo $this->baseUrl() ?>/public/js/modules/default/gerenciamento-risco/analiseRisco.js"></script>
+<div id="formAnaliseRisco" class="divTab">
+	<div class="clear boxTab">
+		<label class="float-l span-2 right bold" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_PROJETO')) ?>:</label>
+        	<p class="float-l span-10"><?php echo $this->arrDados[0]['tx_sigla_projeto']; ?></p>
+            <label class="float-l span-2 right bold"><?php echo $this->escape($this->translate('L_VIEW_PROPOSTA')) ?>:</label>
+        	<p class="float-l"><?php echo $this->arrDados[4]['cd_proposta']; ?> </p>
+        	
+		<label class="float-l span-2 clear-l right bold"><?php echo $this->escape($this->translate('L_VIEW_ETAPA')) ?>:</label>
+        	<p class="float-l span-10"><?php echo $this->arrDados[1]['tx_etapa']; ?> </p>
+		<label class="float-l span-2 right bold"><?php echo $this->escape($this->translate('L_VIEW_ATIVIDADE')) ?>:</label>
+        	<p class="float-l"><?php echo $this->arrDados[2]['tx_atividade']; ?> </p>
+		<label class="float-l span-2 clear-l right bold"><?php echo $this->escape($this->translate('L_VIEW_ITEM')) ?>:</label>
+        	<p class="float-l span-15"><?php echo $this->arrDados[3]['tx_item_risco']; ?> </p>
+	</div>
+    <br />
+    
+	<label class="float-l right clear-l span-4" for="tx_analise_risco"><?php echo $this->escape($this->translate('L_VIEW_ANALISE_RISCO')) ?>:</label>
+		<span class="float-l span-13"><?php echo $this->formTextarea('tx_analise_risco',trim($this->arrAnaliseRisco[0]['tx_analise_risco']),array('class'=>'float-l span-13 height-3'))?></span>
+
+	<label class="float-l right clear-l span-4" for="tx_acao_analise_risco"><?php echo $this->escape($this->translate('L_VIEW_MITIGACAO')) ?>:</label>
+		<span class="float-l span-13"><?php echo $this->formTextarea('tx_mitigacao_risco',trim($this->arrAnaliseRisco[0]['tx_mitigacao_risco']),array('class'=>'float-l span-13 height-3'))?></span>
+			
+	<label class="float-l right clear-l span-4" for="tx_acao_analise_risco"><?php echo $this->escape($this->translate('L_VIEW_ACAO')) ?>:</label>
+		<span class="float-l span-13"><?php echo $this->formTextarea('tx_acao_analise_risco',trim($this->arrAnaliseRisco[0]['tx_acao_analise_risco']),array('class'=>'float-l span-13 height-3'))?></span>
+		
+	<label class="float-l right clear-l span-4" for="tx_acao_analise_risco"><?php echo $this->escape($this->translate('L_VIEW_RESPONSAVEL_ACAO')) ?>:</label>
+		<span class="float-l span-6"><?php echo $this->formSelect('cd_profissional_responsavel',trim($this->arrAnaliseRisco[0]['cd_profissional_responsavel']),array('class'=>'float-l span-7'),$this->arrProfissionalProjeto)?></span>
+		
+	<label class="float-l right span-4" for="tx_acao_analise_risco"><?php echo $this->escape($this->translate('L_VIEW_DATA_LIMITE')) ?>:</label>
+		<span class="float-l span-6"><?php echo $this->data('dt_limite_acao',trim($this->arrAnaliseRisco[0]['dt_limite_acao']),array('class'=>'float-l span-3 gapRight'))?></span>
+		
+	<label class="float-l right clear-l span-4" for="tx_acao_analise_risco"><?php echo $this->escape($this->translate('L_VIEW_STATUS_ACAO')) ?>:</label>
+		<span class="float-l span-6"><?php echo $this->formSelect('st_acao',trim($this->arrAnaliseRisco[0]['st_acao']),array('class'=>'float-l'),$this->arrStatus)?></span>
+		
+	<label class="float-l right clear-l span-4" for="tx_acao_analise_risco"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACAO')) ?>:</label>
+		<span class="float-l span-13"><?php echo $this->formTextarea('tx_observacao_acao',trim($this->arrAnaliseRisco[0]['tx_observacao_acao']),array('class'=>'float-l span-13 height-3'))?></span>
+
+	<?php echo $this->formButton('btn_button_salvar_analise_risco',$this->escape($this->translate('L_BTN_SALVAR')),array('class'=>'verde float-l clear-l push-1')); ?>
+	<?php echo $this->formButton('btn_button_fechar_analise_risco',$this->escape($this->translate('L_BTN_FECHAR')),array('class'=>'azul float-l push-1')); ?>
+</div>

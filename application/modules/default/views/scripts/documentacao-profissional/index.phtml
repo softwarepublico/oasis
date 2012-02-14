@@ -1,0 +1,21 @@
+<?php
+    $this->script('scriptFile',array('/documentacao-profissional/index.js'));
+    $this->script('uploadAjax');
+?>
+<div style="margin-left: 20px;" id="formDocumentoProfissional">	
+	<label class="span-3 float-l clear-l required"><?php echo $this->escape($this->translate('L_VIEW_PROFISSIONAL')) ?>:</label>
+    	<p class="span-3 float-l bold"><?php echo $this->formSelect('cd_profissional_documentacao', null, null, $this->profissionalCombo); ?></p>
+    <div id="divExtensao" style="display: none;">
+		<label class="span-3 float-l clear-l "><?php echo $this->escape($this->translate('L_VIEW_EXTENSOES')) ?>:</label>
+	    	<span class="span-6 float-l bold" id="extensoes"></span>
+	</div>
+	<label class="span-3 float-l clear-l required" for="cd_tipo_documentacao" ><?php echo $this->escape($this->translate('L_VIEW_DOCUMENTACAO')) ?>:</label>
+		<?php echo $this->formSelect('cd_tipo_documentacao', null, array('class' => 'float-l'), $this->tipoDocumentacaoCombo); ?>
+	<label class="span-3 float-l clear-l required" for="tx_arq_documentacao_profissional"><?php echo $this->escape($this->translate('L_VIEW_ARQUIVO')) ?>:</label>
+		<?php echo  $this->formFile('tx_arq_documentacao_profissional',array('class'=>'float-l span-3','size'=>'50')); ?>
+	<img id="imgLoadDocumentacaoProfissional" name="imgLoadDocumentacaoProfissional" alt="<?php echo $this->escape($this->translate('L_VIEW_AGUARDE')) ?>"
+         src="<?php echo $this->baseUrl()?>/public/img/ajax-loader.gif" width="220px" height="19px"
+         class="float-l clear-l push-3" style="display:none;" />
+    <button class="float-l verde clear-l push-3" onclick="return _fnUploadDocumentacaoProfissional();"><?php echo $this->escape($this->translate('L_BTN_ANEXAR_ARQUIVO')) ?></button>
+	<div id="gridDocumentacaoProfissional" class="float-l clear-l push-1 span-15"></div>
+</div>

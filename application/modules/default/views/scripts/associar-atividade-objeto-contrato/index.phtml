@@ -1,0 +1,22 @@
+<?php
+    $this->script('scriptFile',array('/associar-atividade-objeto-contrato/index.js'));
+?>
+
+<form id="form_associar_atividade_objeto_contrato" class="float-l" style="margin-left: 8px;">
+
+    <label class="float-l clear-l span-3 required" for="cd_area_atuacao_ti_associacao"><?php echo $this->escape($this->translate('L_VIEW_AREA_ATUACAO_TI')); ?>:</label>
+    <?php echo $this->formSelect('cd_area_atuacao_ti_associacao',null,array('class'=>'float-l'), $this->arrAreaAtuacaoTiAssociacao);?>
+
+    <label class="float-l clear-l span-3 required" for="cd_objeto_associacao"><?php echo $this->escape($this->translate('L_VIEW_OBJETO')); ?>:</label>
+    <?php echo $this->formSelect('cd_objeto_associacao',null,array('class'=>'float-l'), $this->arrObjetoContratoAssociacao2);?>
+
+    <label class="float-l clear-l span-3 required" for="cd_etapa_associacao"><?php echo $this->escape($this->translate('L_VIEW_ETAPA')); ?>:</label>
+    <?php echo $this->selectUtil('etapa','cd_etapa_associacao',null,array('class'=>'float-l')); ?>
+
+    <?php
+		echo $this->flipFlop(array('name'=>'cd_atividade_objeto_contrato_1', 'label'=>$this->translate('L_VIEW_ATIVIDADE')),
+							 array('name'=>'cd_atividade_objeto_contrato_2', 'label'=>$this->translate('L_VIEW_ATIVIDADE_ASSOCIADA')),
+							 'add_atividade_objeto_contrato',
+							 'remove_atividade_objeto_contrato',8);
+    ?>
+</form>

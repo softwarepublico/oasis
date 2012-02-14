@@ -1,0 +1,87 @@
+<script type="text/javascript">
+$(document).ready(function() {
+    // call the tablesorter plugin
+    $("#tableRegraNegocio").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableRegraNegocio").tablesorterPager({container: $("#tableRegraNegocioPager")});
+});
+</script>
+<table id="tableRegraNegocio" cellspacing="1" class="tablesorter">
+    <thead>
+        <tr>
+            <th width="10%"><?php echo $this->escape($this->translate('L_VIEW_GRID_NR'           )) ?></th>
+            <th width="60%"><?php echo $this->escape($this->translate('L_VIEW_GRID_REGRA_DE_NEGOCIO')) ?></th>
+            <th width="10%"><?php echo $this->escape($this->translate('L_VIEW_GRID_SITUACAO'     )) ?></th>
+            <th width="10%"><?php echo $this->escape($this->translate('L_VIEW_GRID_ATIVO'        )) ?></th>
+            <th width="10%"><?php echo $this->escape($this->translate('L_VIEW_GRID_VERSAO'       )) ?></th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php
+    if($this->res){
+        foreach ($this->res as $res):
+            $limit = 130;
+            $fim   = "";
+            $tx_regra_negocio = $res['tx_regra_negocio'];
+            if(strlen($tx_regra_negocio) >= $limit){
+                $fim = "...";
+                $tx_regra_negocio = substr($tx_regra_negocio,0,$limit);
+            }
+            $tx_regra_negocio .= $fim;
+
+            $onClick = ($res['st_fechamento_regra_negocio']=='S')?
+                "style=\"cursor:default\" title=\"".$this->escape($this->translate('L_MSG_ALERT_REGRA_NEGOCIO_NAO_PODE_SER_ALTERADA'))."\"":
+                "onClick=\"recuperaRegraNegocio({$res['cd_regra_negocio']},{$res['ni_versao_regra_negocio']})\"";
+    ?>
+        <tr style="cursor: pointer;">
+            <!--
+            <td class="center">
+                <img id="imgExcluir"
+                     height="13"
+                     width="13"
+                     style="cursor:pointer;"
+                     onclick="excluirRegraNegocio('<?php echo $res['cd_regra_negocio']; ?>');"
+                     src="<?php echo $this->baseUrl()?>/public/img/del.png"
+                     alt="<?php echo $this->escape($this->translate('L_BTN_EXCLUIR')) ?>"
+                     title="Excluir" />
+
+            </td>
+            -->
+            <td <?php echo $onClick; ?>>
+                <?php echo $res['ni_ordem_regra_negocio'];  ?>
+            </td>
+            <td <?php echo $onClick; ?>>
+                <?php echo $tx_regra_negocio;  ?>
+            </td>
+            <td <?php echo $onClick; ?> class="center">
+                <?php echo ($res['st_fechamento_regra_negocio']=='S')? $this->escape($this->translate('L_VIEW_FECHADA')) : $this->escape($this->translate('L_VIEW_ABERTA'));  ?>
+            </td>
+            <td <?php echo $onClick; ?> class="center">
+                <?php echo ($res['st_regra_negocio']=='A')?"<img src=\"{$this->baseUrl()}/public/img/u42.png\">":""; ?>
+            </td>
+            <td <?php echo $onClick; ?>>
+                <?php echo $res['ni_versao_regra_negocio'];  ?>
+            </td>
+        </tr>
+    <?php
+        endforeach;
+    } else {
+        echo '<tr><td colspan="5" style="text-align:center">'.$this->escape($this->translate('L_VIEW_SEM_REGISTRO')).'</td></tr>';
+    }
+    ?>
+    </tbody>
+</table>
+<div id="tableRegraNegocioPager" class="pager">
+    <form>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+        <input type="text" class="pagedisplay"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+        <select class="pagesize">
+            <option selected="selected"  value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+        </select>
+    </form>
+</div>

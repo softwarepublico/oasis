@@ -1,0 +1,9 @@
+<?php
+    $this->script('scriptFile',array('/gerenciamento-mudanca/analise-mudanca-regra-de-negocio.js'));
+?>
+<div class="clear boxTab">
+	<label class="float-l bold" style="margin-top:2px; font-size:16px;" id="mesAnoAnaliseMudancaRegraDeNegocio"><?php echo $this->mesAno ?></label>
+	<label class="float-r" style="margin-top:2px;"><?php echo $this->anoCombo('anoAnaliseMudancaRegraDeNegocio', $this->anoComboValue,null,1) ?></label>
+	<label class="float-r" style="margin-top:2px;"><?php echo $this->mesCombo('mesAnaliseMudancaRegraDeNegocio', $this->mesComboValue) ?></label>
+</div>
+<div id="gridGerenciamentoMudancaRegraDeNegocio"></div>

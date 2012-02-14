@@ -1,0 +1,18 @@
+<?php 
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/profissional/index.js'));
+?>
+<form id="formRelatorioProjetoProfissional">
+	<?php echo $this->formHidden('tx_objeto'); ?>
+    <label class="span-2 float-l clear-l required" for="cd_objeto"><?php echo $this->translate('L_VIEW_OBJETO') ?>:</label>
+    	<?php echo $this->formSelect("cd_objeto", null, array('class'=>'float-l'), $this->arrComboObjeto); ?>
+    	
+    <fieldset class="clear-l span-7">
+		<legend><?php echo $this->translate('L_VIEW_TIPO_RELATORIO') ?></legend>
+			<p class="float-l"><input type="radio" name="tipo_relatorio" id="tipo_relatorio_completo" value="C" checked="checked" /></p>
+		<label class="span-3 float-l" for="tipo_relatorio_completo"><?php echo $this->translate('L_VIEW_COMPLETO') ?></label>
+			<p class="float-l clear-l"><input type="radio" name="tipo_relatorio" id="tipo_relatorio_resumida" value="R" /></p>
+		<label class="span-3 float-l" for="tipo_relatorio_resumida"><?php echo $this->translate('L_VIEW_RESUMIDO') ?></label>
+	</fieldset>	
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->translate('L_BTN_GERAR') ?></button>
+</form>

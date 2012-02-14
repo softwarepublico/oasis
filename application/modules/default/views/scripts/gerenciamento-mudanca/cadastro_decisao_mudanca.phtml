@@ -1,0 +1,54 @@
+<div class="divTab">
+
+	<div id="form_cadastro_decisao_mudanca">
+
+		<?php echo $this->formHidden('acao_gerenciamento_mudanca'); ?>
+			
+        <label class="span-3 float-l"><?php echo $this->escape($this->translate('L_VIEW_NOME_PROJETO')) ?>:</label>
+		<span id="desc_projeto_gerenciamento_mudanca" class="float-l clear-r bold" style="margin-top: 3px;"></span>
+	
+		<label id="lb_proposta_gerenciamento_mudanca" class="span-3 float-l clear-l"><?php echo $this->escape($this->translate('L_VIEW_PROPOSTA')) ?>:</label>
+		<span id="desc_proposta_gerenciamento_mudanca" class="float-l clear-r bold" style="margin-top: 3px; display: none;"></span>
+	
+		<label id="lb_requisito_gerenciamento_mudanca" class="span-3 float-l clear-l" style="display: none;"><?php echo $this->escape($this->translate('L_VIEW_REQUISITO')) ?>:</label>
+		<span id="desc_requisito_gerenciamento_mudanca" class="float-l clear-r bold" style="margin-top: 3px; display: none;"></span>
+		
+		<label id="lb_regra_negocio_gerenciamento_mudanca" class="span-3 float-l clear-l" style="display: none;"><?php echo $this->escape($this->translate('L_VIEW_REGRA_DE_NEGOCIO')) ?>:</label>
+		<span id="desc_regra_negocio_gerenciamento_mudanca" class="float-l clear-r bold" style="margin-top: 3px; display: none;"></span>
+		
+		<label id="lb_caso_de_uso_gerenciamento_mudanca" class="span-3 float-l clear-l" style="display: none;"><?php echo $this->escape($this->translate('L_VIEW_CASO_DE_USO')) ?>:</label>
+		<span id="desc_caso_de_uso_gerenciamento_mudanca" class="float-l clear-r bold" style="margin-top: 3px; display: none;"></span>
+	
+		<hr class="span-21" style="border-top: 1px solid rgb(84, 189, 205); visibility: visible; height: 6px;"/>
+	
+		<label class=" bold span-9 float-l clear-l "><?php echo $this->escape($this->translate('L_VIEW_MOTIVO_MUDANCA')) ?>:</label>
+		<span id="desc_motivo_mudanca" class="float-l clear-r span-11" style="margin-top: 3px; text-align: justify"></span>
+	
+		<label class=" bold span-9 float-l clear-l"><?php echo $this->escape($this->translate('L_MSG_MUDANCA_AFETA_METRICA')) ?></label>
+		<span id="desc_mudanca_metrica" class="float-l clear-r" style="margin-top: 3px;"></span>
+		
+		<label class=" bold span-9 float-l clear-l"><?php echo $this->escape($this->translate('L_MSG_CUSTO_PROVAVEL_MUDANCA')) ?>:</label>
+		<span id="desc_custo_mudanca" class="float-l clear-r" style="margin-top: 3px;"></span>
+	
+		<label class=" bold span-9 float-l clear-l"><?php echo $this->escape($this->translate('L_MSG_FOI_REALIZADA_REUNIAO_PEDIDO_MUDANCA')) ?></label>
+		<span id="desc_realizacao_reuniao" class="float-l clear-r span-2" style="margin-top: 3px;"></span>
+		
+		<span id="desc_ver_reuniao" class="float-l clear-r" style="margin-top: 3px;"></span>
+
+		<label class=" bold span-4 float-l clear-l"><?php echo $this->escape($this->translate('L_VIEW_ACEITE_MUDANCA')) ?>:</label>
+		<input type="radio" class="float-l" name="rd_aceite_mudanca" id="aceita_mudanca" checked="checked" value="S"/>
+		<span class="float-l span-2" style="margin-top: 3px;"><?php echo $this->escape($this->translate('L_VIEW_SIM')) ?></span>
+		
+		<input type="radio" class="float-l" style="margin-left: -15px;" name="rd_aceite_mudanca" id="nao_aceita_mudanca" value="N"/>
+		<span class="float-l span-2" style="margin-top: 3px;"><?php echo $this->escape($this->translate('L_VIEW_NAO')) ?></span>
+
+		<label class=" bold span-4 float-l clear-l "><?php echo $this->escape($this->translate('L_VIEW_DECISAO')) ?>:</label>
+		<?php echo $this->formTextarea('tx_decisao_mudanca', '', array('style' => 'width:550px; height:100px; margin-top: 3px;','class'=>'float-l')) ?>
+	</div>
+	<div style="margin-top: 15px;" class="float-l clear-l push-4">
+	<?php
+		echo $this->formButton('btn_salvar_analise_mudanca',$this->escape($this->translate('L_BTN_SALVAR')),array('class'=>'verde clear-l float-l'));
+		echo $this->formButton('btn_cancelar_analise_mudanca',$this->escape($this->translate('L_BTN_CANCELAR')),array('class'=>'vermelho float-l'));
+	?>
+	</div>
+</div>

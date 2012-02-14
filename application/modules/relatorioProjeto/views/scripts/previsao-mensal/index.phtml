@@ -1,0 +1,20 @@
+<?php 
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/previsao-mensal/index.js'));
+?>
+<form id="formRelatorioProjetoPrevisaoMensal">
+
+    <label class="span-2 float-l required" for="cd_contrato"><?php echo $this->translate('L_VIEW_CONTRATO') ?>:</label>
+        <?php echo $this->formSelect('cd_contrato',null,array('class'=>'float-l'),$this->arrContrato); ?>
+
+    <label class="span-2 float-l clear-l required right" for="mes_inicial"><?php echo $this->translate('L_VIEW_MES_INICIAL') ?>:</label>
+    	<span class="float-l"><?php echo $this->mesCombo("mes_inicial");?></span>
+    <label class="span-2 float-l right required" for="ano_inicial"><?php echo $this->translate('L_VIEW_ANO_INICIAL') ?>:</label>
+    	<span class="float-l"><?php echo $this->anoCombo("ano_inicial");?></span>
+    <label class="span-2 float-l right clear-l" for="mes_final"><?php echo $this->translate('L_VIEW_MES_FINAL') ?>:</label>
+    	<span class="float-l"><?php echo $this->mesCombo("mes_final",0);?></span>
+    <label class="span-2 float-l right" for="ano_final"><?php echo $this->translate('L_VIEW_ANO_FINAL') ?>:</label>
+    	<span class="float-l"><?php echo $this->anoCombo("ano_final",0);?></span>
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->translate('L_BTN_GERAR') ?></button>
+</form>
+    	

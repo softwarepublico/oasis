@@ -1,0 +1,9 @@
+<ul class="span-21 boxList" id="boxList">
+    <?php 
+    foreach ($this->box_list as $box):
+        if( !empty($box) ):
+    	   echo $this->render('inicio/'.trim($box).'.phtml');
+        endif;
+    endforeach;
+    ?>
+</ul>

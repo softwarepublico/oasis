@@ -1,0 +1,93 @@
+<script type="text/javascript" language="javascript" src="<?php echo $this->baseUrl() ?>/public/js/modules/default/gerenciamento-risco/questionarioItemRisco.js"></script>
+<div id="formQuestionarioAnaliseItemRisco" class="divTab">
+	<?php 
+		echo $this->formHidden('cd_etapa_risco');
+		echo $this->formHidden('cd_atividade_risco');
+		echo $this->formHidden('cd_item_risco');
+	?>
+	<div class="clear boxTab">
+		<label class="float-l span-2 right bold" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_PROJETO')) ?>:</label>
+        	<p class="float-l span-10"><?php echo $this->arrDados[0]['tx_sigla_projeto']; ?></p>
+        <label class="float-l span-2 right bold"><?php echo $this->escape($this->translate('L_VIEW_PROPOSTA')) ?>:</label>
+        	<p class="float-l"><?php echo $this->arrDados[4]['cd_proposta']; ?> </p>
+        	
+		<label class="float-l span-2 clear-l right bold"><?php echo $this->escape($this->translate('L_VIEW_ETAPA')) ?>:</label>
+        	<p class="float-l span-10"><?php echo $this->arrDados[1]['tx_etapa']; ?> </p>
+		<label class="float-l span-2 right bold"><?php echo $this->escape($this->translate('L_VIEW_ATIVIDADE')) ?>:</label>
+        	<p class="float-l"><?php echo $this->arrDados[2]['tx_atividade']; ?> </p>
+		<label class="float-l span-2 clear-l right bold"><?php echo $this->escape($this->translate('L_VIEW_ITEM')) ?>:</label>
+        	<p class="float-l span-15"><?php echo $this->arrDados[3]['tx_item_risco']; ?> </p>
+	</div>
+    <br />
+	    <label class="float-l clear-l span-4 push-1 right">
+	    	<?php echo $this->escape($this->translate('L_VIEW_ITEM_NAO_APLICA')) ?>
+	    	<input type="checkbox" <?php echo (!empty($this->arrAnaliseRisco[0]['st_nao_aplica_risco']))?'checked="checked"':""; ?> id="st_nao_aplica_risco" name="st_nao_aplica_risco" value="S"/>
+	        <script type="text/javascript">naoAplica();</script>
+	    </label>
+    <!-- Cores para os determinados impactos -->
+    	<div class="float-l clear-l span-4 height-3">
+			<label class="float-l right span-4" for="st_fator_risco" style="margin-top: 13px;"><?php echo $this->escape($this->translate('')) ?>Fatores Risco</label>
+    	</div>
+	    <div class="float-l span-16">
+			<label class="float-l span-3"><?php echo $this->escape($this->translate('L_VIEW_PROJETO'   )) ?>:</label>
+			<label class="float-l span-3"><?php echo $this->escape($this->translate('L_VIEW_TECNICO'   )) ?>:</label>
+			<label class="float-l span-3"><?php echo $this->escape($this->translate('L_VIEW_CUSTO'     )) ?>:</label>
+			<label class="float-l span-3"><?php echo $this->escape($this->translate('L_VIEW_CRONOGRAMA')) ?>:</label>
+            <p class="float-l clear-l" style="width:120px;">
+				<span id="st_cor_projeto" class="float-l span-2 <?php echo $this->arrAnaliseRisco[0]['tx_cor_impacto_projeto_risco'] ?>"></span>
+			</p>
+            <p class="float-l" style="width:120px;">
+				<span id="st_cor_tecnico" class="float-l span-2 <?php echo $this->arrAnaliseRisco[0]['tx_cor_impacto_tecnico_risco'] ?>"></span>
+			</p>
+            <p class="float-l" style="width:120px;">
+				<span id="st_cor_custo" class="float-l span-2 <?php echo $this->arrAnaliseRisco[0]['tx_cor_impacto_custo_risco'] ?>"></span>
+			</p>
+            <p class="float-l" style="width:120px;">
+				<span id="st_cor_cronograma" class="float-l span-2 <?php echo $this->arrAnaliseRisco[0]['tx_cor_impacto_cronog_risco'] ?>"></span>
+			</p>
+    	</div>
+	<!-- Fim das cores do Impacto -->	
+	<div class="float-l clear-l">
+		
+	<label class="float-l clear-l right span-4 required" for="st_impacto_projeto_risco"><?php echo $this->escape($this->translate('L_VIEW_IMPACTO_PROJETO')) ?>:</label>
+		<span class="float-l span-6"><?php echo $this->formSelect('st_impacto_projeto_risco',trim($this->arrAnaliseRisco[0]['st_impacto_projeto_risco']),array('class'=>'float-l clear-l'),$this->arrImpacto); ?></span>
+		
+	<label class="float-l right span-4 right required" for="st_impacto_custo_risco"><?php echo $this->escape($this->translate('L_VIEW_IMPACTO_CUSTO')) ?>:</label>
+		<span class="float-l span-6"><?php echo $this->formSelect('st_impacto_custo_risco',trim($this->arrAnaliseRisco[0]['st_impacto_custo_risco']),array('class'=>''),$this->arrImpacto); ?></span>
+		
+	<label class="float-l right clear-l span-4 required" for="st_impacto_tecnico_risco"><?php echo $this->escape($this->translate('L_VIEW_IMPACTO_TECNICO')) ?>:</label>
+		<span class="float-l span-6"><?php echo $this->formSelect('st_impacto_tecnico_risco',trim($this->arrAnaliseRisco[0]['st_impacto_tecnico_risco']),array('class'=>'float-l'),$this->arrImpacto); ?></span>
+		
+	<label class="float-l right span-4 required" for="st_impacto_cronograma_risco"><?php echo $this->escape($this->translate('L_VIEW_IMPACTO_CRONOGRAMA')) ?>:</label>
+		<span class="float-l span-6"><?php echo $this->formSelect('st_impacto_cronograma_risco',trim($this->arrAnaliseRisco[0]['st_impacto_cronograma_risco']),array('class'=>'float-l'),$this->arrImpacto); ?></span>
+	</div>
+	<div class="float-l clear-l push-1" id="gridQuestionarioItem">
+		<table border="1" style="border-collapse: collapse; border: 1px solid #54BDCD; margin-left: 6px; width:700px;">
+			<thead>
+				<th class="span-13"><?php echo $this->escape($this->translate('L_VIEW_QUESTAO')) ?></th>
+				<th><?php echo $this->escape($this->translate('L_VIEW_RESPOSTA')) ?></th>
+			</thead>
+			<tbody>
+				<?php
+				if( count($this->arrQuestionario) > 0){
+					foreach ($this->arrQuestionario as $res):
+				?>
+			    <tr>
+			        <td><?php echo $res['tx_questao_analise_risco']; ?></td>
+			        <td><?php echo $this->formSelect("st_resposta_analise_risco-{$res['cd_questao_analise_risco']}",trim($res['st_resposta_analise_risco']),null,$this->arrQuestao); ?></td>
+				</tr>
+				<?php
+					endforeach;
+				} else {
+					echo "  <tr>
+								<td colspan='2' style='text-align:center;'>".$this->escape($this->translate('L_VIEW_SEM_REGISTRO'))."</td>
+							</tr>
+					";
+				}
+				?>
+			</tbody>
+		</table>
+	</div>
+	<?php echo $this->formButton('btn_button_calcular',$this->escape($this->translate('L_BTN_CALCULAR')),array('class'=>'azul float-l clear-l push-1')); ?>
+	<?php echo $this->formButton('btn_button_salvar_questionario',$this->escape($this->translate('L_BTN_SALVAR')),array('class'=>'verde float-l push-1')); ?>
+</div>

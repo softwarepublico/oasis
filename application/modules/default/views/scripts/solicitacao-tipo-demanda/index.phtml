@@ -1,0 +1,55 @@
+<?php 
+	$this->script('tab'); 
+	$this->script('grid');
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/solicitacao-tipo-demanda/index.js'));
+?>
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#containerSolicitacaoTipoDemanda').show().tabs();
+});
+</script>
+<div id="containerSolicitacaoTipoDemanda" style="display: none;">
+	<ul>
+    	<li>
+            <a href="#solicitacao-tipo-demanda">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_SOLICITACOES_SERVICO')) ?></span>
+            </a>
+        </li>
+    	<li>
+            <a href="#solicitacao-tipo-demanda-andamento" onclick="ajaxGridSolicitacaoTipoDemandaExecutada()">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_SOLICITACOES_SERVICO_EXECUTADAS')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#solicitacao-tipo-demanda-executada" onclick="ajaxGridSolicitacaoTipoDemandaConcluida()">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_SOLICITACOES_SERVICO_CONCLUIDAS')) ?></span>
+            </a>
+        </li>
+        <li id="li-profissional-designado" style="display: none;">
+            <a href="#tab-profissional-designado">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PROFISSIONAL_DESIGNADO')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#solicitacao-tipo-demanda-consulta">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_CONSULTA')) ?></span>
+            </a>
+        </li>
+    </ul>
+    <div id="solicitacao-tipo-demanda">
+    	<?php echo $this->render('solicitacao-tipo-demanda/solicitacao-tipo-demanda.phtml') ?>
+    </div>
+    <div id="solicitacao-tipo-demanda-andamento">
+    	<?php echo $this->render('solicitacao-tipo-demanda/solicitacao-tipo-demanda-executada.phtml') ?>
+    </div>
+    <div id="solicitacao-tipo-demanda-executada">
+    	<?php echo $this->render('solicitacao-tipo-demanda/solicitacao-tipo-demanda-concluida.phtml') ?>
+    </div>
+    <div id="tab-profissional-designado">
+    	<div id="profissional-designado" class="clear divTab"></div>
+    </div>
+    <div id="solicitacao-tipo-demanda-consulta">
+    	<?php echo $this->render('solicitacao-tipo-demanda/solicitacao-tipo-demanda-consulta.phtml') ?>
+    </div>
+</div>

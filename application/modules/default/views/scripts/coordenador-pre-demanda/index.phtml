@@ -1,0 +1,33 @@
+<?php 
+	$this->script('tab'); 
+    $this->script('grid');
+    $this->script('mascara');
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/coordenador-pre-demanda/index.js',
+                                     '/coordenador-pre-demanda/reabrir-pre-demanda.js'));
+?>
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#containerCoordenadorDemanda').show().tabs(); 
+});
+</script>
+<div id="containerCoordenadorDemanda" style="display: none;">
+	<ul>
+    	<li>
+            <a href="#pre-demandas">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PRE_DEMANDAS')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#demandas-executadas">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PRE_DEMANDA_EXECUTADA')) ?></span>
+            </a>
+        </li>
+    </ul>
+    <div id="pre-demandas">
+    	<?php echo $this->render('coordenador-pre-demanda/pre-demanda.phtml') ?>
+    </div>
+    <div id="demandas-executadas">
+    	<?php echo $this->render('coordenador-pre-demanda/pre-demanda-executada.phtml') ?>
+    </div>
+</div> 

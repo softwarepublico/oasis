@@ -1,0 +1,21 @@
+<div id="div_novo_inventario">
+
+	<?php echo $this->formHidden('cd_inventario'); ?>
+	<?php echo $this->formHidden('hidden_cd_area_atuacao_ti'); ?>
+
+    <label class="float-l span-4 bold required" for="cd_area_atuacao_ti_inventario"><?php echo $this->escape($this->translate('L_VIEW_AREA_ATUACAO_TI')) ?>:</label>
+	<?php echo $this->formSelect('cd_area_atuacao_ti_inventario', null, array('class'=>'float-l span-4'), $this->arrAreaAtuacaoTi); ?>
+
+	<label class="float-l clear-l span-4 bold required" for="tx_inventario"><?php echo $this->escape($this->translate('L_VIEW_NOME_INVENTARIO')) ?>:</label>
+	<?php echo $this->formText('tx_inventario', null, array('class'=>'float-l span-12', 'maxlength'=>'100')); ?>
+
+	<label class="float-l clear-l span-4 bold required" for="tx_desc_inventario" editor="editor"><?php echo $this->escape($this->translate('L_VIEW_DESCRICAO_INVENTARIO')) ?>:</label>
+	<?php echo $this->editorHtml('tx_desc_inventario', null, array('class'=>'float-l','cols'=>'60','rows'=>'7','editor'=>K_EDITOR)); ?>
+
+    <label class="float-l clear-l span-4 bold" for="tx_obs_inventario" editor="editor"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACAO_INVENTARIO')) ?>:</label>
+	<?php echo $this->editorHtml('tx_obs_inventario', null, array('class'=>'float-l','cols'=>'60','rows'=>'7','editor'=>K_EDITOR)); ?>
+
+    <?php echo $this->formButton('btn_salvar_inventario', $this->escape($this->translate('L_BTN_SALVAR')), array('class'=>'float-l clear-l verde push-4')); ?>
+	<?php echo $this->formButton('btn_cancelar_inventario', $this->escape($this->translate('L_BTN_CANCELAR')), array('class'=>'float-l vermelho push-4')); ?>
+
+</div>

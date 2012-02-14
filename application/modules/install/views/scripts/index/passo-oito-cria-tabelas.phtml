@@ -1,0 +1,203 @@
+<script language="javascript" type="text/javascript">
+	$(document).ready(function(){
+		var error = '<?php echo $this->error ?>';
+		$('#btn_voltar_passo7').click(function(){
+			$('#container-install').triggerTab(7);
+		});
+		$('#btn_avancar_passo9').click(function(){
+			passoNoveDefinicaoDadosSistema();
+		});
+	});
+</script>
+<h2 class="center">8 - <?php echo $this->escape($this->translate('L_MSG_CRIACAO_TABELAS_SISTEMA')) ?></h2>
+<br />
+<div class="float-l clear-l span-21">
+<?php
+	echo $this->formHidden('caminhoArquivoSql',$this->caminhoArquivoSql);
+
+	//Função evoluida da strpos
+	function strposa($haystack ,$needles=array(),$offset=0) {
+		$chr = array();
+		foreach($needles as $needle) {
+			$chr[] = strpos($haystack,$needle,$offset);
+		}
+		if(empty($chr)) return false;
+		return min($chr);
+	}
+	$imgFalse = '<img class="float-l" style="margin: 0px 5px 0px -5px;" src="'.$this->baseUrl().'/public/img/u46.png"/>';
+	$imgTrue  = '<img class="float-l" style="margin:5px 10px 0px 0px;" src="'.$this->baseUrl().'/public/img/u42.png"/>';
+	$html     = '<p style="margin-left: 85px; margin-top: -15px;" class="float-l clear-l span-19"><label class="float-l">';
+	try {
+
+        if($_SESSION['oasis_install']['banco_dados']['tx_adapter'] == Base_Controller_Action_Helper_Conexao::ADAPTER_MSSQL ||
+           $_SESSION['oasis_install']['banco_dados']['tx_adapter'] == Base_Controller_Action_Helper_Conexao::ADAPTER_PDO_MSSQL ||
+           $_SESSION['oasis_install']['banco_dados']['tx_adapter'] == Base_Controller_Action_Helper_Conexao::ADAPTER_POSTGRES ||
+           $_SESSION['oasis_install']['banco_dados']['tx_adapter'] == Base_Controller_Action_Helper_Conexao::ADAPTER_PDO_POSTGRES){
+
+            $this->objConnection->beginTransaction();
+        }
+
+		//Criando as tabelas
+		echo '<p style="margin-left: 30px; margin-top: -15px;" class="float-l clear-l span-20">
+				<label class="float-l">
+					<span class="bold">'.$this->escape($this->translate('L_MSG_CRIANDO_TABELAS_SISTEMA')).'</span>
+				</label>
+			  </p>';
+
+		$arrArqCreateTable = file($this->caminhoArquivoSql.$this->arqCreateTable);
+		$sql      = "";
+		$arrTable = array();
+		foreach($arrArqCreateTable as $key=>$value) {
+			$html = '<p style="margin-left: 85px; margin-top: -15px;" class="float-l clear-l span-19"><label class="float-l">';
+			$ini = substr($value,0,2);
+			//Retira os comentários do código SQL
+			if(($ini != "--") && ($ini != "/*") && (trim($value) != "")) {
+				$pos = strposa(strtolower($value),array(strtolower("K_SCHEMA")));
+				if($pos !== false) {
+					$value = str_ireplace('K_SCHEMA',K_SCHEMA,$value);
+				}
+				$pos = strposa(strtolower($value),array(strtolower("K_USER")));
+				if($pos !== false) {
+					$value = str_ireplace('K_USER',K_USER,$value);
+				}
+				$pos = strposa(strtolower($value),array(strtolower("CREATE TABLE")));
+				if($pos !== false) {
+					$arrTable = explode(" ",$value);
+					$html .= $imgTrue." ".$this->escape($this->translate('L_VIEW_TABELA')).' <span class="bold">'.$arrTable[2].'</span> '.$this->escape($this->translate('L_MSG_SUCESS_CRIADA')).'
+							  </label></p>';
+					echo $html;
+				}
+				$sql .= $value;
+			}
+		}
+        if($_SESSION['oasis_install']['banco_dados']['tx_adapter'] != Base_Controller_Action_Helper_Conexao::ADAPTER_POSTGRES &&
+           $_SESSION['oasis_install']['banco_dados']['tx_adapter'] != Base_Controller_Action_Helper_Conexao::ADAPTER_PDO_POSTGRES &&
+           $_SESSION['oasis_install']['banco_dados']['tx_adapter'] != Base_Controller_Action_Helper_Conexao::ADAPTER_MYSQL &&
+           $_SESSION['oasis_install']['banco_dados']['tx_adapter'] != Base_Controller_Action_Helper_Conexao::ADAPTER_PDO_MYSQL){
+
+            $objStantemant = $this->objConnection->prepare($sql);
+            $objStantemant->execute();
+            $sql = '';
+        }
+
+		if($_SESSION['oasis_install']['banco_dados']['dados_exemplo'] == "S"){
+			$msg = '<span class="bold">'.$this->escape($this->translate('L_MSG_INSERINDO_DADOS_TABELA_BASICA')).'</span>';
+		} else {
+			$msg = '<span class="bold">'.$this->escape($this->translate('L_MSG_INSERINDO_DADOS_EXEMPLO_TABELA')).'</span>';
+		}
+		//Criando os registros
+		echo '<p style="margin-left: 30px; margin-top: 10px;" class="float-l clear-l span-20">
+				<label class="float-l">
+					<span class="bold">'.$msg.'</span>
+				</label>
+			  </p>';
+        
+		$arrArqDataInsert = file($this->caminhoArquivoSql.$this->arqDataInsert);
+
+		foreach($arrArqDataInsert as $key=>$value){
+			$ini = substr(trim($value),0,2);
+			//Retira os comentários do código SQL
+			if(($ini != "--") && ($ini != "/*") && (trim($value) != "")) {
+				$pos = strposa(strtolower($value),array(strtolower("K_SCHEMA")));
+				if($pos !== false) {
+					$value = str_ireplace('K_SCHEMA',K_SCHEMA,$value);
+				}
+				$pos = strposa(strtolower($value),array(strtolower("K_USER")));
+				if($pos !== false) {
+					$value = str_ireplace('K_USER',K_USER,$value);
+				}
+
+				$sql .= $value;
+
+                if($_SESSION['oasis_install']['banco_dados']['tx_adapter'] != Base_Controller_Action_Helper_Conexao::ADAPTER_POSTGRES &&
+                   $_SESSION['oasis_install']['banco_dados']['tx_adapter'] != Base_Controller_Action_Helper_Conexao::ADAPTER_PDO_POSTGRES &&
+                   $_SESSION['oasis_install']['banco_dados']['tx_adapter'] != Base_Controller_Action_Helper_Conexao::ADAPTER_MYSQL &&
+                   $_SESSION['oasis_install']['banco_dados']['tx_adapter'] != Base_Controller_Action_Helper_Conexao::ADAPTER_PDO_MYSQL){
+
+                    $objStantemant = null;
+                    $objStantemant = $this->objConnection->prepare($value);
+                    $objStantemant->execute();
+                }
+			}
+		}
+        if($_SESSION['oasis_install']['banco_dados']['tx_adapter'] != Base_Controller_Action_Helper_Conexao::ADAPTER_POSTGRES &&
+           $_SESSION['oasis_install']['banco_dados']['tx_adapter'] != Base_Controller_Action_Helper_Conexao::ADAPTER_PDO_POSTGRES &&
+           $_SESSION['oasis_install']['banco_dados']['tx_adapter'] != Base_Controller_Action_Helper_Conexao::ADAPTER_MYSQL &&
+           $_SESSION['oasis_install']['banco_dados']['tx_adapter'] != Base_Controller_Action_Helper_Conexao::ADAPTER_PDO_MYSQL){
+            
+           $sql = '';
+        }
+        
+		//Criando as chaves das tabelas
+		echo '<p style="margin-left: 30px; margin-top: 10px;" class="float-l clear-l span-20">
+				<label class="float-l">
+					<span class="bold">'.$this->escape($this->translate('L_MSG_CRIANDO_RELACIONAMENTO_TABELA')).'</span>
+				</label>
+			  </p>';
+		$arrArqGrant = file($this->caminhoArquivoSql.$this->arqGrant);
+		foreach($arrArqGrant as $key=>$value){
+			$ini = substr($value,0,2);
+			//Retira os comentários do código SQL
+			if(($ini != "--") && ($ini != "/*") && (trim($value) != "")) {
+				$pos = strposa(strtolower($value),array(strtolower("K_SCHEMA")));
+				if($pos !== false) {
+					$value = str_ireplace('K_SCHEMA',K_SCHEMA,$value);
+				}
+				$pos = strposa(strtolower($value),array(strtolower("K_USER")));
+				if($pos !== false) {
+					$value = str_ireplace('K_USER',K_USER,$value);
+				}
+				$sql .= $value;
+			}
+		}
+        if($_SESSION['oasis_install']['banco_dados']['tx_adapter'] != Base_Controller_Action_Helper_Conexao::ADAPTER_POSTGRES &&
+           $_SESSION['oasis_install']['banco_dados']['tx_adapter'] != Base_Controller_Action_Helper_Conexao::ADAPTER_PDO_POSTGRES &&
+           $_SESSION['oasis_install']['banco_dados']['tx_adapter'] != Base_Controller_Action_Helper_Conexao::ADAPTER_MYSQL &&
+           $_SESSION['oasis_install']['banco_dados']['tx_adapter'] != Base_Controller_Action_Helper_Conexao::ADAPTER_PDO_MYSQL){
+
+            $objStantemant = null;
+            $objStantemant = $this->objConnection->prepare($sql);
+            $objStantemant->execute();
+            
+        }else{
+            switch ($_SESSION['oasis_install']['banco_dados']['tx_adapter']){
+                case Base_Controller_Action_Helper_Conexao::ADAPTER_MYSQL:
+                case Base_Controller_Action_Helper_Conexao::ADAPTER_POSTGRES:
+                    $this->objConnection->query($sql);
+                    break;
+                default:
+                    $this->objConnection->exec($sql);
+                    break;
+            }
+        }
+
+        if($_SESSION['oasis_install']['banco_dados']['tx_adapter'] == Base_Controller_Action_Helper_Conexao::ADAPTER_MSSQL ||
+           $_SESSION['oasis_install']['banco_dados']['tx_adapter'] == Base_Controller_Action_Helper_Conexao::ADAPTER_PDO_MSSQL ||
+           $_SESSION['oasis_install']['banco_dados']['tx_adapter'] == Base_Controller_Action_Helper_Conexao::ADAPTER_POSTGRES ||
+           $_SESSION['oasis_install']['banco_dados']['tx_adapter'] == Base_Controller_Action_Helper_Conexao::ADAPTER_PDO_POSTGRES){
+
+            $this->objConnection->commit();
+        }
+	} catch (Zend_Exception $e ) {
+
+        if($_SESSION['oasis_install']['banco_dados']['tx_adapter'] == Base_Controller_Action_Helper_Conexao::ADAPTER_MSSQL ||
+           $_SESSION['oasis_install']['banco_dados']['tx_adapter'] == Base_Controller_Action_Helper_Conexao::ADAPTER_PDO_MSSQL ||
+           $_SESSION['oasis_install']['banco_dados']['tx_adapter'] == Base_Controller_Action_Helper_Conexao::ADAPTER_POSTGRES ||
+           $_SESSION['oasis_install']['banco_dados']['tx_adapter'] == Base_Controller_Action_Helper_Conexao::ADAPTER_PDO_POSTGRES){
+
+            $this->objConnection->rollBack();
+        }
+		$html .= $imgFalse." ".$this->escape($this->translate('L_MSG_ERRO_CRIAR_TABELAS'))."<br /> {$e->getMessage()}</label></p>";
+		echo $html;
+	}
+?>
+</div>
+<!-- Botões da tela -->
+<div class="float-l clear-l span-10" style="margin-top:40px;">
+	<span class="float-l right"><?php echo $this->formButton('btn_voltar_passo7',$this->escape($this->translate('L_BTN_ANTERIOR')),array('class'=>'verde right')); ?></span>
+	<label class="float-l bold right"> <<< <?php echo $this->escape($this->translate('L_VIEW_CONSTANTES_CRIADAS')) ?></label>
+</div>
+<div class="float-r span-10" style="margin-top:40px;">
+	<span class="float-r right"><?php echo $this->formButton('btn_avancar_passo9',$this->escape($this->translate('L_BTN_PROXIMO')),array('class'=>'verde right')); ?></span>
+	<label class="float-r bold right"><?php echo $this->escape($this->translate('L_MSG_DEFINIR_SENHA_ADMINISTRADOR')) ?> >>></label>
+</div>

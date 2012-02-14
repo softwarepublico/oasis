@@ -1,0 +1,20 @@
+<?php $this->script('scriptFile',array('/alocacao-profissional/index.js')); ?>
+<form id="formRelatorioProjetoPorProfissional">
+
+    <label class="span-2 float-l clear-l required" for="cd_objeto"><?php echo $this->translate('L_VIEW_OBJETO') ?>:</label>
+    	<?php echo $this->formSelect("cd_objeto", null, array('class'=>'float-l'), $this->arrComboObjeto); ?>
+
+
+    <fieldset class="clear-l span-7">
+		<legend><?php echo $this->translate('L_VIEW_TIPO_RELATORIO') ?></legend>
+			<p class="float-l">
+                <input type="radio" name="tipo_relatorio" id="tipo_relatorio_projeto-profissional" value="1" checked="checked" />
+            </p>
+		<label class="span-5 float-l" for="tipo_relatorio_projeto-profissional"><?php echo $this->translate('L_VIEW_PROJETO_PROFISSIONAL') ?></label>
+			<p class="float-l clear-l">
+                <input type="radio" name="tipo_relatorio" id="tipo_relatorio_profissional_projeto" value="2" />
+            </p>
+		<label class="span-5 float-l" for="tipo_relatorio_profissional_projeto"><?php echo $this->translate('L_VIEW_PROFISSIONAL_PROJETO') ?></label>
+	</fieldset>	
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->translate('L_BTN_GERAR') ?></button>
+</form>

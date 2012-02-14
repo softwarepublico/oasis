@@ -1,0 +1,47 @@
+@import "screen.css";
+@import "oasis.css";
+
+/* Extensão dos css dos UI ui.themes.css*/
+
+.ui-widget-header {
+    border: 1px solid #aaaaaa /*{borderColorHeader}*/;
+    background: #FFFFFF /*{bgColorHeader}*/  
+        url(../img/dialog/08_diagonals_azul.png)
+        /*{bgImgUrlHeader}*/   0 /*{bgHeaderXPos}*/   50% /*{bgHeaderYPos}*/  
+        repeat-x /*{bgHeaderRepeat}*/;
+    color: #FFFFFF /*{fcHeader}*/;
+    font-weight: bold;
+}
+
+.ui-icon {
+    width: 16px;
+    height: 16px;
+    background-image: url(../img/dialog/ui-icons_2e83ff_256x240.png);
+        /*{iconsContent}*/;
+}
+
+.ui-widget-content .ui-icon {
+    background-image: url(../img/dialog/ui-icons_2e83ff_256x240.png);
+        /*{iconsContent}*/;
+}
+
+.ui-state-hover .ui-icon,.ui-state-focus .ui-icon {
+    background-image: url(../img/dialog/ui-icons_cd0a0a_256x240.png);
+        /*{iconsHover}*/;
+}
+
+.ui-state-default,.ui-widget-content .ui-state-default {
+    color: blue; /*{fcDefault}*/;
+}
+
+.ui-state-hover,.ui-widget-content .ui-state-hover,.ui-state-focus,.ui-widget-content .ui-state-focus
+{
+    color: blue; /*{fcHover}*/;
+}
+
+.oasis_carregando {
+    background: url(../img/ajax-loader.gif) no-repeat center !important;
+    width: 210px;
+    height: 19px;
+    display: block;
+}

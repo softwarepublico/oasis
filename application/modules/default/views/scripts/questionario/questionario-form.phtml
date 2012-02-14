@@ -1,0 +1,89 @@
+<script type="text/javascript" language="javascript" src="<?php echo $this->baseUrl();?>/public/js/modules/default/questionario/questionarioForm.js"></script>
+<div id="formQuestionarioForm">
+	<div class="box border gradient float-l" style="width:810px; overflow:hidden;">
+        <h3 class="highlight tarja-1"><?php echo $this->escape($this->translate('L_VIEW_INFORMACOES_QUESTIONARIO')) ?></h3>
+		<label class="bold span-4"><?php echo $this->escape($this->translate('L_VIEW_PROJETO')) ?>:</label>
+			<p class="span-17" style="margin-left:-31px;"><?php echo $this->arrProjeto['tx_projeto'] ?></p>
+		<label class="bold span-4"><?php echo $this->escape($this->translate('L_VIEW_SIGLA')) ?>:</label>
+			<p class="span-10" style="margin-left:-31px;"><?php echo $this->arrProjeto['tx_sigla_projeto'] ?></p>
+		<label class="bold span-4"><?php echo $this->escape($this->translate('L_VIEW_GESTOR')) ?>:</label>
+			<p class="span-6" style="margin-left:-31px;"><?php echo $this->arrProjeto['tx_gestor_projeto'] ?></p>
+		<label class="bold span-4"><?php echo $this->escape($this->translate('L_VIEW_UNIDADE_GESTORA')) ?>:</label>
+			<p class="span-6" style="margin-left:-31px;"><?php echo $this->arrProjeto['tx_sigla_unidade'] ?></p>
+		<label class="bold span-4"><?php echo $this->escape($this->translate('L_VIEW_CONTEXTO_GERAL')) ?>:</label>
+			<p class="span-17" style="margin-left:-31px;"><?php echo $this->arrProjeto['tx_contexto_geral_projeto'] ?></p>
+	</div>
+	<div class="float-l clear-l" style="margin-top: 0px;">
+		<table border="1" style="border-collapse: collapse; border: 1px solid #54BDCD; margin-left: 6px; width:810px;">
+			<tbody>
+				<tr>
+					<td class="bold"><?php echo $this->escape($this->translate('L_VIEW_DESCRICAO')) ?></td>
+					<td class="bold span-1 center">(1)</td>
+					<td class="bold span-1 center">(2)</td>
+					<td class="bold span-1 center">(3)</td>
+					<td class="bold span-1 center">(4)</td>
+					<td class="bold span-1 center">(5)</td>
+				</tr>
+				<?php
+				if(count($this->arrGrupoFator)>0){
+					foreach($this->arrGrupoFator as $conteudo):
+				?>
+				<tr>
+					<td colspan="6" class="bold"><?php echo "{$conteudo['ni_ordem_grupo_fator']} - {$conteudo['tx_grupo_fator']}" ?></td>
+				</tr>
+				<?php
+					if(count($this->arrGrupoFatorItem) > 0){
+						foreach($this->arrGrupoFatorItem as $key=>$value):
+							if($key == $conteudo['cd_grupo_fator']){
+								foreach($value as $item):
+								$idName = "st_avaliacao_qualidade_{$conteudo['cd_grupo_fator']}_{$item['cd_item_grupo_fator']}";
+								$checked = "checked=\"checked\"";
+								$checkedQualidade = ($item['st_avaliacao_qualidade'] != "")?$checkedQualidade = $item['st_avaliacao_qualidade']:0; 
+				?>
+									<tr>
+										<td>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo "{$conteudo['ni_ordem_grupo_fator']}.{$item['ni_ordem_item_grupo_fator']} - {$item['tx_item_grupo_fator']}" ?></td>
+										<td class="span-1 center"><input type="radio" id="<?php echo $idName ?>" name="<?php echo $idName ?>" value="1" <?php if($checkedQualidade == 1){ echo $checked; } ?> /> </td>
+										<td class="span-1 center"><input type="radio" id="<?php echo $idName ?>" name="<?php echo $idName ?>" value="2" <?php if($checkedQualidade == 2){ echo $checked; } ?> /></td>
+										<td class="span-1 center"><input type="radio" id="<?php echo $idName ?>" name="<?php echo $idName ?>" value="3" <?php if($checkedQualidade == 3){ echo $checked; } ?> /></td>
+										<td class="span-1 center"><input type="radio" id="<?php echo $idName ?>" name="<?php echo $idName ?>" value="4" <?php if($checkedQualidade == 4){ echo $checked; } ?> /></td>
+										<td class="span-1 center"><input type="radio" id="<?php echo $idName ?>" name="<?php echo $idName ?>" value="5" <?php if($checkedQualidade == 5){ echo $checked; } ?> /></td>
+									</tr>
+				<?php									
+								
+								endforeach;
+							}
+						endforeach;
+					}
+				?>
+				 <tr>
+					<td colspan="6">&nbsp;</td>
+				</tr>
+				<?php
+					endforeach;
+				} else {
+				?>
+					<tr>
+                        <td colspan="6" class="bold"><i><?php echo $this->escape($this->translate('L_VIEW_SEM_GRUPO_FATOR_ITEM_CADASTRDO')) ?></i></td>
+					</tr>
+				<?php
+				}
+				?>
+				<tr>
+					<td colspan="6"><b><?php echo $this->escape($this->translate('L_VIEW_LEGENDA')) ?>:</b> <b>(1)</b> <?php echo $this->escape($this->translate('L_VIEW_MUITO_SATISFEITO')) ?> <b>(2)</b> <?php echo $this->escape($this->translate('L_VIEW_SATISFEITO')) ?> <b>(3)</b> <?php echo $this->escape($this->translate('L_VIEW_A_CONTENTO')) ?> <b>(4)</b> <?php echo $this->escape($this->translate('L_VIEW_INSATISFEITO')) ?> <b>(5)</b> <?php echo $this->escape($this->translate('L_VIEW_MUITO_INSATISFEITO')) ?></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="box border " style="width:810px; overflow:hidden; margin-top: -15px;">
+			<h3 class="highlight tarja-1">
+                <?php echo $this->escape($this->translate('L_MSG_ALERT_DESCRICAO_MOTIVO_INSATISFACAO')) ?>
+            </h3>
+			<?php echo $this->formTextarea('tx_motivo_insatisfacao',$this->tx_motivo_insatisfacao,array('class'=>'height-6', 'style'=>'width: 806px; margin-top: -11px; margin-bottom: 0px;')) ?>
+		</div>
+	</div>
+	<?php
+		echo $this->formButton('btn_gerar_avalicao_qualidade' , $this->escape($this->translate('L_BTN_CALCULAR_AVALIACAO')),array('class'=>'verde float-r'));
+		echo $this->formButton('btn_salvar_dados_questionario', $this->escape($this->translate('L_BTN_SALVAR')),array('class'=>'verde float-l clear-l'));
+	?>
+	<br />
+	<br />
+</div>

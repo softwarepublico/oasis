@@ -1,0 +1,40 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#ocorrencia-administrativa').show().tabs(); 
+});
+
+function configOcorrenciaAdministrativa()
+{
+	ajaxComboContratoObjeto();
+	gridOcorrenciaAdministrativaAjax();
+    $('#config_hidden_ocorrencia_administrativa').val('S');
+}
+</script>
+<div id="ocorrencia-administrativa" style="display: none;">
+	<ul>
+    	<li>
+            <a href="#ocorrenciaAdministrativa">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_OCORRENCIAS_ADMINISTRATIVAS')) ?></span>
+            </a>
+        </li>
+    	<li style="display: none;" id="liRegistroOcorrencia">
+            <a href="#registroOcorrencia">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_REGISTRAR_OCORRENCIA_ADMINISTRATIVA')) ?></span>
+            </a>
+        </li>
+    	<li>
+            <a href="#contratoEvento">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_CONTATO_EVENTO_ADMINISTRATIVO')) ?></span>
+            </a>
+        </li>
+    </ul>
+    <div id="ocorrenciaAdministrativa">
+    	<?php echo $this->render('ocorrencia-administrativa/ocorrencia-administrativa.phtml') ?>
+    </div>
+    <div id="registroOcorrencia" style="display: none;">
+		<div id="ocorrencia"><?php echo $this->render('ocorrencia-administrativa/registra-ocorrencia-administrativa.phtml') ?></div>
+    </div>
+    <div id="contratoEvento">
+    	<?php echo $this->render('ocorrencia-administrativa/associa-contrato-evento.phtml') ?>
+    </div>
+</div>

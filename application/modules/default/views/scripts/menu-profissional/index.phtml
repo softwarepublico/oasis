@@ -1,0 +1,76 @@
+<?php 
+	$this->script('tab');
+    $this->script('grid');
+    $this->script('validaForm');
+    $this->script('numero');
+    $this->script('mascara');
+	$this->script('calendario');
+	$this->script('validaData');
+    $this->script('treeview');
+    $this->script('scriptFile',array('/menu-profissional/index.js'));
+?>
+<?php echo $this->formHidden('config_hidden_profissionais','N') ?>
+<?php if(ChecaPermissao::possuiPermissao('painel-profissional') === true): ?>
+	<div id="accordion_profissional" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed') && ($('#config_hidden_profissionais').val() == 'N')){configAccordionProfissionais();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_PROFISSIONAIS')) ?></span>
+    </div>
+	<div id="form_profissional" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('painel-profissional/tabs.phtml') ?>
+		<div class="accordionBottom" style="min-height: 20px;"></div>
+	</div>
+<?php endif; ?>
+
+<?php echo $this->formHidden('config_hidden_profissional_objeto_contrato','N') ?>
+<?php if(ChecaPermissao::possuiPermissao('profissional-objeto-contrato') === true): ?>
+	<div id="accordion_profissional_objeto" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed') && ($('#config_hidden_profissional_objeto_contrato').val() == 'N')){configAccordionProfissionalObjetoContrato();}">
+		<span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_ASSOCIAR_PROFISSIONAL_OBJETO_CONTRATO')) ?></span>
+	</div>
+	<div id="form_profissional_objeto" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('profissional-objeto-contrato/index.phtml') ?>
+	</div>
+<?php endif; ?>
+
+<?php echo $this->formHidden('config_hidden_objeto_perfil_profissional','N') ?>
+<?php if(ChecaPermissao::possuiPermissao('objeto-perfil-profissional') === true): ?>
+	<div id="accordion_perfil_profissional" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){configAccordionAssociarProfissionalPerfil();}">
+		<span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_ASSOCIAR_PROFISSIONAL_PERFIL_SISTEMA')) ?></span>
+	</div>
+	<div id="form_perfil_profissional" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('objeto-perfil-profissional/index.phtml') ?>
+		<div class="accordionBottom" style="min-height: 20px;"></div>
+	</div>
+<?php endif; ?>
+
+
+<?php if(ChecaPermissao::possuiPermissao('documentacao-profissional') === true): ?>
+	<div id="accordion_documentacao_profissional" class="accordion-closed">
+		<span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_ANEXAR_DOCUMENTACAO_PROFISSIONAL')) ?></span>
+	</div>
+	<div id="form_documentacao_profissional" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('documentacao-profissional/index.phtml') ?>
+	</div>
+<?php endif; ?>
+
+<?php if(ChecaPermissao::possuiPermissao('conhecimento-profissional') === true): ?>
+	<div id="accordion_conhecimento_profissional" class="accordion-closed">
+		<span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_ASSOCIAR_CONHECIMENTO_PROFISSIONAL')) ?></span>
+	</div>
+	<div id="form_conhecimento_profissional" accordion="accordion" class="hide accordion">
+		<div style="margin-left: 20px;">
+			<?php echo $this->render('conhecimento-profissional/index.phtml') ?>
+		</div>
+		<div class="accordionBottom" style="min-height: 20px;"></div>
+	</div>
+<?php endif; ?>
+
+<?php if(ChecaPermissao::possuiPermissao('treinamento-profissional') === true): ?>
+	<div id="accordion_treinamento_profissional" class="accordion-closed">
+		<span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_ASSOCIAR_PROFISSIONAL_TREINAMENTO')) ?></span>
+	</div>
+	<div id="form_treinamento_profissional" accordion="accordion" class="hide accordion">
+		<div style="margin-left: 20px;">
+			<?php echo $this->render('treinamento-profissional/index.phtml') ?>
+		</div>
+		<div class="accordionBottom" style="min-height: 20px;"></div>
+	</div>
+<?php endif; ?>

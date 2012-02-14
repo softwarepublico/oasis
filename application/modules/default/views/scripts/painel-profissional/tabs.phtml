@@ -1,0 +1,26 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#container_painel_profissional').show().tabs();
+	$('#container_painel_profissional').triggerTab(1);
+});
+</script>
+<div id="container_painel_profissional" style="display: none;">
+	<ul>
+        <li>
+            <a href="#aba_lista_profissional">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_LISTA')) ?></span>
+            </a>
+        </li>
+        <li style="display: none;" id="li-profissional">
+            <a href="#aba_profissional">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_CADASTRO')) ?></span>
+            </a>
+        </li>
+    </ul>
+	    <div id="aba_lista_profissional">
+	    	<div class="divTab"><?php echo $this->render('painel-profissional/index.phtml') ?></div>
+	    </div>
+	    <div id="aba_profissional" style="display: none;">
+	    	<div class="divTab"><?php echo $this->render('profissional/index.phtml') ?></div>
+	    </div>
+</div>

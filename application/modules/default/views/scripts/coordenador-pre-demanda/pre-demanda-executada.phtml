@@ -1,0 +1,9 @@
+<div id="tabPreDemandaExecutada" class="divTab">
+	<div class="boxTab">
+		<label class="float-l" style="margin-top:2px; font-size:20px;" id="mesAnoExecutada"><?php echo $this->mesAno ?></label>
+		<label class="float-r" style="margin-top:2px;"><?php echo $this->anoCombo('ano_pre_demanda_executada') ?></label>
+		<label class="float-r" style="margin-top:2px;"><?php echo $this->mesCombo('mes_pre_demanda_executada',null,array('style'=>'width:92px;')) ?></label>
+		<label class="float-r" style="margin-top:2px;"><?php echo $this->formSelect('cd_objeto_receptor_executada',null,array('style'=>'width:155px;'),$this->arrObjetoContrato); ?></label>
+	</div>
+	<div id="gridPreDemandaExecutada" class="float-l clear-l span-21"></div>
+</div>

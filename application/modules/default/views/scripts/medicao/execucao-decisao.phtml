@@ -1,0 +1,40 @@
+<?php
+    $this->script('scriptFile',array('/medicao/execucao.js'));
+?>
+<div id="conteiner_execucao" class="divTab">
+    <label class="bold float-l span-4"><?php echo $this->escape($this->translate('L_VIEW_MEDICAO')) ?>:</label>
+		<span id="desc_medicao_execucao" class="float-l span-16" style="margin-top: 2px; text-align: justify;"></span>
+
+	<label class="bold float-l span-4 clear-l"><?php echo $this->escape($this->translate('L_VIEW_BOX')) ?>:</label>
+		<span id="desc_box_execucao" class="float-l span-16" style="margin-top: 2px; text-align: justify;"></span>
+	
+	<label class="bold float-l span-4 clear-l"><?php echo $this->escape($this->translate('L_VIEW_RESULTADO_ANALISE')) ?>:</label>
+		<span id="desc_resultado_execucao" class="float-l span-16" style="margin-top: 2px; text-align: justify;"></span>
+
+	<label class="bold float-l span-4 clear-l" style="margin-top: 10px;" ><?php echo $this->escape($this->translate('L_VIEW_DADOS_MEDICAO')) ?>:</label>
+		<span id="desc_dados_medicao_execucao" class="float-l span-16" style="margin-top: 10px; text-align: justify;"></span>
+
+	<label class="bold float-l span-4 clear-l" style="margin-top: 10px;" ><?php echo $this->escape($this->translate('L_VIEW_DECISAO')) ?>:</label>
+		<span id="desc_decisao_execucao" class="float-l span-16" style="margin-top: 10px; text-align: justify;"></span>
+
+	<label class="bold float-l span-4 clear-l" style="margin-top: 10px;" ><?php echo $this->escape($this->translate('L_VIEW_DATA_DECISAO')) ?>:</label>
+		<span id="desc_data_decisao_execucao" class="float-l span-3" style="margin-top: 10px;"></span>
+
+	<label class="bold float-l span-4 clear-l" style="margin-top: 10px;" ><?php echo $this->escape($this->translate('L_VIEW_DECISAO_EXECUTADA')) ?>:</label>
+		<input type="checkbox" id="st_decisao_executada" name="st_decisao_executada" class="float-l" style="margin-top: 10px;" value="E"/>		
+
+	<span id="desc_st_decisao_executada" class="float-l span-4" style="display:none; margin-top: 10px;"></span>
+
+	<label id="lb_dt_decisao_executada" class="bold float-l clear-l span-4 required" for="dt_decisao_executada"><?php echo $this->escape($this->translate('L_VIEW_DATA_EXECUCAO_DECISAO')) ?>:</label>
+	<?php echo $this->data("dt_decisao_executada",null,array('class'=>'span-3 float-l')); ?>
+	<span id="desc_dt_decisao_executada" class="float-l span-4" style="display:none;"></span>
+	
+	<label id="lb_tx_obs_decisao_executada" class="bold float-l clear-l span-4 required" for="tx_obs_decisao_executada" style="margin-top: 10px;"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACAO_EXECUCAO_DECISAO')) ?>:</label>
+	<?php echo $this->formTextArea( 'tx_obs_decisao_executada', null ,array('class'=>'span-16 float-l height-5','rows'=>'10','cols'=>'20','style'=>'margin-top: 10px')); ?>
+	
+	<span id="desc_tx_obs_decisao_executada" class="float-l span-16" style="display:none; margin-top: 10px;"></span>
+	<?php
+		echo $this->formButton('btn_salvar_execucao', $this->escape($this->translate('L_BTN_SALVAR')), array('class'=>'verde float-l clear-l push-4','style'=>'margin-top: 10px'));
+		echo $this->formButton('btn_cancelar_execucao', $this->escape($this->translate('L_BTN_CANCELAR')), array('class'=>'vermelho float-l push-4','style'=>'margin-top: 10px'));
+	 ?>
+</div>

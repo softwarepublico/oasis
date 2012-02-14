@@ -1,0 +1,79 @@
+<?php
+    $this->script('numero');
+    $this->script('scriptFile',array('/pedido-mudanca/index.js'));
+?>
+<div id="container-pedido-mudanca" style="display: none;">
+	<?php $qtdAbas = 1;
+		echo $this->formHidden('id_tab_da_acao');
+		echo $this->formHidden('cd_projeto_corrente');
+		echo $this->formHidden('dt_versao_item_corrente');
+		echo $this->formHidden('cd_item_controlado_corrente');
+		echo $this->formHidden('teste_aba');
+	?>
+	<ul>
+		<?php if (ChecaPermissao::possuiPermissao('pedido-mudanca-proposta') === true): $qtdAbas++;?>
+		       <li>
+                   <a href="#pedidoMudancaProposta">
+                       <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PROPOSTA')) ?></span>
+                   </a>
+               </li>
+		<?php endif; ?>	
+		<?php if (ChecaPermissao::possuiPermissao('pedido-mudanca-requisito') === true): $qtdAbas++;?>
+                <li>
+                    <a href="#pedidoMudancaRequisito" >
+                        <span><?php echo $this->escape($this->translate('L_VIEW_ABA_REQUISITO')) ?></span>
+                    </a>
+                </li>
+		<?php endif; ?>	
+		<?php if (ChecaPermissao::possuiPermissao('pedido-mudanca-regra-de-negocio') === true): $qtdAbas++;?>
+                <li>
+                    <a href="#pedidoMudancaRegraNegocio" >
+                        <span><?php echo $this->escape($this->translate('L_VIEW_ABA_REGRA_DE_NEGOCIO')) ?></span>
+                    </a>
+                </li>
+		<?php endif; ?>	
+		<?php if (ChecaPermissao::possuiPermissao('pedido-mudanca-caso-de-uso') === true):  $qtdAbas++;?>
+                <li>
+                    <a href="#pedidoMudancaCasoDeUso" >
+                        <span><?php echo $this->escape($this->translate('L_VIEW_ABA_CASO_DE_USO')) ?></span>
+                    </a>
+                </li>
+		<?php endif; ?>	
+                <li id="li_aba_cadastro_pedido" style="display: none;">
+                    <a href="#cadastro">
+                        <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PEDIDO_MUDANCA')) ?></span>
+                    </a>
+                </li>
+    </ul>
+
+	<?php  if (ChecaPermissao::possuiPermissao('pedido-mudanca-proposta') === true): ?>
+	    <div id="pedidoMudancaProposta">
+	    	<?php echo $this->render('pedido-mudanca-proposta/index.phtml') ?>
+	    </div>
+	<?php endif; ?>
+	
+	<?php if (ChecaPermissao::possuiPermissao('pedido-mudanca-requisito') === true):?>
+	    <div id="pedidoMudancaRequisito">
+	    	<?php echo $this->render('pedido-mudanca-requisito/index.phtml') ?>
+	    </div>
+	<?php endif; ?>
+
+	<?php if (ChecaPermissao::possuiPermissao('pedido-mudanca-regra-de-negocio') === true):?>
+	    <div id="pedidoMudancaRegraNegocio">
+	    	<?php echo $this->render('pedido-mudanca-regra-de-negocio/index.phtml') ?>
+	    </div>
+	<?php endif; ?>
+
+	<?php if (ChecaPermissao::possuiPermissao('pedido-mudanca-caso-de-uso') === true):?>
+	    <div id="pedidoMudancaCasoDeUso">
+	    	<?php echo $this->render('pedido-mudanca-caso-de-uso/index.phtml') ?>
+	    </div>
+	<?php endif; ?>
+
+    <div id="cadastro">
+    	<?php echo $this->render('pedido-mudanca/cadastro-pedido-mudanca.phtml');?>
+    </div>
+</div>
+<script>
+	var qtdAbasPM = '<?php echo $qtdAbas ?>';
+</script>

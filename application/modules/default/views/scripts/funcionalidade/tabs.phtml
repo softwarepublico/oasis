@@ -1,0 +1,38 @@
+<?php
+    $this->script('scriptFile',array('/funcionalidade/index.js'));
+?>
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#container_funcionalidade').show().tabs().triggerTab(1);
+	$("#config_hidden_funcionalidade").val('N');
+});
+
+function configAccordionFuncionalidade()
+{
+	if($("#config_hidden_funcionalidade").val() === 'N'){
+		montaGridFuncionalidade();
+		$("#config_hidden_funcionalidade").val('S');
+	}
+}
+</script>
+<div id="container_funcionalidade" style="display: none;">
+	<ul>
+        <li>
+            <a href="#aba_funcionalidade">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_FUNCIONALIDADE')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#aba_funcionalidade_menu">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_FUNCIONALIDADE_MENU')) ?></span>
+            </a>
+        </li>
+    </ul>
+	
+	    <div id="aba_funcionalidade">
+	    	<div class="divTab"><?php echo $this->render('funcionalidade/index.phtml') ?></div>
+	    </div>
+	    <div id="aba_funcionalidade_menu">
+	    	<div class="divTab"><?php echo $this->render('funcionalidade/funcionalidade-menu.phtml') ?></div>
+	    </div>
+</div>

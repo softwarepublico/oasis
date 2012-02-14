@@ -1,0 +1,11 @@
+<?php
+    $this->script('scriptFile',array('/nivel-servico/index.js'));
+    
+    echo $this->formNivelServico;
+?>
+<hr />
+<button id="bt_salvar_nivel_servico" class="verde float-l push-5 clear-l" type="button" name="submit"><?php echo $this->escape($this->translate('L_BTN_SALVAR')) ?></button>
+<button id="bt_cancelar_nivel_servico" class="vermelho float-l push-5" type="button" name="bt_cancelar"><?php echo $this->escape($this->translate('L_BTN_CANCELAR')) ?></button>
+
+
+<div id="gridNivelServico" class="float-l clear-l push-2"></div>

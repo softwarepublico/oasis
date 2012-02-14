@@ -1,0 +1,13 @@
+<?php
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/controle-proposta/index.js',
+                                     '/aceite-proposta/index.js',
+                                     '/homologacao-proposta/index.js'));
+?>
+<div id="tabelaControleProposta" class="divTab boxTab">
+	<label class="float-l bold" style="margin-top:2px; font-size:16px;" id="mesAnoControleProposta"><?php echo $this->mesAno ?></label>
+	<label class="float-r" style="margin-top:2px;"><?php echo $this->anoCombo('anoControleProposta', null, null, 1) ?></label>
+	<label class="float-r" style="margin-top:2px;"><?php echo $this->mesCombo('mesControleProposta') ?></label>
+	<label class="float-r" style="margin-top:2px;"><?php echo $this->formSelect('cd_contrato_controle_proposta', null, array('style'=>'margin-topo:5px;'), null) ?></label>	
+</div>
+<div id="gridControleProposta"></div>

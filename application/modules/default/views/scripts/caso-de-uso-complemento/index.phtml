@@ -1,0 +1,38 @@
+<div style="overflow:hidden;" id="formComplemento">
+		<?php echo $this->formHidden('cd_complemento') ?>
+    <label class="float-l span-3 clear-l right required" for="cd_modulo_complemento"><?php echo $this->escape($this->translate('L_VIEW_MODULO')) ?>:</label>
+		<?php echo $this->formSelect('cd_modulo_complemento', null, array('class'=>'float-l'), $this->comboModulo) ?>
+	<label class="float-l span-3 clear-l right required" for="cd_caso_de_uso_complemento" ><?php echo $this->escape($this->translate('L_VIEW_CASO_DE_USO')) ?>:</label>
+		<?php echo $this->formSelect('cd_caso_de_uso_complemento', null,array('class'=>'float-l')) ?>
+   <label class="float-l span-3 clear-l right"><?php echo $this->escape($this->translate('L_VIEW_ORDEM')) ?>:</label>
+   		<?php echo $this->formText('ni_ordem_complemento',null,array('class'=>'float-l span-2', 'onKeyPress'=>'return soNumeros(event);')) ?>
+	<label class="float-l span-3 clear-l right"><?php echo $this->escape($this->translate('L_VIEW_TIPO')) ?>:</label>
+	
+    <div class="span-11 float-l">
+
+		<label class="float-l span-2">
+            <input type="radio" value="E" checked="checked" class="float-l" id="st_complemento_e" name="st_complemento">
+                <?php echo $this->escape($this->translate('L_VIEW_EXCECAO')) ?>
+        </label>
+		<label class="float-l span-2">
+            <input type="radio" value="R" class="float-l" id="st_complemento_r" name="st_complemento">
+                <?php echo $this->escape($this->translate('L_VIEW_REGRA')) ?>
+        </label>
+		<label class="float-l span-4">
+            <input type="radio" value="F" class="float-l" id="st_complemento_f" name="st_complemento">
+                <?php echo $this->escape($this->translate('L_VIEW_FLUXO_ALTERNATIVO')) ?>
+        </label>
+	</div>
+
+    <label class="float-l span-3 clear-l right"><?php echo $this->escape($this->translate('L_VIEW_DESCRICAO')) ?>:</label>
+	<?php
+	    echo $this->formTextarea('tx_complemento', '', array('class' => 'span-14 height-4 float-l'));
+
+	    echo $this->formButton('adicionarComplemento', $this->escape($this->translate('L_BTN_ADICIONAR')),array('class' => 'float-l clear-l push-3 verde'));
+		echo $this->formButton('alterarComplemento', $this->escape($this->translate('L_BTN_ALTERAR')), array('class' => 'float-l push-3 clear-l verde'));
+		echo $this->formButton('cancelarComplemento', $this->escape($this->translate('L_BTN_CANCELAR')), array('class' => 'float-l push-3 vermelho'));
+	?>
+</div>
+<div id="gridExcecao"></div>
+<div id="gridRegra"></div>
+<div id="gridFluxoAlternativo"></div>

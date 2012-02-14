@@ -1,0 +1,165 @@
+<script language="javascript" type="text/javascript">
+	$(document).ready(function(){
+		var error = '<?php echo $this->error ?>';
+		$('#btn_voltar_passo6').click(function(){
+			$('#container-install').triggerTab(6);
+		});
+		$('#btn_avancar_passo8').click(function(){
+			passoOitoCriaTabelas();
+		});
+	});
+</script>
+<h2 class="center">7 - <?php echo $this->escape($this->translate('L_VIEW_CONSTANTES_CRIADAS')) ?></h2>
+<br />
+<div class="float-l clear-l span-21">
+<?php
+
+	//Montando as imagens de permissão
+	$imgFalse     = '<img class="float-l" style="margin: 0px 5px 0px -5px;" src="'.$this->baseUrl().'/public/img/u46.png"/>';
+	$imgTrue      = '<img class="float-l" style="margin: 5px 10px 0px 0px;" src="'.$this->baseUrl().'/public/img/u42.png"/>';
+	$html         = "";
+
+	$arrArquivoConstantes = file($this->arquivoConstante);
+	foreach($this->arrConstantes as $const=>$valor){
+		$html = '<p style="margin-left: 30px; margin-top: -15px;" class="float-l clear-l span-20"><label class="float-l">';
+		foreach($arrArquivoConstantes as $key=>$string){
+			if(!empty($string)){
+				$pos = strpos(trim($string), $const);
+				if ($pos !== false) {
+                    $valor  = str_ireplace("\"","'",$valor);
+                    $define = 'define("'.$const.'","'.$valor.'");'.PHP_EOL;
+					$arrArquivoConstantes[$key] = $define;
+					$html  .= $imgTrue;
+
+                    $arrValueMsg = array('value1'=>$const,'value2'=>$valor);
+                    
+					$html .= Base_Util::getTranslator('L_MSG_GRAVACAO_CONSTANTE_VARIAVEL',$arrValueMsg);
+					$html .= "</label></p>";
+					break;
+				}
+			}
+		}
+		echo $html;
+	}
+
+	$stringDefine = "";
+	foreach($arrArquivoConstantes as $value){
+		if(!empty($value)){
+			$stringDefine .= $value;
+		}
+	}
+    
+	$fp = fopen($this->arquivoConstante, "w");
+	if(false === @fwrite($fp, $stringDefine)){
+		$html = '<p style="margin-left: 30px; margin-top: 15px;" class="float-l clear-l span-20">
+						<label class="float-l" style="color:red;">
+							'.$this->escape($this->translate('L_VIEW_ARQUIVO')).' <span class="bold">../const.php</span> '.$this->escape($this->translate('L_MSG_ERRO_ALTERACAO_NOVAS_CONSTANTES')).'
+						</label>
+					</p>';
+	} else {
+		$html = '<p style="margin-left: 85px; margin-top: 15px;" class="float-l clear-l span-17">
+					<label class="float-l">
+						'.$this->escape($this->translate('L_VIEW_ARQUIVO')).' <span class="bold">../const.php</span> '.$this->escape($this->translate('L_MSG_SUCESS_ALTERACAO_NOVAS_CONSTANTES')).'
+					</label>
+				</p>';
+	}
+	fclose($fp);
+	echo $html;
+
+	//Configuração dos dados do banco de dados
+	$stringConfigIni = "";
+	$stringConfigIni .= "[prod]".PHP_EOL;
+	$stringConfigIni .= "db.adapter         = {$_SESSION['oasis_install']['banco_dados']['tx_adapter' ]}".PHP_EOL;
+	$stringConfigIni .= "db.config.host     = {$_SESSION['oasis_install']['banco_dados']['tx_host'    ]}".PHP_EOL;
+	$stringConfigIni .= "db.config.username = {$_SESSION['oasis_install']['banco_dados']['tx_username']}".PHP_EOL;
+	$stringConfigIni .= "db.config.password = {$_SESSION['oasis_install']['banco_dados']['tx_password']}".PHP_EOL;
+    $stringConfigIni .= "db.config.port     = {$_SESSION['oasis_install']['banco_dados']['tx_port'  ]}".PHP_EOL;
+
+    //verifica se adapter não é ORACLE para adicionar o parametro porta as configurações
+    if ((($_SESSION['oasis_install']['banco_dados']['tx_adapter'] != Base_Controller_Action_Helper_Conexao::ADAPTER_ORACLE     ) &&
+        ($_SESSION['oasis_install']['banco_dados']['tx_adapter']  != Base_Controller_Action_Helper_Conexao::ADAPTER_PDO_ORACLE)) &&
+        (($_SESSION['oasis_install']['banco_dados']['tx_adapter'] != Base_Controller_Action_Helper_Conexao::ADAPTER_MSSQL      ) &&
+        ($_SESSION['oasis_install']['banco_dados']['tx_adapter']  != Base_Controller_Action_Helper_Conexao::ADAPTER_PDO_MSSQL) ) &&
+        (($_SESSION['oasis_install']['banco_dados']['tx_adapter'] != Base_Controller_Action_Helper_Conexao::ADAPTER_MYSQL      ) &&
+        ($_SESSION['oasis_install']['banco_dados']['tx_adapter']  != Base_Controller_Action_Helper_Conexao::ADAPTER_PDO_MYSQL) )){
+
+    	$stringConfigIni .= "db.config.dbname   = {$_SESSION['oasis_install']['banco_dados']['tx_dbname']}".PHP_EOL;
+    }else{
+        //para colocar a string de conexao do oracle
+    	$stringConfigIni .= "db.config.dbname   = {$_SESSION['oasis_install']['banco_dados']['tx_dbname']}".PHP_EOL;
+    }
+
+    //faz a verificação dos adapteres ORACLE ou SQLSERVER
+    //para adicionar algumas configurações adicionais
+    if ($_SESSION['oasis_install']['banco_dados']['tx_adapter'] == Base_Controller_Action_Helper_Conexao::ADAPTER_ORACLE ||
+        $_SESSION['oasis_install']['banco_dados']['tx_adapter'] == Base_Controller_Action_Helper_Conexao::ADAPTER_PDO_ORACLE){
+        
+        $stringConfigIni .= "db.config.options.allowModifications   = 1".PHP_EOL;
+        $stringConfigIni .= "db.config.options.autoQuoteIdentifiers = 0".PHP_EOL;
+        $stringConfigIni .= "db.config.options.caseFolding          = 2".PHP_EOL;
+    }else if($_SESSION['oasis_install']['banco_dados']['tx_adapter'] == Base_Controller_Action_Helper_Conexao::ADAPTER_MSSQL ||
+             $_SESSION['oasis_install']['banco_dados']['tx_adapter'] == Base_Controller_Action_Helper_Conexao::ADAPTER_PDO_MSSQL ){
+
+        $stringConfigIni .= "db.config.charset                             = utf8".PHP_EOL;
+        $stringConfigIni .= "db.config.options.multipleActiveResultSets    = 1".PHP_EOL;
+        $stringConfigIni .= "db.config.driver_options.ReturnDatesAsStrings = 1".PHP_EOL;
+
+    }else if($_SESSION['oasis_install']['banco_dados']['tx_adapter'] == Base_Controller_Action_Helper_Conexao::ADAPTER_MYSQL ||
+             $_SESSION['oasis_install']['banco_dados']['tx_adapter'] == Base_Controller_Action_Helper_Conexao::ADAPTER_PDO_MYSQL){
+
+        $stringConfigIni .= "db.config.charset              = utf8".PHP_EOL;
+        $stringConfigIni .= "db.config.driver_options.1000  = 1".PHP_EOL;
+    }
+
+    //Configuração do firebug
+	$stringConfigIni .= "firebug.profiler.enabled = false".PHP_EOL.PHP_EOL;
+
+    //configuação do timezone
+    $stringConfigIni .= "[configuration]".PHP_EOL;
+    $stringConfigIni .= "date_default_timezone = America/Sao_Paulo".PHP_EOL.PHP_EOL;
+
+    //Configuração das linguagens
+    $stringConfigIni .= "[languages]".PHP_EOL;
+    $stringConfigIni .= "languages.en_us = en_US".PHP_EOL;
+    $stringConfigIni .= "languages.pt_br = pt_BR".PHP_EOL;
+    $stringConfigIni .= "languages.es_es = es_ES".PHP_EOL.PHP_EOL;
+    
+    
+    $stringConfigIni .= "[ldap]".PHP_EOL;
+    $stringConfigIni .= "server.host                   = {$_SESSION['oasis_install']['ldap']['host']}".PHP_EOL;
+    $stringConfigIni .= "server.port                   = {$_SESSION['oasis_install']['ldap']['port']}".PHP_EOL;
+    $stringConfigIni .= "server.bindRequiresDn         = {$_SESSION['oasis_install']['ldap']['bindRequiresDn']}".PHP_EOL;
+    $stringConfigIni .= "server.accountDomainName      = {$_SESSION['oasis_install']['ldap']['accountDomainName']}".PHP_EOL;
+    $stringConfigIni .= "server.accountDomainNameShort = {$_SESSION['oasis_install']['ldap']['accountDomainNameShort']}".PHP_EOL;
+    $stringConfigIni .= "server.accountCanonicalForm   = {$_SESSION['oasis_install']['ldap']['accountCanonicalForm']}".PHP_EOL;
+    $stringConfigIni .= "server.baseDn                 = \"{$_SESSION['oasis_install']['ldap']['baseDn']}\"".PHP_EOL;
+    $stringConfigIni .= "server.useStartTls            = {$_SESSION['oasis_install']['ldap']['useStartTls']}".PHP_EOL;
+    $stringConfigIni .= "server.useSsl                 = {$_SESSION['oasis_install']['ldap']['useSsl']}".PHP_EOL;
+    
+	$fpb = fopen($this->arquivoBancoIni, "w");
+	if(false === @fwrite($fpb, $stringConfigIni)){
+		$html = '<p style="margin-left: 30px; margin-top: -15px;" class="float-l clear-l span-20">
+						<label class="float-l" style="color:red;">
+							'.$this->escape($this->translate('L_VIEW_ARQUIVO')).' <span class="bold">../config.ini</span> '.$this->escape($this->translate('L_MSG_ERRO_ALTERACAO_CONFIGURACOES_BANCO_DADOS')).'
+						</label>
+					</p>';
+	} else {
+		$html = '<p style="margin-left: 85px; margin-top: -15px;" class="float-l clear-l span-17">
+					<label class="float-l">
+						'.$this->escape($this->translate('L_VIEW_ARQUIVO')).' <span class="bold">../config.ini</span> '.$this->escape($this->translate('L_MSG_SUCESS_ALTERACAO_CONFIGURACOES_BANCO_DADOS')).'
+					</label>
+				</p>';
+	}
+	fclose($fpb);
+	echo $html;
+?>
+</div>
+<!-- Botões da tela -->
+<div class="float-l clear-l span-10" style="margin-top:40px;">
+	<span class="float-l right"><?php echo $this->formButton('btn_voltar_passo6',$this->escape($this->translate('L_BTN_ANTERIOR')),array('class'=>'verde right')); ?></span>
+	<label class="float-l bold right"> <<< <?php echo $this->escape($this->translate('L_VIEW_CONFIGURACOES_GERAIS')) ?></label>
+</div>
+<div class="float-r span-10" style="margin-top:40px;">
+	<span class="float-r right"><?php echo $this->formButton('btn_avancar_passo8',$this->escape($this->translate('L_BTN_PROXIMO')),array('class'=>'verde right')); ?></span>
+	<label class="float-r bold right"><?php echo $this->escape($this->translate('L_MSG_CRIACAO_TABELAS_SISTEMA')) ?> >>></label>
+</div>

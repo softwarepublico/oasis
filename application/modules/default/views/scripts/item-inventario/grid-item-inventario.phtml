@@ -1,0 +1,52 @@
+<script type="text/javascript">
+$(document).ready(function() {
+    // call the tablesorter plugin
+    $("#tableItemInventario").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableItemInventario").tablesorterPager({container: $("#tableItemInventarioPager")});
+});
+</script>
+<table id="tableItemInventario" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+			<th class="{sorter: false}" style="width: 20px;">&nbsp;</th>
+            <th class="span-10"><?php echo $this->escape($this->translate('L_VIEW_GRID_ITEM')) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res):
+		foreach ($this->res as $res):
+	?>
+		<tr>
+			<td style="text-align: center;">
+                <img id="imgExcluir" height="13" width="13" style="cursor:pointer;" onclick="excluirItemInventario(<?php echo $res['cd_item_inventario'] ?>);" src="<?php echo $this->baseUrl()?>/public/img/del.png" alt="<?php echo $this->escape($this->translate('L_BTN_EXCLUIR')) ?>"/>
+            </td>
+			<td style="cursor:pointer;" onClick="recuperarItemInventario(<?php echo $res['cd_item_inventario'] ?>)" >
+                <?php echo $res['tx_item_inventario'] ?>
+            </td>
+        </tr>
+	<?php
+		endforeach;
+	else:
+		echo " <tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			  </tr>";
+	endif ?>
+	</tbody>
+</table>
+<div id="tableItemInventarioPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

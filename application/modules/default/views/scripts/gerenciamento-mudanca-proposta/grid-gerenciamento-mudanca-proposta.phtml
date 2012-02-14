@@ -1,0 +1,71 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableGerenciamentoMudancaProposta").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableGerenciamentoMudancaProposta").tablesorterPager({container: $("#tableGerenciamentoMudancaPropostaPager")}); 
+});
+</script>
+<table id="tableGerenciamentoMudancaProposta" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th class="span-4"><?php echo $this->escape($this->translate('L_VIEW_GRID_PROJETO' )) ?></th>
+			<th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_PROPOSTA')) ?></th>
+			<th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_SITUACAO')) ?></th>
+			<th class="span-4"><?php echo $this->escape($this->translate('L_VIEW_GRID_ACAO'    )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+			$fimProj = "";
+			if(strlen($res['tx_sigla_projeto']) >= 45){
+				$fimProj = "...";
+			}
+			$tx_sigla_projeto = substr($res['tx_sigla_projeto'],0,45).$fimProj; 
+		
+	?>
+		<tr>
+			<td title="<?php echo $res['tx_sigla_projeto']; ?>"><?php echo $tx_sigla_projeto ?></td>
+			<td title="<?php echo $this->escape($this->translate('L_VIEW_PROPOSTA'))." ".$res['cd_proposta'];?>"><?php echo $res['cd_proposta']; ?></td>
+			<td title="<?php echo $res['st_decisao_mudanca_desc'];?>"><?php echo $res['st_decisao_mudanca_desc'];?></td>
+			<td style="text-align: center;">
+				<?php
+					if( is_null($res['st_decisao_mudanca'] )){
+						$clickAnalise  = "cadastrarDecisaoMudancaProposta({$res['cd_projeto']},{$res['cd_item_controle_baseline']},'{$res['dt_gerencia_mudanca']}',{$res['cd_item_controlado']},'{$res['dt_versao_item_controlado']}','{$res['tx_sigla_projeto']}')";
+						echo $this->formButton("btn_analisar_pedido_mudanca_proposta_{$res['cd_projeto']}_{$res['cd_proposta']}_{$res['dt_versao_item_controlado']}",$this->escape($this->translate('L_BTN_ANALISAR_PEDIDO')),array('class'=>'azul','onclick'=>"{$clickAnalise}"));
+
+					}else if( $res['st_decisao_mudanca'] === "S" && is_null($res['st_execucao_mudanca']) ){
+						
+						$clickAbrirProposta = "abreModalAlteracaoPropostaAnaliseMudanca({$res['cd_projeto']}, {$res['cd_proposta']}, {$res['cd_item_controle_baseline']}, '{$res['dt_gerencia_mudanca']}', '{$res['dt_versao_item_controlado']}');";
+						echo $this->formButton("btn_abrir_proposta_mudanca_proposta_{$res['cd_projeto']}_{$res['cd_proposta']}_{$res['dt_versao_item_controlado']}",$this->escape($this->translate('L_BTN_ABRIR_PROPOSTA')),array('class'=>'azul','onclick'=>"{$clickAbrirProposta}"));
+
+						$clickAbrirPreProjeto = "abreModalPreProjetoAnaliseMudanca({$res['cd_projeto']}, {$res['cd_proposta']}, {$res['cd_item_controle_baseline']}, '{$res['dt_gerencia_mudanca']}', '{$res['dt_versao_item_controlado']}');";
+						echo $this->formButton("btn_projeto_evolutivo_mudanca_proposta_{$res['cd_projeto']}_{$res['cd_proposta']}_{$res['dt_versao_item_controlado']}",$this->escape($this->translate('L_BTN_GERAR_PRE_PROJETO_EVOLUTIVO')),array('class'=>'azul','onclick'=>"{$clickAbrirPreProjeto}"));
+					}
+				?>
+			</td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo "<tr><td colspan='4' style='text-align: center;'>".$this->escape($this->translate('L_VIEW_SEM_REGISTRO'))."</td></tr>";
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableGerenciamentoMudancaPropostaPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

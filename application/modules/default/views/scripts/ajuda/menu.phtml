@@ -1,0 +1,22 @@
+<div style="text-align: center;">
+	<img src="<?php  echo $this->baseUrl();?>/public/img/ajuda/administracao/menu.png" alt="Tela de Cadastro de Menus" />
+	<p style="text-align: justify;">
+		Esta tela permite cadastrar as funcionalidades do sistema.<br><br>
+		1. Menu Pai (campo obrigatório): funcionalidade imediamente acima à funcionalidade cadastrada.
+		Caso a funcionalidade cadastrada não possua menu pai, ela aparecerá como uma funcionalidade principal
+		na lista geral de menus do sistema.<br>
+		2. Menu (campo obrigatório) : nome da funcionalidade do sistema.<br>
+		3. Módulo (campo obrigatório): módulo ao qual pertence a funcionalidade.
+		Os módulos atualmente existentes são "relatorioDemanda" e "relatorioProjeto" e somente estão disponíveis
+		para funcionalidades de relatório.<br>
+		4. Página (campo obrigatório): nome do controle que instancia a funcionalidade.
+		Controles com várias palavras devem ser escritos no formato palavra1-palavra2, com letras minúsculas e separadas por hífen (-).
+		Ex: informacoes-basicas.<br><br>
+		Para cadastrar um menu, preencha os campos e clique no botão "Salvar".<br>
+		Para alterar um menu, clique no link com o nome do menu na treeview, altere os campos e clique no botão "Salvar".<br>
+		Para excluir um menu, clique no link com o nome do menu na treeview e clique no botão "Excluir".<br><br>
+		Obs: o controle indicado no campo "Página" deve existir na estrutura de controles do sistema.
+	</p>
+</div>
+
+

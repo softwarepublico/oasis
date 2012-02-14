@@ -1,0 +1,9 @@
+<?php 
+    $this->script('validaForm') ;
+    $this->script('scriptFile',array('/etapa-atividade/index.js'));
+?>
+<form id="formRelatorioEtapaAtividade">
+    <label class="span-2 float-l clear-l right required" for="cd_objeto"><?php echo $this->translate('L_VIEW_OBJETO') ?>:</label>
+    	<?php echo $this->formSelect("cd_objeto",null,array('class'=>'float-l'),$this->comboObjeto); ?>
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->translate('L_BTN_GERAR') ?></button>
+</form>

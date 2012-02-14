@@ -1,0 +1,38 @@
+<?php
+    $this->script('numero');
+    $this->script('scriptFile',array('/caso-de-uso/index.js',
+                                     '/caso-de-uso-ator/index.js',
+                                     '/caso-de-uso-complemento/index.js',
+                                     '/caso-de-uso-definicao/index.js',
+                                     '/caso-de-uso-interacao/index.js'));
+?>
+<!-- Scripts da tela do caso de uso -->
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#container-gerenciarProjeto').show().tabs(); 
+});
+</script>
+<div id="container-gerenciarProjeto" style="display: none;">
+	<ul>
+        <li><a href="#ator"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_ATORES')) ?></span></a></li>
+        <li><a href="#definicao"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_DEFINICAO')) ?></span></a></li>
+        <li><a href="#interacao"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_INTERACAO')) ?></span></a></li>
+        <li><a href="#excecaoRegra"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_COMPLEMENTOS')) ?></span></a></li>
+        <li><a href="#FecharCasoDeUso"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_FECHAMENTO_VERSAO')) ?></span></a></li>
+    </ul>
+    <div id="ator">
+    	<?php echo $this->render('caso-de-uso-ator/index.phtml') ?>
+    </div>
+    <div id="definicao">
+    	<?php echo $this->render('caso-de-uso-definicao/index.phtml') ?>
+    </div>
+    <div id="interacao">
+        <?php echo $this->render('caso-de-uso-interacao/index.phtml') ?>
+    </div>
+    <div id="excecaoRegra">
+        <?php echo $this->render('caso-de-uso-complemento/index.phtml') ?>
+    </div>
+    <div id="FecharCasoDeUso" class="divTab">
+        <div id="FechamentoCasoDeUso" class="float-l clear-l span-19" ></div>
+    </div>
+</div>

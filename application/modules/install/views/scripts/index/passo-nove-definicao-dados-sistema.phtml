@@ -1,0 +1,60 @@
+<script language="javascript" type="text/javascript">
+	$(document).ready(function(){
+		var error = '<?php echo $this->error ?>';
+		$('#btn_voltar_passo8').click(function(){
+			$('#container-install').triggerTab(8);
+		});
+		$('#btn_salvar_dados_adm').click(function(){
+			if(!validaForm('#formDefiniSenhaAdministrador')){ return false; }
+			if(!validaSenha()){ return false; }
+			salvaDadosSistema();
+		});
+	});
+	/**
+	 * Função para salvar os dados do adm
+	 */
+	function salvaDadosSistema() {
+		$.ajax({
+			type: "POST",
+			url: systemName+"/"+systemNameModule+"/index/salva-dados-sistema",
+			data: $('#formDefiniSenhaAdministrador :input').serialize()
+					+"&caminhoArquivoSql="+$('#caminhoArquivoSql').val(),
+			success: function(retorno){
+				alertMsg(retorno,1,function(){
+							passoDezFinalizaSistema();
+						});
+			}
+		});
+	}
+
+/**
+* valida senha do usu[ario
+*/
+function validaSenha() {
+	if($('#tx_senha').val() != $('#tx_senha_confirmada').val()){
+		showToolTip(i18n.L_VIEW_SCRIPT_SENHA_CONFIRMACAO_INCORRETA.$('#tx_senha_confirmada'));
+		return false;
+	}
+	return true;
+}
+
+
+</script>
+<h2 class="center">9 - <?php echo $this->escape($this->translate('L_VIEW_DEFINICAO_DADOS')) ?></h2>
+<br />
+<div class="float-l clear-l span-21" id="formDefiniSenhaAdministrador">
+	<div class="float-l">
+		<label class="float-l clear-l span-3 right"><?php echo $this->escape($this->translate('L_VIEW_USUARIO')) ?>:</label>
+			<label class="float-l bold">administrador</label>
+		<label class="float-l clear-l span-3 right required" for="tx_senha"><?php echo $this->escape($this->translate('L_VIEW_SENHA')) ?>:</label>
+			<?php echo $this->formPassword('tx_senha','',array('class'=>'float-l span-5')) ?>
+		<label class="float-l clear-l span-3 right required" for="tx_senha_confirmada"><?php echo $this->escape($this->translate('L_VIEW_CONFIRMAR_SENHA')) ?>:</label>
+			<?php echo $this->formPassword('tx_senha_confirmada','',array('class'=>'float-l span-5')) ?>
+		<?php echo $this->formButton('btn_salvar_dados_adm',$this->escape($this->translate('L_BTN_SALVAR')),array('class'=>'float-l verde clear-l push-2'))?>
+	</div>
+</div>
+<!-- Botões da tela -->
+<div class="float-l clear-l span-10" style="margin-top:40px;">
+	<span class="float-l right"><?php echo $this->formButton('btn_voltar_passo8',$this->escape($this->translate('L_BTN_ANTERIOR')),array('class'=>'verde right')); ?></span>
+	<label class="float-l bold right"> <<< <?php echo $this->escape($this->translate('L_MSG_CRIACAO_TABELAS_SISTEMA')) ?></label>
+</div>

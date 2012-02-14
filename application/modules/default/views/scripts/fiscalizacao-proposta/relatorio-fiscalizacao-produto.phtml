@@ -1,0 +1,47 @@
+<?php
+//criando o objeto
+$objPdf = new Base_Tcpdf_Pdf();
+
+$arrKeywords = array(
+                     K_CREATOR_SYSTEM,
+                     $this->escape($this->translate('L_TIT_REL_ACOMPANHAMENTO_PROPOSTA')),
+                     $this->escape($this->translate('L_VIEW_ACOMPANHAMENTO')),
+                     $this->escape($this->translate('L_VIEW_ACOMPANHAMENTO_PROPOSTA')),
+                     $this->escape($this->translate('L_VIEW_PROPOSTA')),
+                     $this->escape($this->translate('L_VIEW_RELATORIO'))
+               );
+
+$objPdf->iniciaRelatorio($this->escape($this->translate('L_TIT_REL_ACOMPANHAMENTO_PROPOSTA')), $arrKeywords);
+
+$objPdf->SetDisplayMode("real");
+
+// set font
+$objPdf->SetFont('helvetica', 'B', 8);
+// add a page
+$objPdf->AddPage();
+
+if(count($this->arrDados) > 0 ){
+	$objPdf->Cell(180,6,$this->escape($this->translate('L_VIEW_PROJETO')).":    ".$this->arrDados[0]['tx_projeto'],'',1,'L');
+	$objPdf->Cell(180,6,$this->escape($this->translate('L_VIEW_SIGLA')).":        ".$this->arrDados[0]['tx_sigla_projeto'],'',1,'L');
+	$objPdf->Cell(180,6,$this->escape($this->translate('L_VIEW_PROPOSTA')).": ".$this->arrDados[0]['cd_proposta'],'',1,'L');
+	$objPdf->SetFont('helvetica', '', 8);
+	$strHtml = "";
+	$strHtml .= "<ul>"; 
+	foreach($this->arrDados as $key=>$value){
+		$texto = date('d/m/Y H:i:s', strtotime($value['dt_acompanhamento_proposta']))." (".$value['tx_profissional'].") - ".trim($value['tx_acompanhamento_proposta']);
+		$strHtml .= "<li>"; 
+		$strHtml .= "   {$texto}"; 
+		$strHtml .= "<li>"; 
+	}
+	$strHtml .= "</ul>"; 
+	$objPdf->writeHTML($strHtml,true, 0, true, 0);
+} else {
+	$objPdf->writeHTML($objPdf->semRegistroParaConsulta(),true, 0, true, 0);
+}
+
+// reset pointer to the last page
+$objPdf->lastPage();
+
+//Close and output PDF document
+$objPdf->Output('relatorio_fiscalizacao_proposta.pdf', 'I');
+?>

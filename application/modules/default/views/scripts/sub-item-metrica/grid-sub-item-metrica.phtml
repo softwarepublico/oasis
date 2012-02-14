@@ -1,0 +1,71 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableSubItemMetrica").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableSubItemMetrica").tablesorterPager({container: $("#tableSubItemMetricaPager")});
+});
+</script>
+<table id="tableSubItemMetrica" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+			<th class="{sorter: false}" style="width: 20px;">&nbsp;</th>
+			<th class="span-7"><?php echo $this->escape($this->translate('L_VIEW_GRID_SUB_ITEM_METRICA')) ?></th>
+			<th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_VARIAVEL_SUB_ITEM')) ?></th>
+			<th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_NR_ORDEM')) ?></th>
+			<th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_STATUS')) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+    ?>
+		<tr>
+			<td><img id="imgExcluir" height="13" width="13" style="cursor:pointer; text-align: center;" onclick="excluirSubItemMetrica(<?php echo $res['cd_sub_item_metrica'] ?>, <?php echo $res['cd_item_metrica'] ?>, <?php echo $res['cd_definicao_metrica'] ?>);" src="<?php echo $this->baseUrl()?>/public/img/del.png" alt="<?php echo $this->escape($this->translate('L_BTN_EXCLUIR')) ?>"/></td>
+            <?php
+			    $fimSub = "";
+				if(strlen($res['tx_sub_item_metrica']) >= 45){
+					$fimSub = "...";
+				}
+				$tx_sub_item_metrica = substr($res['tx_sub_item_metrica'],0,45)
+			?>
+			<td title="<?php echo $res['tx_sub_item_metrica'] ?>" onClick="recuperaSubItemMetrica(<?php echo $res['cd_sub_item_metrica'] ?>, <?php echo $res['cd_item_metrica'] ?>, <?php echo $res['cd_definicao_metrica'] ?>)" style="cursor:pointer;"><?php echo $tx_sub_item_metrica.$fimSub ?></td>
+            <td class="center" onClick="recuperaSubItemMetrica(<?php echo $res['cd_sub_item_metrica'] ?>, <?php echo $res['cd_item_metrica'] ?>, <?php echo $res['cd_definicao_metrica'] ?>)" style="cursor:pointer;"><?php echo $res['tx_variavel_sub_item_metrica']; ?></td>
+            <td class="center" onClick="recuperaSubItemMetrica(<?php echo $res['cd_sub_item_metrica'] ?>, <?php echo $res['cd_item_metrica'] ?>, <?php echo $res['cd_definicao_metrica'] ?>)" style="cursor:pointer;"><?php echo $res['ni_ordem_sub_item_metrica']; ?></td>
+            <?php
+                $st_interno = '';
+                if($res['st_interno'] == 'S'){
+                    $st_interno = $this->escape($this->translate('L_VIEW_INTERNO'));
+                }
+            ?>
+            <td class="center" onClick="recuperaSubItemMetrica(<?php echo $res['cd_sub_item_metrica'] ?>, <?php echo $res['cd_item_metrica'] ?>, <?php echo $res['cd_definicao_metrica'] ?>)" style="cursor:pointer;"><?php echo $st_interno; ?></td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo " <tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			  </tr>";
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableSubItemMetricaPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

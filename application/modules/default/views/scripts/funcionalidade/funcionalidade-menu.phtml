@@ -1,0 +1,19 @@
+<div class="float-l" style="margin-left:10px;">
+    <label class="float-l bold"><?php echo $this->escape($this->translate('L_VIEW_FUNCIONALIDADE')) ?>:</label>
+	<?php echo $this->formSelect('cd_funcionalidade_menu', null, array('class'=>'float-l'), $this->arrFuncionalidade); ?>
+</div>
+
+<div class="clear-l float-l" style="margin-left:10px;">
+
+	<?php echo $this->flipFlop(array(
+                                   'name'=>'cd_menu_funcionalidade',
+                                   'label'=>$this->escape($this->translate('L_VIEW_CONTROLES')),
+                                   'value'=>$this->menus),
+							   array(
+                                   'name'=>'cd_menu_funcionalidade2',
+                                   'label'=>$this->escape($this->translate('L_VIEW_CONTROLES_ASSOCIADOS')),
+                                   'value'=>$this->menus2),
+							   'addFuncionalidadeMenu',
+							   'removeFuncionalidadeMenu',8); ?>
+	<div class="accordionBottom" style="min-height: 10px;"></div>
+</div>

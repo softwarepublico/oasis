@@ -1,0 +1,53 @@
+<script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl();?>/public/js/modules/default/penalizacao/analisar-justificativa.js"></script>
+<div id="dadosAnaliseJustificativa">
+    <h2><?php echo $this->escape($this->translate('L_VIEW_DADOS_JUSTIFICATIVA'))?></h2>
+
+    <label class="float-l clear-l span-4 bold" ><?php echo $this->escape($this->translate('L_VIEW_DATA_PENALIZACAO'))?>:</label>
+        <span class="float-l span-16" style="text-align: justify;"><?php echo date('d/m/Y', strtotime($this->arrPenalidade['dt_penalizacao'])) ?></span>
+    <label class="float-l clear-l span-4 bold" ><?php echo $this->escape($this->translate('L_VIEW_PENALIDADE'))?>:</label>
+        <span class="float-l span-16 " style="text-align: justify;"><?php echo $this->arrPenalidade['tx_penalidade'] ?></span>
+    <label class="float-l clear-l span-4 bold"><?php echo $this->escape($this->translate('L_VIEW_DATA_JUSTIFICATIVA'))?>:</label>
+        <span class="float-l span-16 " style="text-align: justify;"><?php echo date('d/m/Y', strtotime($this->arrPenalidade['dt_justificativa'])) ?></span>
+    <label class="float-l clear-l span-4 bold"><?php echo $this->escape($this->translate('L_VIEW_JUSTIFICATIVA'))?>:</label>
+        <span class="float-l span-16" style="margin-bottom: 10px; text-align: justify;"><?php echo $this->arrPenalidade['tx_justificativa_penalizacao'] ?></span>
+</div>
+<hr class="visible"/>
+<div id="aceiteAnaliseJustificativa" style="margin-top: 10px;">
+    <?php
+
+    echo $this->formHidden('cd_penalidade' ,$this->dadosPenalidade['cd_penalidade']);
+    echo $this->formHidden('dt_penalizacao',$this->dadosPenalidade['dt_penalizacao']);
+    echo $this->formHidden('cd_contrato'   ,$this->dadosPenalidade['cd_contrato']);
+    ?>
+
+    <label class="float-l clear-l span-4 bold"><?php echo $this->escape($this->translate('L_VIEW_ACEITE_JUSTIFICATIVA'))?>:</label>
+    <span class="float-l span-12 clear-l">
+        <?php
+        $checked_sim = '';
+        $checked_nao = '';
+        if(is_null($this->arrPenalidade['st_aceite_justificativa'])){
+            $checked_sim = 'checked="checked"';
+        } else if($this->arrPenalidade['st_aceite_justificativa'] == 'N'){
+            $checked_nao = 'checked="checked"';
+        } else {
+            $checked_sim = 'checked="checked"';
+        }
+
+        ?>
+        <label class="float-l"><input <?php echo $checked_sim ?> id="aceite_justificativa_sim" name="st_aceite_justificativa" value="S" type="radio" /><?php echo $this->escape($this->translate('L_VIEW_SIM')) ?></label>
+        <label class="float-l"><input <?php echo $checked_nao ?> id="aceite_justificativa_nao" name="st_aceite_justificativa" value="N" type="radio"/><?php echo $this->escape($this->translate('L_VIEW_NAO')) ?></label>
+    </span>
+    <label class="float-l clear-l bold required" for="tx_obs_justificativa"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACAO'))?>:</label>
+    <span class="float-l span-12 clear-l">
+        <?php echo  $this->formTextarea('tx_obs_justificativa',$this->arrPenalidade['tx_obs_justificativa'],array('class'=>'float-l height-5 span-12')); ?>
+    </span>
+</div>
+
+<?php
+    if($this->button){
+        echo $this->formButton('btn_salvar_aceite_justificativa',$this->escape($this->translate('L_BTN_ACEITE_JUSTIFICATIVA')),array('class'=>'float-l verde clear-l'));
+        echo $this->formButton('btn_cancelar_aceite_justificativa',$this->escape($this->translate('L_BTN_CANCELAR')),array('class'=>'float-l vermelho'));
+    } else {
+        echo $this->formButton('btn_cancelar_aceite_justificativa',$this->escape($this->translate('L_BTN_CANCELAR')),array('class'=>'float-l vermelho clear-l'));
+    }
+ ?>

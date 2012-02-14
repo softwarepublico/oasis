@@ -1,0 +1,375 @@
+<?php
+$objPdf = new Base_Tcpdf_Pdf();
+
+$arrKeywords = array(K_CREATOR_SYSTEM,
+                             Base_Util::getTranslator('L_TIT_REL_DOCUMENTO_PROPOSTA'),
+                             Base_Util::getTranslator('L_VIEW_RELATORIO')
+                            );
+
+//Inicia cabeçalho do relatório
+$objPdf->iniciaRelatorio(Base_Util::getTranslator('L_TIT_REL_DOCUMENTO_PROPOSTA'), $arrKeywords);
+
+$objPdf->SetDisplayMode("real");
+
+// set font
+$objPdf->SetFont('helvetica', '', 10);
+
+// add a page
+$objPdf->AddPage();
+
+dadosProjeto($this->arrDadosProjeto,$this->tipo_relatorio,$objPdf);
+dadosProposta($this->arrDadosProposta,$this->cd_proposta,$this->arrDadosProjeto[0]['solicitacao'],$objPdf);
+if($this->tipo_relatorio == "C"){
+	dadosMetricas($this->arrDadosMetrica,$objPdf);
+}
+
+dadosModulo($this->arrDadosModuloProposta,$objPdf);
+dadosCronograma($this->arrDadosParcela,$this->arrProdutoParcela, $this->siglaMetricaPadrao, $objPdf);
+dadosUltimoProcessamentoProposta($this->arrUltimoProcessamentoProposta, $objPdf);
+if(count($this->arrDadosProcessamentoPropostaAceite) > 0){
+	dadosProcessamentoPropostaAceite($this->arrDadosProcessamentoPropostaAceite, $objPdf);
+}
+
+// ---------------------------------------------------------
+$objPdf->SetFont('helvetica', 'B', 8);
+$objPdf->Cell(PDF_MARGIN_LEFT,6,'__','',1,'L');
+//Close and output PDF document
+$objPdf->Output('relatorio_documento_proposta.pdf', 'I');
+
+function dadosAceiteProposta($arrAceiteProposta)
+{
+	$objPdf = new Base_Tcpdf_Pdf();
+	
+	$objPdf->SetFont('helvetica', 'B', 10);
+	$objPdf->Cell(50,6, Base_Util::getTranslator('L_VIEW_DATA_FECHAMENTO_PROPOSTA'),'B',1,'L');
+	$objPdf->Ln(5);
+	$objPdf->Cell(180,0,"",'B',1,'L');
+	$objPdf->Ln(5);
+}
+
+function dadosCronograma($arrParcela, $arrProdutoParcela, $siglaMetricaPadrao, $objPdf)
+{
+
+	$objPdf->SetFont('helvetica', 'B', 10);
+	$objPdf->Cell(50,6, mb_strtoupper(Base_Util::getTranslator('L_VIEW_CRONOGRAMA_EXECUCAO'), 'utf-8'),'B',1,'L');
+	$objPdf->Ln(5);
+	
+	foreach($arrParcela as $key=>$value){
+		$objPdf->SetFont('helvetica', 'B', 8);
+		$objPdf->Cell(0,0, Base_Util::getTranslator('L_VIEW_PARCELA_NR_DT_PREVISAO', array('value1'=>$value['ni_parcela'],'value2'=>$value['dt_prevista'])),'',1,'L');
+		$objPdf->SetFont('helvetica', '', 8);
+		$objPdf->ln(3);
+		$objPdf->Cell(0,0, Base_Util::getTranslator('L_VIEW_PRODUTOS').":",'',1,'L');
+		foreach($arrProdutoParcela[$value['cd_parcela']] as $chave=>$valor){
+			$objPdf->MultiCell(0,0,"   -{$valor['tx_produto_parcela']}".PHP_EOL,'','J',0,1);
+		}
+		$objPdf->ln(5);
+		$objPdf->Cell(0,0, Base_Util::getTranslator('L_VIEW_UNID_METRICA_REALIZACAO_PRODUTO_PARCELA', array('value1'=>$value['ni_horas_parcela'],'value2'=>$siglaMetricaPadrao)),'',1,'L');
+		$objPdf->Cell(100,0,"",'B ',1,'L');
+		$objPdf->ln(2);
+	}
+	
+	$objPdf->SetFont('helvetica', '', 8);
+	$objPdf->Ln(5);
+	$objPdf->Cell(180,0,"",'B',1,'L');
+	$objPdf->Ln(5);
+}
+
+function dadosModulo($arrDadosModuloProposta,$objPdf)
+{
+	$objPdf->SetFont('helvetica', 'B', 10);
+	$objPdf->Cell(75,6, mb_strtoupper(Base_Util::getTranslator('L_VIEW_MODULO_TRABALHADO_PROPOSTA'), 'utf-8'),'B',1,'J');
+	$objPdf->Ln(5);
+	
+	$objPdf->SetFont('helvetica', '', 8);
+	foreach($arrDadosModuloProposta as $key=>$value){
+		$objPdf->MultiCell(0, 2, "-".$value.PHP_EOL, '', 'J', 0, 1);
+	}
+	$objPdf->Ln(5);
+	$objPdf->Cell(180,0,"",'B',1,'L');
+	$objPdf->Ln(5);
+}
+
+function dadosMetricas($arrDadosMetrica,$objPdf)
+{
+	$objPdf->SetFont('helvetica', 'B', 10);
+	$objPdf->Cell(40,6, mb_strtoupper(Base_Util::getTranslator('L_VIEW_CUSTO_PROJETO'), 'utf-8'),'B',1,'L');
+    $objPdf->Ln(5);
+    $w = array(10,50,160,20);
+    if(count($arrDadosMetrica) > 0){
+
+        $valorTotalHoras = 0;
+        $arrValorMetrica = array();
+        $unidadeMetricaPadrao = "";
+        foreach($arrDadosMetrica as $key=>$value){
+            if(array_key_exists("observacao", $value)){
+                $objPdf->SetFont('helvetica', 'B', 8);
+                $objPdf->Cell($w[0],6,'','');
+                $objPdf->Cell($w[1],6, Base_Util::getTranslator('L_VIEW_OBSERVACAO_METRICA').":",'');
+                $objPdf->ln(4);
+                $objPdf->SetFont('helvetica', '', 8);
+                $objPdf->Cell($w[0],6,'','');
+                $objPdf->MultiCell($w[2], 6, $value['observacao'].PHP_EOL, '', 'J', '', 1);
+                continue;
+            }
+            $objPdf->SetFont('helvetica', 'B', 8);
+            $objPdf->Cell(12,6, Base_Util::getTranslator('L_VIEW_METRICA').":",'');
+            $objPdf->SetFont('helvetica', '', 8);
+            if($value['st_metrica_padrao'] == 'S'){
+                $objPdf->Cell(165,6,$value['tx_nome_metrica']." (".Base_Util::getTranslator('L_VIEW_FORMULA_PADRAO').")",'',1);
+                $unidadeMetricaPadrao = $value['tx_sigla_unidade_metrica'];
+            } else {
+                $objPdf->Cell(165,6,$value['tx_nome_metrica'],'',1);
+            }
+
+            foreach($arrDadosMetrica[$key]['item_metrica'] as $keyMetrica=>$metrica){
+                if(is_null($metrica['st_interno_item_metrica'])){
+                    $objPdf->SetFont('helvetica', 'B', 8);
+                    $objPdf->Cell($w[0],6,'','');
+                    $objPdf->Cell($w[1],6, Base_Util::getTranslator('L_VIEW_ITEM_METRICA').":",'');
+                    $objPdf->ln(4);
+                    $objPdf->SetFont('helvetica', '', 8);
+                    $objPdf->Cell($w[0],6,'','');
+                    $objPdf->MultiCell($w[2], 6, $metrica['tx_item_metrica'].PHP_EOL, '', 'J', '', 1);
+
+                    //Condição que verifica se a métrica possui justificativa
+                    if($value['st_justificativa_metrica'] == 'S'){
+                        $objPdf->SetFont('helvetica', 'B', 8);
+                        $objPdf->Cell($w[3],6,'','');
+                        $objPdf->Cell($w[1],6, Base_Util::getTranslator('L_VIEW_JUSTIFICATIVA_METRICA').":",'');
+                        $objPdf->ln(4);
+                        $objPdf->Cell($w[3],6,'','');
+                        $objPdf->SetFont('helvetica', '', 8);
+                        $objPdf->MultiCell($w[2],6,$value['tx_justificativa_metrica'].PHP_EOL,'','J','',1,'','',true,'',true);
+                    }
+
+                    $formulaTotalItemMetrica = $metrica['tx_formula_item_metrica'];
+                    foreach($arrDadosMetrica[$key]['item_metrica'][$keyMetrica]['sub_item'] as $keySubItem=>$subItem){
+                        //Condição que verifica se o sub item da métrica não é interno
+                        if(is_null($subItem['st_interno'])) {
+                            $objPdf->SetFont('helvetica', 'B', 8);
+                            $objPdf->Cell($w[3],6,'','');
+                            $objPdf->Cell($w[1],6,$subItem['tx_sub_item_metrica'],'');
+                            $objPdf->ln(4);
+                            $objPdf->Cell($w[3],6,'','');
+                            $objPdf->SetFont('helvetica', '', 8);
+                            $objPdf->MultiCell($w[2],6,$subItem['tx_variavel_sub_item_metrica'].' = '.$subItem['ni_valor_sub_item_metrica'].PHP_EOL,'','J','',1);
+                        }
+                        $formulaTotalItemMetrica = str_ireplace($subItem['tx_variavel_sub_item_metrica'], $subItem['ni_valor_sub_item_metrica'], $formulaTotalItemMetrica);
+                    }
+
+                    $objPdf->SetFont('helvetica', 'B', 8);
+                    $objPdf->Cell($w[3],6,'','');
+                    $objPdf->Cell($w[1],6, Base_Util::getTranslator('L_VIEW_FORMULA_ITEM_METRICA').":",'');
+                    $objPdf->ln(4);
+                    $objPdf->Cell($w[3],6,'','');
+                    $objPdf->SetFont('helvetica', '', 8);
+                    $objPdf->MultiCell($w[2],6,$metrica['tx_formula_item_metrica']."\n",'','J','',1);
+
+                    $objPdf->SetFont('helvetica', 'B', 8);
+                    $objPdf->Cell($w[3],6,'','');
+                    $objPdf->Cell($w[1],6, Base_Util::getTranslator('L_VIEW_CALCULO_FORMULA_ITEM_METRICA'),'');
+                    $objPdf->ln(4);
+                    $objPdf->Cell($w[3],6,'','');
+                    $objPdf->SetFont('helvetica', '', 8);
+                    $formulaTotalItemMetrica = str_ireplace(',', '.', $formulaTotalItemMetrica);
+                    eval("\$calculoDaMetrica = $formulaTotalItemMetrica;");
+                    $calculoDaMetrica = round($calculoDaMetrica,1);
+                    $objPdf->MultiCell($w[2],6, $formulaTotalItemMetrica." = <b>".$calculoDaMetrica."</b>".PHP_EOL,'','J','',1,'','',true,'',true);
+
+                    if($value['st_metrica_padrao'] == 'S'){
+                        $objPdf->SetFont('helvetica', 'B', 8);
+                        $objPdf->Cell($w[3],6,'','');
+                        $objPdf->Cell($w[1],6, Base_Util::getTranslator('L_VIEW_VALOR_TOTAL_ITEM_METRICA', $value['tx_sigla_metrica']).":",'');
+                        $objPdf->ln(4);
+                        $objPdf->Cell($w[3],6,'','');
+                        $objPdf->SetFont('helvetica', '', 8);
+                        $objPdf->Cell($w[1],6,$calculoDaMetrica,'',1);
+                    } else {
+                        $objPdf->SetFont('helvetica', 'B', 8);
+                        $objPdf->Cell($w[3],6,'','');
+                        $objPdf->Cell($w[1],6, Base_Util::getTranslator('L_VIEW_FORMULA_CALCULO_VARIAVEL', $value['tx_sigla_metrica']).":",'');
+                        $objPdf->ln(4);
+                        $objPdf->Cell($w[3],6,'','');
+                        $objPdf->SetFont('helvetica', '', 8);
+                        $objPdf->Cell($w[1],6,$value['tx_sigla_metrica']." * ".Base_Util::getTranslator('L_VIEW_FATOR_RELACAO_METRICA_PADRAO'),'',1);
+
+                        $objPdf->SetFont('helvetica', 'B', 8);
+                        $objPdf->Cell($w[3],6,'','');
+                        $objPdf->Cell($w[1],6, Base_Util::getTranslator('L_VIEW_VALOR_TOTAL_ITEM_METRICA', $value['tx_sigla_metrica']).":",'');
+                        $objPdf->ln(4);
+                        $objPdf->Cell($w[3],6,'','');
+                        $objPdf->SetFont('helvetica', '', 8);
+                        $objPdf->Cell($w[1],6,"{$calculoDaMetrica} * {$value['nf_fator_relacao_metrica_pad']} = ".round(($calculoDaMetrica*$value['nf_fator_relacao_metrica_pad']),1),'',1);
+                        $calculoDaMetrica = round($calculoDaMetrica*$value['nf_fator_relacao_metrica_pad'],1);
+                    }
+
+                    //Criando um índece com a variavel da formula geral para o calculo final
+                    $arrValorMetrica[$metrica['tx_variavel_item_metrica']] = $calculoDaMetrica;
+                } else {
+                    $formulaTotalItemMetrica = $metrica['tx_formula_item_metrica'];
+                    foreach($arrDadosMetrica[$key]['item_metrica'][$keyMetrica]['sub_item'] as $keySubItem=>$subItem){
+                        $formulaTotalItemMetrica = str_ireplace($subItem['tx_variavel_sub_item_metrica'], $subItem['ni_valor_sub_item_metrica'], $formulaTotalItemMetrica);
+                    }
+                    eval("\$calculoDaMetrica = $formulaTotalItemMetrica;");
+                    //Criando um índece com a variavel da formula geral para o calculo final
+                    $arrValorMetrica[$metrica['tx_variavel_item_metrica']] = $calculoDaMetrica;
+                }
+            }//fim
+
+            $objPdf->SetFont('helvetica', 'B', 8);
+            $objPdf->Cell(28,6, Base_Util::getTranslator('L_VIEW_FORMULA_METRICA').":",'');
+            $objPdf->ln(4);
+            $objPdf->SetFont('helvetica', '', 8);
+            $objPdf->Cell(150,6,$value['tx_formula_metrica'],'',1,'L');
+
+            $formuloTotalMetrica = $value['tx_formula_metrica'];
+            foreach($arrValorMetrica as $variavelMetrica=>$valorMetrica){
+                $formuloTotalMetrica = str_ireplace($variavelMetrica, $valorMetrica, $formuloTotalMetrica);
+            }
+            eval("\$calculoDaFormulaDaMetrica = $formuloTotalMetrica;");
+            $calculoDaFormulaDaMetrica = round($calculoDaFormulaDaMetrica,1);
+            $objPdf->SetFont('helvetica', 'B', 8);
+            $objPdf->Cell(43,6, Base_Util::getTranslator('L_VIEW_CALCULO_FORMULA_METRICA').":",'');
+            $objPdf->ln(4);
+            $objPdf->SetFont('helvetica', '', 8);
+            $objPdf->MultiCell(135,6,$formuloTotalMetrica." = <b>".$calculoDaFormulaDaMetrica."</b>".PHP_EOL,'','J','',1,'','',true,'',true);
+
+            $valorTotalHoras += $calculoDaFormulaDaMetrica;
+        }
+        $objPdf->SetFont('helvetica', 'B', 8);
+        $objPdf->Cell($w[1],6, Base_Util::getTranslator('L_VIEW_VALOR_TOTAL_METRICA_VARIAVEL', $unidadeMetricaPadrao).":",'');
+        $objPdf->ln(4);
+        $objPdf->SetFont('helvetica', '', 8);
+    	$objPdf->Cell($w[1],6,($valorTotalHoras == 0)?"0":$valorTotalHoras,'',1);
+    } else {
+        $objPdf->SetFont('helvetica', 'B', 8);
+        $objPdf->Cell($w[3],6,'','');
+        $objPdf->Cell($w[1],6, Base_Util::getTranslator('L_MSG_ALERT_CONTRATO_PROJETO_VINCULADO_SEM_METRICA_PADRAO_DEFINIDA'),'');
+    }
+    $objPdf->Ln(5);
+	$objPdf->Cell(180,0,"",'B',1,'L');
+	$objPdf->Ln(5);
+}
+
+function dadosProposta($arrDadosProposta,$cd_proposta,$solicitacao,$objPdf)
+{
+	$objPdf->SetFont('helvetica', 'B', 10);
+	$objPdf->Cell(50,6, mb_strtoupper(Base_Util::getTranslator('L_VIEW_DADOS_PROPOSTA'), 'utf-8'),'B',1,'L');
+	$objPdf->Ln(10);
+	
+	$objPdf->SetFont('helvetica', 'B', 8);
+	$objPdf->Cell(90,0, Base_Util::getTranslator('L_VIEW_NR_PROPOSTA'),'',0,'L');
+	$objPdf->Cell(0,0, Base_Util::getTranslator('L_VIEW_SOLICITACAO'),'',1,'L');
+	
+	$objPdf->SetFont('helvetica', '', 8);
+	$objPdf->Cell(90,0,$cd_proposta,'',0,'L');
+	$objPdf->Cell(0,0,$solicitacao,'',1,'L');
+	$objPdf->Ln(5);
+	
+	$objPdf->SetFont('helvetica', 'B', 8);
+	$objPdf->Cell(90,0, Base_Util::getTranslator('L_VIEW_INICIO'),'',0,'L');
+	$objPdf->Cell(0,0, Base_Util::getTranslator('L_VIEW_TERMINO_PREVISTO'),'',1,'L');
+
+	$objPdf->SetFont('helvetica', '', 8);
+	$objPdf->Cell(90,0,$arrDadosProposta[0]['dt_inicio'],'',0,'L');
+	$objPdf->Cell(0,0, $arrDadosProposta[0]['dt_fim'   ],'',1,'L');
+	$objPdf->Ln(5);
+	$objPdf->Cell(180,0,"",'B',1,'L');
+	$objPdf->Ln(5);
+}
+
+function dadosProjeto($arrDadosProjeto, $tipo_relatorio,$objPdf)
+{
+	$objPdf->SetFont('helvetica', 'B', 10);
+	$objPdf->Cell(40,6, mb_strtoupper(Base_Util::getTranslator('L_VIEW_DADOS_PROJETO'), 'utf-8'),'B',1,'L');
+	$objPdf->Ln(10);
+	
+	$objPdf->Cell(0,0, Base_Util::getTranslator('L_VIEW_SIGLA'),'',1,'L');
+	$objPdf->SetFont('helvetica', '', 8);
+	$objPdf->Cell(0,0, mb_strtoupper($arrDadosProjeto[0]['tx_sigla_projeto'],'utf-8'),'',1,'L');
+	$objPdf->Ln(5);
+	
+	$objPdf->SetFont('helvetica', 'B', 8);
+	$objPdf->Cell(0,0, Base_Util::getTranslator('L_VIEW_NOME'),'',1,'L');
+	$objPdf->SetFont('helvetica', '', 8);
+	$objPdf->Cell(0,0,$arrDadosProjeto[0]['tx_projeto'],'',1,'L');
+	$objPdf->Ln(5);
+	
+	$objPdf->SetFont('helvetica', 'B', 8);
+	$objPdf->Cell(0,0, Base_Util::getTranslator('L_VIEW_CONTEXTO_GERAL'),'',1,'L');
+	$objPdf->SetFont('helvetica', '', 8);
+    $arrDadosProjeto[0]['tx_contexto_geral_projeto'] = str_ireplace("<br>", "\n", $arrDadosProjeto[0]['tx_contexto_geral_projeto']);
+	//$objPdf->MultiCell(0,0,trim(strip_tags($arrDadosProjeto[0]['tx_contexto_geral_projeto'],'<b><i><span><li><ol><ul><br><br />'))."\n",'','J','',1,'','',true,true);
+	$objPdf->writeHTML($arrDadosProjeto[0]['tx_contexto_geral_projeto'].PHP_EOL,'','',true,'','J');
+	$objPdf->Ln(5);
+	
+	if($tipo_relatorio == "C"){
+		$objPdf->SetFont('helvetica', 'B', 8);
+		$objPdf->Cell(0,0, Base_Util::getTranslator('L_VIEW_ESCOPO'),'',1,'L');
+		$objPdf->SetFont('helvetica', '', 8);
+        $arrDadosProjeto[0]['tx_escopo_projeto'] = str_ireplace("<br>", "\n", $arrDadosProjeto[0]['tx_escopo_projeto']);
+		//$objPdf->MultiCell(0,0,trim(strip_tags($arrDadosProjeto[0]['tx_escopo_projeto'],'<b><i><span><li><ol><ul><br>'))."\n",'','J','',1,'','',true,true);
+		$objPdf->writeHTML($arrDadosProjeto[0]['tx_escopo_projeto'].PHP_EOL,'','',true,'','J');
+		$objPdf->Ln(5);
+	}
+	
+	if($arrDadosProjeto[0]['cd_proposta'] > 1){
+		$objPdf->SetFont('helvetica', 'B', 8);
+		$objPdf->Cell(0,0, Base_Util::getTranslator('L_VIEW_OBJETIVO_PROPOSTA'),'',1,'L');
+		$objPdf->SetFont('helvetica', '', 8);
+		$objPdf->MultiCell(0,0,trim(strip_tags($arrDadosProjeto[0]['tx_objetivo_proposta'],'<b><i><span><li><ol><ul><br>')).PHP_EOL,'','J','',1);
+		$objPdf->Ln(5);
+	}
+	
+	$objPdf->SetFont('helvetica', 'B', 8);
+	$objPdf->Cell(90,0, Base_Util::getTranslator('L_VIEW_UNIDADE_GESTORA'),'',0,'L');
+	$objPdf->Cell(0,0,  Base_Util::getTranslator('L_VIEW_GESTOR_PROJETO'),'',1,'L');
+
+	$objPdf->SetFont('helvetica', '', 8);
+	$objPdf->Cell(90,0, mb_strtoupper($arrDadosProjeto[0]['tx_sigla_unidade' ], 'utf-8'),'',0,'L');
+	$objPdf->Cell(0,0,  mb_strtoupper($arrDadosProjeto[0]['tx_gestor_projeto'], 'utf-8'),'',1,'L');
+	$objPdf->Ln(5);
+	
+	$objPdf->SetFont('helvetica', 'B', 8);
+	$objPdf->Cell(90,0, Base_Util::getTranslator('L_VIEW_IMPACTO_PROJETO'),'',0,'L');
+	$objPdf->Cell(0,0,  Base_Util::getTranslator('L_VIEW_GERENTE_DO_PROJETO'),'',1,'L');
+	
+	$objPdf->SetFont('helvetica', '', 8);
+	$objPdf->Cell(90,0,mb_strtoupper($arrDadosProjeto[0]['desc_impacto'   ], 'utf-8'),'',0,'L');
+	$objPdf->Cell(0,0, mb_strtoupper($arrDadosProjeto[0]['tx_profissional'], 'utf-8'),'',1,'L');
+	$objPdf->Ln(5);
+	$objPdf->Cell(180,0,"",'B',1,'L');
+	$objPdf->Ln(5);
+}
+
+function dadosProcessamentoPropostaAceite($arrProcessamentoProposta, $objPdf)
+{
+	$objPdf->SetFont('helvetica', 'B', 10);
+	$objPdf->Cell(40,6, mb_strtoupper(Base_Util::getTranslator('L_VIEW_ACEITE_DA_PROPOSTA'), 'utf-8'),'B',1,'L');
+	$objPdf->Ln(5);
+	foreach($arrProcessamentoProposta as $key=>$value){
+		$objPdf->SetFont('helvetica', '', 8);
+		$objPdf->Cell(0,0,"    ".$value['dt_aceite_proposta'],'',1,'L');
+	}
+	$objPdf->Ln(5);
+	$objPdf->Cell(180,0,"",'B',1,'L');
+	$objPdf->Ln(5);
+}
+
+function dadosUltimoProcessamentoProposta($arrUltimoProcessamentoProposta, $objPdf)
+{
+	$objPdf->SetFont('helvetica', 'B', 10);
+	$objPdf->Cell(80,6, mb_strtoupper(Base_Util::getTranslator('L_VIEW_DATA_FECHAMENTO_PROPOSTA'), 'utf-8'),'B',1,'L');
+	$objPdf->Ln(5);
+	if(count($arrUltimoProcessamentoProposta) > 0 ){
+		foreach($arrUltimoProcessamentoProposta as $key=>$value){
+			$objPdf->SetFont('helvetica', '', 8);
+			$objPdf->Cell(0,0,"    ".$value['dt_fechamento_proposta'],'',1,'L');
+		}
+	}
+	$objPdf->Ln(5);
+	$objPdf->Cell(180,0,"",'B',1,'L');
+	$objPdf->Ln(5);
+}
+?>

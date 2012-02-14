@@ -1,0 +1,17 @@
+<?php 
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/item-parecer/index.js'));
+?>
+<form id="formRelatorioDiversoItemParecer">
+    	
+    <fieldset class="clear-l span-7">
+		<legend><?php echo $this->translate('L_VIEW_TIPO_ITEM_PARECER') ?></legend>
+			<p class="float-l"><input type="radio" name="tipo_item" id="tipo_item_todos" value="T" checked="checked" /></p>
+		<label class="span-3 float-l" for="tipo_item"><?php echo $this->translate('L_VIEW_AMBOS') ?></label>
+			<p class="float-l  clear-l"><input type="radio" name="tipo_item" id="tipo_item_proposta" value="P"    /></p>
+		<label class="span-3 float-l" for="tipo_item"><?php echo $this->translate('L_VIEW_PROPOSTA') ?></label>
+			<p class="float-l clear-l"><input type="radio" name="tipo_item" id="tipo_item_parcela" value="C" /></p>
+		<label class="span-3 float-l" for="tipo_item"><?php echo $this->translate('L_VIEW_PARCELA') ?></label>
+	</fieldset>	
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->translate('L_BTN_GERAR') ?></button>
+</form>

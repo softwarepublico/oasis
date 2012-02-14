@@ -1,0 +1,47 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableModulo").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableModulo").tablesorterPager({container: $("#tableModuloPager"), size:05}); 
+});
+</script>
+<table id="tableModulo" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+			<th class="{sorter:false}" width="15">&nbsp;</th>
+            <th><?php echo $this->escape($this->translate('L_VIEW_GRID_MODULO')) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+	?>
+		<tr>
+			<td><img id="imgExcluir" height="13" width="13" style="cursor: pointer;" onclick="excluirModulo('<?php echo $res['cd_modulo'] ?>');" src="<?php echo $this->baseUrl()?>/public/img/del.png" alt="<?php echo $this->escape($this->translate('L_BTN_EXCLUIR')) ?>"/></td>
+			<td style="cursor: pointer;" onclick="alterar('<?php echo $res['cd_modulo'] ?>','<?php echo $res['tx_modulo'] ?>')"><?php echo $res['tx_modulo'] ?></td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo "  <tr>
+					<td width='15'>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr> ";
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableModuloPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="05">05</option>
+			<option value="10">10</option>
+		</select>
+	</form>
+</div>

@@ -1,0 +1,75 @@
+<?php 
+	$this->script('tab');
+	$this->script('grid');
+    $this->script('scriptFile',array('/solicitacao-servico/index.js'));
+?>
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#container-solicitacao-servico').show().tabs(); 
+});
+</script>
+<div id="container-solicitacao-servico" style="display: none;">
+	<ul>
+    	<li>
+            <a href="#solicitacoesServico">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_SOLICITACOES_SERVICO')) ?></span>
+            </a>
+        </li>
+		<?php if(ChecaPermissao::possuiPermissao('solicitacao-servico-consulta-objeto-demanda') === true): ?>
+			<li>
+                <a href="#consultaSolicitacao">
+                    <span><?php echo $this->escape($this->translate('L_VIEW_ABA_CONSULTA_TIPO_DEMANDA')) ?></span>
+                </a>
+            </li>
+			<li id="li-profissional-designado" style="display: none;">
+                <a href="#tab-profissional-designado">
+                    <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PROFISSIONAL_DESIGNADO')) ?></span>
+                </a>
+            </li>
+		<?php endif;?>
+    	<?php if(ChecaPermissao::possuiPermissao('solicitacao-servico-consulta-objeto-projeto') === true): ?>    	
+			<li>
+                <a href="#consultaSolicitacaoObjetoProjeto">
+                    <span><?php echo $this->escape($this->translate('L_VIEW_ABA_CONSULTA_TIPO_PROJETO')) ?></span>
+                </a>
+            </li>
+	    <?php endif;?>        
+        <li id="li-detalhe-solicitacao" style="display: none;">
+            <a href="#tab-detalhe-solicitacao">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_DETALHE_SOLICITACAO')) ?></span>
+            </a>
+        </li>
+        <li id="li-analise-solicitacao-justificativa" style="display: none;">
+            <a href="#tab-analise-solicitacao-justificativa">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_ANALISE_JUSTIFICATIVA')) ?></span>
+            </a>
+        </li>
+    </ul>
+	
+    <div id="solicitacoesServico">
+    	<?php echo $this->render('solicitacao-servico/solicitacao-servico.phtml') ?>
+    </div>
+
+    <?php if(ChecaPermissao::possuiPermissao('solicitacao-servico-consulta-objeto-demanda') === true): ?>    	
+		<div id="consultaSolicitacao">
+			<?php echo $this->render('solicitacao-servico-consulta-objeto-demanda/solicitacao-servico-consulta.phtml') ?>
+		</div>
+		<div id="tab-profissional-designado">
+			<div id="profissional-designado" class="clear divTab"></div>
+		</div>
+    <?php endif;?>
+
+    <?php if(ChecaPermissao::possuiPermissao('solicitacao-servico-consulta-objeto-projeto') === true): ?>    	
+		<div id="consultaSolicitacaoObjetoProjeto">
+			<?php echo $this->render('solicitacao-servico-consulta-objeto-projeto/solicitacao-servico-consulta.phtml') ?>
+		</div>
+    <?php endif;?>
+
+    <div id="tab-detalhe-solicitacao">
+    	<div id="detalhe-solicitacao" class="clear divTab"></div>
+    </div>
+
+	<div id="tab-analise-solicitacao-justificativa">
+    	<div id="div-analise-solicitacao-justificativa" class="clear divTab"></div>
+	</div>
+</div>

@@ -1,0 +1,24 @@
+<?php
+    $this->script('scriptFile',array('/associar-requisito-regra-negocio/index.js'));
+?>
+<div style="margin-left: 17px;">
+	<label class="span-3 float-l"><?php echo $this->escape($this->translate('L_VIEW_NOME_PROJETO')) ?>:</label>
+    	<p class="float-l clear-r bold"><?php echo $this->nomeProjeto; ?></p>
+
+	<label class="span-3 float-l clear-l"><?php echo $this->escape($this->translate('L_VIEW_PROPOSTA')) ?>:</label>
+        <p class="float-l clear-r bold"><?php echo $this->cd_proposta; ?></p>
+
+	<hr class="span-20" style="border-top: 1px solid rgb(84, 189, 205); visibility: visible; height: 6px;"/>
+	
+    <label class="bold float-l span-3" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_REQUISITO')) ?>:</label>
+	<?php 
+	    echo $this->formSelect( 'cmb_requisitos_associar_requisito_regra', null ,array('class'=>'span-6 float-l'), $this->arrRequisitos );
+	    echo $this->formButton('btn_associar_regra_versao_anterior', mb_strtoupper($this->escape($this->translate('L_BTN_ATUALIZAR_VERSAO_REGRA_DE_NEGOCIO')),'utf-8'), array('class'=>'azul float-l push-2'));
+	?>
+
+	<?php
+		echo $this->flipFlop(array('name'=>'regras_1', 'label'=>$this->escape($this->translate('L_VIEW_REGRAS_DE_NEGOCIO'))),
+							 array('name'=>'regras_2', 'label'=>$this->escape($this->translate('L_VIEW_REGRAS_DE_NEGOCIO_ASSOCIADAS'))),
+							 'add_associacao_requisito',
+							 'remove_associacao_requisito',8); ?>
+</div>

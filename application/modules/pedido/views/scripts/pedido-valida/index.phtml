@@ -1,0 +1,37 @@
+<?php
+    $this->script('grid');
+    $this->script('tab');
+    $this->script('scriptFile',array('/pedido-valida/index.js'));
+?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#container_validar_pedido').show().tabs();
+        $('#container_validar_pedido').triggerTab(1);
+    });
+</script>
+
+<div id="container_validar_pedido" style="display: none;">
+	<ul>
+        <li>
+            <a href="#pedidos_validar">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PEDIDOS_AUTORIZADOS')) ?></span>
+            </a>
+        </li>
+        <li id="li_formulario_validar" style="display:none">
+            <a href="#form_validar">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_VALIDAR_PEDIDO')) ?></span>
+            </a>
+        </li>
+    </ul>
+    <div id="pedidos_validar">
+		<div class="divTab">
+            <div class="boxTab height-2"></div>
+            <div id="grid_pedidos" class="float-l clear-l"></div>
+		</div>
+    </div>
+    <div id="form_validar">
+		<div class="divTab">
+            <div id="form_validar_pedido"></div>
+		</div>
+    </div>
+</div>

@@ -1,0 +1,158 @@
+<script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl();?>/public/js/lib/jquery/jquery-1.3.1.min.js"></script>
+<script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl();?>/public/js/modules/default/matriz-rastreabilidade/generate.js" "></script>
+
+<script>verificaBrowser();</script>
+
+<div id="cabecalho" style="width: 700px; text-align: center; font-family: helvetica" >
+	<p><img src="<?php echo $this->baseUrl();?>/public/img/logoRetratoDesenvolvimento.png" /></p>
+	<p><?php echo K_HEADER_COORDENACAO ?></p>
+	<p><b><?php echo $this->escape($this->translate('L_VIEW_MATRIZ_RASTREABILIDADE_REQUISITOS')) ?></b></p>
+	<p style="text-align: right; font-size: 13px; margin-top: -32px;"><?php echo date('d/m/Y H:i');?></p>
+	<hr>
+</div>
+<h4 style="font-family: helvetica">Projeto: <?php echo $this->arrDadosProjeto[0]['tx_sigla_projeto']; ?></h4>
+
+<?php if($this->arrDados): ?>
+    <table border="1" style="border-collapse: collapse; border: 1px solid #54BDCD; width: auto;"  >
+        <thead>
+            <tr>
+                <th bgcolor="#C3D9FF" style="width: 200px;">&nbsp;</th>
+                <?php foreach($this->arrRequisitoPai as $cd_req_pai=>$rqPai):
+                	$arr = explode('|',$rqPai);
+                
+                    $fim = "";
+                    if(strlen("RE ".$arr[1]." - ".$arr[0]) >= 12){
+                        $fim = "...";
+                    }
+                    $tx_requisito_pai = substr("RE ".$arr[1]." - ".$arr[0],0,12);
+                ?>
+                <th bgcolor="#C3D9FF" style="width: 120px;" title="<?php echo $arr[0]; ?>"><?php echo $tx_requisito_pai.$fim; ?></th>
+
+                <?php endforeach; ?>
+            </tr>
+        </thead>
+        <tbody>
+       <?php
+            //linha vertical de requisito 'todos os requisito'
+            //$req = ao requisito da linha horizontal
+            foreach( $this->arrRequisito as $req ):
+
+                $cor   = "#FFFFFF";
+                $title = "";
+                $style = "";
+
+                $fimReq = "";
+                if(strlen("RE ".$req['ni_ordem']." - ".$req['tx_requisito']) >= 23){
+                    $fimReq = "...";
+                }
+                $tx_requisito = substr("RE ".$req['ni_ordem']." - ".$req['tx_requisito'],0,23);
+        ?>
+            <tr>
+                <td bgcolor="#C3D9FF" style="font-weight: bold;" title="<?php echo $req['tx_requisito']; ?>" ><?php echo $tx_requisito.$fimReq;?></td>
+            <?php
+
+                //vai fazer a comparação entre a coluna de pais e
+                // todos os seus filhos com a linha que esta sendo impressa
+                //para saber se a coluna possui o filho igual a linha para pintar de verde ou amarela
+                foreach( $this->arrDados as $cd_pai=>$filhos){
+                    if( $req['cd_requisito'] == $cd_pai ){
+
+                          $cor   = "#BBBBBB"; //CINZA
+                          $title = "title=\"".$this->escape($this->translate('L_MSG_ALERT_SEM_DEPENDENCIA_PARA_MESMO_REQUISITO'))."\"";
+                          $style = "style=\"cursor:pointer;\"";
+                          ?>
+                            <td class="bold span-2" bgcolor="<?php echo $cor; ?>" <?php echo $title; ?> <?php echo $style; ?> ></td>
+                          <?php
+                    }else{
+                        $qtdFilho = count($filhos);
+                        $qtdFor   = 1;
+
+                        //vare os filhos constantes na coluna (que é o pai)
+                        //para saber se contem o mesmo indice da linha que é filho
+                        foreach( $filhos as $filho ){
+                            if( $req['cd_requisito'] == $filho['filho'] ){
+                                if( !$filho['st_fechamento_pai'] ){
+//                                    $cor   = "#FFF6A6"; // AMARELO
+                                    $cor   = "#FF3300"; // VERMELHO
+                                    $title = "title=\"".$this->escape($this->translate('L_VIEW_REQUISITO_PAI_NAO_FECHADO'))."\"";
+                                    $style = "style=\"cursor:pointer;\"";
+                                    ?>
+                                    <td class="bold span-2" bgcolor="<?php echo $cor; ?>" <?php echo $title; ?> <?php echo $style; ?> ></td>
+                                    <?php
+                                }else{
+                                    $cor   = "#88E386"; //VERDE
+                                    $title = "title=\"".$this->escape($this->translate('L_VIEW_REQUISITO_PAI_FECHADO'))."\"";
+                                    $style = "style=\"cursor:pointer;\"";
+                                    ?>
+                                    <td class="bold span-2" bgcolor="<?php echo $cor; ?>" <?php echo $title; ?> <?php echo $style; ?> ></td>
+                                    <?php
+                                }
+                                break;
+                            }else if( $qtdFilho == $qtdFor) {
+
+                                $cor   = "#FFFFFF";//BRANCO
+                                $style = "";
+                                $title = "";
+                                ?>
+                                <td class="bold span-2" bgcolor="<?php echo $cor; ?>" <?php echo $title; ?> <?php echo $style; ?> ></td>
+                                <?php
+                            }
+                            $qtdFor++;
+                        }
+                    }
+                }
+            ?>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+	<br />
+    <!-- Legenda -->
+    <table border="1" style="border-collapse: collapse; border: 1px solid #54BDCD; width: auto;">
+        <tr><th style="text-align:center" colspan="2"><?php echo $this->escape($this->translate('L_VIEW_LEGENDA')) ?></th></tr>
+        <tbody>
+            <tr>
+                <td bgcolor="#FF3300" style="width: 50px;"></td>
+                <td><?php echo $this->escape($this->translate('L_VIEW_REQUISITO_PAI_NAO_FECHADO')) ?></td>
+            </tr>
+            <tr>
+                <td bgcolor="#88E386" style="width: 50px;"></td>
+                <td><?php echo $this->escape($this->translate('L_VIEW_REQUISITO_PAI_FECHADO')) ?></td>
+            </tr>
+            <tr>
+                <td bgcolor="#BBBBBB" style="width: 50px;"></td>
+                <td><?php echo $this->escape($this->translate('L_MSG_ALERT_SEM_DEPENDENCIA_PARA_MESMO_REQUISITO')) ?></td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    
+    <?php if( $this->arrDadosAnalise ): ?>
+    	<div style="width: 700px; font-family: helvetica; font-size: 15px;">
+    		<label style="float:left; text-decoration: underline;"><b><?php echo $this->escape($this->translate('L_VIEW_ANALISE_ANDAMENTO')) ?>:</b></label>
+    		<div style="float:left; text-align: justify">
+    			<span>&nbsp;&nbsp;<?php echo $this->arrDadosAnalise['tx_analise_matriz_rastreab']; ?></span>
+    		</div>
+    	</div>
+    	<br/>
+	    <br/>
+    <?php endif;?>
+    
+    
+    <div id="footer" style="width: 700px; font-family: helvetica; font-size: 10px; float:left;" >
+	    <hr>
+	    <p><?php echo $this->escape($this->translate('L_VIEW_FONTE')) ?>: <?php echo K_CREATOR_SYSTEM." - ".K_TITLE_SYSTEM ?></p>
+    </div>
+    
+    
+    <div id="print_instrucao" style="float:left;">
+	    <?php echo $this->formButton('btn_print',$this->escape($this->translate('L_BTN_IMPRIMIR')),array('onClick'=>'imprimirRelatorio();'));?>
+	    <br />
+		<p id="intrucao"></p>
+    </div>
+	    
+<?php else: ?>
+	<script>semRegistro();</script>
+	<br />
+	<p id="sem_registro"></p>
+<?php endif;?>

@@ -1,0 +1,27 @@
+<?php
+$this->script('scriptFile',array('/medicao/decisao.js'));
+?>
+<div id="conteiner_decisao" class="divTab">
+    <label class="bold float-l span-4"><?php echo $this->escape($this->translate('L_VIEW_MEDICAO')) ?>:</label>
+		<span id="desc_medicao" class="float-l span-16" style="margin-top: 2px; text-align: justify;"></span>
+
+	<label class="bold float-l span-4 clear-l"><?php echo $this->escape($this->translate('L_VIEW_BOX')) ?>:</label>
+		<span id="desc_box" class="float-l span-16" style="margin-top: 2px; text-align: justify;"></span>
+
+	<label class="bold float-l span-4 clear-l"><?php echo $this->escape($this->translate('L_VIEW_RESULTADO_ANALISE')) ?>:</label>
+		<span id="desc_resultado" class="float-l span-16" style="margin-top: 2px; text-align: justify;"></span>
+
+	<label class="bold float-l span-4 clear-l" style="margin-top: 10px;" ><?php echo $this->escape($this->translate('L_VIEW_DADOS_MEDICAO')) ?>:</label>
+		<span id="desc_dados_medicao" class="float-l span-16" style="margin-top: 10px; text-align: justify;"></span>
+	
+	<label class="bold float-l clear-l span-4 required" for="tx_decisao" style="margin-top: 10px;"><?php echo $this->escape($this->translate('L_VIEW_DECISAO')) ?>:</label>
+	<?php echo $this->formTextArea( 'tx_decisao', null ,array('class'=>'span-16 float-l height-5','rows'=>'10','cols'=>'20','style'=>'margin-top: 10px')); ?>
+	
+	<label class="bold float-l clear-l span-4 required" for="dt_decisao"><?php echo $this->escape($this->translate('L_VIEW_DATA_DECISAO')) ?>:</label>
+	<?php echo $this->data("dt_decisao",null,array('class'=>'span-3 float-l')); ?>
+	
+	<?php
+		echo $this->formButton('btn_salvar_decisao', $this->escape($this->translate('L_BTN_SALVAR')), array('class'=>'verde float-l clear-l push-4','style'=>'margin-top: 10px'));
+		echo $this->formButton('btn_cancelar_decisao', $this->escape($this->translate('L_BTN_CANCELAR')), array('class'=>'vermelho float-l push-4','style'=>'margin-top: 10px'));
+	 ?>
+</div>

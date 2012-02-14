@@ -1,0 +1,12 @@
+<?php
+    $this->script('scriptFile',array('/controle-parcela/index.js',
+                                     '/aceite-parcela/index.js',
+                                     '/homologacao-parcela/index.js'));
+?>
+<div id="tabelaControleParcela" class="divTab boxTab">
+	<label class="float-l bold" style="margin-top:2px; font-size:16px;" id="mesAnoControleParcela"><?php echo $this->mesAno ?></label>
+	<label class="float-r" style="margin-top:2px;"><?php echo $this->anoCombo('anoControleParcela', null, null, 1) ?></label>
+	<label class="float-r" style="margin-top:2px;"><?php echo $this->mesCombo('mesControleParcela') ?></label>
+	<label class="float-r" style="margin-top:2px;"><?php echo $this->formSelect('cd_contrato_controle_parcela', null, array('style'=>'margin-topo:5px;'), null) ?></label>		
+</div>
+<div id="gridControleParcela"></div>

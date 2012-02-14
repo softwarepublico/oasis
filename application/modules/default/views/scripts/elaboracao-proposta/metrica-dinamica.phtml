@@ -1,0 +1,31 @@
+<?php
+    $this->script('scriptFile',array('/aplicacao-metrica-dinamica/metrica-dinamica.js'));
+?>
+<div style="margin-left:5px; overflow:hidden;">
+	<div class="highlight span-5 float-r" style="padding:5px;" id="horasTotais">
+		<?php if( is_null($this->unidadePadraoMetrica) ): ?>
+			<p class="center">&nbsp;<br /><span id="valor_total_horas_metrica_dinamica" class="large-2 bold">&nbsp;</span></p>
+		<?php else: ?>
+            <p class="center"><?php echo $this->escape(Base_Util::getTranslator('L_VIEW_TOTAL_SIGLA_METRICA_VARIAVEL_PROJETO', $this->unidadePadraoMetrica)) ?>:<br />
+                <span id="valor_total_horas_metrica_dinamica" class="large-2 bold">
+                    <?php echo $this->resProposta->ni_horas_proposta." ".$this->unidadePadraoMetrica; ?>
+                </span>
+            </p>
+		<?php endif; ?>
+	</div>
+
+	<label class="span-3 float-l bold"><?php echo $this->translate('L_VIEW_PROJETO') ?>:</label>
+	<p class="span-11 float-l"><?php echo $this->nomeProjeto ?></p>
+
+	<label class="span-3 float-l clear-l bold"><?php echo $this->escape($this->translate('L_VIEW_METRICA')) ?>:</label>
+    <?php echo $this->formSelect('cd_definicao_metrica','',array('class'=>'float-l', 'disabled'=>'disabled'), $this->arrMetrica); ?>
+
+    <hr class="span-21" style="border-top: 1px solid rgb(84, 189, 205); visibility: visible; height: 6px;"/>
+
+    <div id="montagemMetrica" class="float-l clear-l" style="display:none;"></div>
+
+</div>
+<div class="accordionBottom">
+    <label class="bold span-18 right float-l" style="color: red;"><?php echo Base_Util::getTranslator('L_MSG_ALERT_CLIQUE_PARA_REGISTRAR_OPERACAO', $this->escape($this->translate('L_BTN_CONFIRMAR'))) ?></label>
+	<button type="button" class="verde" id="bt_confirmar_metrica" name="bt_confirmar_metrica" disabled="disabled"><?php echo $this->escape($this->translate('L_BTN_CONFIRMAR')) ?></button>
+</div>

@@ -1,0 +1,26 @@
+<div class="divTab" id="div_nova_mensagem">
+
+	<?php echo $this->formHidden( 'cd_mensageria' );?>
+
+	<label class="right bold float-l span-4 required" for="cd_objeto_mensageria" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_OBJETO')) ?>:</label>
+	<?php echo $this->formSelect( 'cd_objeto_mensageria', null ,array('class'=>'span-6 float-l'), $this->arrTipoObjetoContrato );?>
+
+	<label class="right bold float-l span-4 clear-l" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_PERFIL')) ?>:</label>
+	<?php echo $this->formSelect( 'cd_perfil_mensageria', null ,array('class'=>'span-6 float-l'), $this->arrTipoPerfil ); ?>
+
+	<label class="right bold float-l span-4 clear-l required" for="dt_postagem" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_DATA_POSTAGEM')) ?>:</label>
+	<?php echo $this->data("dt_postagem",null,array('class'=>'span-3 float-l')); ?>
+	
+    <label class="right bold float-l span-4 clear-l required" for="dt_encerramento" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_DATA_ENCERRAMENTO')) ?>:</label>
+	<?php echo $this->data("dt_encerramento",null,array('class'=>'span-3 float-l')); ?>
+
+	<label class="right bold float-l span-4 clear-l required" for="tx_mensagem" editor="editor" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_MENSAGEM')) ?>:</label>
+	<?php echo $this->editorHtml( 'tx_mensagem', null, array('class'=>'float-l','cols'=>'60','rows'=>'13','editor'=>K_EDITOR)); ?>
+	
+	<?php
+		echo $this->formButton('btn_alterar_mensagem', $this->escape($this->translate('L_BTN_SALVAR')), array('class'=>'verde float-l clear-l push-4','style'=>'display:none;'));
+		echo $this->formButton('btn_salvar_mensagem', $this->escape($this->translate('L_BTN_SALVAR')), array('class'=>'verde float-l clear-l push-4'));
+		echo $this->formButton('btn_cancelar_mensagem', $this->escape($this->translate('L_BTN_CANCELAR')), array('class'=>'vermelho float-l push-4'));
+		echo $this->objDataDiff->comparaDataInicioFim('dt_postagem','dt_encerramento');
+	?>
+</div>

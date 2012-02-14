@@ -1,0 +1,37 @@
+<?php
+    $this->script('tab');
+    $this->script('grid');
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/pedido-pergunta/index.js'));
+?>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#container_perguntas').show().tabs();
+        $('#container_perguntas').triggerTab(1);
+    });
+</script>
+
+<div id="container_perguntas" style="display: none;">
+	<ul>
+    	<li><a href="#lista_pergunta">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_LISTA_PERGUNTA')) ?></span>
+            </a>
+        </li>
+        <li id="li_nova_pergunta" style="display:none">
+            <a href="#form_nova_pergunta">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PERGUNTA')) ?></span>
+            </a>
+        </li>
+    </ul>
+    <div id="lista_pergunta">
+		<div class="divTab">
+            <?php echo $this->render('pedido-pergunta/lista-perguntas.phtml') ?>
+		</div>
+    </div>
+    <div id="form_nova_pergunta">
+		<div class="divTab">
+            <?php echo $this->render('pedido-pergunta/nova-pergunta.phtml') ?>
+		</div>
+    </div>
+</div>

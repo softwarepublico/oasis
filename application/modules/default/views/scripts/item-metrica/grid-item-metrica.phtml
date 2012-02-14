@@ -1,0 +1,73 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableItemMetrica").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableItemMetrica").tablesorterPager({container: $("#tableItemMetricaPager")});
+});
+</script>
+<table id="tableItemMetrica" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+			<th class="{sorter:false}" style="width: 15px;">&nbsp;</th>
+            <th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_NOME'         )) ?></th>
+			<th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_FORMULA'      )) ?></th>
+			<th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_VARIAVEL_ITEM')) ?></th>
+			<th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_NR_ORDEM'     )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+	?>
+		<tr>
+			<td><img id="imgExcluir" height="13" width="13" style="cursor:pointer; text-align: center;" onclick="excluirItemMetrica(<?php echo $res['cd_item_metrica'] ?>, <?php echo $res['cd_definicao_metrica'] ?>);" src="<?php echo $this->baseUrl()?>/public/img/del.png" alt="<?php echo $this->escape($this->translate('L_BTN_EXCLUIR')) ?>"/></td>
+			<?php
+			    $fimItem = "";
+				if(strlen($res['tx_item_metrica']) >= 41){
+					$fimItem = "...";
+				}
+				$tx_item_metrica = substr($res['tx_item_metrica'],0,41)
+			?>
+			<td onClick="recuperaItemMetrica(<?php echo $res['cd_item_metrica'] ?>, <?php echo $res['cd_definicao_metrica'] ?>)" style="cursor:pointer;"><?php echo $tx_item_metrica.$fimItem; ?></td>
+
+			<?php
+			    $fimFormula = "";
+				if(strlen($res['tx_formula_item_metrica']) >= 32){
+					$fimFormula = "...";
+				}
+				$tx_formula_item_metrica = substr($res['tx_formula_item_metrica'],0,32)
+			?>
+			<td onClick="recuperaItemMetrica(<?php echo $res['cd_item_metrica'] ?>, <?php echo $res['cd_definicao_metrica'] ?>)" style="cursor:pointer;"><?php echo $tx_formula_item_metrica.$fimFormula; ?></td>
+            <td onClick="recuperaItemMetrica(<?php echo $res['cd_item_metrica'] ?>, <?php echo $res['cd_definicao_metrica'] ?>)" style="cursor:pointer;"><?php echo $res['tx_variavel_item_metrica']; ?></td>
+			<td onClick="recuperaItemMetrica(<?php echo $res['cd_item_metrica'] ?>, <?php echo $res['cd_definicao_metrica'] ?>)" style="cursor:pointer;"><?php echo $res['ni_ordem_item_metrica']; ?></td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo " <tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			  </tr>";
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableItemMetricaPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

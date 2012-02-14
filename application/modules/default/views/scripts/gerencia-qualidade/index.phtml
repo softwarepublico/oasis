@@ -1,0 +1,54 @@
+<?php
+    $this->script('scriptFile',array('/gerencia-qualidade/index.js'));
+?>
+<div id="formGerenciaQualidade" >
+	<div class="clear-l">
+		<?php echo $this->formHidden('cd_gerencia_qualidade',null) ?>
+
+        <label class="float-l right span-2 required" for="cd_projeto_qualidade">
+            <?php echo $this->escape($this->translate('L_VIEW_PROJETO')) ?>:
+        </label>
+			<?php echo $this->formSelect('cd_projeto_qualidade',null,array('class'=>'float-l'),$this->arrProjetosGerenciaQualidade); ?>
+
+        <label class="float-l right span-2 clear-l required" for="cd_proposta_qualidade">
+            <?php echo $this->escape($this->translate('L_VIEW_PROPOSTA')) ?>:
+        </label>
+			<?php echo $this->formSelect('cd_proposta_qualidade',null,array('class'=>'float-l'),array(0=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE')))); ?>
+
+        <label class="float-l right span-2 clear-l required" for="tx_fase_projeto">
+            <?php echo $this->escape($this->translate('L_VIEW_FASE')) ?>:
+        </label>
+			<?php echo $this->formText('tx_fase_projeto',null,array('class'=>'float-l span-10')); ?>
+
+        <label class="float-l right span-2 clear-l required" for="dt_auditoria_qualidade">
+            <?php echo $this->escape($this->translate('L_VIEW_DATA')) ?>:
+        </label>
+			<?php echo $this->data('dt_auditoria_qualidade',null,array('class'=>'float-l span-3')); ?>
+
+        <label class="float-l right span-2 clear-l required" for="cd_profissional_qualidade">
+            <?php echo $this->escape($this->translate('L_VIEW_QUEM_FAZ')) ?>:
+        </label>
+			<?php echo $this->formSelect('cd_profissional_qualidade',null,array('class'=>'float-l'),$this->arrProfissional); ?>
+		<?php
+			 echo $this->formButton(
+                     'btn_salvar_gerencia_qualidade',
+                     $this->escape($this->translate('L_BTN_SALVAR')),
+                     array(
+                         'class'=>'float-l clear-l verde push-2'
+                  ));
+			 echo $this->formButton(
+                     'btn_alterar_gerencia_qualidade',
+                     $this->escape($this->translate('L_BTN_ALTERAR')),
+                     array(
+                         'class'=>'float-l clear-l azul push-2'
+                  ));
+			 echo $this->formButton(
+                     'btn_cancelar_gerencia_qualidade',
+                     $this->escape($this->translate('L_BTN_CANCELAR')),
+                     array(
+                         'class'=>'float-l vermelho push-2'
+                  ));
+		?>
+	</div>
+	<div id="gridGerenciaQualidade" style="margin-top: 10px;" class="float-l clear-l span-18 push-1"></div>
+</div>

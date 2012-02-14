@@ -1,0 +1,29 @@
+<div style=" padding-left:10px;">
+    <?php
+    if( $this->res ):
+        $count = 0;
+        $clear = '';
+        ?>
+        <?php
+        foreach( $this->res as $papel=>$profissional):
+            if($count != 0) {
+                $clear = 'clear-l';
+            }
+            ?>
+            <div class="float-l <?php echo $clear; ?>">
+                <span class="float-l bold">&rArr; <?php echo $this->escape($papel); ?></span>
+                <div class="float-l clear-l push-1">
+                            <?php foreach( $profissional as $value): ?>
+                    <p class="float-l clear-l"><span>- <?php echo $this->escape($value); ?></span></p>
+                            <?php endforeach;?>
+                </div>
+            </div>
+            <?php
+            $count++;
+        endforeach;
+        ?>
+<?php else:
+      echo $this->escape($this->translate('L_VIEW_SEM_PROFISSIONAL_ALOCADO_PROJETO'));
+      endif;?>
+    <hr />
+</div>

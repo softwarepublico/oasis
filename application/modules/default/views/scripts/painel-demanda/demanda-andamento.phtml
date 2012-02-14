@@ -1,0 +1,14 @@
+<div id="tabDemandaAndamento" class="divTab">
+	<div class="boxTab">
+		<label class="float-l bold" style="margin-top:2px; font-size:16px;" id="mesAnoPainelDemanda"><?php echo $this->mesAno ?></label>
+		<div class="float-r campoBoxTab">
+			<button id="nova_demanda" class="azul" style="margin-top:4px;"><?php echo $this->escape($this->translate('L_BTN_NOVA_DEMANDA')) ?></button>
+		</div>
+		<label class="float-r" style="margin-top:2px;"><?php echo $this->anoCombo('anoDemandaAndamento',$this->mes) ?></label>
+		<label class="float-r" style="margin-top:2px;"><?php echo $this->mesCombo('mesDemandaAndamento',$this->ano,null,1) ?></label>
+		<label class="float-r" style="margin-top:2px;"><?php echo $this->formSelect('cd_profissional_demanda', null, array('class' => 'span-4 float-l', 'style' => 'margin-right: 10px;'), $this->cd_profissional_combo) ?></label>
+        <label class="float-r" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_PROFISSIONAL')) ?>:</label>
+	</div>
+
+	<div id="gridDemandaAndamento" class="float-l clear-l span-21"></div>
+</div>

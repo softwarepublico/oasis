@@ -1,0 +1,133 @@
+<script type="text/javascript" defer="defer">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableExecucaoProposta").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableExecucaoProposta").tablesorterPager({container: $("#pager_execucao_proposta")}); 
+});
+
+function redirecionaExecucao(params) {
+    var url = 'execucao-proposta/index/abaOrigem/execucaoProposta';
+    redirect(url,params,'');
+}
+</script>
+<table id="tableExecucaoProposta" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+			<th width="14%"><?php echo $this->escape($this->translate('L_VIEW_GRID_SIGLA')) ?></th>
+			<th width="12%"><?php echo $this->escape($this->translate('L_VIEW_GRID_PROPOSTA')) ?></th>
+			<th width="29%" colspan="3"><?php echo $this->escape($this->translate('L_VIEW_GRID_DOCUMENTACAO')) ?></th>
+			<?php 
+			if($_SESSION['oasis_logged'][0]['cd_perfil'] != K_CODIGO_PERFIL_TECNICO):
+			  	echo "<th width='13%'>".$this->escape($this->translate('L_VIEW_GRID_PERFIS_HISTORICO'))."</th>";
+			endif;
+			?>
+			<th width="10%"><?php echo $this->escape($this->translate('L_VIEW_GRID_PARCELAS')) ?></th>
+			<th width="7%"><?php echo $this->escape($this->translate('L_VIEW_GRID_METRICA')) ?></th>
+			<?php 
+			if($_SESSION['oasis_logged'][0]['cd_perfil'] != K_CODIGO_PERFIL_TECNICO):
+			  	echo "<th width=\"15%\">&nbsp;</th>";
+			endif;
+			?>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res):
+		foreach ($this->res as $res):
+	?>
+	<tr>
+		<td><?php echo $res['tx_sigla_projeto']?></td>
+        <td><span class="link" onclick="redirecionaExecucao({cd_projeto:<?php echo $res['cd_projeto'] ?>,cd_proposta:<?php echo $res['cd_proposta']?>})"><?php echo $this->escape($this->translate('L_VIEW_PROPOSTA_NR'))." ".$res['cd_proposta'] ?></span></td>
+		<td width="10%">
+			<div><?php echo $this->escape($this->translate('L_VIEW_CASOS_DE_USO')) ?></div>
+			<div style="text-align:center">
+				<?php if($res['st_caso_de_uso'] == "1"):?>
+                         <span class="link" onclick="redirecionaExecucao({cd_projeto:<?php echo $res['cd_projeto'] ?>,cd_proposta:<?php echo $res['cd_proposta']?>,accordion:'form_caso_de_uso'})" ><img src="<?php echo $this->baseUrl()?>/public/img/u42.png"></span>
+				<?php else:?>
+                         <span class="link" onclick="redirecionaExecucao({cd_projeto:<?php echo $res['cd_projeto'] ?>,cd_proposta:<?php echo $res['cd_proposta']?>,accordion:'form_caso_de_uso'})"><img src="<?php echo $this->baseUrl()?>/public/img/u46.png"></span>
+				<?php endif; ?>
+			</div>
+		</td>
+		<td class="center"  width="10%">
+			<div><?php echo $this->escape($this->translate('L_VIEW_DICIONARIO')) ?></div>
+			<div>
+				<?php if($res['st_dicionario_dados'] == "1"):?>
+                         <span class="link" onclick="redirecionaExecucao({cd_projeto:<?php echo $res['cd_projeto'] ?>,cd_proposta:<?php echo $res['cd_proposta']?>,accordion:'form_dicionario_de_dados'})"><img src="<?php echo $this->baseUrl()?>/public/img/u42.png"></span>
+				<?php else :?>
+                         <span class="link" onclick="redirecionaExecucao({cd_projeto:<?php echo $res['cd_projeto'] ?>,cd_proposta:<?php echo $res['cd_proposta']?>,accordion:'form_dicionario_de_dados'})"><img src="<?php echo $this->baseUrl()?>/public/img/u46.png"></span>
+				<?php endif ?>
+			</div>		
+		</td>
+		<td class="center" width="10%">
+			<div><?php echo $this->escape($this->translate('L_VIEW_INF_TECNICAS')) ?></div>
+			<div>
+				<?php if($res['st_informacoes_tecnicas'] == "1"):?>
+                         <span class="link" onclick="redirecionaExecucao({cd_projeto:<?php echo $res['cd_projeto'] ?>,cd_proposta:<?php echo $res['cd_proposta']?>,accordion:'form_dados_tecnicos'})"><img src="<?php echo $this->baseUrl()?>/public/img/u42.png"></span>
+				<?php else:?>
+                         <span class="link" onclick="redirecionaExecucao({cd_projeto:<?php echo $res['cd_projeto'] ?>,cd_proposta:<?php echo $res['cd_proposta']?>,accordion:'form_dados_tecnicos'})"><img src="<?php echo $this->baseUrl()?>/public/img/u46.png"></span>
+				<?php endif; ?>
+			</div>		
+		</td>
+		<?php 
+			if($_SESSION['oasis_logged'][0]['cd_perfil'] != K_CODIGO_PERFIL_TECNICO):
+			  	echo "  <td>
+							<div><a style=\"cursor:pointer;\" onclick=\"abreModalProfissional({$res['cd_projeto']});\">".$this->escape($this->translate('L_VIEW_PERFIS_ALOCADOS'))."</a></div>
+							<div><a style=\"cursor:pointer;\" onclick='gerarRelatorioHistorico({$res['cd_projeto']},{$res['cd_proposta']});'>".$this->escape($this->translate('L_VIEW_VER_HISTORICO'))."</a></div>
+						</td> ";
+			endif;
+		?>
+		<td><a style="cursor:pointer;" onclick="abreModalParcelas(<?php echo $res['cd_parcela']?>);"><?php echo $this->escape($this->translate('L_VIEW_PARCELA'))." ".$res['ni_parcela'] ?></a></td>
+		<td><?php echo $res['ni_horas_parcela'] ?></td>
+		<?php
+		$str = ""; 
+		if($_SESSION['oasis_logged'][0]['cd_perfil'] != K_CODIGO_PERFIL_TECNICO):
+		  	$str = "  <td> ";
+		  	if(is_null($res['st_fechamento_parcela'])):
+		  		$str .= "<button onClick=\"fechaParcela('{$res['cd_projeto']}', '{$res['cd_proposta']}', '{$res['cd_parcela']}')\" class=\"azul\">".$this->escape($this->translate('L_BTN_FECHAR_PARCELA'))."</button>";
+		  	else:
+		  		$str .= "&nbsp; </td> "; 
+		  	endif;
+		endif;
+	  	echo $str;
+		?>
+	</tr>
+	<?php
+		endforeach;
+	else:
+		$str = "";
+		$str = "  <tr>
+					<td width='14%'>&nbsp;</td>
+					<td width='12%'>&nbsp;</td>
+					<td width='29%' colspan='3'>&nbsp;</td>";
+		if($_SESSION['oasis_logged'][0]['cd_perfil'] != K_CODIGO_PERFIL_TECNICO):
+		  	$str .= "<td width='13%'>&nbsp;</td>";
+		endif;
+		$str .=	"   <td width='10%'>&nbsp;</td>
+					<td width='7%'>&nbsp;</td>";
+					
+	    if($_SESSION['oasis_logged'][0]['cd_perfil'] != K_CODIGO_PERFIL_TECNICO):
+		  	$str .= "<td width=\"15%\">&nbsp;</td>";
+		endif;
+		$str .= " </tr> ";
+		echo $str; 
+	endif;
+	?>
+	</tbody>
+</table>
+<div id="pager_execucao_proposta" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>
+<div id="dialog_ver_parcelas" style="display:none; overflow-y:scroll; overflow-x:hidden;"></div>
+<div id="dialog_ver_profissionais" style="display:none; overflow-y:scroll; overflow-x:hidden;" ></div>

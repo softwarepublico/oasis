@@ -1,0 +1,8 @@
+<?php
+    $this->script('scriptFile',array('/controle-encerramento-proposta/index.js'));
+?>
+<div id="tabelaControleEncerramentoProposta" class="divTab boxTab">
+    <label class=" float-l span-2 bold right" style="margin-top: 3px;"><?php echo $this->escape($this->translate('L_VIEW_CONTRATO')) ?></label>
+	<p class="float-l" style="margin-top: 3px;"><?php echo $this->formSelect('cd_contrato_controle_encerramento_proposta', null, null, null) ?></p>
+</div>
+<div id="gridControleEncerramentoProposta"></div>

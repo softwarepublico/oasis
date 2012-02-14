@@ -1,0 +1,91 @@
+<script type="text/javascript" defer="defer">
+$(document).ready(function() {
+	// call the tablesorter plugin
+    $("#tableResultadoExecutaSelect").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableResultadoExecutaSelect").tablesorterPager({container: $("#pagerResultadoExecutaSelect")});
+
+});
+</script>
+<?php if(count($this->result) > 0): ?>
+    <table  id="tableResultadoExecutaSelect" cellspacing="1" class="tablesorter">
+        <thead>
+            <tr>
+                <?php echo montaHead( $this->result ) ?>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <?php echo montaBody( $this->result )?>
+                
+            </tr>
+        </tbody>
+    </table>
+    <div id="pagerResultadoExecutaSelect" class="pager">
+        <form>
+            <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+            <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+            <input type="text" class="pagedisplay"/>
+            <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+            <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+            <select class="pagesize">
+                <option selected="selected"  value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+        </form>
+    </div>
+<?php else: ?>
+    <table  id="tableResultadoExecutaSelect" cellspacing="1" class="tablesorter">
+        <thead>
+            <tr>
+                <th class="{sorter:false}">Columns</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>A consulta n&atilde;o retornou dados</td>
+        </tbody>
+    </table>
+    <div id="pagerResultadoExecutaSelect" class="pager">
+        <form>
+            <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+            <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+            <input type="text" class="pagedisplay"/>
+            <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+            <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+            <select class="pagesize">
+                <option selected="selected"  value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+        </form>
+    </div>
+<?php endif; ?>
+
+
+<?php
+function montaHead( $arr ){
+    $tr = "<th class=\"{sorter:false}\">ROWNUM</th>";
+    foreach( $arr[0] as $key=>$value ){
+        $tr .= "<th class=\"{sorter:false}\">".strtoupper($key)."</th>";
+    }
+    return $tr;
+}
+
+function montaBody( $arr ){
+    $tr = "";
+    foreach( $arr as $rownum=>$tupla ){
+        $tr .= "<tr>";
+        $num = $rownum+1;
+        $tr .= "    <td>{$num}</td>";
+        foreach($tupla as $key=>$value){
+            $tr .= "<td>{$value}</td>";
+        }
+        $tr .= "</tr>";
+    }
+
+    return $tr;
+}
+?>

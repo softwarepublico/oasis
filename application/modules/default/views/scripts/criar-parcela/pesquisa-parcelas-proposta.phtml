@@ -1,0 +1,64 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+    $("#tableParcela").tablesorter({widthFixed: true, widgets: ['zebra']});
+});
+</script>
+<table id="tableParcela" cellspacing="1" class="tablesorter" style="margin-top: 0px;">
+	<thead>
+		<tr>
+			<th>&nbsp;</th>
+            <th><?php echo $this->escape($this->translate('L_VIEW_GRID_PARCELA')) ?></th>
+			<th><?php echo $this->unidadePadraoMetrica; ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_PREVISAO')) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_EXECUCAO')) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+		if(($res['st_modulo_proposta'] == 'S') || ($res['ni_mes_execucao_parcela'] != "" && $res['ni_ano_previsao_parcela'] != "")){
+			$lixeira = " &nbsp; ";
+			$alterar = "";
+		} else {
+			$lixeira = " <img height='13' width='13' style='cursor:pointer;' onclick='excluirParcela({$res['cd_parcela']});' src='{$this->baseUrl()}/public/img/del.png' alt='".$this->escape($this->translate('L_BTN_EXCLUR'))."' /> ";
+			$alterar = " onclick=\"recuperaParcela({$res['cd_parcela']},
+							        '{$res['ni_horas_parcela']}',
+							        {$res['ni_mes_previsao_parcela']},
+							        {$res['ni_ano_previsao_parcela']},
+							        {$res['ni_parcela']})\" style=\"cursor:pointer;\"";
+		}
+		if($res['ni_mes_previsao_parcela'] != "" && $res['ni_ano_previsao_parcela'] != ""){
+			$horasPrevisaoParcela = $res['ni_mes_previsao_parcela']."/".$res['ni_ano_previsao_parcela'];
+		} else {
+			$horasPrevisaoParcela = "XX/XXXX";
+		}
+	?>
+		<tr>
+			<td><?php echo $lixeira ?></td>
+			<td <?php echo $alterar ?>><?php echo $res['ni_parcela'] ?></td>
+			<td <?php echo $alterar ?>><?php echo $res['ni_horas_parcela'] ?></td>
+			<td <?php echo $alterar ?>><?php echo  $horasPrevisaoParcela ?></td>
+			<td <?php echo $alterar ?>><?php
+					if($res['ni_mes_execucao_parcela'] != "" && $res['ni_ano_previsao_parcela'] != ""){
+						echo $res['ni_mes_execucao_parcela']."/".$res['ni_ano_execucao_parcela']; 
+					} else {
+						echo "XX/XXXX"; 
+					}
+				?></td>
+		</tr>
+		<?php
+			endforeach;
+		} else {
+			echo "
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>";
+		}
+		?>
+	</tbody>
+</table>

@@ -1,0 +1,53 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#container_rotina').show()
+                          .tabs()
+                          .triggerTab(1);
+	$("#config_hidden_rotina").val('N');
+});
+</script>
+
+<div id="container_rotina" style="display: none;">
+    <?php
+        $permissaoRotina     = 'N';
+        $permissaoAssociacao = 'N';
+    ?>
+	<ul>
+		<?php if(ChecaPermissao::possuiPermissao('rotina') === true): $permissaoRotina = 'S'; ?>
+            <li><a href="#aba_rotina"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_ROTINA')); ?></span></a></li>
+        <?php endif; ?>
+
+		<?php if(ChecaPermissao::possuiPermissao('associar-rotina-objeto-contrato') === true): $permissaoAssociacao = 'S'; ?>
+	        <li><a href="#aba_associar_rotina_obj_contr"><span><?php echo $this->escape($this->translate('L_VIEW_ABA_ASSOCIAR_ROTINA_OBJETO_CONTRATO')); ?></span></a></li>
+        <?php endif; ?>
+    </ul>
+	
+		<?php if(ChecaPermissao::possuiPermissao('rotina') === true): ?>
+		    <div id="aba_rotina">
+		    	<div class="divTab"><?php echo $this->render('rotina/index.phtml') ?></div>
+		    </div>
+        <?php endif; ?>
+        
+		<?php if(ChecaPermissao::possuiPermissao('associar-rotina-objeto-contrato') === true): ?>
+		    <div id="aba_associar_rotina_obj_contr">
+		    	<div class="divTab"><?php echo $this->render('associar-rotina-objeto-contrato/index.phtml') ?></div>
+		    </div>
+        <?php endif; ?>
+</div>
+
+<script type="text/javascript">
+
+    var permRotina      = '<?php echo $permissaoRotina;     ?>';
+    var permAssociacao  = '<?php echo $permissaoAssociacao;?>';
+
+    function configAccordionRotina()
+    {
+        if( (permRotina == 'S') && ($("#cd_area_atuacao_ti_rotina_objeto_contrato").val() != 0) ){
+            montaGridRotina();
+        }
+        /*if( (permAssociacao == 'S') && ($('#cd_area_atuacao_ti_rotina_objeto_contrato').val() != 0) ){
+            comboRotinaAssociacao();
+        }*/
+        $("#config_hidden_rotina").val('S');
+    }
+</script>

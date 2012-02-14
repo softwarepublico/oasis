@@ -1,0 +1,25 @@
+<script language="javascript" type="text/javascript">
+	$(document).ready(function(){
+        //garante q se caso for atualiada a pagina volta para o passo 1
+        $('#container-install').triggerTab(1);
+        
+		$('#btn_avancar_passo2').click(function(){
+			if($('#cd_language').val() == 0){
+				showToolTip(i18n.L_VIEW_SCRIPT_CAMPO_OBRIGATORIO, $('#cd_language'));
+			} else {
+				passoDoisApresentacao();
+			}
+		});
+	});
+</script>
+<h2 class="center"><?php echo $this->escape($this->translate('L_MSG_BEM_VINDO_ASSISTENTE_INSTALACAO')) ?></h2>
+<br />
+<label class="float-l clear-l bold span-21 center" for="tx_language"><?php echo $this->escape($this->translate('L_MSG_ESCOLHA_IDIOMA_UTILIZADO')) ?></label>
+<div class="float-l clear-l span-21 center" id="formLanguage">
+	<?php echo $this->formSelect('tx_language',null,array('class'=>'center'),$this->arrLanguage); ?>
+</div>
+<!-- Botões da tela -->
+<div class="float-r clear-l span-21" style="margin-top:40px;">
+	<span class="float-r right"><?php echo $this->formButton('btn_avancar_passo2',$this->escape($this->translate('L_BTN_PROXIMO')),array('class'=>'verde right')); ?></span>
+	<label class="float-r bold right"><?php echo $this->escape($this->translate('L_MSG_INICIAR_INSTALACAO')) ?> >>></label>
+</div>

@@ -1,0 +1,95 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        // call the tablesorter plugin
+        $("#tableJustificativa").tablesorter({widthFixed: true, widgets: ['zebra']});
+        $("#tableJustificativa").tablesorterPager({container: $("#tableJustificativaPager")});
+    });
+    /**
+     * Função que recupera os dados da penalidade para realizar a justificativa
+     */
+    function registrarJustificativa(cd_penalidade, dt_penalizacao, cd_contrato) {
+        $.ajax({
+            type	: "POST",
+            url		: systemName+"/penalizacao/registrar-justificativa",
+            data    : {'cd_penalidade':cd_penalidade,'dt_penalizacao':dt_penalizacao,'cd_contrato':cd_contrato},
+            success : function(retorno){
+                $("#divRegistrarJustificativa").html(retorno);
+
+                $("#registrarJustificativa"  ).css("display", "");
+                $("#liRegistrarJustificativa").css("display", "");
+                $("#container-penalizacao"   ).triggerTab(3);
+            }
+        });
+    }
+
+    /**
+     * Função para visualizar os dados da justificativa da penalidade
+     */
+    function analisejustificativa(cd_penalidade, dt_penalizacao, cd_contrato) {
+        $.ajax({
+            type	: "POST",
+            url		: systemName+"/penalizacao/analise-justificativa",
+            data    : {'cd_penalidade':cd_penalidade,'dt_penalizacao':dt_penalizacao,'cd_contrato':cd_contrato},
+            success : function(retorno){
+                $("#divAnaliseJustificativa").html(retorno);
+
+                $("#analiseJustificativa"  ).css("display", "");
+                $("#liAnaliseJustificativa").css("display", "");
+                $("#container-penalizacao" ).triggerTab(4);            }
+        });
+    }
+</script>
+<table id="tableJustificativa" cellspacing="1" class="tablesorter" style="border-collapse: collapse;">
+    <thead>
+        <tr>
+            <th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_DATA'      )) ?></th>
+            <th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_PENALIDADE')) ?></th>
+            <th class="span-1"><?php echo $this->escape($this->translate('L_VIEW_GRID_CONTRATO'  )) ?></th>
+            <th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_JUSTIFICAR')) ?></th>
+            <th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_ACAO'      )) ?></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        if($this->res):
+            foreach ($this->res as $res):
+                ?>
+        <tr>
+            <td><?php echo date('d/m/Y', strtotime($res['dt_penalizacao'])) ?></td>
+            <td><?php echo $res['tx_abreviacao_penalidade']; ?></td>
+            <td><?php echo $res['tx_numero_contrato'];  	 ?></td>
+            <td><?php
+                    if(is_null($res['dt_justificativa']))
+                        echo $this->formButton('btn_justificar',$this->escape($this->translate('L_BTN_JUSTIFICAR')),array('class'=>'verde','onclick'=>"registrarJustificativa(".$res['cd_penalidade'].",'".$res['dt_penalizacao']."',".$res['cd_contrato'].")"));
+                 ?>
+            </td>
+            <td><?php echo $this->formButton('btn_ver_justificar',$this->escape($this->translate('L_BTN_VER_JUSTIFICATIVA')),array('class'=>'azul', 'onclick'=>"analisejustificativa(".$res['cd_penalidade'].",'".$res['dt_penalizacao']."',".$res['cd_contrato'].")")); ?></td>
+        </tr>
+            <?php
+            endforeach;
+        else:
+            echo '<tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			  </tr>';
+        endif;
+        ?>
+    </tbody>
+</table>
+<div id="tableJustificativaPager" class="pager">
+    <form>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+        <input type="text" class="pagedisplay"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+        <select class="pagesize">
+            <option selected="selected" value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+        </select>
+    </form>
+</div>

@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <meta http-equiv="cache-control" content="no-cache" />
+        <title><?php echo $this->escape($this->titulo); ?></title>
+        
+        <link rel="stylesheet" href="<?php echo $this->baseUrl();?>/public/css/dialog.css" type="text/css" media="screen, projection" />
+        <link rel="stylesheet" href="<?php echo $this->baseUrl();?>/public/css/oasisImport.css" type="text/css" media="screen, projection" />
+        <link rel="stylesheet" href="<?php echo $this->baseUrl();?>/public/css/print.css" type="text/css" media="print" />
+        <!--[if IE]><link rel="stylesheet" href="<?php echo $this->baseUrl();?>/public/css/ie.css" type="text/css" media="screen, projection" /><![endif]-->
+
+        <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl();?>/public/js/lib/jquery/jquery-1.3.1.min.js"></script>
+        <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl();?>/public/js/oasis.js"></script>
+        
+        <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl();?>/public/js/lib/jquery/ui/jquery-ui-personalized-1.6rc6.min.js"></script>
+		<script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl();?>/public/js/lib/jquery/ui/jquery.bgiframe.min.js"></script>
+        <script language="javascript" defer="defer" type="text/javascript" src="<?php echo $this->baseUrl();?>/public/js/oasis.msg.js"></script>
+        <script language="javascript" type="text/javascript"> 
+        	$(document).ready(function(){
+        		$('.buttonBarLeft').css('display','');
+        	});
+            var welcome    = <?php if( isset($_SESSION['oasis_logged']) ){echo "true";}else{echo "false";} ?>;
+            var systemName = '<?php echo $this->baseUrl();?>';
+            <?php 
+            if(key_exists('oasis_logged',$_SESSION)){
+                if(key_exists('cd_profissional',$_SESSION['oasis_logged'][0])){
+                    if($_SESSION['oasis_logged'][0]['cd_profissional'] === "0"){ 
+            ?>
+                        jQuery(document).ready(function(){
+                            jQuery('#cabeca').height('112px');
+                        });
+            <?php
+                     } 
+                  } 
+            }
+            ?>
+        </script>
+    </head>
+    <body>
+        <div id="cabeca" class="container">
+            <a href="/oasis"><img id="logo" alt="Oasis" src="<?php echo $this->baseUrl();?>/public/img/logo4.png"/></a>
+            <ul>
+                <li><a href="#" onclick="window.open('<?php echo $this->baseUrl();?>/public/documentacao/geral/Info-OASIS.pdf');">Informações Gerais</a></li>
+                <li><a href="#" onclick="window.location.href='/oasis/alterar-senha';">Alterar Senha</a></li>
+                <li><a href="#" onclick="window.location.href='/oasis/fale-conosco';">Fale Conosco</a></li>
+                <li><a href="#" onclick="window.location.href='/oasis/base-conhecimento';">Base Conhecimento</a></li>
+                <li><a href="#" onclick="abreModalAjuda();">Ajuda</a></li>
+                <li class="ultimo branco"><a href="<?php echo $this->baseUrl();?>/auth/logout">Sair</a></li>
+            </ul>
+            <p id="nomeUsuario">
+                Olá, <b><?php echo $this->nomeUsuarioLogado;?></b>
+                <br />
+                Seu último acesso foi <?php echo $this->dataUltimoAcesso; ?> às <?php echo $this->horaUltimoAcesso; ?>
+            </p>
+            <p id="tamanhoFonte">
+                Tamanho da fonte: 
+                <span class="a1" onclick="mudaFonte('pequena')">A</span>
+                <span class="a2" onclick="mudaFonte('normal')">A</span>
+                <span class="a3"  onclick="mudaFonte('grande')">A</span>
+            </p>
+            <?php //echo $this->menuContainer; ?>
+            <?php echo $this->partialLoop('index/_menuItem.phtml',$this->menu); ?>
+        </div>
+        <div class="breadCrumbs container">
+            <?php echo $this->breadCrumbs; ?>
+            <script language="javascript" type="text/javascript">
+                $(document).ready( function() {
+                    $('ul#breadCrumbs li span').text('<?php echo $this->escape($this->tituloJanela); ?>');
+                });
+            </script>
+        </div>
+        <div class="corpo">
+            <div id="content" class="container">
+                <?php echo $this->layout()->content; ?>
+                <div class="buttonBarLeft" style="display: none;">
+                    <div class="buttonBarRight">
+                        <div class="buttonBarMiddle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="rodapeContainer">
+            <div id="rodape" class="container">
+            <!-- 
+               <img alt="Oasis" id="logoRodape" src="<?php echo $this->baseUrl();?>/public/img/logoRodape.png" />
+             -->
+               <address>
+                   <?php echo K_ADDRES_ORGAO; ?>
+               </address>
+            </div>
+        </div>
+        <div id="modal_ajuda" style="display:none;"><?php echo $this->render("ajuda/{$this->controllerAtualAjuda}");?></div>
+        <div id="modal_ajuda_ajax"></div>
+        <script type="text/javascript">
+		<!--
+			$(document).ajaxStart(function(){
+			   ajaxLoading('Aguarde...');
+			});
+			$(document).ajaxStop(function(){
+			   ajaxLoaded();
+			});
+		//-->
+		</script>
+		<!-- modais do sistema do sistema Já incluidas Falta Mudar para ficar Dinâmico--> 
+        <link type="text/css" href="<?php echo $this->baseUrl()?>/public/js/lib/jquery/dialog/css/basic.css" rel="stylesheet" media="screen" />
+        <script language="javascript" defer="defer" type="text/javascript" src="<?php echo $this->baseUrl() ?>/public/js/lib/jquery/dialog/jquery.simplemodal.js"></script>
+		
+    </body>
+</html>

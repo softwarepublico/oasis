@@ -1,0 +1,40 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableAtor").tablesorter({widthFixed: true, widgets: ['zebra']});
+});
+</script>
+<table id="tableAtor" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+			<th class="{sorter: false}" width="15">&nbsp;</th>
+            <th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_ATOR')) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+	?>
+		<tr>
+			<td>
+                <img id="imgExcluir"
+                     height="13"
+                     width="13"
+                     style="cursor:pointer;"
+                     onclick="excluirAtorProjeto('<?php echo $res['cd_ator'] ?>');"
+                     src="<?php echo $this->baseUrl()?>/public/img/del.png"
+                     alt="<?php echo $this->escape($this->translate('L_BTN_EXCLUIR')) ?>"/></td>
+			<td onClick="recuperaAtorProjetoAjax(<?php echo $res['cd_ator'] ?>)" style="cursor:pointer;"><?php echo $res['tx_ator'] ?></td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo " <tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			  </tr>";
+	}
+	?>
+	</tbody>
+</table>

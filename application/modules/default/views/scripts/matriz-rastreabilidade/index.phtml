@@ -1,0 +1,48 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#container_matriz_rastreabilidade').show().tabs(); 
+});
+</script>
+<div id="container_matriz_rastreabilidade" style="display: none;">
+	<ul>
+		<?php if (ChecaPermissao::possuiPermissao('matriz-rastreabilidade-requisito') === true): ?>
+        	<li>
+                <a href="#aba_matriz_requisito">
+                    <span><?php echo $this->escape($this->translate('L_VIEW_ABA_REQUISITO')) ?></span>
+                </a>
+            </li>
+		<?php endif; ?>
+		<?php if (ChecaPermissao::possuiPermissao('matriz-rastreabilidade-regra-de-negocio') === true): ?>
+	        <li>
+                <a href="#aba_matriz_regra_de_negocio">
+                    <span><?php echo $this->escape($this->translate('L_VIEW_ABA_REGRA_DE_NEGOCIO')) ?></span>
+                </a>
+            </li>
+		<?php endif; ?>
+		<?php if (ChecaPermissao::possuiPermissao('matriz-rastreabilidade-caso-de-uso') === true): ?>
+	        <li>
+                <a href="#aba_matriz_caso_de_uso">
+                    <span><?php echo $this->escape($this->translate('L_VIEW_ABA_CASO_DE_USO')) ?></span>
+                </a>
+            </li>
+		<?php endif; ?>
+    </ul>
+	
+	<?php if (ChecaPermissao::possuiPermissao('matriz-rastreabilidade-requisito') === true): ?>
+	    <div id="aba_matriz_requisito">
+	    	<?php echo $this->render('matriz-rastreabilidade-requisito/index.phtml') ?>
+	    </div>
+	<?php endif; ?>
+	
+	<?php if (ChecaPermissao::possuiPermissao('matriz-rastreabilidade-regra-de-negocio') === true): ?>
+	    <div id="aba_matriz_regra_de_negocio">
+	    	<?php echo $this->render('matriz-rastreabilidade-regra-de-negocio/index.phtml') ?>
+	    </div>
+	<?php endif; ?>
+
+	<?php if (ChecaPermissao::possuiPermissao('matriz-rastreabilidade-caso-de-uso') === true): ?>
+	    <div id="aba_matriz_caso_de_uso">
+	    	<?php echo $this->render('matriz-rastreabilidade-caso-de-uso/index.phtml') ?>
+	    </div>
+	<?php endif; ?>
+</div>

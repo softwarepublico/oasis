@@ -1,0 +1,9 @@
+<?php
+    $this->script('scriptFile',array('/profissional/index.js'));
+    
+    echo $this->formProfissional;
+?>
+<button id="bt_cancelar_profissional" class="azul float-l clear-l push-4" type="button" name="bt_cancelar"><?php echo $this->escape($this->translate('L_BTN_CANCELAR')) ?></button>
+<button id="submitbuttonProfissional" class="verde float-l push-4"        type="button" name="submit"     ><?php echo $this->escape($this->translate('L_BTN_SALVAR')) ?></button>
+<button id="bt_excluir_profissional"  class="vermelho float-l push-4"     type="button" name="bt_excluir" ><?php echo $this->escape($this->translate('L_BTN_EXCLUIR')) ?></button>
+

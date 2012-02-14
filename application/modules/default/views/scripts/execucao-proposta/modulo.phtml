@@ -1,0 +1,23 @@
+<?php
+    $this->script('scriptFile',array('/modulo/index.js'));
+?>
+<div style="margin-right:5px; padding-left:5px;">
+    <label class="span-3 float-l"><?php echo $this->escape($this->translate('L_VIEW_NOME_PROJETO')) ?>:</label>
+	<p class="float-l clear-r bold"><?php echo $this->nomeProjeto; ?></p>
+<div style="margin-left:14px;">
+	<div class="span-9 clear-l">
+		<label><?php echo $this->escape($this->translate('L_VIEW_MODULOS_DISPONIVEIS')) ?></label>
+		<?php
+			echo $this->formSelect('cd_modulo_combo', null, array('multiple' => 'multiple', 'size' => '5', 'class' => 'span-9', 'style' => 'height:150px;'), $this->modulo);
+		?>
+	</div>
+
+	<div class="span-9" style="margin-left: 75px;">
+		<label class="span-7"><?php echo $this->escape($this->translate('L_VIEW_MODULOS_VINCULADOS_PROPOSTA')) ?></label>
+		<?php
+			echo $this->formSelect('cd_modulo_combo2', null, array('multiple' => 'multiple', 'size' => '5', 'class' => 'span-9', 'style' => 'height:150px;'), $this->modulo2);
+		?>
+	</div>
+</div>	
+	<div class="accordionBottom" style="min-height: 30px;"></div>
+</div>

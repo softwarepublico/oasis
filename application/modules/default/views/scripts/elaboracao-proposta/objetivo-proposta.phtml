@@ -1,0 +1,26 @@
+<form method="post" id="formObjetivoProposta">
+	<div>
+	<div style="overflow:hidden; padding-left: 5px;" class="boxTab">
+        <label class="span-3 float-l right"><?php echo $this->escape($this->translate('L_VIEW_NOME_PROJETO')) ?>:</label>
+            <p class="span-17 float-l bold"><?php echo $this->nomeProjeto ?></p>
+		<label class="span-3 float-l clear-l right"><?php echo $this->escape($this->translate('L_VIEW_PROPOSTA')) ?>:</label>
+            <p class="span-3 float-l bold"><?php echo $this->cd_proposta ?></p>
+	</div>
+	<div  style="padding-top:8px; padding-left:10px;">
+		<label class="span-5 float-l"><?php echo $this->escape($this->translate('L_VIEW_OBJETIVO_PROPOSTA')) ?>:</label>
+			<?php echo $this->formTextarea('tx_objetivo_proposta', $this->tx_objetivo_proposta, array('class' => 'float-l span-20 height-4  clear-l')) ?>
+	</div>
+	<hr />
+	<div  class="accordionBottom">
+		<label class="bold span-19 right float-l" style="color: red;">
+            <?php echo Base_Util::getTranslator('L_MSG_ALERT_CLIQUE_PARA_REGISTRAR_OPERACAO', $this->escape($this->translate('L_BTN_SALVAR'))) ?>
+        </label>
+		<?php echo $this->formButton(
+                        'bt_salvar_objetivo_proposta',
+                        $this->escape($this->translate('L_BTN_SALVAR')),
+                        array('class' => 'verde'),
+                        null)
+        ?>
+	</div>
+	</div>
+</form>

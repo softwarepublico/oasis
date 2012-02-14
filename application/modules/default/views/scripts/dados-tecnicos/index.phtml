@@ -1,0 +1,28 @@
+<?php
+    $this->script('scriptFile',array('/dados-tecnicos/index.js'));
+?>
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#container-dadosTecnicos').show().tabs(); 
+});
+</script>
+<div id="container-dadosTecnicos" style="display: none;">
+	<ul>
+        <li>
+            <a href="#informacoes-tecnicas">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_INFORMACOES_TECNICAS')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#conhecimento-utilizado">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_CONHECIMENTO_UTILIZADO')) ?></span>
+            </a>
+        </li>
+    </ul>
+    <div id="informacoes-tecnicas">
+        <?php echo $this->render('dados-tecnicos/informacoes-tecnicas.phtml') ?>
+    </div>
+    <div id="conhecimento-utilizado">
+        <?php echo $this->render('dados-tecnicos/conhecimento-utilizado.phtml') ?>
+    </div>
+</div>

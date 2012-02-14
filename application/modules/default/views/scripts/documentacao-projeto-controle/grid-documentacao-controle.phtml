@@ -1,0 +1,67 @@
+<script type="text/javascript" defer="defer">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableDocumentacaoProjetoControle").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableDocumentacaoProjetoControle").tablesorterPager({container: $("#tableDocumentacaoProjetoControlePager"), size:5});
+});
+
+</script>
+<table id="tableDocumentacaoProjetoControle" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+			<th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_DATA'          )) ?></th>
+			<th class="span-4"><?php echo $this->escape($this->translate('L_VIEW_GRID_TIPO_DOCUMENTO')) ?></th>
+			<th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_NOME_DOCUMENTO')) ?></th>
+			<th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_ABRIR'         )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+	?>
+	<tr>
+		<td style="cursor: pointer;"> 
+			<?php echo date('d/m/Y', strtotime($res['dt_documentacao_projeto'])) ?>
+		</td>
+		<td style="cursor: pointer;">
+			<?php echo $res['tx_tipo_documentacao'] ?>
+		</td>
+		<td style="cursor: pointer;">
+			<?php echo $res['tx_nome_arquivo'] ?>
+		</td>
+		<td>
+            <div id="divDownload">
+                <a id="aDonwload" href="<?php echo $this->baseUrl();?>/documentacao-projeto-controle/download/data/<?php echo $res['dt_documentacao_projeto'] ?>/projeto/<?php echo $res['cd_projeto'] ?>/tipo/<?php echo $res['cd_tipo_documentacao'] ?>">
+                    <?php echo $this->escape($this->translate('L_VIEW_ABRIR')) ?>
+                </a>
+            </div>
+		</td>
+	</tr>
+	<?php
+		endforeach;
+	} else {
+		echo "  <tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr> ";
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableDocumentacaoProjetoControlePager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="05">05</option>
+			<option value="10">10</option>
+			<option value="20">20</option>
+		</select>
+	</form>
+</div>

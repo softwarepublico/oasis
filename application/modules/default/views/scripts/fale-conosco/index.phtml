@@ -1,0 +1,32 @@
+<?php 
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/fale-conosco/index.js'));
+?>
+<div id="formFaleConosco">
+	<fieldset class="span-14 push-4 float-l">
+		<?php 
+			echo $this->formHidden('cd_fale_conosco');
+		?>
+        <legend><?php echo $this->escape($this->translate('L_VIEW_FALE_CONOSCO')) ?></legend>
+			<div>
+                <label class="float-l span-3 clear-l right required" for="tx_nome"><?php echo $this->escape($this->translate('L_VIEW_NOME')) ?>:</label>
+					<?php echo $this->formText('tx_nome', '', array('class'=>'float-l span-9','maxlength'=>'50')) ?>
+				<label class="float-l span-3 clear-l right required" for="tx_email"><?php echo $this->escape($this->translate('L_VIEW_EMAIL')) ?>:</label>
+					<?php echo $this->formText('tx_email', '', array('class'=>'float-l span-9','maxlength'=>'50')) ?>
+				<label class="float-l span-3 clear-l right required" for="tx_assunto"><?php echo $this->escape($this->translate('L_VIEW_ASSUNTO')) ?>:</label>
+					<?php echo $this->formText('tx_assunto', '', array('class'=>'float-l span-9','maxlength'=>'50')) ?>
+				<label class="float-l span-3 clear-l right required" for="tx_mensagem"><?php echo $this->escape($this->translate('L_VIEW_MENSAGEM')) ?>:</label>
+					<?php echo $this->formTextarea('tx_mensagem', '', array('class'=>'float-l height-4 span-9')) ?>
+				
+				<label id="label_tx_resposta" class="float-l span-3 clear-l right" for="tx_resposta"><?php echo $this->escape($this->translate('L_VIEW_RESPOSTA')) ?>:</label>
+					<?php echo $this->formTextarea('tx_resposta', '', array('class'=>'float-l height-4 span-9','maxlength'=>'50')) ?>
+			</div>
+			<?php echo $this->formButton(
+                            'btn_enviar_msg',
+                            $this->escape($this->translate('L_BTN_ENVIAR')),
+                            array('class'=>'verde float-l span-2 clear-l push-10'
+                       ));
+            ?>
+	</fieldset>
+</div>
+<div class="float-l span-10" id="teste"></div>

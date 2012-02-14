@@ -1,0 +1,69 @@
+<script type="text/javascript" language="javascript" src="<?php echo $this->baseUrl(); ?>/public/js/modules/default/gerenciamento-rotina/historico-execucao-rotina.js"></script>
+<div id="tabHistoricoExecucaoRotina">
+	<?php 
+		echo $this->formHidden('tab_origem',$this->tab_origem);
+	?>
+	<label class="bold clear-l float-l span-4"><?php echo $this->escape($this->translate('L_VIEW_ROTINA')) ?>:</label>
+		<p class="float-l span-5"><?php echo $this->arrDadosRotina[0]['tx_rotina'] ?></p>
+	<label class="bold clear-l float-l span-4"><?php echo $this->escape($this->translate('L_VIEW_HORA')) ?>:</label>
+		<p class="span-17 float-l "><?php echo $this->arrDadosRotina[0]['tx_hora_inicio_rotina'] ?></p>
+	<label class="bold clear-l float-l span-4"><?php echo $this->escape($this->translate('L_VIEW_PERIODICIDADE')) ?>:</label>
+		<p class="span-17 float-l ">
+            <?php
+            switch ($this->arrDadosRotina[0]['st_periodicidade_rotina'])
+            {
+                case 'D':
+                    echo $this->escape($this->translate('L_VIEW_PERIODICIDADE_DIARIA'));
+                    break;
+                case 'S':
+                    echo $this->escape($this->translate('L_VIEW_PERIODICIDADE_SEMANAL'));
+                    break;
+                case 'M':
+                    echo $this->escape($this->translate('L_VIEW_PERIODICIDADE_MENSAL'));
+                    break;
+                default:
+                    break;
+            }
+            ?>
+        </p>
+	<label class="bold clear-l float-l span-4"><?php echo $this->escape($this->translate('L_VIEW_PRAZO_EXECUCAO_HORAS')) ?>:</label>
+		<p class="span-17 float-l "><?php echo $this->arrDadosRotina[0]['ni_prazo_execucao_rotina'] ?></p>
+	<hr style="width: 829px; border-top: 1px solid #54BDCD; visibility: visible; display: block;" />
+	<label class="bold clear-l float-l span-4"><?php echo $this->escape($this->translate('L_VIEW_OBJETO')) ?>:</label>
+		<p class="span-17 float-l "><?php echo $this->arrDadosRotina[0]['tx_objeto'] ?></p>
+	<label class="bold span-4 float-l"><?php echo $this->escape($this->translate('L_VIEW_DATA')) ?>:</label>
+		<p class="span-5 float-l "><?php echo date('d/m/Y H:i:s', strtotime($this->arrDadosExecucao[0]['dt_execucao_rotina'])) ?></p>
+	<label class="bold clear-l float-l span-4"><?php echo $this->escape($this->translate('L_VIEW_PROFISSIONAL')) ?>:</label>
+		<p class="span-17 float-l "><?php echo $this->arrDadosExecucao[0]['tx_profissional'] ?></p>
+	<label class="bold clear-l float-l span-4"><?php echo $this->escape($this->translate('L_VIEW_SITUACAO')) ?>:</label>
+		<p class="span-17 float-l ">
+            <?php
+                    if ($this->arrDadosExecucao[0]['st_fechamento_execucao_rotina'] == 'S') {
+                        echo  $this->escape($this->translate('L_VIEW_FECHADA'));
+                    }else{
+                        echo  $this->escape($this->translate('L_VIEW_ABERTA'));
+                    }
+            ?>
+        </p>
+	<hr style="width: 829px; border-top: 1px solid #54BDCD; visibility: visible; display: block;" />
+	<label class="bold clear-l float-l span-4"><?php echo $this->escape($this->translate('L_VIEW_HISTORICO_EXECUCAO')) ?></label>
+	<div class="span-20 float-l clear-l height-8 border" style="overflow-x: hidden; overflow-x: auto; margin-left:18px; margin-bottom: 5px;">
+		<?php 
+			if(count($this->arrDadosHistorico) > 0):
+				foreach($this->arrDadosHistorico as $historico): ?>
+					<ul>
+						<li class="clear-l float-l span-19" style="text-align: justify;">
+							<?php echo "<b>".date('d/m/Y H:i:s', strtotime($historico['dt_historico_execucao_rotina']))."</b><hr />".$historico['tx_historico_execucao_rotina'] ?>
+						</li>
+					</ul>
+		<?php  endforeach;
+			else: ?>
+                <label style="color: red; text-align: center;"><?php echo $this->escape($this->translate('L_MSG_ALERT_SEM_HISTORICO_REGISTRADO_PROFISSIONAL')) ?></label>
+		<?php endif; ?>
+	</div>
+	<div class="clear float-l span-21" style="margin-top: 9px;">
+		<?php
+			echo $this->formButton('btn_cancelar_historico_execucao_rotina', $this->escape($this->translate('L_BTN_CANCELAR')),array('class'=>'vermelho float-l clear-l'));
+		 ?>
+	</div>
+</div>

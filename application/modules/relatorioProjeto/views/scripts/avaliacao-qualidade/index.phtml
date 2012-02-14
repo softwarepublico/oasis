@@ -1,0 +1,14 @@
+<?php
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/avaliacao-qualidade/index.js'));
+?>
+<form id="formRelatorioAvaliacaoQualidade">
+
+	<label class="span-2 right float-l required" for="cd_contrato"><?php echo $this->escape($this->translate('L_VIEW_CONTRATO')) ?>:</label>
+		<?php echo $this->formSelect('cd_contrato',null,array('class'=>'float-l'),$this->arrContrato); ?>
+
+    <label class="span-2 float-l right clear-l required" for="cd_projeto"><?php echo $this->escape($this->translate('L_VIEW_PROJETO')) ?>:</label>
+    	<?php echo $this->formSelect("cd_projeto", null, array('class'=>'float-l'), array('0'=>$this->translate('L_VIEW_COMBO_SELECIONE'))); ?>
+
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->escape($this->translate('L_BTN_GERAR')) ?></button>
+</form>

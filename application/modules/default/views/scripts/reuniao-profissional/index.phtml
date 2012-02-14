@@ -1,0 +1,18 @@
+<?php
+    $this->script('scriptFile',array('/reuniao-profissional/index.js'));
+?>
+<div class="span-21">
+	<div id="div_combos_reuniao_profissional" class="float-l">
+		<label class="float-l span-2 right required" for="cd_projeto_reuniao_profissional"><?php echo $this->escape($this->translate('L_VIEW_PROJETO')) ?>:</label>
+			<?php echo $this->formSelect('cd_projeto_reuniao_profissional', null, array('class'=>'span-6 float-l'), $this->projetoCombo);?>
+	
+        <label class="float-l clear-l span-2 right required" for="cd_reuniao_profissional" ><?php echo $this->escape($this->translate('L_VIEW_REUNIAO')) ?>:</label>
+			<?php echo $this->formSelect('cd_reuniao_profissional', null, array('class'=>'span-6 float-l'), array(0=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE'))));?>
+	</div>
+	<hr />
+</div>
+<?php echo $this->flipFlop(array('name'=>'cd_profissional_combo', 'label'=>$this->escape($this->translate('L_VIEW_PROFISSIONAIS')), 'value'=>$this->profissionais),
+						   array('name'=>'cd_profissional2', 'label'=>$this->escape($this->translate('L_VIEW_PROFISSIONAIS_ASSOCIADOS')), 'value'=>$this->profissionais2),
+						   'add',
+						   'remove',8);
+?>

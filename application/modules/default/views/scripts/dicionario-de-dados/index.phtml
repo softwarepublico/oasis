@@ -1,0 +1,25 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#container-dicionarioDeDados').show().tabs();
+    });
+</script>
+<div id="container-dicionarioDeDados" style="display: none;">
+    <ul>
+        <li>
+            <a href="#documentar">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_DOCUMENTAR')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#configuracao-banco-dados">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_CONFIGURACOES_BANCO_DADOS')) ?></span>
+            </a>
+        </li>
+    </ul>
+    <div id="documentar">
+        <?php echo $this->render('dicionario-de-dados/documentar.phtml') ?>
+    </div>
+    <div id="configuracao-banco-dados">
+        <?php echo $this->render('dicionario-de-dados/configuracao-banco-dados.phtml') ?>
+    </div>
+</div>

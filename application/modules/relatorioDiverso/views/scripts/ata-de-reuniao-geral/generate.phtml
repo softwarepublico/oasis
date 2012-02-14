@@ -1,0 +1,73 @@
+<?php
+//criando o objeto
+$objPdf = new Base_Tcpdf_Pdf();
+
+$arrKeywords = array(K_CREATOR_SYSTEM,
+                             Base_Util::getTranslator('L_TIT_REL_ATA_REUNIAO'),
+                             Base_Util::getTranslator('L_VIEW_REUNIAO'),
+                             Base_Util::getTranslator('L_VIEW_ATA'),
+                             Base_Util::getTranslator('L_VIEW_RELATORIO')
+                            );
+
+$objPdf->iniciaRelatorio(Base_Util::getTranslator('L_TIT_REL_ATA_REUNIAO_GERAL'), $arrKeywords);
+$objPdf->SetDisplayMode("real");
+
+// add a page
+$objPdf->AddPage();
+
+if(count($this->arrAtaReuniaoGeral) > 0){
+	//Mostra o nome do Objeto
+	$objPdf->SetFont('helvetica', 'B', 8);
+	$objPdf->Cell(PDF_MARGIN_LEFT, 4, mb_strtoupper(Base_Util::getTranslator('L_VIEW_OBJETO'), 'utf-8').": ".$this->arrAtaReuniaoGeral['tx_objeto'], '', 0, 'L');
+	$objPdf->Ln(4);
+	
+	//Mostra
+	$objPdf->Cell(PDF_MARGIN_LEFT, 4, mb_strtoupper(Base_Util::getTranslator('L_VIEW_DATA'), 'utf-8').":   ".$this->arrAtaReuniaoGeral['dt_reuniao'], '', 0, 'L');
+	$objPdf->Ln(4);
+	$objPdf->Cell(PDF_MARGIN_LEFT, 4, mb_strtoupper(Base_Util::getTranslator('L_VIEW_LOCAL'), 'utf-8').": ".$this->arrAtaReuniaoGeral['tx_local_reuniao'], '', 0, 'L');
+	$objPdf->Ln(6);
+	
+	//Mostra participantes
+	$objPdf->Cell(180, 4, mb_strtoupper(Base_Util::getTranslator('L_VIEW_PARTICIPANTES_VARIAVEL', Base_Util::getTranslator('L_VIEW_UNIDADE')), 'utf-8'), 'B', 0, 'L');
+	$objPdf->Ln(4);
+	$objPdf->SetFont('helvetica', '', 8);
+	
+	$arrProfissional = explode(",",$this->arrAtaReuniaoGeral['tx_participantes']);
+	foreach($arrProfissional as $valor){
+		$objPdf->MultiCell(0,0,trim($valor).PHP_EOL,'','J');
+		$objPdf->Ln(1);
+	}
+	$objPdf->Ln(6);
+	
+	//Mostra Pauta
+	$objPdf->SetFont('helvetica', 'B', 8);
+	$objPdf->Cell(180, 4, mb_strtoupper(Base_Util::getTranslator('L_VIEW_PAUTA'), 'utf-8'), 'B', 0, 'L');
+	$objPdf->Ln(4);
+	$objPdf->SetFont('helvetica', '', 8);
+	$objPdf->MultiCell(0,0,trim($this->arrAtaReuniaoGeral['tx_pauta']).PHP_EOL,'','J',0,1,null,null,null,null,true);
+	$objPdf->Ln(6);
+	
+	//Mostra Ata
+	$objPdf->SetFont('helvetica', 'B', 8);
+	$objPdf->Cell(180, 4, mb_strtoupper(Base_Util::getTranslator('L_VIEW_ATA'), 'utf-8'), 'B', 0, 'L');
+	$objPdf->Ln(4);
+	$objPdf->SetFont('helvetica', '', 8);
+	$objPdf->MultiCell(0,0,$this->arrAtaReuniaoGeral['tx_ata'].PHP_EOL,'','J',0,1,null,null,null,null,true);
+	
+	
+} else {
+	$strHtml  = '';
+	$strHtml .= '<table cellpadding="5" cellspacing="0" bordercolor="#CCCCCC" border="1">';
+	$strHtml .= '<tr>';
+	$strHtml .= '  <td bgcolor="'.Base_Tcpdf_Pdf::FILL_TITLE_TABLE.'" width="508px" style="text-align:center;"><b>'.Base_Util::getTranslator('L_MSG_ALERT_SEM_ATA_REUNIAO_PROJETO').'</b></td>';
+	$strHtml .= '</tr>';
+	$strHtml .= '</table>';
+	$objPdf->writeHTML($strHtml,true, 0, true, 0);
+}
+
+// reset pointer to the last page
+$objPdf->lastPage();
+
+//Close and output PDF document
+$objPdf->Output('relatorio_ata_da_reuniao_geral.pdf', 'I');
+?>

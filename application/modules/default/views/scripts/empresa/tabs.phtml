@@ -1,0 +1,62 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#container_empresa').show().tabs().triggerTab(1); 
+	$("#config_hidden_empresa").val('N');
+});
+</script>
+<?php 
+	$permissaoEmpresa 		  = "N";
+	$permissaoContratoEmpresa = "N";
+?>
+<div id="container_empresa" style="display: none;">
+	<ul>
+		<?php if(ChecaPermissao::possuiPermissao('empresa') === true): $permissaoEmpresa = "S"; ?>
+        	<li>
+                <a href="#aba_empresa">
+                    <span><?php echo $this->translate('L_VIEW_ABA_EMPRESA'); ?></span>
+                </a>
+            </li>
+        <?php endif; ?>
+		<?php if(ChecaPermissao::possuiPermissao('contato-empresa') === true): $permissaoContratoEmpresa = "S";?>
+	        <li id="li-contato-empresa">
+                <a href="#aba_contato_empresa">
+                    <span><?php echo $this->translate('L_VIEW_ABA_CONTATO_EMPRESA'); ?></span>
+                </a>
+            </li>
+        <?php endif; ?>
+    </ul>
+	
+		<?php if(ChecaPermissao::possuiPermissao('empresa') === true): ?>
+		    <div id="aba_empresa">
+		    	<div class="divTab"><?php echo $this->render('empresa/index.phtml') ?></div>
+		    </div>
+        <?php endif; ?>
+        
+		<?php if(ChecaPermissao::possuiPermissao('contato-empresa') === true): ?>
+		    <div id="aba_contato_empresa">
+		    	<div class="divTab"><?php echo $this->render('contato-empresa/index.phtml') ?></div>
+		    </div>
+        <?php endif; ?>
+</div>
+
+<script type="text/javascript">
+var perm_empresa		 = '<?php echo $permissaoEmpresa; ?>';
+var perm_contato_empresa = '<?php echo $permissaoContratoEmpresa; ?>';
+
+function configAccordionEmpresa()
+{
+	if($("#config_hidden_empresa").val() === 'N'){
+		if( perm_empresa === 'S' ){
+			montaGridEmpresa();
+		}
+		if( perm_contato_empresa === 'S'){
+			comboEmpresa("cd_empresa_contato_empresa");
+			if ($("#cd_empresa_contato_empresa").val() != 0) {
+				gridContatoEmpresaAjax();
+			}
+		}
+
+		$("#config_hidden_empresa").val('S');
+	}
+}
+</script>

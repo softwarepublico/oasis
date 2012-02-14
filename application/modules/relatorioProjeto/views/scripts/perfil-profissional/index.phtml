@@ -1,0 +1,15 @@
+<?php 
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/perfil-profissional/index.js'));
+?>
+<form id="formRelatorioPefilProfissional">
+
+    <label class="clear-l span-2 float-l right required" for="cd_objeto"><?php echo $this->translate('L_VIEW_OBJETO') ?>:</label>
+    	<?php echo $this->formSelect("cd_objeto",null,array('class'=>'float-l'), $this->comboObjeto); ?>
+    
+    <label class="clear-l span-2 float-l right required" for="cd_perfil"><?php echo $this->translate('L_VIEW_PERFIL') ?>:</label>
+    	<?php echo $this->formSelect("cd_perfil",null,array('class'=>'float-l'), array(0=>Base_Util::getTranslator('L_VIEW_COMBO_SELECIONE'))); ?>
+    
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->translate('L_BTN_GERAR') ?></button>
+</form>
+    	

@@ -1,0 +1,196 @@
+<?php
+//criando o objeto
+set_time_limit(90000);
+$objPdf = new Base_Tcpdf_Pdf();
+
+$arrKeywords = array(K_CREATOR_SYSTEM,
+                             Base_Util::getTranslator('L_TIT_REL_CASO_DE_USO'),
+                             Base_Util::getTranslator('L_VIEW_CASO_DE_USO'),
+                             Base_Util::getTranslator('L_VIEW_RELATORIO')
+                            );
+
+$objPdf->iniciaRelatorio(Base_Util::getTranslator('L_TIT_REL_CASO_DE_USO'), $arrKeywords);
+
+$objPdf->SetDisplayMode("real");
+$objPdf->SetTitle("Caso de Uso");
+
+// set font
+$objPdf->SetFont('helvetica', '', 8);
+
+//echo "<pre>";
+//print_r($this->arrInteracao);
+//die( "<hr>ARQUIVO:<b>" . __FILE__ . "</b><br>LINHA:<b>" . __LINE__ . '</b>' );
+
+$valTab = '       ';
+$topico = 1;
+// add a page
+if(count($this->arrResult) > 0){
+	$i = 0;
+	foreach($this->arrResult as $key=>$value){
+		$objPdf->AddPage();
+		$strTableCDU = "";
+// CAPA DO CASO DE USO
+        $objPdf->Ln(80);
+        $objPdf->SetFont('helvetica', 'B', 12);
+        $objPdf->Cell(180, 6,$this->arrResult[0]['tx_projeto'], '', 0, 'R');
+        $objPdf->Ln();
+		$objPdf->Cell(180, 6, $this->arrResult[0]['tx_sigla_projeto'], '', 0, 'R');
+        $objPdf->Ln();
+        $objPdf->Ln();
+        $objPdf->SetFont('helvetica', '', 10);
+		$objPdf->Cell(180, 6, Base_Util::getTranslator('L_VIEW_ESPECIFICACAO_CASO_USO'), '', 0, 'R');
+        $objPdf->Ln();
+		$objPdf->Cell(180, 6, strtoupper(Base_Util::getTranslator('L_VIEW_MODULO')).' '.$this->arrResult[0]['tx_modulo'], '', 0, 'R');
+        $objPdf->Ln();
+        $objPdf->Ln();
+		$objPdf->Cell(180, 6, $this->arrResult[$i]['tx_caso_de_uso'], '', 0, 'R');
+        $objPdf->Ln();
+        $objPdf->SetFont('helvetica', 'B', 10);
+		$objPdf->Cell(180, 6, Base_Util::getTranslator('L_VIEW_VERSAO')." ".$this->arrResult[$i]['ni_versao_caso_de_uso'], '', 0, 'R');
+        $objPdf->Ln(100);
+        $objPdf->SetFont('helvetica', '', 10);
+        $objPdf->Cell(40, 6, Base_Util::getTranslator('L_VIEW_CASO_DE_USO').":", '1', 0, 'L');
+        $objPdf->Cell(140, 6,$this->arrResult[$i]['tx_caso_de_uso'], '1', 0, 'L');
+		$objPdf->AddPage();
+	
+ //Introdução 
+ 
+		$strTableCDU .= '<table cellpadding="5" cellspacing="0">';
+			$strTableCDU .= '<tr>';
+			$strTableCDU .= '  <td ><b>'. $topico .'.    '.Base_Util::getTranslator('L_VIEW_INTRODUCAO').'</b></td>';
+			$strTableCDU .= '</tr>';
+			$strTableCDU .= '<tr>';
+            $strTableCDU .= '  <td width="15px"></td>';
+			$strTableCDU .= '  <td >'. $valTab . strip_tags(Base_Util::getTranslator('L_MSG_INTRODUCAO_CASO_DE_USO')).'</td>';
+			$strTableCDU .= '</tr>';
+            
+            $topico +=1;
+			$strTableCDU .= '<tr>';
+			$strTableCDU .= '  <td ><b>'. $topico .'.    '.Base_Util::getTranslator('L_VIEW_DESCRICAO').'</b></td>';
+			$strTableCDU .= '</tr>';
+			$strTableCDU .= '<tr>';
+            $strTableCDU .= '  <td width="15px"></td>';
+			$strTableCDU .= '  <td >'. $valTab . strip_tags($this->arrResult[$i]['tx_descricao_caso_de_uso']).'</td>';
+			$strTableCDU .= '</tr>';
+
+            $topico +=1;
+            $strTableCDU .= '<tr>';
+			$strTableCDU .= '  <td ><b>'. $topico .'.    '.Base_Util::getTranslator('L_VIEW_ATOR').'</b></td>';
+			$strTableCDU .= '</tr>';
+        if(count($this->arrInteracao[$i]) > 0){
+            $strTableCDU .= '<tr>';
+            $strTableCDU .= '  <td width="15px"></td>';
+			$strTableCDU .= '  <td >'.  $valTab . strip_tags($this->arrInteracao[$i][0]['tx_ator']).'</td>';
+			$strTableCDU .= '</tr>';
+        } else {
+            $strTableCDU .= '<tr>';
+            $strTableCDU .= '  <td width="15px"></td>';
+			$strTableCDU .= '  <td >'.  $valTab .Base_Util::getTranslator('L_VIEW_NAO_ESPECIFICADO').'</td>';
+			$strTableCDU .= '</tr>';
+        }
+
+            $topico +=1;
+            $strTableCDU .= '<tr>';
+			$strTableCDU .= '  <td ><b>'. $topico .'.    '.Base_Util::getTranslator('L_VIEW_FLUXO_BASICO').'</b></td>';
+			$strTableCDU .= '</tr>';
+		if(count($this->arrInteracao[$i]) > 0){
+            
+			$quantCol = count($this->arrInteracao[$i])+1;
+			foreach($this->arrInteracao[$i] as $chave=>$valor){
+				$strTableCDU .= '<tr>';
+                $strTableCDU .= '  <td width="15px"></td>';
+				$strTableCDU .= '  <td>'.$valTab . ($chave + 1).'. '.strip_tags($valor['tx_interacao']).'</td>';
+				$strTableCDU .= '</tr>';
+			}
+		} else {
+            $strTableCDU .= '<tr>';
+            $strTableCDU .= '  <td width="15px"></td>';
+			$strTableCDU .= '  <td >'.  $valTab .Base_Util::getTranslator('L_VIEW_NAO_ESPECIFICADO').'</td>';
+			$strTableCDU .= '</tr>';
+        }
+		
+            $topico +=1;
+            $strTableCDU .= '<tr>';
+			$strTableCDU .= '  <td ><b>'. $topico .'.    '.Base_Util::getTranslator('L_VIEW_EXCECOES').'</b></td>';
+			$strTableCDU .= '</tr>';
+		if(count($this->arrComplementoExcecao[$i]) > 0){
+			foreach($this->arrComplementoExcecao[$i] as $k=>$v){
+				$ex = "EX".substr("00".$v['ni_ordem_complemento'],-2);
+				$strTableCDU .= '<tr>';
+                    $strTableCDU .= '  <td width="15px"></td>';
+					$strTableCDU .= '  <td>'.$ex.' - '.strip_tags($v['tx_complemento']).'</td>';
+				$strTableCDU .= '</tr>';
+			}
+		} else {
+            $strTableCDU .= '<tr>';
+            $strTableCDU .= '  <td width="15px"></td>';
+			$strTableCDU .= '  <td >'.  $valTab .Base_Util::getTranslator('L_VIEW_NAO_ESPECIFICADO').'</td>';
+			$strTableCDU .= '</tr>';
+        }
+				
+            $topico +=1;
+            $strTableCDU .= '<tr>';
+			$strTableCDU .= '  <td ><b>'. $topico .'.    '.Base_Util::getTranslator('L_VIEW_REGRA').'</b></td>';
+			$strTableCDU .= '</tr>';
+		if(count($this->arrComplementoRegra[$i]) > 0){
+			foreach($this->arrComplementoRegra[$i] as $q=>$b){
+				$re = "RE".substr("00".$b['ni_ordem_complemento'],-2);
+				$strTableCDU .= '<tr>';
+					$strTableCDU .= '  <td width="15px"></td>';
+					$strTableCDU .= '  <td >'.$re.' - '.strip_tags($b['tx_complemento']).'</td>';
+				$strTableCDU .= '</tr>';
+			}
+		} else {
+            $strTableCDU .= '<tr>';
+            $strTableCDU .= '  <td width="15px"></td>';
+			$strTableCDU .= '  <td >'.  $valTab .Base_Util::getTranslator('L_VIEW_NAO_ESPECIFICADO').'</td>';
+			$strTableCDU .= '</tr>';
+        }
+
+            $topico +=1;
+            $strTableCDU .= '<tr>';
+			$strTableCDU .= '  <td ><b>'. $topico .'.    '.Base_Util::getTranslator('L_VIEW_FLUXO_ALTERNATIVO').'</b></td>';
+			$strTableCDU .= '</tr>';
+		if(count($this->arrComplementoFluxoAlt[$i]) > 0){
+			foreach($this->arrComplementoFluxoAlt[$i] as $key=>$value){
+				$fa = "FA".substr("00".$value['ni_ordem_complemento'],-2);
+				$strTableCDU .= '<tr>';
+					$strTableCDU .= '  <td width="15px"></td>';
+					$strTableCDU .= '  <td >'.$fa.' - '.strip_tags($value['tx_complemento']).'</td>';
+				$strTableCDU .= '</tr>';
+			}
+		} else {
+            $strTableCDU .= '<tr>';
+            $strTableCDU .= '  <td width="15px"></td>';
+			$strTableCDU .= '  <td >'.  $valTab .Base_Util::getTranslator('L_VIEW_NAO_ESPECIFICADO').'</td>';
+			$strTableCDU .= '</tr>';
+        }
+        
+      //  $strTableCDU .= '<tr><td ></td><tr>';
+        $strTableCDU .= '<tr>';
+            $strTableCDU .= '  <td >___</td>';
+        $strTableCDU .= '</tr>';
+
+        $i++;
+		$strTableCDU .= '</table>';
+        $topico =1;
+		
+		$objPdf->writeHTML($strTableCDU,true, 0, true, 0);
+            
+    }   
+
+} else {
+	$objPdf->AddPage();
+	$strTableCDU  = "";
+	$strTableCDU .= '<table cellpadding="5" cellspacing="0" bordercolor="#CCCCCC" border="1">';
+	$strTableCDU .= '<tr>';
+	$strTableCDU .= '  <td bgcolor="'.Base_Tcpdf_Pdf::FILL_TITLE_TABLE.'" width="508px" style="text-align:center;"><b>'.Base_Util::getTranslator('L_MSG_ALERT_PROPOSTA_PROJETO_SEM_CASO_USO').'</b></td>';
+	$strTableCDU .= '</tr>';
+	$strTableCDU .= '</table>';
+	$objPdf->writeHTML($strTableCDU,true, 0, true, 0);
+}
+// reset pointer to the last page
+$objPdf->lastPage();
+//Close and output PDF document
+$objPdf->Output('relatorio_caso_de_uso.pdf', 'I');
+?>

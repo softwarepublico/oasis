@@ -1,0 +1,29 @@
+<div id="div_nova_analise_disp_servico">
+
+	<?php echo $this->formHidden('cd_disponibilidade_servico'); ?>
+	<?php echo $this->formHidden('hidden_cd_objeto_disp_servico'); ?>
+	<?php echo $this->formHidden('hidden_dt_inicio_analise_disponilidade_servico'); ?>
+	<?php echo $this->formHidden('hidden_dt_fim_analise_disponilidade_servico'); ?>
+
+    <label class="float-l span-4 bold required" for="cd_objeto_disp_servico"><?php echo $this->escape($this->translate('L_VIEW_OBJETO')) ?>:</label>
+	<?php echo $this->formSelect('cd_objeto_disp_servico', null, array('class'=>'float-l span-4'), $this->arrObjetoContratoDemandaServico); ?>
+
+	<label class="float-l clear-l span-4 bold required" for="dt_inicio_analise_disp_servico"><?php echo $this->escape($this->translate('L_VIEW_INICIO_ANALISE')) ?>:</label>
+	<?php echo $this->Data('dt_inicio_analise_disp_servico', null, array('class'=>'float-l span-2')); ?>
+
+	<label class="float-l clear-l span-4 bold required" for="dt_fim_analise_disp_servico"><?php echo $this->escape($this->translate('L_VIEW_FIM_ANALISE')) ?>:</label>
+	<?php echo $this->Data('dt_fim_analise_disp_servico', null, array('class'=>'float-l span-2')); ?>
+
+	<label class="float-l clear-l span-4 bold required" for="tx_analise_disp_servico" editor="editor"><?php echo $this->escape($this->translate('L_VIEW_ANALISE')) ?>:</label>
+	<?php echo $this->editorHtml('tx_analise_disp_servico', null, array('class'=>'float-l','cols'=>'60','rows'=>'7','editor'=>K_EDITOR)); ?>
+
+	<label class="float-l clear-l span-4 bold"><?php echo $this->escape($this->translate('L_VIEW_INDICE_OBTIDO')) ?>:</label>
+	<?php echo $this->formText('ni_indice_disp_servico', null, array('class'=>'float-l span-2', 'onKeyPress'=>'return soNumerosComPonto(event)', 'maxlength'=>'8')); ?>
+
+	<label class="float-l clear-l span-4 bold required" for="tx_parecer_disp_servico" editor="editor"><?php echo $this->escape($this->translate('L_VIEW_PARECER')) ?>:</label>
+	<?php echo $this->editorHtml('tx_parecer_disp_servico', null, array('class'=>'float-l','cols'=>'60','rows'=>'7','editor'=>K_EDITOR)); ?>
+
+	<?php echo $this->formButton('btn_salvar_analise_disp_servico', $this->escape($this->translate('L_BTN_SALVAR')), array('class'=>'float-l clear-l verde push-4')); ?>
+	<?php echo $this->formButton('btn_cancelar_analise_disp_servico', $this->escape($this->translate('L_BTN_CANCELAR')), array('class'=>'float-l vermelho push-4')); ?>
+
+</div>

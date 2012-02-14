@@ -1,0 +1,82 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableMudancaProposta").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableMudancaProposta").tablesorterPager({container: $("#tableMudancaPropostaPager")}); 
+});
+</script>
+<table id="tableMudancaProposta" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+			<th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_PROPOSTA'    )) ?></th>
+			<th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_MES_ANO'     )) ?></th>
+			<th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_UNID_METRICA')) ?></th>
+			<th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_SITUACAO'    )) ?></th>
+			<th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_ACAO'        )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		$util = new Base_Controller_Action_Helper_Util();
+		
+		foreach ($this->res as $res):
+
+			if(empty($res['ni_mes_proposta']) && empty($res['ni_ano_proposta'])){
+				$mesAno = "";	
+			}else if( !empty($res['ni_mes_proposta']) ){
+				$mesAno = $util->getMes($res['ni_mes_proposta']).' / '.$res['ni_ano_proposta'];
+			}else{
+				$mesAno = "/ ".$res['ni_ano_proposta'];
+			}
+	?>
+		<tr>
+			<td ><?php echo $res['cd_proposta']			  ?></td>
+			<td ><?php echo $mesAno	    ?></td>
+			<td ><?php echo $res['ni_horas_proposta']; ?></td>
+			<?php if($res['st_encerramento_proposta'] === 'S'):?>
+				<td><?php echo $this->escape($this->translate('L_VIEW_EMCESSADA')) ?></td>
+				<td style="text-align: center;"></td>
+			<?php else :
+					if( $res['st_homologacao_proposta'] == "A"):
+			 ?>
+						<td><?php echo $this->escape($this->translate('L_VIEW_PROCESSADA')) ?></td>
+						<td style="text-align: center;">
+							<?php
+								if (array_key_exists('possui_pedido', $res) && ($res["possui_pedido"] == "S")) {
+									echo $this->escape($this->translate('L_VIEW_PEDIDO_MUDANCA_SOLICITADO'));
+								}else{
+									$click = "cadastrarMudancaProposta({$res['cd_projeto']},{$res['cd_proposta']},'{$res['dt_fechamento_proposta']}')";
+									echo $this->formButton('btn_pedir_mudanca_proposta',$this->escape($this->translate('L_BTN_PEDIR_MUDANCA')),array('class'=>'verde','onclick'=>"{$click}"));
+								}
+							 ?>
+						</td>
+				<?php else: ?>
+                        <td><?php echo $this->escape($this->translate('L_VIEW_EM_PROCESSAMENTO')) ?></td>
+						<td></td>
+				<?php endif; ?>
+			<?php endif; ?>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo "<tr><td colspan='5' style='text-align: center;'>".$this->escape($this->translate('L_VIEW_SEM_REGISTRO'))."</td></tr>";
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableMudancaPropostaPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

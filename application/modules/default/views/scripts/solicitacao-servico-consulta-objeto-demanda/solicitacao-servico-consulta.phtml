@@ -1,0 +1,33 @@
+<?php
+	$this->script("grid");
+	$this->script("calendario");
+	$this->script("mascara");
+	$this->script("validaData");
+    $this->script('scriptFile',array('/solicitacao-servico-consulta-objeto-demanda/index.js'));
+?>
+<div id="tabSolicitacaoTipoDemandaConsulta" class="divTab">
+	<div class="clear boxTab" >
+        <label class="span-2 float-l"><?php echo $this->escape($this->translate('L_VIEW_UNIDADE')) ?>:</label>
+            <p class="float-l span-6"><?php echo $this->formSelect('cd_unidade_consulta_tipo_demanda', null, array('class' => 'span-5 float-l', 'style' => 'margin-right: 10px;'), $this->cd_unidade_combo) ?></p>
+		<label class="span-2 float-l"><?php echo $this->escape($this->translate('L_VIEW_SOLICITANTE')) ?>:</label>
+            <p class="float-l span-6"><?php echo $this->formText('tx_solicitante', null, array('class' => 'span-5 float-l', 'style' => 'margin-right: 10px;'), null) ?></p>
+		<label class="span-2 float-l clear-l"><?php echo $this->escape($this->translate('L_VIEW_DATA_INICIAL')) ?>:</label>
+            <p class="float-l span-6"><?php echo $this->Data('dt_inicio_consulta_tipo_demanda', null, array('class' => 'float-l'), null) ?></p>
+		<label class="span-2 float-l"><?php echo $this->escape($this->translate('L_VIEW_DATA_FINAL')) ?>:</label>
+            <p class="float-l span-6"><?php echo $this->Data('dt_fim_consulta_tipo_demanda', null, array('class' => 'float-l'), null) ?></p>
+		<label class="span-2 float-l clear-l"><?php echo $this->escape($this->translate('L_VIEW_PROFISSIONAL')) ?>:</label>
+            <p class="float-l span-6"><?php echo $this->formSelect('cd_profissional', null, array('class' => 'span-5 float-l', 'style' => 'margin-right: 10px;'), $this->cd_profissional_combo) ?></p>
+		<label class="span-2 float-l"><?php echo $this->escape($this->translate('L_VIEW_NUMERO')) ?>:</label>
+			<p class="float-l span-6">
+				<?php echo $this->formText('solicitacao', null, array('class' => 'span-3 float-l', 'style' => 'margin-right: 10px;'), null) ?>
+				<label class="span-2 float-l" style="font-size: 8px;">(XX/AAAA)</label>
+			</p>
+		<label class="span-2 float-l clear-l"><?php echo $this->escape($this->translate('L_VIEW_TEXTO')) ?>:</label>
+            <p class="float-l"><?php echo $this->formText('tx_demanda', null, array('class' => 'span-14 float-l'), null) ?></p>
+		<label class="span-2 float-l clear-l"><?php echo $this->escape($this->translate('L_VIEW_TIPO')) ?>:</label>
+            <p class="float-l"><input type="radio" name="tipo_consulta" id="tipo_consulta_and" value="and" checked="checked" />And</p>
+            <p class="float-l"><input type="radio" name="tipo_consulta" id="tipo_consulta_or" value="or" />Or</p>
+		<label class="span-2 float-r clear-l"><?php echo $this->formButton('bt_consultar', $this->escape($this->translate('L_BTN_CONSULTAR')), array('class' => 'float-r azul'), null)?></label>
+	</div>
+	<div id="gridSolicitacaoTipoDemandaConsulta" class="float-l clear-l span-21"></div>
+</div>

@@ -1,0 +1,109 @@
+<?php
+    $this->script('scriptFile',array('/gerenciamento-mudanca/index.js'));
+?>
+<div id="container-gerenciamento-mudanca" style="display: none;">
+	<?php
+		//controle de permisão
+		$qtdAbas 		= 1;
+		$proposta 		= 'N';
+		$requisito 		= 'N';
+		$regraDeNegocio = 'N';
+		$casoDeUso 		= 'N';
+        $permissaoAlteracoProposta = 'N';
+        $permissaoPreProjeto       = 'N';
+		
+	
+		echo $this->formHidden('id_tab_da_acao_gerenciamento_mudanca');
+		echo $this->formHidden('teste_aba_gerenciamento_mudanca');
+		
+		echo $this->formHidden('cd_projeto_gerenciamento_mudanca');
+		echo $this->formHidden('cd_item_controle_baseline_gerenciamento_mudanca');
+		echo $this->formHidden('cd_item_controlado_gerenciamento_mudanca');
+		echo $this->formHidden('dt_versao_item_controlado_gerenciamento_mudanca');
+		echo $this->formHidden('dt_gerencia_mudanca_gerenciamento_mudanca');
+	?>
+
+	<ul>
+		<?php if(ChecaPermissao::possuiPermissao('gerenciamento-mudanca-proposta') === true):
+					$qtdAbas++;
+					$proposta = 'S';
+					if (ChecaPermissao::possuiPermissao('alteracao-proposta') === true){
+						$permissaoAlteracoProposta = 'S';
+					}
+					if (ChecaPermissao::possuiPermissao('pre-projeto-evolutivo') === true){
+						$permissaoPreProjeto = 'S';
+					}
+		?>
+                <li>
+                    <a href="#analiseMudancaProposta">
+                        <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PROPOSTA')) ?></span>
+                    </a>
+                </li>
+		<?php endif; ?>
+
+		<?php if(ChecaPermissao::possuiPermissao('gerenciamento-mudanca-requisito') === true): $qtdAbas++; $requisito = 'S'; ?>
+                    <li>
+                        <a href="#analiseMudancaRequisito">
+                            <span><?php echo $this->escape($this->translate('L_VIEW_ABA_REQUISITO')) ?></span>
+                        </a>
+                    </li>
+		<?php endif; ?>
+
+		<?php if(ChecaPermissao::possuiPermissao('gerenciamento-mudanca-regra-de-negocio') === true): $qtdAbas++; $regraDeNegocio = 'S'; ?>
+                    <li>
+                        <a href="#analiseMudancaRegraNegocio">
+                            <span><?php echo $this->escape($this->translate('L_VIEW_ABA_REGRA_DE_NEGOCIO')) ?></span>
+                        </a>
+                    </li>
+		<?php endif; ?>
+
+		<?php if(ChecaPermissao::possuiPermissao('gerenciamento-mudanca-caso-de-uso') === true): $qtdAbas++; $casoDeUso = 'S'; ?>
+                    <li>
+                        <a href="#analiseMudancaCasoDeUso">
+                            <span><?php echo $this->escape($this->translate('L_VIEW_ABA_CASO_DE_USO')) ?></span>
+                        </a>
+                    </li>
+		<?php endif; ?>	
+
+        <li id="li_aba_cadastro_decisao" style="display: none;">
+            <a href="#aba_cadastro_decisao">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_CADASTRO_DECISAO')) ?></span>
+            </a>
+        </li>
+    </ul>
+
+    <?php  if (ChecaPermissao::possuiPermissao('gerenciamento-mudanca-proposta') === true): ?>
+	    <div id="analiseMudancaProposta">
+	    	<?php echo $this->render('gerenciamento-mudanca-proposta/index.phtml') ?>
+	    </div>
+	<?php endif; ?>
+    <?php  if (ChecaPermissao::possuiPermissao('gerenciamento-mudanca-requisito') === true): ?>
+	    <div id="analiseMudancaRequisito">
+	    	<?php echo $this->render('gerenciamento-mudanca-requisito/index.phtml') ?>
+	    </div>
+	<?php endif; ?>
+    <?php  if (ChecaPermissao::possuiPermissao('gerenciamento-mudanca-regra-de-negocio') === true): ?>
+	    <div id="analiseMudancaRegraNegocio">
+	    	<?php echo $this->render('gerenciamento-mudanca-regra-de-negocio/index.phtml') ?>
+	    </div>
+	<?php endif; ?>
+    <?php  if (ChecaPermissao::possuiPermissao('gerenciamento-mudanca-caso-de-uso') === true): ?>
+	    <div id="analiseMudancaCasoDeUso">
+	    	<?php echo $this->render('gerenciamento-mudanca-caso-de-uso/index.phtml') ?>
+	    </div>
+	<?php endif; ?>
+    
+    <div id="aba_cadastro_decisao">
+    	<?php echo $this->render('gerenciamento-mudanca/cadastro_decisao_mudanca.phtml') ?>
+    </div>
+</div>
+
+<script>
+	var qtdAbas					  =  <?php echo $qtdAbas ?>;
+	var permissaoProposta		  = '<?php echo $proposta ?>';
+	var permissaoRequisito		  = '<?php echo $requisito ?>';
+	var permissaoRegraDeNegocio	  = '<?php echo $regraDeNegocio ?>';
+	var permissaoCasoDeUso		  = '<?php echo $casoDeUso ?>';
+	var permissaoAlteracoProposta = '<?php echo $permissaoAlteracoProposta ?>';
+	var permissaoPreProjeto		  = '<?php echo $permissaoPreProjeto ?>';
+</script>

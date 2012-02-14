@@ -1,0 +1,14 @@
+<form id="formPreProjetoEvolutivo" style="margin-left: 10px;">
+	<?php echo $this->formHidden('cd_projeto_pre_projeto_evolutivo', $this->cd_projeto); ?>
+	<div class="float-l span-14">
+        <label class="bold span-4 float-l right required" for="tx_pre_projeto_evolutivo" >
+            <?php echo $this->escape($this->translate('L_VIEW_PRE_PROJETO_EVOLUTIVO')) ?>:
+        </label>
+		<?php echo $this->formText('tx_pre_projeto_evolutivo', '', array('class'=>'float-l span-10','maxlength'=>'200')) ?>
+
+		<label class="bold span-4 float-l clear-l right required" for="tx_objetivo_pre_proj_evol" >
+            <?php echo $this->escape($this->translate('L_VIEW_OBJETIVO_PRE_PROJETO_EVOLUTIVO')) ?>:
+        </label>
+		<?php echo $this->formTextarea('tx_objetivo_pre_proj_evol', '', array('class'=>'float-l span-10', 'style' => 'width:386px; height:120px;')) ?>
+	</div>
+</form>

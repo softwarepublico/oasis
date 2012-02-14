@@ -1,0 +1,51 @@
+<?php
+    $this->script('scriptFile',array('/conhecimento-profissional/index.js'));
+?>
+<label class="bold float-l span-4" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_PROFISSIONAL')) ?>:</label>
+<?php 
+    echo $this->formSelect( 'cd_profissional_conhecimento', 
+                            null, 
+                            array(
+                                'class' => 'float-l'
+                            ), 
+                            $this->arrComboProfissional );
+?>
+<br />
+<label class="bold float-l span-4 clear-l" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_TIPO_CONHECIMENTO')) ?>:</label>
+<?php 
+    echo $this->formSelect( 'cd_tipo_conhecimento', 
+                            null, 
+                            array(
+                                'class' => 'float-l'
+                            ), 
+                            $this->arrComboTipoConhecimento );
+?>
+<label class="bold float-l span-6  clear-l" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_CONHECIMENTO')) ?></label>
+<label class="bold float-l span-10 right" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_ASSOCIADO_PROFISSIONAL')) ?></label>
+<?php
+	echo $this->formSelect( 'cd_conhecimento1', 
+	                        null, 
+	                        array(
+	                            'multiple' => 'multiple',
+                                'class'    => 'span-9 float-l clear-l left',
+                                'style'    => 'height: 150px;'
+	                        ), 
+	                        $this->arrComboConhecimento1 );
+?>	
+<div class="span-2" style="position:relative; left:20px; top:62px">
+	<?php
+		echo $this->formButton('addTipoConhecimento', '>>');
+		echo $this->formButton('removeTipoConhecimento', '<<', array('style' => 'margin-top:10px;'));
+	?>	
+</div>
+<?php
+	echo $this->formSelect( 'cd_conhecimento2', 
+	                        null, 
+	                        array(
+	                            'multiple' => 'multiple',
+	                            'class'    => 'span-9 float-l left',
+	                            'style'    => 'height: 150px;'
+	                        ), 
+	                        $this->arrComboConhecimento2 );
+?>
+<div id="teste"></div>

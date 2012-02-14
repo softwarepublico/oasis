@@ -1,0 +1,49 @@
+<script type="text/javascript" defer="defer">
+	$(document).ready(function() {
+	    $("#tabela_questionarioItemRisco").tablesorter({widthFixed: true, widgets: ['zebra']});
+	    $("#tabela_questionarioItemRisco").tablesorterPager({container: $("#pager_questionarioItemRisco")});
+
+	});
+</script>
+<table id="tabela_questionarioItemRisco" cellspacing="1" class="tablesorter" style="width:auto;">
+	<thead>
+	    <tr>
+            <th class="span-13"><?php echo $this->escape($this->translate('L_VIEW_GRID_QUESTAO')) ?></th>
+			<th class="span-9"><?php echo $this->escape($this->translate('L_VIEW_GRID_RESPOSTA')) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if( count($this->arrQuestionario) > 0){
+		foreach ($this->arrQuestionario as $res):
+	?>
+    <tr>
+        <td><?php echo $res['tx_questao_analise_risco']; ?></td>
+        <td><?php echo $this->formSelect('st_resposta_analise_risco',null,array("onchange"=>"salvaQuestionarioRisco({$res['cd_etapa']},{$res['cd_atividade']},{$res['cd_item_risco']},{$res['cd_questao_analise_risco']})"),$this->arrQuestao); ?></td>
+	</tr>
+	<?php
+		endforeach;
+	} else {
+		echo "  <tr>
+					<td colspan='2' style='text-align:center;'>".$this->escape($this->translate('L_VIEW_SEM_REGISTRO'))."</td>
+				</tr>
+		";
+	}
+	?>
+	</tbody>
+</table>
+<div id="pager_questionarioItemRisco" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

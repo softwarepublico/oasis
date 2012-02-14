@@ -1,0 +1,84 @@
+<?php
+//criando o objeto
+$objPdf = new Base_Tcpdf_Pdf();
+
+$arrKeywords = array(K_CREATOR_SYSTEM,
+                             Base_Util::getTranslator('L_TIT_REL_HISTORICO_GERAL_PROJETO'),
+                             Base_Util::getTranslator('L_VIEW_HISTORICO'),
+                             Base_Util::getTranslator('L_VIEW_RELATORIO')
+                            );
+
+//Inicia cabeçalho do relatório
+$objPdf->iniciaRelatorio(Base_Util::getTranslator('L_TIT_REL_HISTORICO_GERAL_PROJETO'), $arrKeywords);
+
+$objPdf->SetDisplayMode("real");
+// set font
+$objPdf->SetFont('helvetica', 'B', 10);
+// add a page
+$objPdf->AddPage();
+
+$objPdf->Cell(PDF_MARGIN_LEFT, 6, Base_Util::getTranslator('L_VIEW_PROJETO').": ".$this->tx_projeto, '', 1, 'L');
+
+if(!empty($this->tx_profissional)){
+	$objPdf->Cell(PDF_MARGIN_LEFT, 6, Base_Util::getTranslator('L_VIEW_PROFISSIONAL').": ".$this->tx_profissional, '', 1, 'L');
+}
+if(!empty($this->dt_inicio)){
+	$objPdf->Cell(PDF_MARGIN_LEFT, 6, Base_Util::getTranslator('L_VIEW_INICIO').": ".date('d/m/Y', strtotime($this->dt_inicio)), '', 1, 'L');
+}
+if(!empty($this->dt_fim)){
+	$objPdf->Cell(PDF_MARGIN_LEFT, 6, Base_Util::getTranslator('L_VIEW_FIM').": ".date('d/m/Y', strtotime($this->dt_fim)), '', 1, 'L');
+}
+
+$objPdf->Ln();
+if (count($this->arrHistorico) > 0) {
+	imprimirDados($this->arrHistorico, $objPdf);
+}else{
+	$objPdf->writeHTML($objPdf->semRegistroParaConsulta('L'),true, 0, true, 0);
+}
+
+// ---------------------------------------------------------
+
+//Close and output PDF document
+$objPdf->Output('relatorio_historico_projeto.pdf', 'I');
+//============================================================+
+// END OF FILE                                                 
+//============================================================+
+function imprimirDados($data, $objPdf){
+	
+	$propostaAux  = 0;
+	$moduloAux    = 0;
+	$etapaAux     = 0;
+	$atividadeAux = 0;
+	foreach($data as $row){
+		$aux = "N";
+		if($propostaAux  != $row['cd_proposta']){
+			$objPdf->SetFont('helvetica', 'B', 8);
+			$objPdf->Cell(PDF_MARGIN_LEFT, 6, Base_Util::getTranslator('L_VIEW_PROPOSTA_NR')." ".$row['cd_proposta'], '', 1, 'L');
+			$aux = "S";
+		} 
+		if($moduloAux != $row['cd_modulo'] || $aux == "S"){
+			$objPdf->SetFont('helvetica', 'B', 8);
+			$objPdf->Cell(PDF_MARGIN_LEFT, 6, Base_Util::getTranslator('L_VIEW_MODULO').": ".$row['tx_modulo'], '', 1, 'L');
+			$aux = "S";
+		} 
+		if($etapaAux != $row['cd_etapa'] || $aux == "S"){
+			$objPdf->SetFont('helvetica', 'B', 8);
+			$objPdf->Cell(100, 6, Base_Util::getTranslator('L_VIEW_ETAPA').": ".$row['tx_etapa'], '', 0, 'L');
+		} 
+		if($atividadeAux != $row['cd_atividade'] || $aux == "S"){
+			$objPdf->SetFont('helvetica', 'B', 8);
+			$objPdf->Cell(120, 6, Base_Util::getTranslator('L_VIEW_ATIVIDADE').": ".$row['tx_atividade'], '', 1, 'L');
+		} 
+		$objPdf->SetFont('helvetica', '', 8);
+
+     	$texto = date('d/m/Y', strtotime($row['dt_inicio_historico']))." - ".date('d/m/Y', strtotime($row['dt_fim_historico']))." (".$row['tx_profissional'].") <br>".trim(strip_tags($row['tx_historico'],"<br><span><b><i><li><ol><ul>")).PHP_EOL;
+        
+     	$objPdf->MultiCell(0,0,$texto,'','J',0,1,'','',true,0,true);
+		
+		$propostaAux  = $row['cd_proposta'];
+		$moduloAux    = $row['cd_modulo'];
+		$etapaAux     = $row['cd_etapa'];
+		$atividadeAux = $row['cd_atividade'];
+	}
+}
+?>

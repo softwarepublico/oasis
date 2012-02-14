@@ -1,0 +1,20 @@
+<?php
+    $this->script('scriptFile',array('/penalizacao/index.js','/penalizacao/justificativa.js'));
+?>
+<div id="penalizacao" class="divTab">
+	<div class="boxTab">
+		<?php echo $this->formHidden('cd_contrato_penalizacao') ?>
+		<div id="divObjetoContrato" style="display: none; margin-left:5px;">
+			<label class="bold float-l span-2 right"><?php echo $this->escape($this->translate('L_VIEW_CONTRATO')) ?>:</label>
+				<p id="contratoObjeto"></p>
+				<hr>
+		</div>
+        <label class="bold float-l span-2 right" style="margin-left:5px;"><?php echo $this->escape($this->translate('L_VIEW_OBJETO')) ?>:</label>
+			<?php echo $this->formSelect('cd_objeto_penalizacao',null,array('class'=>'float-l span-5'),$this->contratos) ?>
+		<label class="bold float-l span-2 right" style="margin-left:5px;"><?php echo $this->escape($this->translate('L_VIEW_DATA')) ?>:</label>
+			<p><?php 
+				echo $this->data('dt_penalizacao',date('d/m/Y'),array('class'=>'calendario-input float-l',"onBlur"=>"camposPenalizacao()"));
+			 ?></p>
+	</div>
+	<div id="penalizacaoForm" class="float-l span-21" style="display: none;"></div>		
+</div>

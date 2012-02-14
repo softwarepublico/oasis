@@ -1,0 +1,72 @@
+<?php
+//    $this->script('scriptFile',array('/fale-conosco/tabresposta.js'));
+?>
+<script>
+$(document).ready(function(){
+
+	$('#btn_salvar_resposta_fale_conosco').click(function(){
+		salvarResposta();
+	});
+
+	$('#btn_cancelar_resposta_fale_conosco').click(function(){
+		fechaTabResposta();
+	});
+
+	if ($('#tab_origem').val() == 3) {
+		$('#btn_salvar_resposta_fale_conosco').hide();
+	}
+});
+
+function salvarResposta()
+{
+    //if(!validaForm()){return false}
+    $.ajax({
+		type	: "POST",
+		url		: systemName+"/fale-conosco/salvar-resposta",
+		data	: $('#formRespostaFaleConosco :input').serialize(),
+		//dataType: 'json',
+		success : function(retorno){
+			alertMsg(retorno,null, 'fechaTabResposta()');
+			gridFaleConoscoMensagemAberta();
+			gridFaleConoscoMensagemPendente();
+			gridFaleConoscoMensagemRespondida();
+		}
+    });
+}
+
+function fechaTabResposta() {
+    $('#li-resposta-fale-conosco').hide();
+    var tab_origem = parseInt($('#tab_origem').val());
+    $('#container_fale_conosco').triggerTab(tab_origem);
+}
+</script>
+
+<form method="post" id="formRespostaFaleConosco">
+<div id="tabResposta">
+	<?php 
+		echo $this->formHidden('cd_fale_conosco',$this->arrFaleConosco['cd_fale_conosco']);
+		echo $this->formHidden('tab_origem',$this->tab_origem);
+	?>
+    <label class="bold span-3 float-l"><?php echo $this->escape($this->translate('L_VIEW_NOME')) ?>:</label>
+		<p class="span-10 float-l "><?php echo "{$this->arrFaleConosco['tx_nome']}  ({$this->arrFaleConosco['tx_email']})" ?></p>
+	<label class="bold clear-l float-l span-3"><?php echo $this->escape($this->translate('L_VIEW_ASSUNTO')) ?>:</label>
+		<p class="float-l span-5"><?php echo $this->arrFaleConosco['tx_assunto'] ?></p>
+	<label class="bold clear-l float-l span-3"><?php echo $this->escape($this->translate('L_VIEW_MENSAGEM')) ?>:</label>
+		<div class="span-15" style="text-align: justify;"><?php echo $this->arrFaleConosco['tx_mensagem'] ?></div>
+        <?php if ($this->arrFaleConosco['st_respondida'] == "S" && is_null($this->arrFaleConosco['st_pendente'])) { ?>
+	<label class="bold clear-l float-l span-3"><?php echo $this->escape($this->translate('L_VIEW_RESPOSTA')) ?>:</label>
+		<div class="span-15" style="text-align: justify;"><?php echo $this->arrFaleConosco['tx_resposta'] ?></div>
+        <?php } else { ?>
+        <label class="bold clear-l float-l span-3"><?php echo $this->escape($this->translate('L_VIEW_RESPOSTA')) ?>:</label>
+                <p><?php  echo $this->formTextarea("tx_resposta", $this->arrFaleConosco['tx_resposta'],array('class'=>'float-l height-4 span-9'))?></p>
+            <?php if ($this->arrFaleConosco['st_respondida'] == "N") { ?>
+            <label class="span-3 float-l clear-l"><?php echo $this->escape($this->translate('L_VIEW_PENDENTE')) ?>:</label>
+                    <input type="checkbox" id="st_pendente" name="st_pendente" value="S" class="float-l">
+            <?php } ?>
+        <?php } ?>
+        <div class="clear float-l span-20" style="margin-top: 9px;">
+        <?php echo $this->formButton('btn_cancelar_resposta_fale_conosco',$this->escape($this->translate('L_BTN_CANCELAR')),array('class'=>'vermelho float-l clear-l')); ?>
+        <?php echo $this->formButton('btn_salvar_resposta_fale_conosco',$this->escape($this->translate('L_BTN_SALVAR')),array('class'=>'verde float-r')); ?>
+	</div>
+</div>
+</form>

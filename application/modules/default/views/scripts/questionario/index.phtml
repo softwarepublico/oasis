@@ -1,0 +1,15 @@
+<?php
+    $this->script('scriptFile',array('/questionario/index.js'));
+?>
+<div class="box border" id="questionario" style="height: 94px;">
+	<label class=" float-l span-2 bold" style="margin-left:5px; margin-top: 6px;"><?php echo $this->escape($this->translate('L_VIEW_CONTRATO')) ?>:</label>
+		<?php echo $this->formSelect('cd_contrato_questionario', null, array('class'=>'float-l','style'=>'margin-top:6px;')) ?>
+	
+    <label class="bold float-l span-2 clear-l" style="margin-left:5px; margin-top: 6px;"><?php echo $this->escape($this->translate('L_VIEW_PROJETO')) ?>:</label>
+		<?php echo $this->formSelect('cd_projeto_questionario',null,array('class'=>'float-l'), array('0'=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE')))) ?>
+
+    <label class="bold float-l span-2 clear-l" style="margin-left:5px;">Proposta:</label>
+		<?php echo $this->formSelect('cd_proposta_questionario',null,array('class'=>'float-l'), array('0'=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE')))) ?>
+
+    <div class="float-l clear-l" style="margin-top: 6px;" id="montaQuestionario"></div>
+</div>

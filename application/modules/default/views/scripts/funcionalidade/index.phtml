@@ -1,0 +1,32 @@
+<div id="formFuncionalidade" class="divTab">
+    <?php echo $this->formHidden('cd_funcionalidade') ?>
+
+    <label class="float-l span-4 clear-l right required" for="tx_titulo_box_inicio">
+        <?php echo $this->escape($this->translate('L_VIEW_CODIGO_CLASSIFICACAO')) ?>:
+    </label>
+		<?php echo $this->formText('tx_codigo_funcionalidade', null, array('class'=>'float-l span-4')) ?>
+    
+    <label class="float-l span-4 clear-l right required" for="tx_box_inicio">
+        <?php echo $this->escape($this->translate('L_VIEW_FUNCIONALIDADE')) ?>:
+    </label>
+		<?php echo $this->formText('tx_funcionalidade', null, array('class'=>'float-l span-14')) ?>
+
+    <label class="float-l span-4 clear-l right required" for="tx_box_inicio" editor="editor" style="margin-top:2px;">
+        <?php echo $this->escape($this->translate('L_VIEW_DESCRICAO')) ?>:
+    </label>
+    	<?php echo $this->editorHtml( 'tx_descricao', null, array('class'=>'float-l','cols'=>'66','rows'=>'5','editor'=>K_EDITOR)); ?>
+    
+    <label class="float-l span-4 clear-l right" for="st_tipo_box_inicio">
+        <?php echo $this->escape($this->translate('L_VIEW_TIPO')) ?>:
+    </label>
+		<?php echo $this->formSelect('st_funcionalidade',null,array('class'=>'float-l span-4'),$this->arrTipoFuncionalidade) ?>
+
+    <div class="float-l clear-l">
+		<?php
+			echo $this->formButton('adicionarFuncionalidade', $this->escape($this->translate('L_BTN_SALVAR')),array('class' => 'verde push-3'));
+			echo $this->formButton('cancelarFuncionalidade',  $this->escape($this->translate('L_BTN_CANCELAR')), array('class' => 'vermelho push-3'));
+			echo $this->formButton('alterarFuncionalidade',   $this->escape($this->translate('L_BTN_ALTERAR')), array('class' => 'azul push-3'));
+		?>
+	</div>
+	<div id="gridFuncionalidade" class="float-l clear-l span-21"></div>
+</div>

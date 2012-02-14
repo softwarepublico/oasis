@@ -1,0 +1,17 @@
+<?php 
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/papel-profissional/index.js'));
+?>
+<form id="form_rel_papel_profissional">
+    <label class="float-l span-3 required" for="cd_contrato"><?php echo $this->translate('L_VIEW_CONTRATO') ?>:</label>
+        <?php echo $this->formSelect('cd_contrato', null, array('class'=>'float-l'), $this->arrContrato); ?>
+    <label class="float-l span-3 clear-l required" for="cd_projeto"><?php echo $this->translate('L_VIEW_PROJETO') ?>:</label>
+        <?php echo $this->formSelect('cd_projeto', null, array('class'=>'float-l'), array(0=>Base_Util::getTranslator('L_VIEW_COMBO_SELECIONE'))); ?>
+    <label class="float-l span-3 clear-l required" for="cd_papel_profissional"><?php echo $this->translate('L_VIEW_PAPEL') ?>:</label>
+        <?php echo $this->formSelect('cd_papel_profissional', null, array('class'=>'float-l'), array(0=>Base_Util::getTranslator('L_VIEW_COMBO_SELECIONE'))); ?>
+
+    <?php echo $this->formButton('btn_gerar', Base_Util::getTranslator('L_BTN_GERAR'), array('class'=>'buttonBar verde')); ?>
+</form>
+
+
+

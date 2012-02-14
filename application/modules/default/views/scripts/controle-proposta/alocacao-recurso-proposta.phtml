@@ -1,0 +1,13 @@
+<div id="div_detalhe_alocacao_proposta" style="margin-left: 10px;">
+	<label class="float-l span-4 bold"><?php echo $this->translate('L_VIEW_PROJETO') ?>:</label>
+		<span class="float-l span-10 bold"><?php echo $this->tx_sigla_projeto; ?></span>
+
+    <label class="float-l clear-l span-4"><?php echo $this->escape($this->translate('L_VIEW_DATA_ALOCACAO')) ?>:</label>
+		<span class="float-l span-10"><?php echo $this->dt_alocacao_proposta; ?></span>
+
+	<label class="float-l clear-l span-4"><?php echo $this->escape($this->translate('L_VIEW_PROFISSIONAL')) ?>:</label>
+		<span class="float-l span-10"><?php echo $this->prof_alocacao_proposta; ?></span>
+
+	<label class="float-l clear-l span-4"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACOES')) ?>:</label>
+		<span class="float-l span-10" style="text-align: justify;"><?php echo $this->tx_motivo_alteracao_proposta; ?></span>
+</div>

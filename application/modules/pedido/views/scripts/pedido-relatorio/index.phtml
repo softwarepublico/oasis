@@ -1,0 +1,85 @@
+<?php
+    $this->script('mascara');
+	$this->script('calendario');
+	$this->script('validaData');
+    $this->script('grid');
+?>
+<fieldset class="float-l span-20">
+	<legend><?php echo $this->escape($this->translate('L_VIEW_RELATORIO_SOLICITACOES')) ?></legend>
+	<form>
+		<label for="inicio" class="float-l span-3 right bold"><?php echo $this->escape($this->translate('L_VIEW_PERIODO')) ?>:</label>
+            <?php echo $this->data("inicio",$this->inicio,array('class'=>'float-l span-3')); ?>
+		<label for="final" class="float-l span-1 right bold"><?php echo $this->escape($this->translate('L_VIEW_A')) ?>:</label>
+            <?php echo $this->data("final",$this->final,array('class'=>'float-l span-3')); ?>
+		<label for="status" class="float-l span-2 right bold"><?php echo $this->escape($this->translate('L_VIEW_SITUACAO')) ?>:</label>
+            <?php echo $this->formSelect("status",$this->status,array('class'=>'float-l'),$this->situacao); ?>
+        <button type="submit" class="verde"><?php echo $this->escape($this->translate('L_BTN_PESQUISAR')) ?></button>
+	</form>
+<?php
+    if(count($this->pedidos)): ?>
+        <script type="text/javascript">
+        $(document).ready(function() {
+            $("#pedidos").tablesorter({widthFixed: true, widgets: ['zebra']});
+        });
+        </script>
+
+        <div class="float-l clear-l">
+            <table cellspacing="1" id="pedidos" class="tablesorter">
+                <thead>
+                    <tr>
+                        <th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_DATA_HORA')) ?></th>
+                        <th class="span-4"><?php echo $this->escape($this->translate('L_VIEW_GRID_SITUACAO')) ?></th>
+                        <th class="span-11"><?php echo $this->escape($this->translate('L_VIEW_GRID_OBSERVACAO')) ?></th>
+                        <th class="center span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_OPCAO')) ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach($this->pedidos as $rs): ?>
+                    <tr>
+                        <td><?php echo date('d/m/Y H:i:s', strtotime($rs->dt_solicitacao_pedido))?></td>
+                        <td><?php echo $rs->st_situacao_pedido_desc ?></td>
+
+                        <?php
+                            $fim = "";
+                            if(strlen(htmlspecialchars($rs->tx_observacao_pedido)) >= 85){
+                                $fim = "...";
+                            }
+                            $tx_observacao_pedido = substr(htmlspecialchars($rs->tx_observacao_pedido),0,85).$fim;
+                        ?>
+
+                        <td><?php echo strip_tags(nl2br($tx_observacao_pedido),'<br>') ?></td>
+                        <td class="center">
+                            <a href="<?php echo $this->baseUrl()?>/pedido/pedido-relatorio/historico/pedido/<?php echo $rs->cd_solicitacao_pedido?>"><?php echo $this->escape($this->translate('L_VIEW_HISTORICO')) ?></a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+            <?php if(count($this->paginas) > 1): ?>
+                <div class="float-l right"><?php echo $this->escape($this->translate('L_VIEW_PAGINAS')) ?>: &nbsp;</div>
+                <?php if($this->anterior >= 0): ?>
+                    <div class="float-l left">
+                        <a href="<?php echo $this->baseUrl()?>/pedido/pedido-relatorio/index/start/<?php echo $this->anterior?>" title="<?php echo $this->escape($this->translate('L_VIEW_ANTERIOR')) ?>">&lt;</a>&nbsp;
+                    </div>
+                <?php endif;?>
+                <?php foreach($this->paginas as $num => $pagina): ?>
+                    <div class="float-l center">
+                        <?php if($this->atual == $pagina): ?>
+                            &nbsp;<b><?php echo $num ?></b>&nbsp;
+                        <?php else:?>
+                            &nbsp;<a href="<?php echo $this->baseUrl()?>/pedido/pedido-relatorio/index/start/<?php echo $pagina; ?>"><?php echo $num ?></a>&nbsp;
+                        <?php endif;?>
+                    </div>
+                <?php endforeach; ?>
+                <?php if($this->proximo < $num): ?>
+                    <div class="float-l right">
+                        &nbsp;<a href="<?php echo $this->baseUrl()?>/pedido/pedido-relatorio/index/start/<?php echo $this->proximo?>" title="<?php echo $this->escape($this->translate('L_VIEW_PROXIMA')) ?>">&gt;</a>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
+        </div>
+<?php else: ?>
+    <h2 class="clear"><?php echo $this->escape($this->translate('L_MSG_ALERT_SEM_PEDIDO_ENCONTRATO')) ?></h2>
+<?php endif; ?>
+    
+</fieldset>

@@ -1,0 +1,86 @@
+<script type="text/javascript" defer="defer">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableFechamentoExtratoMensalDemanda").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableFechamentoExtratoMensalDemanda").tablesorterPager({container: $("#pager_fechamento_extrato_mensal_demanda")}); 
+ 
+});
+</script>
+<table  id="tableFechamentoExtratoMensalDemanda" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th><?php echo $this->escape($this->translate('L_VIEW_GRID_MES_ANO')) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_NUMERO_PARCELAS')) ?></th>
+			<th><?php echo $this->unidadePadraoMetrica; ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_SITUACAO')) ?></th>
+			<th>&nbsp;</th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+    
+	if($this->arrDados){
+		foreach ($this->arrDados as $arrDados):
+	?>
+	<tr>
+		<td><?php echo $arrDados['mes_ano'] ?>
+			<?php //echo$this->formHidden("st_encerramento_proposta_{$arrDados['mes']}_{$arrDados['ano']}", $arrDados['st_encerramento_proposta'], null, null) ?>
+		</td>
+		<td><?php echo $arrDados['qtd_parcelas'] ?></td>
+		<td><?php echo $arrDados['horas_parcelas'] ?></td>
+		<?php if ($arrDados['qtd_parcelas'] > 0) {
+					if ($arrDados['mes_fechado'] == "S"){?>
+                        <td class="center"><?php echo $this->escape($this->translate('L_VIEW_FECHADO')) ?></td>
+                        <td class="center">
+                            <button onClick="abrePopUp('<?php echo $this->baseUrl()?>/relatorioProjeto/extrato-mensal-demanda/generate/mes/<?php echo $arrDados['mes'] ?>/ano/<?php echo $arrDados['ano'] ?>/cd_contrato/<?php echo $this->cd_contrato ?>');"
+                                    class="azul"
+                                    id="bt_ver_extrato_<?php echo $arrDados['mes']?>_<?php echo $arrDados['ano']?>">
+                                <?php echo $this->escape($this->translate('L_BTN_VER_EXTRATO')) ?>
+                            </button>
+                        </td>
+		<?php       }else{ ?>
+                        <td class="center">
+                            <button onClick="fechaExtratoMensal('<?php echo $this->cd_contrato ?>', '<?php echo $arrDados['mes']?>', '<?php echo $arrDados['ano']?>', '<?php echo $arrDados['qtd_parcelas']?>', '<?php echo $arrDados['horas_parcelas']?>')"
+                                    class="verde"
+                                    id="bt_fechar_extrato_<?php echo $arrDados['mes']?>_<?php echo $arrDados['ano']?>">
+                                <?php echo $this->escape($this->translate('L_BTN_FECHAR_EXTRATO')) ?>
+                            </button>
+                        </td>
+                        <td class="center">&nbsp;</td>
+		<?php 
+					}	
+			  } else { 
+		?>
+                    <td class="center"><?php echo $this->escape($this->translate('L_VIEW_SEM_PARCELA')) ?></td>
+                    <td class="center">&nbsp;</td>
+		<?php } ?>
+	</tr>
+	<?php
+		endforeach;
+	} else {
+		echo " <tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr> ";
+	}
+	?>
+	</tbody>
+</table>
+<div id="pager_fechamento_extrato_mensal_demanda" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="12">12</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

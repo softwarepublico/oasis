@@ -1,0 +1,79 @@
+<script type="text/javascript">
+	$(document).ready(function() { 
+		$('#container_metrica').show().tabs().triggerTab(1);
+	    $('#config_hidden_metrica').val('N');
+	});
+	
+	function configAccordionMetrica()
+	{
+		if( $('#config_hidden_metrica').val() == 'N' ) {
+			montaGridDefinicaoMetrica();
+	
+			if($("#cmb_definicao_metrica_item").val() != 0 ){
+				montaGridItemMetrica();
+			};
+			if($("#cmb_definicao_metrica_sub_item").val() != 0 ){
+				getComboItemMetricaSubItem();
+			}
+			if($("#cmb_definicao_metrica_condicao_sub_item").val() != 0 ){
+				getComboItemMetricaCondicaoSubItem();
+			}
+		    $('#config_hidden_metrica').val('S');
+		}
+	}
+</script>
+<div id="container_metrica" style="display: none;">
+	<ul>
+        <li>
+            <a href="#aba_definicao">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_DEFINICAO')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#aba_item">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_ITEM')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#aba_sub_item">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_SUB_ITEM')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#aba_condicao">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_CONDICAO')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#aba_tipo_produto">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_TIPO_PRODUTO')) ?></span>
+            </a>
+        </li>
+    </ul>
+	
+    <div id="aba_definicao">
+    	<div class="divTab">
+			<?php echo $this->render('definicao-metrica/index.phtml') ?>
+    	</div>
+    </div>
+    <div id="aba_item">
+    	<div class="divTab">
+    		<?php echo $this->render('item-metrica/index.phtml') ?>
+    	</div>
+    </div>
+    <div id="aba_sub_item">
+    	<div class="divTab">
+	    	<?php echo $this->render('sub-item-metrica/index.phtml') ?>
+    	</div>
+    </div>
+    <div id="aba_condicao">
+    	<div class="divTab">
+	    	<?php echo $this->render('condicao-sub-item-metrica/index.phtml') ?>
+    	</div>
+    </div>
+    <div id="aba_tipo_produto">
+    	<div class="divTab">
+	    	<?php echo $this->render('tipo-produto/index.phtml') ?>
+    	</div>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="highlight" style="margin-bottom:1em;">
+    <a class="float-r" style="margin-right:5px;" href="#" onclick="abrir_novo_posicionamento('N')"><?php echo $this->escape($this->translate('L_VIEW_NOVO_POSICIONAMENTO')) ?></a>
+	<h3 class="span-6 float-l"><?php echo $this->escape($this->translate('L_VIEW_POSICIONAMENTO_ATUAL_PROJETO')) ?></h3>
+</div>
+<h4 style="margin-left:5px; margin-right:5px;">
+	<span class="large float-r">
+		<?php echo $this->mesAtualExtenso ?>/<?php echo $this->anoAtual ?>
+	</span>
+	<?php echo $this->escape($this->translate('L_VIEW_ULTIMO_POSICIONAMENTO_INSERIDO')) ?>
+</h4>
+<p><?php echo nl2br($this->tx_situacao_projeto) ?></p>
+<?php if ($this->jaExiste): ?>
+<div class="clear" style="margin-right:5px; height:20px;">
+	<?php if ($this->podeAlterar): ?>
+	<a class="float-r" href="#" onclick="abrir_novo_posicionamento('E')"><?php echo $this->escape($this->translate('L_VIEW_EDITAR_POSICIONAMENTO')) ?></a>
+	<?php endif; ?>
+</div>
+<?php endif; ?>
+<div class="clear" >
+	<?php if ($this->proximoMes):?>
+	<a class="float-r" style="margin-right:10px;" href="#"onclick="carregaSituacaoMesAnterior('<?php echo $this->proximoMes ?>', '<?php echo $this->proximoAno ?>', '<?php echo $this->cd_projeto ?>');"><?php echo $this->escape($this->translate('L_VIEW_PROXIMO_MES')) ?></a>
+	<?php endif; ?>
+	
+	<?php if ($this->mesAnterior): ?>
+	<a class="float-r" style="margin-right:10px;" href="#" onclick="carregaSituacaoMesAnterior('<?php echo $this->mesAnterior ?>', '<?php echo $this->anoAnterior ?>', '<?php echo $this->cd_projeto ?>');"><?php echo $this->escape($this->translate('L_VIEW_MES_ANTERIOR')) ?></a>
+	<?php endif; ?>
+</div>

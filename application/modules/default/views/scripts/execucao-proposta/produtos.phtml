@@ -1,0 +1,38 @@
+<?php
+    $this->script('scriptFile',array('/produto-parcela/index.js'));
+?>
+<div style="margin-left:5px;"> 
+	<?php 
+		echo $this->formHidden('cd_parcela_produto_cad');
+		echo $this->formHidden('cd_produto_parcela');
+		echo $this->formHidden('escondeExclusao',$this->escondeExclusao);
+	?>
+	
+	<div style="overflow:hidden; margin-bottom:25px; padding-bottom:15px;">
+		<label class="span-3 float-l"><?php echo $this->escape($this->translate('L_VIEW_NOME_PROJETO')) ?>:</label>
+            <p class="span-3 float-l bold"><?php echo $this->nomeProjeto ?></p>
+		<label class="span-3 float-l clear-l"><?php echo $this->escape($this->translate('L_VIEW_PROPOSTA')) ?>:</label>
+            <p class="span-3 float-l bold"><?php echo $this->cd_proposta ?></p>
+	</div>
+
+	<div class="span-5 float-l clear-l" style="border-right:1px solid rgb(84, 189, 205); margin-top: -30px;" >
+		<label class="span-5 bold" style="padding-right:0;"><?php echo $this->escape($this->translate('L_VIEW_LISTA_PARCELAS')) ?>:<br /></label>
+		<div id="produtosParcelas">
+			<label class="clear-l span-5" style="padding-right:0;"><?php echo $this->escape($this->translate('L_VIEW_COM_PRODUTO_CADASTRADO')) ?>:</label>
+			<div id="parcelaComProduto" class="span-5" style="margin-top: -8px; margin-bottom: 5px;"></div>
+		
+			<label class="span-5 clear" style="padding-right:0;"><?php echo $this->escape($this->translate('L_VIEW_SEM_PRODUTO_CADASTRADO')) ?>:</label>
+			<div id="parcelaSemProduto" class="span-5" style="margin-top: -8px;"></div>
+		</div> 
+	</div>
+	
+	<div class="span-15 float-l" style="margin-top: -30px;">
+		<label class="span-2 right bold float-l"><?php echo $this->escape($this->translate('L_VIEW_PARCELA')) ?>:</label>
+		<p class="bold span-8 float-l" id="numeroParcela"></p>
+		
+		<div class="span-15" id="gridProdutoParcela" style="padding-left: 10px;"></div>
+	</div>
+	
+	<div class="float-l clear-l span-10 push-10" style="padding-left: 13px"></div>
+
+</div>

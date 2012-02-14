@@ -1,0 +1,130 @@
+<?php
+    $this->script('grid');
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/pedido.js',
+                                     '/pedido-solicitacao/formulario.js'));
+?>
+<fieldset>
+	<legend><?php echo $this->escape($this->translate('L_VIEW_FORMULARIO_SOLICITACAO')) ?></legend>
+    <p style="color:red"><b>*</b> <?php echo $this->escape($this->translate('L_VIEW_PERGUNTAS_OBRIGATORIAS')) ?></p>
+    <form id="form_preenchimento_questionario"
+          enctype="multipart/form-data"
+          action="<?php echo $this->url(array('module'=>'pedido', 'controller'=>'pedido-solicitacao','action'=>'formulario')); ?>"
+          method="POST">
+<?php
+	$pergunta = 0;
+	foreach($this->formulario as $rs) {
+
+		if($pergunta != $rs->cd_pergunta_pedido) {
+			if($pergunta)
+				echo '</div><br />';
+			$pergunta = $rs->cd_pergunta_pedido;
+			echo "<div id=\"div_perg{$pergunta}\">";
+
+            $obriga = '';
+            if($rs->st_obriga_resposta == 'S'){
+                $obriga = '<span style="color:red;">*</span>';
+                //adiciona condiçao para validação do formulario
+                echo "<script>$('#div_perg{$pergunta}').addClass('pergunta-obrigatoria')</script>";
+            }
+			echo "<label id=\"lb_perg{$pergunta}\" class='span-12 bold'>{$obriga} {$rs->tx_titulo_pergunta}</label>";
+		}
+		if($rs->st_resposta_texto == 'T'){
+			echo "<textarea class=\"span-12 height-4 textarea\" id=\"perg{$pergunta}resp{$rs->cd_resposta_pedido}\" name=\"perg{$pergunta}resp{$rs->cd_resposta_pedido}\">{$rs->tx_descricao_resposta}</textarea>";
+
+            //adiciona as condições para validação do formulario
+            if($rs->st_obriga_resposta == 'S'){
+                echo "<script>$('#lb_perg{$pergunta}').attr('for','perg{$pergunta}resp{$rs->cd_resposta_pedido}')</script>";
+                echo "<script>$('#perg{$pergunta}resp{$rs->cd_resposta_pedido}').addClass('campo-obrigatorio')</script>";
+            }
+        }else {
+			$nome    = "perg{$pergunta}";
+			$nome   .= ($rs->st_multipla_resposta == 'S') ? '[]'                 : '';
+			$tipo    = ($rs->st_multipla_resposta == 'S') ? 'checkbox'           : 'radio';
+            $checked = ($rs->cd_solicitacao_resposta    ) ? ' checked="checked"' : '';
+
+			echo "<label class=\"float-l clear-l\" for=\"perg{$pergunta}resp{$rs['cd_resposta_pedido']}\">";
+			echo "    <input id=\"perg{$pergunta}resp{$rs->cd_resposta_pedido}\" name=\"{$nome}\" type=\"{$tipo}\" value=\"{$rs->cd_resposta_pedido}\" {$checked} />";
+			echo      $rs['tx_titulo_resposta'];
+			echo "</label>";
+
+            //adiciona condiçao para validação do formulario
+            if($rs->st_obriga_resposta == 'S'){
+                echo "<script>$('#perg{$pergunta}resp{$rs->cd_resposta_pedido}').addClass('campo-obrigatorio')</script>";
+            }
+
+			if($rs->st_resposta_texto == 'S'){
+				echo " <input type=\"text\" class=\"span-8\" name=\"perg{$pergunta}resp{$rs->cd_resposta_pedido}texto\" value=\"{$rs->tx_descricao_resposta}\" onfocus=\"$('#perg{$pergunta}resp{$rs->cd_resposta_pedido}').attr('checked', 'checked') />";
+            }else if($rs->st_resposta_texto == 'U'){
+				echo " <input type=\"file\" name=\"perg{$pergunta}resp{$rs->cd_resposta_pedido}arquivo\" onfocus=\"$('#perg{$pergunta}resp{$rs->cd_resposta_pedido}').attr('checked', 'checked') />";
+            }
+			echo '<br class="clear-l" />';
+		}
+	}
+	if($pergunta)
+		echo '</div><br />';
+?>
+
+<?php
+    if(count($this->historico)): ?>
+        <br />
+        <h2 class="span-12"><?php echo $this->escape($this->translate('L_VIEW_HISTORICO_PREENCHIMENTO')) ?></h2>
+        <div class="float-l clear-l">
+            <script type="text/javascript">
+            $(document).ready(function() {
+                $("#tablePedidoHistorico").tablesorter({widthFixed: true, widgets: ['zebra']});
+                $("#tablePedidoHistorico").tablesorterPager({container: $("#tablePedidoHistoricoPager")});
+            });
+            </script>
+            <table cellspacing="1" id="tablePedidoHistorico" class="tablesorter" style="border-collapse:collapse">
+                <thead>
+                    <tr>
+                        <th class="span-3" ><?php echo $this->escape($this->translate('L_VIEW_GRID_DATA_HORA' )) ?></th>
+                        <th class="span-4" ><?php echo $this->escape($this->translate('L_VIEW_GRID_SITUACAO'  )) ?></th>
+                        <th class="span-14"><?php echo $this->escape($this->translate('L_VIEW_GRID_OBSERVACAO')) ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach($this->historico as $rs): ?>
+                    <tr>
+                        <td><?php echo date('d/m/Y H:i:s', strtotime($rs->dt_registro_historico))?></td>
+                        <td><?php echo $rs->st_acao_historico_desc?></td>
+                        <td><?php echo nl2br($rs->tx_descricao_historico)?></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+            <div id="tablePedidoHistoricoPager" class="pager">
+                <form>
+                    <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+                    <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+                    <input type="text" class="pagedisplay"/>
+                    <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+                    <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+                    <select class="pagesize">
+                        <option selected="selected"  value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+<?php endif; ?>
+
+        <div class="float-l clear-l">
+            <div class="float-l clear-l span-1 height-1"></div>
+            <h2 class="float-l clear-l span-12"><span style="color:red;">*&nbsp;</span><?php echo $this->escape($this->translate('L_VIEW_OBSERVACAO')) ?>:</h2>
+            <?php echo $this->formTextarea('tx_observacao_pedido',$this->ultimaObservacao, array('class'=>'float-l clear-l span-12 height-4')); ?>
+		</div>
+
+        <?php echo $this->formButton('btn_salvar_questionario',
+                                     $this->escape($this->translate('L_BTN_SALVAR')),
+                                     array('class'=>'float-l clear-l span-2 push-2 verde', 'onclick'=>'submeteQuestionario()')); ?>
+        <?php echo $this->formButton('btn_limpar_questionario',
+                                     $this->escape($this->translate('L_BTN_LIMPAR')),
+                                     array('class'=>'float-l span-2 push-3 azul', 'type'=>'reset')); ?>
+        <?php echo $this->formButton('btn_cancelar_questionario',
+                                     $this->escape($this->translate('L_BTN_CANCELAR')),
+                                     array('class'=>'float-l span-2 push-4 vermelho','onclick'=>"location.href = '{$this->baseUrl()}/pedido/pedido-solicitacao'")); ?>
+	</form>
+</fieldset>

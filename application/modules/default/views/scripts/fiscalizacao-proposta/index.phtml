@@ -1,0 +1,24 @@
+<?php 
+    $this->script('grid');
+    $this->script('scriptFile',array('/fiscalizacao-proposta/index.js'));
+?>
+<script>
+	var errorDonwload = '<?php echo $this->errorDonwload; ?>';
+</script>
+<div id="formFiscalizacaoProduto" >
+    <label class="span-2 right float-l bold required" for="cd_contrato">
+        <?php echo $this->escape($this->translate('L_VIEW_CONTRATO')) ?>:
+    </label>
+		<?php echo $this->formSelect('cd_contrato',null,array('class'=>'float-l'),$this->arrContrato); ?>
+
+    <label class="float-l right span-2 clear-l bold">
+        <?php echo $this->escape($this->translate('L_VIEW_MES')) ?>:
+    </label>
+		<?php echo $this->mesCombo('ni_mes_execucao_parcela',null,array('class'=>'float-l')); ?>
+
+	<label class="float-l right span-2 clear-l bold">
+        <?php echo $this->escape($this->translate('L_VIEW_ANO')) ?>:
+    </label>
+		<?php echo $this->anoCombo('ni_ano_execucao_parcela',null,array('class'=>'float-l')); ?>
+	<div id="gridFiscalizacao" style="display:none; margin-top: 10px;" class="float-l clear-l span-21"></div>
+</div>

@@ -1,0 +1,9 @@
+<div id="tabPreDemanda" class="divTab">
+	<div class="clear boxTab">
+		<label class="float-l" style="margin-top:2px; font-size:20px;" id="mesAnoPreDemanda"><?php echo $this->mesAno ?></label>
+		<label class="float-r" style="margin-top:2px;"><?php echo $this->anoCombo('ano_pre_demanda',null,null,1) ?></label>
+		<label class="float-r" style="margin-top:2px;"><?php echo $this->mesCombo('mes_pre_demanda') ?></label>
+		<label class="float-r" style="margin-top:2px;"><?php echo $this->formSelect('cd_nucleo_pre_demanda','',array('style'=>'width:155px;'),$this->arrObjetoContrato); ?></label>
+	</div>
+	<div id="gridPreDemanda" class="span-21"></div>
+</div>

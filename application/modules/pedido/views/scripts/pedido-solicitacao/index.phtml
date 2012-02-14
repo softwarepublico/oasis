@@ -1,0 +1,79 @@
+<?php
+    $this->script('grid');
+    $this->script('tab');
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/pedido.js'));
+    $this->script('scriptFile',array('/pedido-solicitacao/index.js'));
+?>
+<div id="container-solicitacao" style="display: none;">
+
+    <?php $qtdAba = 1;?>
+
+	<ul>
+    	<li>
+            <a href="#abaSolicitacoes">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_MINHAS_SOLICITACOES')) ?></span>
+            </a>
+        </li>
+        <?php if($_SESSION['oasis_pedido']['st_autoridade'] === 'A' || $_SESSION['oasis_pedido']['st_autoridade'] === 'T'): $qtdAba++; ?>
+            <li>
+                <a href="#abaAutorizacao">
+                    <span><?php echo $this->escape($this->translate('L_VIEW_ABA_AUTORIZACOES')) ?></span>
+                </a>
+            </li>
+        <?php endif;?>
+        <?php if($_SESSION['oasis_pedido']['st_autoridade'] === 'C' || $_SESSION['oasis_pedido']['st_autoridade'] === 'T'): $qtdAba = $qtdAba + 2;?>
+            <li>
+                <a href="#abaAutorizacaoComite">
+                    <span><?php echo $this->escape($this->translate('L_VIEW_ABA_SOLICITACOES_COMITE')) ?></span>
+                </a>
+            </li>
+            <li id="li_formulario_pedido" style="display:none">
+                <a href="#pedidoComiteEncaminhar">
+                    <span><?php echo $this->escape($this->translate('L_VIEW_ABA_PEDIDO')) ?></span>
+                </a>
+            </li>
+        <?php endif; ?>
+
+    </ul>
+
+    <script type="text/javascript">
+        var qtdAbas = <?php echo $qtdAba; ?>;
+    </script>
+
+    <!--Aba 1-->
+    <div id="abaSolicitacoes">
+        <?php echo $this->render('pedido-solicitacao/aba-solicitacoes.phtml') ?>
+    </div>
+
+    <!--Aba 2-->
+    <?php if($_SESSION['oasis_pedido']['st_autoridade'] === 'A' || $_SESSION['oasis_pedido']['st_autoridade'] === 'T'): ?>
+        <script type="text/javascript">
+            montaGridAutorizacaoSolicitacao();
+        </script>
+        <div id="abaAutorizacao">
+            <div id="divAutorizacaoSolicitacao"></div>
+        </div>
+    <?php endif; ?>
+
+        <!--Abas 3 e 4-->
+    <?php if($_SESSION['oasis_pedido']['st_autoridade'] === 'C' || $_SESSION['oasis_pedido']['st_autoridade'] === 'T'): ?>
+
+        <?php $this->script('scriptFile', array('/pedido-encaminhar-recomendacao-comite/index.js'));?>
+
+        <script type="text/javascript">
+            montaGridSolicitacaoComite();
+        </script>
+
+        <div id="abaAutorizacaoComite">
+             <div class="clear boxTab height-2"></div>
+            <div id="divAutorizacaoSolicitacaoComite"></div>
+        </div>
+    
+        <div id="pedidoComiteEncaminhar">
+            <div class="divTab">
+                <div id="form_pedido_comite_encaminhar"></div>
+            </div>
+        </div>
+    <?php endif; ?>
+</div>

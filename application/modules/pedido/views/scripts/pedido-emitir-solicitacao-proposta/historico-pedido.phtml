@@ -1,0 +1,46 @@
+<div class="float-l clear-l">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#historicoPedido").tablesorter({widthFixed: true, widgets: ['zebra']});
+            $("#historicoPedido").tablesorterPager({container: $("#historicoPedidoPager")});
+        });
+    </script>
+    <table cellspacing="1" id="historicoPedido" class="tablesorter">
+        <thead>
+            <tr>
+                <th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_DATA_HORA')) ?></th>
+                <th class="span-4"><?php echo $this->escape($this->translate('L_VIEW_GRID_SITUACAO')) ?></th>
+                <th class="span-14"><?php echo $this->escape($this->translate('L_VIEW_GRID_OBSERVACAO')) ?></th>
+            </tr>
+        </thead>
+
+        <tbody>
+        <?php if(count($this->historico)): ?>
+            <?php foreach($this->historico as $rs): ?>
+                <?php $rs['dt_registro_historico'] = strtotime($rs['dt_registro_historico']); ?>
+            <tr>
+                <td><?php echo date('d/m/Y H:i:s', $rs['dt_registro_historico'])?></td>
+                <td><?php echo $rs['st_acao_historico_desc']?></td>
+                <td><?php echo nl2br($rs['tx_descricao_historico'])?></td>
+            </tr>
+            <?php endforeach; ?>
+        <?php else: 
+            echo "<tr><td colspan='3' class='center'>".$this->escape($this->translate('L_MSG_ALERT_SEM_INFORMACAO_HISTORICO'))."</td</tr>";
+        ?>
+        <?php endif; ?>
+        </tbody>
+    </table>
+    <div id="historicoPedidoPager" class="pager">
+        <form>
+            <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+            <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+            <input type="text" class="pagedisplay"/>
+            <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+            <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+            <select class="pagesize">
+                <option selected="selected"  value="10">10</option>
+                <option value="20">20</option>
+            </select>
+        </form>
+    </div>
+</div>

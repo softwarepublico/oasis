@@ -1,0 +1,148 @@
+<script type="text/javascript" defer="defer">
+$(document).ready(function() {
+    // call the tablesorter plugin
+    $("#tableCasoDeUsoHomologacao_gerenciamentoTeste").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableCasoDeUsoHomologacao_gerenciamentoTeste").tablesorterPager({container: $("#pagerCasoDeUsoHomologacao_gerenciamentoTeste")});
+
+});
+</script>
+<table  id="tableCasoDeUsoHomologacao_gerenciamentoTeste" cellspacing="1" class="tablesorter">
+    <thead>
+        <tr>
+            <th class="{sorter: false}" width="14%"><?php echo $this->escape($this->translate('L_VIEW_GRID_ITEM_TESTE'  )) ?></th>
+            <th class="{sorter: false}" width="20%"><?php echo $this->escape($this->translate('L_VIEW_GRID_RELATO_TESTE')) ?></th>
+            <th class="{sorter: false}" width="20%"><?php echo $this->escape($this->translate('L_VIEW_GRID_SOLUCAO'     )) ?></th>
+            <th class="{sorter: false}" width="46%"><?php echo $this->escape($this->translate('L_VIEW_GRID_HOMOLOGACAO' )) ?></th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php
+    if($this->res){
+        foreach ($this->res as $res):
+            $idLinha = "tr_{$res['cd_item_teste_caso_de_uso']}__{$res['cd_item_teste']}";
+    ?>
+    <?php if( $res['st_item_teste_caso_de_uso'] == 'H' ): ?>
+    <tr <?php echo ($res['st_obrigatorio']=='S')?' title="'.$this->escape($this->translate('L_MSG_ALERT_ITEM_TESTE_OBRIGATORIO')).'" ':''; ?> id="<?php echo $idLinha; ?>">
+        <td class="middle">
+            <?php
+                if($res['st_obrigatorio']=='S'):
+            ?>
+            <img src="<?php echo $this->baseUrl(); ?>/public/img/u42.png" title="<?php echo $this->escape($this->translate('L_MSG_ALERT_ITEM_TESTE_OBRIGATORIO')) ?>" />
+            <?php
+                endif;
+                if( (int)$res['qtd_arquivo']>0 ):
+                    $testoAnexo = $this->escape(Base_Util::getTranslator('L_MSG_ALERT_ITEM_TESTE_COM_XX_ANEXO', $res['qtd_arquivo']));
+            ?>
+            <img src="<?php echo $this->baseUrl(); ?>/public/img/anexo.png" title="<?php echo $testoAnexo; ?>" />
+            <?php
+                    echo "({$res['qtd_arquivo']})<br />";
+                elseif($res['st_obrigatorio']=='S'):
+                    echo "<br />";
+                endif;
+                echo "{$res['ni_ordem_item_teste']} - {$res['tx_item_teste']}";
+            ?>
+        </td>
+            <td style="text-align:center">
+                <input type="hidden"
+                       id="cd_item_teste_caso_de_uso__<?php echo $res['cd_item_teste'] ?>"
+                       name="cd_item_teste_caso_de_uso__<?php echo $res['cd_item_teste'] ?>"
+                       value="<?php echo $res['cd_item_teste_caso_de_uso'] ?>" />
+                <textarea id="tx_analise__<?php echo $res['cd_item_teste'] ?>"
+                          name="tx_analise__<?php echo $res['cd_item_teste'] ?>"
+                          readonly="readonly"
+                          tabindex="-1"
+                          style="height: 85px;width: 90%;"><?php echo $res['tx_analise'] ?></textarea>
+            </td>
+            <td style="text-align:center">
+                <textarea id="tx_solucao__<?php echo $res['cd_item_teste'] ?>"
+                          name="tx_solucao__<?php echo $res['cd_item_teste'] ?>"
+                          readonly="readonly"
+                          tabindex="-1"
+                          style="height: 85px;width: 90%;"><?php echo $res['tx_solucao'] ?></textarea>
+
+            </td>
+            <td style="text-align:center">
+                <textarea id="tx_homologacao__<?php echo $res['cd_item_teste'] ?>"
+                          name="tx_homologacao__<?php echo $res['cd_item_teste'] ?>"
+                          onkeypress="verificaSePodeDigitar($('#tx_solucao__<?php echo $res['cd_item_teste'] ?>'),$(this))"
+                          onfocus="verificaSePodeDigitar($('#tx_solucao__<?php echo $res['cd_item_teste'] ?>'),$(this))"
+                          <?php if(trim($res['tx_solucao']=='')){echo'readonly="readonly"';} ?>
+                          class="float-l"
+                          style="height: 85px;width: 250px"><?php echo $res['tx_homologacao'] ?></textarea>
+                <?php
+                    echo $this->formButton(
+                         'btn_homologado_casoDeUso_homologacao_gerenciamentoTeste',
+                         $this->escape($this->translate('L_BTN_HOMOLOGADO')),
+                         array(
+                             'class'    =>  'azul float-r',
+                             'style'    =>  'width:101px',
+                             'onclick'  =>  "salvarGerenciamentoTeste('casoDeUso_homologacao','{$idLinha}',$(this).prev())"
+                    ));
+                    echo $this->formButton(
+                         'btn_nao_homologado_casoDeUso_homologacao_gerenciamentoTeste',
+                         $this->escape($this->translate('L_BTN_NAO_HOMOLOGADO')),
+                         array(
+                             'class'    =>  'vermelho float-r',
+                             'style'    =>  'margin-top:3px;width:101px',
+                             'onclick'  =>  "salvarGerenciamentoTeste('casoDeUso_homologacao','{$idLinha}',$(this).prev(),'N')"
+                    ));
+                    if( (int)$res['qtd_arquivo']>0 ){
+                        echo $this->formButton(
+                            'btn_download_casoDeUso_homologacao_gerenciamentoTeste',
+                            $this->escape($this->translate('L_BTN_ABRIR_ANEXOS')),
+                             array(
+                                'class'    =>  'float-r',
+                                'style'    =>  'margin-top:3px;width:101px',
+                                'onclick'  =>  'abreDialogDownload('. str_replace('"',"'",json_encode($res)) .',\'casoDeUso_homologacao\')'
+                        ));
+                    }
+                    echo $this->formButton(
+                         "btn_historico_casoDeUso_homologacao_gerenciamentoTeste__{$res['cd_item_teste']}",
+                         $this->escape($this->translate('L_BTN_VER_HISTORICO')),
+                         array(
+                             'class'    =>  'float-r',
+                             'style'    =>  'margin-top:3px;width:101px',
+                             'onclick'  =>  'abreHistorico('. str_replace('"',"'",json_encode($res)) .',\'casoDeUso_homologacao\')'
+                    ));
+                ?>
+            </td>
+        <?php else: ?>
+            <td colspan="4" class="hide" title="<?php echo $this->escape($this->translate('L_MSG_ALERT_ITEM_NAO_PODE_SER_HOMOLOGADO')) ?>">
+                <?php echo $this->escape($this->translate('L_MSG_ALERT_ITEM_NAO_PODE_SER_HOMOLOGADO')) ?>
+            </td>
+        <?php endif; ?>
+    </tr>
+    <?php
+        endforeach;
+    } else {
+        echo '<tr><td colspan="4" style="text-align:center"> '.$this->escape($this->translate('L_VIEW_SEM_REGISTRO')).' </td></tr>';
+    }
+    ?>
+    </tbody>
+</table>
+<div id="pagerCasoDeUsoHomologacao_gerenciamentoTeste" class="pager">
+    <form>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+        <input type="text" class="pagedisplay"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+        <select class="pagesize">
+            <option selected="selected"  value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+        </select>
+    </form>
+</div>
+<div class="clear">
+    <?php
+        echo $this->formButton(
+                 'btn_cancelar_casoDeUso_homologacao_gerenciamentoTeste',
+                 $this->escape($this->translate('L_BTN_CANCELAR')),
+                 array(
+                     'class' => 'vermelho float-r',
+                     'onclick' => "habilitaAbaGerenciamentoTeste('casoDeUso',true)"
+             ));
+     ?>
+</div>

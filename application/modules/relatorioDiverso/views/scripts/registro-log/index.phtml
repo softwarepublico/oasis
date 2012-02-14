@@ -1,0 +1,27 @@
+<?php
+    $this->script('validaForm');
+    $this->script('mascara');
+    $this->script('calendario');
+    $this->script('validaData');
+    $this->script('scriptFile',array('/registro-log/index.js'));
+?>
+<form id="form_registro_log">
+	
+	<label class="float-l span-2 right"><?php echo $this->escape($this->translate('L_VIEW_PROFISSIONAL')) ?>:</label>
+	<?php echo $this->formSelect('cmb_profissional_log', null, array('class'=>'float-l span-11'), $this->arrProfissionalLog);?>
+	
+	<label class="float-l span-2 right clear-l required" for="dt_inicio_log"><?php echo $this->escape($this->translate('L_VIEW_DATA_INICIAL')) ?>:</label>
+	<?php echo $this->Data('dt_inicio_log', null, array('class'=>'float-l span-3'));?>
+	
+	<label class="float-l span-4 right required" for="dt_fim_log" style="padding-left: 10px;"><?php echo $this->escape($this->translate('L_VIEW_DATA_FINAL')) ?>:</label>
+	<?php echo $this->Data('dt_fim_log', null, array('class'=>'float-l span-3'));?>
+
+	<label class="float-l span-2 right clear-l"><?php echo $this->escape($this->translate('L_VIEW_TABELA')) ?>:</label>
+	<?php echo $this->formSelect('cmb_tabela_log', null, array('class'=>'float-l span-11'), $this->arrTabelasEsquema);?>
+
+	<label class="float-l span-2 right clear-l" ><?php echo $this->escape($this->translate('L_VIEW_IP')) ?>:</label>
+	<?php echo $this->formText('ip_log', null, array('class'=>'float-l span-11'));?>
+
+	<?php echo $this->formButton('btn_gerar', $this->escape($this->translate('L_BTN_GERAR')), array('class'=>'buttonBar verde'));?>
+
+</form>

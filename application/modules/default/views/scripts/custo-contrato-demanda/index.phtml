@@ -1,0 +1,50 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#container-custo-contrato-demanda').show().tabs(); 
+    $('#config_hidden_custo_contrato_demanda').val('N');
+});
+function configCustoContratoDemanda()
+{
+	executaCustoContratoDemandaAjax();
+    $('#config_hidden_custo_contrato_demanda').val('S');
+}
+</script>
+<?php
+//    $this->script('uploadAjax');
+  //  $this->script('scriptFile',array('/custo-contrato-demanda/index.js'));
+?>
+<div id="container-custo-contrato-demanda" style="display: none;">
+	<ul>
+		<li id="li_custo_por_valor" >
+            <a href="#custo_valor">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_CUSTO_DEMANDA_VALOR')) ?></span>
+            </a>
+        </li>
+		<li id="li_custo_por_metrica" >
+            <a href="#custo_metrica">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_CUSTO_DEMANDA_METRICA')) ?></span>
+            </a>
+        </li>
+		<li id="li_extrato_para_metrica">
+            <a href="#extrato_demanda">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_EXTRATO_MENSAL_DEMANDA')) ?></span>
+            </a>
+        </li>
+    </ul>
+	
+    <div id="custo_valor">
+		<div class="divTab">
+			<?php echo $this->render('custo-contrato-demanda/custo-valor.phtml') ?>
+		</div>
+    </div>
+    <div id="custo_metrica">
+		<div class="divTab">
+	    	<?php echo $this->render('custo-contrato-demanda/custo-metrica.phtml') ?>
+		</div>
+    </div>
+    <div id="extrato_demanda">
+		<div class="divTab">
+	    	<?php echo $this->render('fechamento-extrato-mensal-demanda/index.phtml') ?>
+		</div>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+<div style="padding-bottom: 15px;">
+	<div  style="padding-top:8px; padding-left:5px; overflow-y: scroll; height: 500px;">
+        <label class="span-5 float-l bold"><?php echo $this->escape($this->translate('L_VIEW_NOME_PROJETO')) ?>:</label>
+		<span class="span-15 float-l" style="text-align: justify;"><?php echo $this->arrDescricaoProjeto["tx_projeto"] ?></span>
+
+		<label class="span-5 float-l bold clear-l"><?php echo $this->escape($this->translate('L_VIEW_SIGLA')) ?>:</label>
+		<span class="span-15 float-l" style="text-align: justify;"><?php echo $this->arrDescricaoProjeto["tx_sigla_projeto"] ?></span>
+
+		<label class="span-5 float-l bold clear-l"><?php echo $this->escape($this->translate('L_VIEW_CONTEXTO_PROJETO')) ?>:</label>
+		<span class="span-15 float-l" style="text-align: justify;"><?php echo $this->arrDescricaoProjeto["tx_contexto_geral_projeto"] ?></span>
+
+		<label class="span-5 float-l bold clear-l"><?php echo $this->escape($this->translate('L_VIEW_ESCOPO_RESUMIDO')) ?>:</label>
+		<span class="span-15 float-l" style="text-align: justify;"><?php echo $this->arrDescricaoProjeto["tx_escopo_projeto"] ?></span>
+
+		<label class="span-5 float-l bold clear-l"><?php echo $this->escape($this->translate('L_VIEW_PRIORIDADE')) ?>:</label>
+		<span class="span-5 float-l" style="text-align: justify;"><?php echo $this->arrDescricaoProjeto["st_prioridade_projeto"] ?></span>
+
+		<label class="span-5 float-l bold right"><?php echo $this->escape($this->translate('L_VIEW_ABRANGENCIA_PROJETO')) ?>:</label>
+		<span class="span-5 float-l" style="text-align: justify; margin-top: 3px;"><?php echo $this->arrDescricaoProjeto["st_impacto_projeto"] ?></span>
+
+		<label class="span-5 float-l bold clear-l"><?php echo $this->escape($this->translate('L_VIEW_PUBLICO_SER_ALCANCADO')) ?>:</label>
+		<span class="span-5 float-l" style="text-align: justify;"><?php echo $this->arrDescricaoProjeto["tx_publico_alcancado"] ?></span>
+
+		<label class="span-5 float-l bold right"><?php echo $this->escape($this->translate('L_VIEW_UNIDADE_GESTORA')) ?>:</label>
+		<span class="span-5 float-l" style="text-align: justify; margin-top: 3px;"><?php echo $this->arrDescricaoProjeto["tx_sigla_unidade"] ?></span>
+
+		<label class="span-5 float-l bold clear-l"><?php echo $this->escape($this->translate('L_VIEW_GESTOR_PROJETO')) ?>:</label>
+		<span class="span-15 float-l" style="text-align: justify;"><?php echo $this->arrDescricaoProjeto["tx_gestor_projeto"] ?></span>
+
+		<label class="span-5 float-l bold clear-l"><?php echo $this->escape($this->translate('L_VIEW_CO_GESTOR_PROJETO')) ?>:</label>
+		<span class="span-15 float-l" style="text-align: justify;"><?php echo $this->arrDescricaoProjeto["tx_co_gestor_projeto"] ?></span>
+
+		<label class="span-5 float-l bold clear-l"><?php echo $this->escape($this->translate('L_VIEW_GERENTE_DO_PROJETO')) ?>:</label>
+		<span class="span-15 float-l" style="text-align: justify;"><?php echo $this->arrDescricaoProjeto["tx_profissional"] ?></span>
+
+		<label class="span-5 float-l bold clear-l"><?php echo $this->escape($this->translate('L_VIEW_STATUS_PROJETO')) ?>:</label>
+		<span class="span-15 float-l" style="text-align: justify;"><?php echo $this->arrDescricaoProjeto["tx_status"] ?></span>
+
+		<label class="span-5 float-l bold clear-l"><?php echo $this->escape($this->translate('L_VIEW_PREVISAO_INICIO')) ?>:</label>
+		<span class="span-5 float-l" style="text-align: justify;"><?php echo $this->arrDescricaoProjeto["ni_mes_inicio_previsto"]."/".$this->arrDescricaoProjeto["ni_ano_inicio_previsto"] ?></span>
+
+		<label class="span-5 float-l bold right"><?php echo $this->escape($this->translate('L_VIEW_PREVISAO_TERMINO')) ?>:</label>
+		<span class="span-5 float-l" style="text-align: justify; margin-top: 3px;"><?php echo $this->arrDescricaoProjeto["ni_mes_termino_previsto"]."/".$this->arrDescricaoProjeto["ni_ano_termino_previsto"] ?></span>
+
+		<label class="span-5 float-l bold clear-l"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACAO_PROJETO')) ?>:</label>
+		<span class="span-15 float-l" style="text-align: justify;"><?php echo $this->arrDescricaoProjeto["tx_obs_projeto"] ?></span>
+	</div>
+</div>

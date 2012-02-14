@@ -1,0 +1,19 @@
+<?php
+    $this->script('scriptFile',array('/papel-profissional/index.js'));
+?>
+<div id="form_papel_profissional">
+    <?php echo $this->formHidden( 'cd_papel_profissional' ); ?>
+
+    <label class="span-3 right float-l clear-l required" for="cd_area_atuacao_papel_profissional"><?php echo $this->escape($this->translate('L_VIEW_AREA_ATUACAO')) ?>:</label>
+		<?php echo $this->formSelect('cd_area_atuacao_papel_profissional', null, array('class'=>'float-l')); ?>
+    <label class="span-3 right float-l clear-l required" for="tx_papel_profissional" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_PAPEL_PROFISSIONAL')) ?>:</label>
+    <?php
+        echo $this->formText( 'tx_papel_profissional', null, array('class' => 'float-l span-10'));
+        
+    	echo $this->formButton('btn_salvar_papel_profissional' , $this->escape($this->translate('L_BTN_SALVAR')),   array('class' => 'float-l clear-l push-3 verde'));
+    	echo $this->formButton('btn_alterar_papel_profissional', $this->escape($this->translate('L_BTN_ALTERAR')),  array('class' => 'float-l clear-l push-3 azul',  'style'=>'display:none'));
+    	echo $this->formButton('btn_cancelar_papel_profissional',$this->escape($this->translate('L_BTN_CANCELAR')), array('class' => 'float-l push-3 vermelho', 	  'style'=>'display:none'));
+    ?>
+</div>
+<hr />
+<div id="gridPapelProfissional" class="float-l clear-l push-3"></div>

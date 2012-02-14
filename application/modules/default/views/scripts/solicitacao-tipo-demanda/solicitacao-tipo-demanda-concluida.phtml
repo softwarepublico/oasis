@@ -1,0 +1,10 @@
+<div id="tabSolicitacaoTipoDemandaConcluida" class="divTab">
+	<div class="clear boxTab" >
+		<label class="float-l" style="margin-top:2px; font-size:20px;" id="mesAnoTipoDemandaConcluida"><?php echo $this->mesAno ?></label>
+		<label class="float-r" style="margin-top:2px;"><?php echo $this->anoCombo('anoSolicitacaoTipoDemandaConcluida',null,null,1) ?></label>
+		<label class="float-r" style="margin-top:2px;"><?php echo $this->mesCombo('mesSolicitacaoTipoDemandaConcluida') ?></label>
+		<label class="float-r" style="margin-top:2px;"><?php echo $this->formSelect('cd_profissional_tipo_demanda_concluida', null, array('class' => 'span-5 float-l', 'style' => 'margin-right: 10px;'), $this->cd_profissional_combo) ?></label>		
+        <label class="float-r" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_PROFISSIONAL')) ?>:</label>
+	</div>
+	<div id="gridSolicitacaoTipoDemandaConcluida" class="float-l clear-l span-21"></div>
+</div>

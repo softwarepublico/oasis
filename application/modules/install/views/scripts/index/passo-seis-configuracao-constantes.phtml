@@ -1,0 +1,235 @@
+<script language="javascript" type="text/javascript">
+var _divLdap,
+    _ldapAutenticate,
+    _ldapTipo,
+    _btnTesteLdap;
+    
+$(document).ready(function(){
+    _btnTesteLdap    = $('#btn_teste_ldap');
+    _ldapAutenticate = $('#ldap_autenticate');
+    _ldapTipo        = $('#ldap_tipo');
+    _divLdap         = $('#configuracaoLdap');
+    
+    _divLdap.find(':input').attr('disabled','disabled');
+    
+	$('#btn_voltar_passo5').click(function(){
+		$('#container-install').triggerTab(5);
+	});
+	$('#btn_avancar_passo7').click(function(){
+		if( !validaForm('#formConfiguracaoGeral') ){ return false;}
+		atualizaDados();
+	});
+	$('#email').click(configuraEmail);
+	
+	_btnTesteLdap.click(openDialogTesteConexaoLdap);
+    _ldapAutenticate.change(configuraLdapAutenticate).trigger('change');
+    _ldapTipo.change(configuraLdapHiddens).trigger('change');
+	
+	//Mascará da jquery para os campos
+	//Adiciona uma função no metodo
+	jQuery(function($){
+		$("#prefixo_telefone_orgao").mask("(99) 9999");
+	});
+
+	var email = "<?php echo $_SESSION['oasis_install']['constantes']['email'] ?>";
+	if(email == "S"){
+		$('#email').attr('checked', 'checked')
+                   .trigger('click');
+	}
+});
+
+
+function openDialogTesteConexaoLdap(){
+    eval('var buttons = {"OK": '+function(){testarConexaoLdap('popupTesteConexaoLdap');}+',"'+i18n.L_VIEW_SCRIPT_BTN_FECHAR+'": '+function(){closeDialog('popupTesteConexaoLdap');}+'};');
+    loadDialog({ 
+               id       : 'popupTesteConexaoLdap',
+               title    : 'Teste de Conexão',
+               width    : 320,
+               height   : 'auto',
+               objQuery : $('#divPopUpTesteConexaoLdap'),
+               buttons  : buttons
+           });
+}
+
+function testarConexaoLdap(idDialogClose){
+    $.ajax({
+		type: "POST",
+		url: systemName+"/"+systemNameModule+"/index/testa-conexao-ldap",
+		data: $("#fld_params_ldap :input").serialize()+"&"+
+			  $("#popupTesteConexaoLdap :input").serialize(),
+		dataType: 'json',
+		success: function(retorno){
+            if(retorno['type'] == 1){ //sucesso
+                alertMsg(retorno['msg'],retorno['type'],function(){closeDialog(idDialogClose)});
+            }else{
+                alertMsg(retorno['msg'],retorno['type']);
+            }
+		}
+	});
+}
+
+/**
+ * Função para nostrar o e-mail
+ */
+function configuraEmail(){
+	 if($('#email').attr('checked') == true){
+		 $('#configuracaoRodape'    ).show();
+		 $('#label_email_principal' ).addClass('required');
+		 $('#label_servidor_email'  ).addClass('required');
+		 $('#label_porta_email'     ).addClass('required');
+    } else {
+		 $('#configuracaoRodape'   ).hide();
+		 $('#label_email_principal').removeClass('required');
+		 $('#label_servidor_email' ).removeClass('required');
+		 $('#label_porta_email'    ).removeClass('required');
+    }
+}
+
+function configuraLdapAutenticate(){
+    if($(this).is(':checked')){
+        _divLdap.find('.control').addClass('required');
+        _divLdap.find(':input').removeAttr('disabled');
+        _divLdap.show();
+    }else{
+        _divLdap.find('.control').removeClass('required');
+        _divLdap.hide();
+        _divLdap.find(':input').attr('disabled','disabled');
+    }
+}
+
+function configuraLdapHiddens(){
+    var bindRequiresDn  = $('#ldap_bindRequiresDn');
+    var useStartTls     = $('#ldap_useStartTls');
+    
+    switch ($(this).val()) {
+        case 'active_directory':
+            bindRequiresDn.val(0);
+            useStartTls.val(1);
+            break;
+        default:
+            bindRequiresDn.val(1);
+            useStartTls.val(0);
+            break;
+    }
+}
+
+/**
+ * Função para criar as constantes no sistema
+ */
+function atualizaDados() {
+	$.ajax({
+		type: "POST",
+		url: systemName+"/"+systemNameModule+"/index/atualiza-dados",
+		data: $("#formConfiguracaoGeral :input").serialize()+"&"+
+			  $("#formLanguage :input").serialize()+"&"+
+			  $("#formLicenca :input").serialize()+"&"+
+			  $("#formConfiguracoesBancoDeDados :input").serialize(),
+		dataType: 'json',
+		success: function(retorno){
+			if(retorno['erro'] == true){
+				$('#container-install').triggerTab(retorno['tab']);
+				if(retorno['campo'] != ""){
+					var obj = eval("$('#"+retorno['campo']+"')");
+					window.setTimeout(function(){showToolTip(retorno['msg'],obj)},1000);
+				} else {
+					alertMsg(retorno['msg'],retorno['erroType']);
+				}
+			} else {
+				passoSeteCriaConstantes();
+			}
+		}
+	});
+}
+
+</script>
+<h2 class="center">6 - <?php echo $this->escape($this->translate('L_VIEW_CONFIGURACOES_GERAIS')) ?></h2>
+<br />
+
+<div class="float-l clear-l span-21" id="formConfiguracaoGeral">
+    <fieldset id="fld_params_ldap">
+		<legend><?php echo $this->escape($this->translate('L_MSG_CONFIGURACAO_CONEXAO_LDAP')) ?></legend>
+        <label class="float-l clear-l span-16 push-4">
+            <?php echo $this->formCheckbox('ldap_autenticate',$_SESSION['oasis_install']['constantes']['ldap_autenticate'], null, array('checkedValue'=>'S','uncheckedValue'=>'N')) ?>
+            <?php echo $this->escape($this->translate('L_MSG_USAR_AUTENTICACAO_LDAP'))?>
+        </label>
+        <div class="float-l clear-l hide span-20" id="configuracaoLdap">
+            <?php echo $this->formHidden('ldap_bindRequiresDn',$_SESSION['oasis_install']['ldap']['bindRequiresDn']) ?>
+            <?php echo $this->formHidden('ldap_useStartTls',$_SESSION['oasis_install']['ldap']['useStartTls']) ?>
+            
+            <label class="float-l clear-l span-4 right" for="ldap_tipo"><?php echo $this->escape($this->translate('Tipo')) ?>:</label>
+                <?php echo $this->formSelect('ldap_tipo',null,array('class'=>'float-l span-5'),$this->arrTipoLdap) ?>
+            <label class="float-l clear-l span-4 right control" for="ldap_host"><?php echo $this->escape($this->translate('L_VIEW_HOST')) ?>:</label>
+                <?php echo $this->formText('ldap_host',$_SESSION['oasis_install']['ldap']['host'],array('class'=>'float-l span-5')) ?>
+            <label class="float-l clear-l span-4 right" for="ldap_port"><?php echo $this->escape($this->translate('L_VIEW_PORTA'))?>:</label>
+                <?php echo $this->formText('ldap_port',$_SESSION['oasis_install']['ldap']['port'],array('class'=>'float-l span-5')) ?>
+            <label class="float-l clear-l span-4 right" for="ldap_useSsl"><?php echo $this->escape($this->translate('L_VIEW_USAR_SSL'))?>:</label>
+                <?php echo $this->formSelect('ldap_useSsl',$_SESSION['oasis_install']['ldap']['useSsl'],array('class'=>'float-l span-5'),array(0=>'Não',1=>'Sim')) ?>
+            <label class="float-l clear-l span-4 right control" for="ldap_accountDomainName"><?php echo $this->escape($this->translate('L_VIEW_DOMINIO_LDAP')) ?>:</label>
+                <?php echo $this->formText('ldap_accountDomainName',$_SESSION['oasis_install']['ldap']['accountDomainName'],array('class'=>'float-l span-5')) ?>
+            <label class="float-l clear-l span-4 right control" for="ldap_accountDomainNameShort"><?php echo $this->escape($this->translate('accountDomainNameShort'))?>:</label>
+                <?php echo $this->formText('ldap_accountDomainNameShort',$_SESSION['oasis_install']['ldap']['accountDomainNameShort'],array('class'=>'float-l span-5','style'=>'text-transform:uppercase;')) ?>
+            <label class="float-l clear-l span-4 right control" for="ldap_baseDn"><?php echo $this->escape($this->translate('baseDn'))?>:</label>
+                <?php echo $this->formText('ldap_baseDn',$_SESSION['oasis_install']['ldap']['baseDn'],array('class'=>'float-l span-10')) ?>
+
+            <?php echo $this->formButton('btn_teste_ldap',$this->escape($this->translate('L_BTN_TESTAR_CONEXAO_LDAP')),array('class'=>'verde float-l clear-l push-4')); ?>
+            
+        </div>
+	</fieldset>
+	<fieldset>
+		<legend><?php echo $this->escape($this->translate('L_MSG_INFORMACOES_ORGAO')) ?></legend>
+			<label class="float-l clear-l span-4 right required" for="nome_orgao"><?php echo $this->escape($this->translate('L_VIEW_NOME')) ?>:</label>
+				<?php echo $this->formText('nome_orgao',$_SESSION['oasis_install']['constantes']['nome_orgao'],array('class'=>'float-l span-14')) ?>
+            <label class="float-l clear-l span-4 right required" for="nome_ti_orgao"><?php echo $this->escape($this->translate('L_VIEW_NOME_AREA_TI')) ?>:</label>
+				<?php echo $this->formText('nome_ti_orgao',$_SESSION['oasis_install']['constantes']['nome_ti_orgao'],array('class'=>'float-l span-14')) ?>
+            <label class="float-l clear-l span-4 right required" for="dominio_email"><?php echo $this->escape($this->translate('L_VIEW_DOMINIO_EMAIL')) ?>:</label>
+				<?php echo $this->formText('dominio_email',$_SESSION['oasis_install']['constantes']['dominio_email'],array('class'=>'float-l span-14')) ?>
+            <label class="float-l clear-l span-4 right required" for="prefixo_telefone_orgao"><?php echo $this->escape($this->translate('L_VIEW_PREFIXO_TELEFONE')) ?>:</label>
+				<?php echo $this->formText('prefixo_telefone_orgao',$_SESSION['oasis_install']['constantes']['prefixo_telefone_orgao'],array('class'=>'float-l span-6')) ?>
+            <label class="float-l span-3 right required" for="telefone_principal_orgao"><?php echo $this->escape($this->translate('L_VIEW_TELEFONE_PRINCIPAL')) ?>:</label>
+				<?php echo $this->telefone('telefone_principal_orgao',$_SESSION['oasis_install']['constantes']['telefone_principal_orgao'],array('class'=>'float-l span-5 gapLeft')) ?>
+	</fieldset>
+	<fieldset>
+		<legend><?php echo $this->escape($this->translate('L_VIEW_INFORMACOES_GERAIS')) ?></legend>
+			<label class="float-l clear-l span-4 right required" for="caminho_virtual"><?php echo $this->escape($this->translate('L_VIEW_CAMINHO_VIRTUAL')) ?>:</label>
+				<?php echo $this->formText('caminho_virtual',$this->caminhoVirtual,array('class'=>'float-l span-14')) ?>
+            <label class="float-l clear-l span-4 right required" for="caminho_fisico"><?php echo $this->escape($this->translate('L_VIEW_CAMINHO_FISICO')) ?>:</label>
+				<?php echo $this->formText('caminho_fisico',$this->caminhoFisico,array('class'=>'float-l span-14')) ?>
+            <label class="float-l clear-l span-4 right required" for="rodape">
+				<?php echo $this->escape($this->translate('L_VIEW_INFORMACOES_RODAPE')) ?>:<br/>(<b><i><small><?php echo $this->escape($this->translate('L_VIEW_FORMATACAO_HTML')) ?></small></i></b>)
+			</label>
+				<?php echo $this->formTextarea('rodape',$_SESSION['oasis_install']['constantes']['rodape'],array('class'=>'float-l span-14 height-4')) ?>
+            <label class="float-l clear-l span-13 right push-1" style="margin-left: 35px;">
+				<input type="checkbox" id="email" name="email" value="S"/>
+				<?php echo $this->escape($this->translate('L_MSG_DESEJO_SISTEMA_ENVIE_EMAIL_DURANTE_FLUXO_PROCESSO')) ?>
+			</label>
+	</fieldset>
+	<div class=" float-l clear-l hide span-21" id="configuracaoRodape">
+		<fieldset>
+			<legend><?php echo $this->escape($this->translate('L_VIEW_CONFIGURACOES_EMAIL')) ?></legend>
+				<label id="label_email_principal" class="float-l clear-l span-4 right" for="email_principal"><?php echo $this->escape($this->translate('L_VIEW_EMAIL_PRINCIPAL')) ?>:</label>
+					<?php echo $this->formText('email_principal',$_SESSION['oasis_install']['constantes']['email_principal'],array('class'=>'float-l span-7')) ?>
+                <label id="label_servidor_email" class="float-l clear-l span-4 right" for="servidor_email"><?php echo $this->escape($this->translate('L_VIEW_SERVIDOR')) ?>:</label>
+					<?php echo $this->formText('servidor_email',$_SESSION['oasis_install']['constantes']['servidor_email'],array('class'=>'float-l span-7')) ?>
+                <label id="label_porta_email" class="float-l clear-l span-4 right" for="porta_email"><?php echo $this->escape($this->translate('L_VIEW_PORTA')) ?>:</label>
+					<?php echo $this->formText('porta_email',$_SESSION['oasis_install']['constantes']['porta_email'],array('class'=>'float-l span-7')) ?>
+		</fieldset>
+	</div>
+</div>
+<!-- Botões da tela -->
+<div class="float-l clear-l span-10" style="margin-top:40px;">
+	<span class="float-l right"><?php echo $this->formButton('btn_voltar_passo5',$this->escape($this->translate('L_BTN_ANTERIOR')),array('class'=>'verde right')); ?></span>
+	<label class="float-l bold right"> <<< <?php echo $this->escape($this->translate('L_VIEW_CONFIGURACAO_BANCO_DADOS')) ?></label>
+</div>
+<div class="float-r span-10" style="margin-top:40px;">
+	<span class="float-r right"><?php echo $this->formButton('btn_avancar_passo7',$this->escape($this->translate('L_BTN_PROXIMO')),array('class'=>'verde right')); ?></span>
+	<label class="float-r bold right"><?php echo $this->escape($this->translate('L_VIEW_CRIACAO_CONSTANTES')) ?> >>></label>
+</div>
+
+<div id="divPopUpTesteConexaoLdap" class="hide">
+    <div class="float-l">
+        <label class="float-l span-2 right"><?php echo $this->escape($this->translate('L_VIEW_LOGIN')) ?>:</label>
+            <?php echo $this->formText('usuario','',array('class'=>'span-5 float-l', 'maxlength'=>'100')); ?>
+        <label class="float-l span-2 right clear-l"><?php echo $this->escape($this->translate('L_VIEW_SENHA')) ?>:</label>
+            <?php echo $this->formPassword('senha','',array('class'=>'span-5 float-l','onkeypress'=>'checarCapsLock(event,$(this))')) ?>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+<?php
+    $this->script('scriptFile',array('/regra-negocio/index.js'));
+?>
+<div id="container-regra_negocio" style="display: none;">
+	<ul>
+        <li>
+            <a href="#aba_regras_negocio">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_REGRAS_DE_NEGOCIO')) ?></span>
+            </a>
+        </li>
+        <li id="li_aba_regra_negocio" style="display: none;">
+            <a href="#aba_regra_negocio">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_REGRA_DE_NEGOCIO')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#aba_fechamento_versao">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_FECHAMENTO_VERSAO')) ?></span>
+            </a>
+        </li>
+    </ul>
+    <div id="aba_regras_negocio">
+    	<?php echo $this->render('regra-negocio/regras-negocio.phtml') ?>
+    </div>
+    <div id="aba_regra_negocio">
+    	<?php echo $this->render('regra-negocio/regra-negocio.phtml') ?>
+    </div>
+    <div id="aba_fechamento_versao">
+    	<?php echo $this->render('regra-negocio/fechamento-versao.phtml') ?>
+    </div>
+</div>

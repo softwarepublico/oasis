@@ -1,0 +1,106 @@
+<?php echo $this->doctype(); ?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <?php //Especifica helpers de visão do tipo head para registrar 
+              echo $this->headMeta();
+              echo $this->headTitle();
+              echo $this->headLink();
+              echo $this->headScript();
+         ?>
+    </head>
+    <body>
+        <div id="cabeca" class="container">
+            <a href="<?php echo $this->baseUrl();?>">
+                <img id="logo" alt="OASIS" src="<?php echo $this->baseUrl();?>/public/img/logo4.png"/>
+            </a>
+            
+            <ul id="barraMenu">
+                <li id="informacoes_gerais">
+                    <a href="#" onclick="window.open('<?php echo $this->baseUrl();?>/public/documentacao/geral/Info-OASIS.pdf');">
+                        <?php echo $this->escape($this->translate('L_VIEW_INFORMACOES_GERAIS')) ?>
+                    </a>
+                </li>
+                <li id="alterar_senha">
+                    <?php
+                        if('S' == K_LDAP_AUTENTICATE){
+                            $onclickAltSenha = "alertMsg('{$this->escape($this->translate('L_MSG_INFORMACAO_TROCA_SENHA'))}',2);";
+                        }else{
+                            $onclickAltSenha = "window.location.href='{$this->baseUrl()}/alterar-senha';";
+                        }
+                    ?>
+                    <a href="#" onclick="<?php echo $onclickAltSenha; ?>">
+                        <?php echo $this->escape($this->translate('L_VIEW_ALTERAR_SENHA')) ?>
+                    </a>
+                </li>
+                <li id="fale_conosco">
+                    <a href="#" onclick="window.location.href='<?php echo $this->baseUrl();?>/fale-conosco';">
+                        <?php echo $this->escape($this->translate('L_VIEW_FALE_CONOSCO')) ?>
+                    </a>
+                </li>
+                <li id="base_conhecimento">
+                    <a href="#" onclick="window.location.href='<?php echo $this->baseUrl();?>/base-conhecimento';">
+                        <?php echo $this->escape($this->translate('L_VIEW_BASE_CONHECIMENTO')) ?>
+                    </a>
+                </li>
+                <li id="ajuda">
+                    <a href="#" onclick="abreModalAjuda('<?php echo $this->originalController ?>');">
+                        <?php echo $this->escape($this->translate('L_VIEW_AJUDA')) ?>
+                    </a>
+                </li>
+                <li id="sair" class="ultimo branco">
+                    <a href="#" onclick="window.location.href='<?php echo $this->baseUrl();?>/auth/logout';">
+                        <?php echo $this->escape($this->translate('L_VIEW_SAIR')) ?>
+                    </a>
+                </li>
+            </ul>
+            <p id="nomeUsuario">
+                <?php echo Base_Util::getTranslator('L_VIEW_OLA', $this->nomeUsuarioLogado) ?>
+                <br />
+                <?php if($this->originalModule != 'pedido')
+                    echo $this->escape(Base_Util::getTranslator('L_VIEW_ULTIMO_ACESSO', array('value1'=>$this->dataUltimoAcesso, 'value2'=>$this->horaUltimoAcesso))) ?>
+            </p>
+            <p id="tamanhoFonte">
+                <?php echo $this->escape($this->translate('L_VIEW_TAMANHO_FONTE')) ?>:
+                <span class="a1" onclick="mudaFonte('pequena')">A</span>
+                <span class="a2" onclick="mudaFonte('normal')">A</span>
+                <span class="a3"  onclick="mudaFonte('grande')">A</span>
+            </p>
+            <div id="menuContainer">
+                <?php echo $this->menuContainer; ?>
+            </div>
+        </div>
+        <div id="breadCrumbs" class="breadCrumbs container">
+            <?php echo $this->breadCrumbs; ?>
+            <script language="javascript" type="text/javascript">
+                $(document).ready( function() {
+                    $('ul#breadCrumbs li span').text('<?php echo $this->escape($this->tituloJanela); ?>');
+                });
+            </script>
+        </div>
+        <div class="corpo">
+            <div id="content" class="container">
+                <?php echo $this->layout()->content; ?>
+                <div class="buttonBarLeft" style="display: none;">
+                    <div class="buttonBarRight">
+                        <div class="buttonBarMiddle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="rodapeContainer">
+            <div id="rodape" class="container">
+                <address>
+                    <?php echo K_ADDRES_ORGAO; ?>
+                </address>
+            </div>
+        </div>
+        <script type="text/javascript">
+            <!--
+            $(document).ajaxStart(function(){
+                ajaxLoading(i18n.L_VIEW_SCRIPT_AGUARDE);
+            });
+            $(document).ajaxStop(ajaxLoaded);
+            //-->
+        </script>
+    </body>
+</html>

@@ -1,0 +1,32 @@
+<form id="formParecerTecnicoParcela">
+
+	<?php echo $this->formHidden('cd_projeto_parecer_tecnico_parcela', $this->cd_projeto); ?>
+	<?php echo $this->formHidden('cd_proposta_parecer_tecnico_parcela', $this->cd_proposta); ?>
+	<?php echo $this->formHidden('cd_parcela_parecer_tecnico_parcela', $this->cd_parcela); ?>
+	<?php echo $this->formHidden('st_pendente', $this->st_pendente); ?>
+
+	<label class="float-l span-4 bold"><?php echo $this->escape($this->translate('L_VIEW_PROJETO')) ?>:</label>
+	<span class="float-l span-10 bold"><?php echo $this->tx_sigla_projeto." (".$this->escape($this->translate('L_VIEW_PARCELA'))." ".$this->ni_parcela.")"?></span>
+
+	<div id="div_itens_parecer_tecnico_parcela" class="float-l clear-l span-14">
+		<?php foreach ($this->listaItemParecerTecnicoParcela as $nome):	?>
+				<label class="clear-l span-4 float-l required" for="cd_item_parecer_tecnico_<?php echo $nome->cd_item_parecer_tecnico ?>" title="<?php echo $nome->tx_descricao?>" ><?php echo $nome->tx_item_parecer_tecnico ?>:</label>
+					<input class="span-1 float-l" type="radio" id="cd_item_parecer_tecnico_<?php echo $nome->cd_item_parecer_tecnico ?>" name="cd_item_parecer_tecnico[<?php echo $nome->cd_item_parecer_tecnico ?>]" value="OK">
+                        <label class="span-1 float-l"><?php echo $this->escape($this->translate('L_VIEW_OK')) ?></label>
+					<input class="span-1 float-l" type="radio" id="cd_item_parecer_tecnico_<?php echo $nome->cd_item_parecer_tecnico ?>" name="cd_item_parecer_tecnico[<?php echo $nome->cd_item_parecer_tecnico ?>]" value="NO">
+                        <label class="span-2 float-l"><?php echo $this->escape($this->translate('L_VIEW_NAO_OK')) ?></label>
+					<input class="span-1 float-l" type="radio" id="cd_item_parecer_tecnico_<?php echo $nome->cd_item_parecer_tecnico ?>" name="cd_item_parecer_tecnico[<?php echo $nome->cd_item_parecer_tecnico ?>]" value="NA">
+                        <label class="span-2 float-l" ><?php echo $this->escape($this->translate('L_VIEW_NAO_APLICA')) ?></label>
+		<?php endforeach; ?>
+	</div>
+	<label class="float-l clear-l span-4 required" for="tx_obs_parecer_tecnico_parcela"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACOES')) ?>:</label>
+	<span class="float-l span-10"><?php echo $this->formTextarea('tx_obs_parecer_tecnico_parcela', '', array('class'=>'float-l','style'=>'width:400px; height:120px;')) ?></span>
+
+	<label class="float-l clear-l span-4 required" for="st_parecer_tecnico_parcela"><?php echo $this->escape($this->translate('L_VIEW_TIPO_AVALIACAO')) ?>:</label>
+		<input class="span-1 float-l" type="radio" id="st_parecer_tecnico_parcela" name="st_parecer_tecnico_parcela" value="A" checked="checked"><label class="span-2 float-l"><?php echo $this->escape($this->translate('L_VIEW_ATENDIDO')) ?></label>
+		<input class="span-1 float-l" type="radio" id="st_parecer_tecnico_parcela" name="st_parecer_tecnico_parcela" value="N"><label class="span-3 float-l"><?php echo $this->escape($this->translate('L_VIEW_NAO_ATENDIDO')) ?></label>
+
+	<?php if($this->st_pendente !== "S"):?>
+		<input class="span-1 float-l" type="radio" id="st_parecer_tecnico_parcela" name="st_parecer_tecnico_parcela" value="P"><label class="span-2 float-l"><?php echo $this->escape($this->translate('L_VIEW_PENDENTE')) ?></label>
+	<?php endif; ?>
+</form>

@@ -1,0 +1,4 @@
+# Rewrite rules for zend framework
+#deny from all
+RewriteEngine on
+RewriteRule !\.(pdf|php|js|htm|ico|txt|gif|jpg|png|css|rss|zip|tar\.gz)$ public/index.php

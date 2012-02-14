@@ -1,0 +1,77 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	// call the tablesorter plugin 
+    $("#tableFecharCasoDeUso").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableFecharCasoDeUso").tablesorterPager({container: $("#tableFecharCasoDeUsoPager"), size:05}); 
+});
+</script>
+<label class="float-l clear-l"><?php echo $this->escape($this->translate('L_VIEW_MODULO')) ?>:</label>
+	<?php echo $this->formSelect('cd_modulo_fechamento',$this->cd_modulo,array('class'=>'float-l'),$this->arrModulo) ?>
+<table id="tableFecharCasoDeUso" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+			<th width="50px"><?php echo $this->escape($this->translate('L_VIEW_GRID_MODULO'      )) ?></th>
+			<th width="100px"><?php echo $this->escape($this->translate('L_VIEW_GRID_CASO_DE_USO')) ?></th>
+			<th width="10px"><?php echo $this->escape($this->translate('L_VIEW_GRID_STATUS'      )) ?></th>
+			<th width="30px"><?php echo $this->escape($this->translate('L_VIEW_GRID_ACAO'        )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach($this->res as $res):
+	?>
+		<tr>
+			<td><?php echo $res['tx_modulo'] ?></td>
+			<td><?php echo $res['tx_caso_de_uso'] ?></td>
+			<td width="10px" style="text-align: center;"><?php echo $res['st_fechamento_caso_de_uso_desc'] ?></td>
+			<td style="text-align: center;">
+				<?php 
+					if($res['st_fechamento_caso_de_uso'] != "S"){
+						echo $this->formButton(
+                                'btn_fechar_caso_de_uso',
+                                $this->escape($this->translate('L_BTN_FECHAR_CASO_DE_USO')),
+                                array('class'=>'azul',
+                                      'onclick'=>"fecharCasoDeUso({$res['cd_caso_de_uso']},'{$res['dt_versao_caso_de_uso']}')")
+                             );
+					}
+				?>
+			</td>
+			
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo " <tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr> ";
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableFecharCasoDeUsoPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="05">05</option>
+			<option value="10">10</option>
+		</select>
+	</form>
+</div>
+
+<script type="text/javascript">
+<!--
+$(document).ready(function(){
+	$('#cd_modulo_fechamento').change(function(){
+		tabFecharCasoDeUso($('#cd_modulo_fechamento').val());		
+	});
+});
+//-->
+</script>

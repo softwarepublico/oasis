@@ -1,0 +1,75 @@
+<?php
+    $this->script('scriptFile',array('/medicao/index.js'));
+?>
+<div id="container-medicao" style="display: none;">
+	<?php echo $this->formHidden('cd_medicao') ?>
+	<?php echo $this->formHidden('cd_box_inicio') ?>
+	<?php echo $this->formHidden('hidden_dt_analise') ?>
+	<ul>
+    	<li>
+            <a href="#aba_medicoes">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_MEDICAO')) ?></span>
+            </a>
+        </li>
+    	<li id="li_aba_nova_medicao" style="display: none;">
+            <a href="#aba_nova_medicao">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_NOVA_MEDICAO')) ?></span>
+            </a>
+        </li>
+    	<li>
+            <a href="#aba_analise_medicao">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_ANALISE')) ?></span>
+            </a>
+        </li>
+    	<li id="li_aba_nova_analise_medicao" style="display: none;">
+            <a href="#aba_nova_analise_medicao">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_NOVA_ANALISE')) ?></span>
+            </a>
+        </li>
+        <li id="li_aba_decisao_medicao" style="display: none;">
+            <a href="#aba_decisao_medicao">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_DECISAO')) ?></span>
+            </a>
+        </li>
+    	<li>
+            <a href="#aba_decisoes">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_DECISAO')) ?></span>
+            </a>
+        </li>
+        <li id="li_aba_execucao_decisao" style="display: none;">
+            <a href="#aba_execucao_decisao">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_EXECUCAO')) ?></span>
+            </a>
+        </li>
+    	<li>
+            <a href="#aba_medicao_medida">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_MEDICAO_MEDIDA')) ?></span>
+            </a>
+        </li>
+    </ul>
+    
+    <div id="aba_medicoes">
+    	<?php echo $this->render('medicao/medicoes.phtml') ?>
+    </div>    
+    <div id="aba_nova_medicao">
+    	<?php echo $this->render('medicao/nova-medicao.phtml') ?>
+    </div>
+    <div id="aba_analise_medicao">
+    	<?php echo $this->render('medicao/analise.phtml') ?>
+    </div>
+    <div id="aba_nova_analise_medicao">
+    	<?php echo $this->render('medicao/nova-analise.phtml') ?>
+    </div>
+    <div id="aba_decisao_medicao">
+    	<?php echo $this->render('medicao/decisao.phtml') ?>
+    </div>
+    <div id="aba_decisoes">
+    	<?php echo $this->render('medicao/decisoes.phtml') ?>
+    </div>
+    <div id="aba_execucao_decisao">
+    	<?php echo $this->render('medicao/execucao-decisao.phtml') ?>
+    </div>
+    <div id="aba_medicao_medida">
+    	<?php echo $this->render('medicao/medicao-medida.phtml') ?>
+    </div>
+</div>

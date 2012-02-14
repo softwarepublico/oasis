@@ -1,0 +1,25 @@
+<?php 
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/caso-de-uso/index.js'));
+?>
+<form id="formRelatorio">
+	<label class="span-2 right float-l required" for="cd_contrato"><?php echo $this->translate('L_VIEW_CONTRATO') ?>:</label>
+		<?php echo $this->formSelect('cd_contrato',null,array('class'=>'float-l'),$this->arrContrato); ?>
+
+    <label class="span-2 required clear-l float-l right" for="cd_projeto"><?php echo $this->translate('L_VIEW_PROJETO') ?>:</label>
+    	<?php echo $this->formSelect("cd_projeto",null,array('class'=>'float-l'),array(0=>Base_Util::getTranslator('L_VIEW_COMBO_SELECIONE'))); ?>
+    <hr />
+    <label class="span-2 float-l right required" for="cd_modulo"><?php echo $this->translate('L_VIEW_MODULO') ?>:</label>
+    <select id="cd_modulo" name="cd_modulo" ><option value=""><?php echo $this->translate('L_VIEW_COMBO_SELECIONE') ?></option></select>
+    
+    <fieldset class="clear-l">
+		<legend><?php echo $this->translate('L_VIEW_TIPO_CASO_DE_USO') ?></legend>
+			<p class="float-l"><input type="radio" name="tipo_caso_de_uso" id="tipo_caso_de_uso_complexo" value="C"  /></p>
+		<label class="span-3 float-l" for="tipo_caso_de_uso_complexo"><?php echo $this->translate('L_VIEW_COMPLEXO') ?></label>
+			<p class="float-l clear-l"><input type="radio" name="tipo_caso_de_uso" id="tipo_caso_de_uso_simplificado" value="S" checked="checked" /></p>
+		<label class="span-3 float-l" for="tipo_caso_de_uso_simplificado"><?php echo $this->translate('L_VIEW_SIMPLIFICADO') ?></label>
+	</fieldset>
+
+    
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->translate('L_BTN_GERAR') ?></button>
+</form>

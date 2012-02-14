@@ -1,0 +1,65 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableReencaminharSolicitacaoDemanda").tablesorter({widthFixed: true, widgets: ['zebra']});
+});
+</script>
+<table id="tableReencaminharSolicitacaoDemanda" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+			<th class="{sorter: false}" style="width:10px;">&nbsp;</th>
+            <th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_PROFISSIONAIS')) ?></th>
+			<th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_NIVEL_SERVICO')) ?></th>
+			<th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_OBSERVACAO'   )) ?></th>
+			<th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_CONFIRMACAO'  )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+	?>
+		<tr>
+			<td>
+				<?php if(is_null($res['dt_demanda_nivel_servico'])){ ?>
+					<img id="imgExcluir_<?php echo $res['cd_profissional'] ?>" height="13" width="13" style="cursor:pointer;" onclick="excluirProfissionalDesignado('<?php echo $res['cd_demanda'] ?>','<?php echo $res['cd_profissional'] ?>', <?php echo $res['cd_nivel_servico'] ?>);" src="<?php echo $this->baseUrl()?>/public/img/del.png" alt="<?php echo $this->escape($this->translate('L_BTN_EXCLUIR')) ?>"/>
+				<?php } ?>	
+			</td>
+			<td onclick="recuperarDesignacaoProfissional(<?php echo $res['cd_demanda'] ?>, <?php echo $res['cd_profissional'] ?>, <?php echo $res['cd_nivel_servico'] ?>)" style="cursor:pointer;"><?php echo $res['tx_nome_conhecido'] ?></td>
+			<td onclick="recuperarDesignacaoProfissional(<?php echo $res['cd_demanda'] ?>, <?php echo $res['cd_profissional'] ?>, <?php echo $res['cd_nivel_servico'] ?>)" style="cursor:pointer;"><?php echo $res['tx_nivel_servico'] ?></td>
+			<td onclick="recuperarDesignacaoProfissional(<?php echo $res['cd_demanda'] ?>, <?php echo $res['cd_profissional'] ?>, <?php echo $res['cd_nivel_servico'] ?>)" style="cursor:pointer;">
+				<?php
+					$continuidade = "";
+                    $observacao   = "";
+
+                    if($res['st_nova_obs_nivel_servico'] === 'S'){
+                        $observacao = (strlen($res['tx_nova_obs_nivel_servico']) >50)? substr($res['tx_nova_obs_nivel_servico'],0,50)."...": $res['tx_nova_obs_nivel_servico'];
+                    }else{
+                        $observacao = (strlen($res['tx_obs_nivel_servico']) >50)? substr($res['tx_obs_nivel_servico'],0,50)."...": $res['tx_obs_nivel_servico'];
+                    }
+					echo $observacao;
+				 ?>
+			 </td>
+			 <td>
+			 	<?php 
+			 		if(is_null($res['dt_demanda_nivel_servico']))
+			 			echo $this->formButton("bt_confirmacao_profissional_{$res['cd_profissional']}",$this->escape($this->translate('L_BTN_CONFIRMAR_DESIGNACAO')),array('class'=>'verde center',"onclick"=>"confirmaDesignacaoProfissional({$res['cd_demanda']},{$res['cd_profissional']},{$res['cd_nivel_servico']})"));
+			 		if(!is_null($res['st_fechamento_nivel_servico']))
+			 			echo $this->formButton("bt_reencaminhar_profissional_{$res['cd_profissional']}",$this->escape($this->translate('L_BTN_REENCAMINHAR')),array('class'=>'verde center',"onclick"=>"confirmaReencaminhamentoProfissional({$res['cd_demanda']},{$res['cd_profissional']},{$res['cd_nivel_servico']})"));
+			 	?>
+			 </td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo " <tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			  </tr>";
+	}
+	?>
+	</tbody>
+</table>

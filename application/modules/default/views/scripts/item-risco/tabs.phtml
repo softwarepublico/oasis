@@ -1,0 +1,46 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#container_item_risco').show().tabs().triggerTab(1);
+	$("#config_hidden_item_questao_risco").val('N');
+});
+
+
+function configAccordionItemQuestaoRisco()
+{
+	if($("#config_hidden_item_questao_risco").val() === 'N'){
+		comboAreaAtuacao('cd_area_atuacao_ti_item_risco');
+		comboAreaAtuacao('cd_area_atuacao_ti_questao_analise_risco');
+		$("#config_hidden_item_questao_risco").val('S');
+	}
+}
+</script>
+<div id="container_item_risco" style="display: none;">
+	<ul>
+		<?php if(ChecaPermissao::possuiPermissao('item-risco') === true): ?>
+        	<li>
+                <a href="#aba_item_risco">
+                    <span><?php echo $this->escape($this->translate('L_VIEW_ABA_ITEM_RISCO')) ?></span>
+                </a>
+            </li>
+        <?php endif; ?>
+		<?php if(ChecaPermissao::possuiPermissao('questao-analise-risco') === true): ?>
+	        <li id="li-questao-analise-risco">
+                <a href="#aba_questao_analise_risco">
+                    <span><?php echo $this->escape($this->translate('L_VIEW_ABA_QUESTAO_ANALISE_RISCO')) ?></span>
+                </a>
+            </li>
+        <?php endif; ?>
+    </ul>
+	
+		<?php if(ChecaPermissao::possuiPermissao('item-risco') === true): ?>
+		    <div id="aba_item_risco">
+		    	<div class="divTab"><?php echo $this->render('item-risco/index.phtml') ?></div>
+		    </div>
+        <?php endif; ?>
+        
+		<?php if(ChecaPermissao::possuiPermissao('questao-analise-risco') === true): ?>
+		    <div id="aba_questao_analise_risco">
+		    	<div class="divTab"><?php echo $this->render('questao-analise-risco/index.phtml') ?></div>
+		    </div>
+        <?php endif; ?>
+</div>

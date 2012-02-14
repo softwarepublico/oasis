@@ -1,0 +1,61 @@
+<?php
+    $this->script('scriptFile',array('/demanda-executor-demanda/index.js'));
+?>
+<script type="text/javascript">
+	var acessoProfissional = "<?php echo $this->acessoProfissional ?>";
+	if(acessoProfissional == "N"){
+		alertMsg("Usuário sem permissão para visualizar conteúdo",2,"window.location.href = '"+systemName+"/demanda-executor-demanda\#demanda-executada'");
+	}
+</script>
+<?php  echo $this->formHidden('abaOrigem',$this->abaOrigem) ?>
+<div class="box span-21 border gradient">
+	<h3 class="highlight tarja-1"><?php echo $this->escape($this->translate('L_VIEW_DETALHE_DEMANDA_EXECUTADA')) ?></h3>
+
+    <label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_NUMERO')) ?>:</label>
+        <p class="span-6"><?php echo $numero = (!is_null($this->demanda['ni_solicitacao'])) ? "{$this->demanda['ni_solicitacao']}/{$this->demanda['ni_ano_solicitacao']}" : $this->demanda['cd_demanda']; ?></p>
+
+    <label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_DATA_HORA_DEMANDA')) ?>:</label>
+        <p class="span-6"><?php echo date('d/m/Y H:i:s', strtotime($this->demanda['dt_demanda'])) ?></p>
+
+	<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_NIVEL_SERVICO')) ?>:</label>
+        <p class="span-15"><?php echo $this->demanda['tx_nivel_servico'] ?></p>
+
+	<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_SOLICITANTE')) ?>:</label>
+        <p class="span-6"><?php echo $this->demanda['tx_solicitante_demanda'] ?></p>
+
+	<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_UNIDADE')) ?>:</label>
+        <p class="span-6"><?php echo $this->demanda['tx_sigla_unidade'] ?></p>
+
+	<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_DESCRICAO')) ?>:</label>
+        <div class="span-15" style="text-align: justify; margin-left: 10px;"><?php echo $this->demanda['tx_demanda'] ?></div>
+
+	<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACAO')) ?>:</label>
+        <p class="span-15" style="text-align: justify;"><?php echo $this->demanda['tx_obs_nivel_servico'] ?></p>
+
+	<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_DETALHE_EXECUCAO')) ?></label>
+        <p class="span-6"></p>
+
+	<hr style="width:815px;"/>
+
+	<label class="bold span-5"><?php echo $this->escape($this->translate('L_VIEW_OBJETO_EXECUTOR')) ?>:</label>
+        <p class="span-6"><?php echo $this->demanda['tx_objeto'] ?></p>
+	<label class="bold clear-l float-l span-4"><?php echo $this->escape($this->translate('L_VIEW_HISTORICO_EXECUCAO')) ?></label>
+
+	<div class="span-20 float-l clear-l height-8 border" style="overflow-x: hidden; overflow-x: auto; margin-left:18px; margin-bottom: 5px;">
+		<?php 
+			if(count($this->arrHistorico) > 0){
+				foreach($this->arrHistorico as $historico): ?>
+					<ul>
+						<li class="clear-l float-l span-19" style="text-align: justify;">
+							<?php echo "<b>".date('d/m/Y H:i:s', strtotime($historico['dt_inicio']))."&nbsp;a&nbsp;".date('d/m/Y H:i:s', strtotime($historico['dt_fim']))." &nbsp;&nbsp;(".$historico['tx_profissional'].")</b><br />".$historico['tx_historico'] ?>
+						</li>
+					</ul>
+		<?php  endforeach;
+			} else { ?>
+                <label style="color: red; text-align: center;"><?php echo $this->escape($this->translate('L_MSG_ALERT_SEM_HISTORICO_REGISTRADO_PROFISSIONAL')) ?></label>
+		<?php } ?>
+	</div>
+	<br />	
+	<hr style="width:815px;"/>
+	<?php echo $this->formButton('bt_retornar', mb_strtoupper($this->escape($this->translate('L_BTN_RETORNAR')), 'utf-8'), array('class' => 'float-l azul'), null)?>
+</div>

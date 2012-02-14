@@ -1,0 +1,87 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+    // call the tablesorter plugin 
+    $("#tableAnaliseExecucaoProjeto").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableAnaliseExecucaoProjeto").tablesorterPager({container: $("#tableAnaliseExecucaoProjetoPager")}); 
+});
+
+</script>
+<table id="tableAnaliseExecucaoProjeto" cellspacing="1" class="tablesorter">
+    <thead>
+        <tr>
+            <th class="sorter: false" width="2%">&nbsp;</th>
+            <th width="58%"><?php echo $this->escape($this->translate('L_VIEW_GRID_DATA_ANALISE')) ?></th>
+            <th width="40%"><?php echo $this->escape($this->translate('L_VIEW_GRID_ACAO')) ?></th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php
+    if($this->res){
+        foreach ($this->res as $key=>$res):
+            $dataAnalise = $res['dt_analise_execucao_projeto'];
+            $fechamento  = $res['st_fecha_analise_execucao_proj'];
+    ?>
+        <tr>
+            <td class="center">
+                <img id="imgExcluir" 
+                     height="13" 
+                     width="13"
+                     style="cursor:pointer;margin:0px" 
+                     onclick="excluirAnaliseExecucaoProjeto('<?php echo $dataAnalise; ?>');" 
+                     src="<?php echo $this->baseUrl()?>/public/img/del.png" 
+                     alt="<?php echo $this->escape($this->translate('L_BTN_EXCLUIR')) ?>"/>
+            </td>
+            <td>
+                <?php echo date('d/m/Y H:i:s', strtotime($dataAnalise));  ?>
+            </td>
+            <td class="center">
+                <?php if(is_null($fechamento)): ?>
+                    <script type="text/javascript">podeCriarNovaAnalise = false;</script>
+                    <button class="azul span-3" 
+                            onclick="recuperaAnaliseExecucaoProjeto('<?php echo $dataAnalise; ?>',true)" 
+                            type="button" 
+                            id="btn_alterar_<?php echo $key; ?>" 
+                            name="btn_alterar_<?php echo $key; ?>">
+                        <?php echo $this->escape($this->translate('L_BTN_ALTERAR_ANALISE')) ?>
+                    </button>
+                    <button class="vermelho span-3" 
+                            onclick="fecharAnaliseExecucaoProjeto('<?php echo $dataAnalise; ?>')" 
+                            type="button" 
+                            id="btn_fechar_<?php echo $key; ?>" 
+                            name="btn_fechar_<?php echo $key; ?>">
+                        <?php echo $this->escape($this->translate('L_BTN_FECHAR_ANALISE')) ?>
+                    </button>
+                <?php else: ?> 
+                    <button class="cinza span-6"
+                            onclick="recuperaAnaliseExecucaoProjeto('<?php echo $dataAnalise; ?>',false)" 
+                            type="button" 
+                            id="btn_visualizar_<?php echo $key; ?>" 
+                            name="btn_visualizar_<?php echo $key; ?>">
+                        <?php echo $this->escape($this->translate('L_BTN_VER_ANALISE')) ?>
+                    </button>
+                <?php endif; ?> 
+            </td>
+        </tr>
+    <?php
+        endforeach;
+    } else {
+        echo '<tr><td colspan="3" style="text-align:center"> '.$this->escape($this->translate('L_VIEW_SEM_REGISTRO')).' </td></tr>';
+    }
+    ?>
+    </tbody>
+</table>
+<div id="tableAnaliseExecucaoProjetoPager" class="pager">
+    <form>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+        <input type="text" class="pagedisplay"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+        <select class="pagesize">
+            <option selected="selected"  value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+        </select>
+    </form>
+</div>

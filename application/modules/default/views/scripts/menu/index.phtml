@@ -1,0 +1,15 @@
+<?php
+$this->script('scriptFile',array('/menu/index.js',
+                                 '/menu/treeview.js'));
+?>
+<div id="formMenu">
+    <?php
+        echo $this->formMenu;
+    ?>
+</div>
+<div id="treeEstrutura" class="float-l span-9 box gradient" style="padding:10px 10px 25px 10px;">
+	<div>
+		<img src="<?php echo $this->baseUrl()?>/public/img/openfoldericon.png" alt="menu" />
+	</div>
+</div>
+<div id="listarMenus"></div>

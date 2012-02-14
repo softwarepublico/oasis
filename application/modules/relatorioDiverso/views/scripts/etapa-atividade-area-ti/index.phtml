@@ -1,0 +1,9 @@
+<?php 
+    $this->script('validaForm') ;
+    $this->script('scriptFile',array('/etapa-atividade-area-ti/index.js'));
+?>
+<form id="formRelatorioEtapaAtividadeAreaTi">
+    <label class="span-5 float-l clear-l right required" for="cd_area_atuacao_ti"><?php echo $this->translate('L_VIEW_AREA_ATUACAO_TI') ?>:</label>
+    	<?php echo $this->formSelect("cd_area_atuacao_ti",null,array('class'=>'float-l'),$this->comboAreaTi); ?>
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->translate('L_BTN_GERAR') ?></button>
+</form>

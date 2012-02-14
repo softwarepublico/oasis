@@ -1,0 +1,22 @@
+<form method="post" action="<?php echo $this->baseUrl()?>/aceite-parcela/">
+    <div style="background-color:#fbfbfb;">
+        <div class="highlight" style="padding:5px">
+            <h2></h2>
+        </div>
+        <div style="padding-top:8px; padding-left:10px;">
+
+            <input class="span-1 float-l" type="radio" id="sim" name="sim" value="N">
+                <label class="span-1 float-l" for = "sim"><?php echo $this->escape($this->translate('L_VIEW_SIM')) ?></label>
+            <input class="span-1 float-l" type="radio" id="nao" name="nao" value="N">
+            <label class="span-1 float-l" for = "nao"><?php echo $this->escape($this->translate('L_VIEW_NAO')) ?></label>
+        </div>
+        <div>
+            <label class="span-3"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACOES')) ?>:</label>
+            <?php echo $this->formTextarea('observacoes', '', array('style' => 'width:700px; height:50px;')) ?>
+        </div>
+        <hr />
+        <div class="highlight clear" style="padding:5px;">
+            <?php echo $this->formButton('salvar_aceite_parcela', $this->escape($this->translate('L_BTN_SALVAR')), array('class' => 'verde float-r')) ?>
+        </div>
+    </div>
+</form>

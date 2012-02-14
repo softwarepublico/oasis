@@ -1,0 +1,65 @@
+<script language="javascript" type="text/javascript">
+	$(document).ready(function(){
+		$('#btn_voltar_passo2').click(function(){
+			removeTollTip();
+			$('#container-install').triggerTab(2);
+		});
+		$('#btn_avancar_passo4').click(function(){
+			if($('#tx_aceite_licenca').attr('checked') == true){
+				passoQuatroVerificarPermissao();
+			} else {
+				showToolTip(i18n.L_VIEW_SCRIPT_ACEITAR_TERMO_LICENCA_OBRIGATORIO, $('#tx_aceite_licenca'));
+			}
+		});
+		var licenca = "<?php echo $_SESSION['oasis_install']['licenca']['tx_aceite_licenca'] ?>";
+		if(licenca == "S"){
+			$('#tx_aceite_licenca').attr('checked', 'checked');
+		}
+	});
+</script>
+<h2 class="center">3. Termos da Licença</h2>
+<br />
+<div class="float-l clear-l span-21" style="text-align:justify; overflow-y:scroll; height:350px;">
+	<?php
+		$b = DIRECTORY_SEPARATOR;
+		$arquivo = SYSTEM_PATH_ABSOLUTE."{$b}application{$b}configuration{$b}install{$b}licenca{$b}licenca.txt";
+		
+		if(isset($_SERVER['WINDIR'])){
+			$arquivo = str_replace("/","\\",$arquivo);
+		}
+
+		$arrArquivo = file($arquivo);
+		$texto      = "<p class=\"float-l clear-l span-17\" style=\"margin-left: 85px; margin-top:15px; text-align:justify;\">";
+		$qtd        = count($arrArquivo)-1;
+
+		foreach($arrArquivo as $key=>$dados){
+			if(trim($dados) == ""){
+				$texto .= "</p>";
+				$texto .= "<p class=\"float-l clear-l span-17\" style=\"margin-left: 85px; margin-top:15px; text-align:justify;\">";
+			} else {
+				$texto .= utf8_encode($dados)." ";
+			}
+			if($key == $qtd){
+				$texto .= "</p>";
+			}
+		}
+
+		echo $texto;
+	?>
+</div>
+
+<div class="float-l clear-l span-21" style="margin-top:40px;" id="formLicenca">
+	<label class="bold center">
+		<input type="checkbox" value="S" id="tx_aceite_licenca" name="tx_aceite_licenca" />
+		<?php echo $this->escape($this->translate('L_VIEW_ACEITO_TERMO_LICENCA')) ?>
+	</label>
+</div>
+<!-- Botões da tela -->
+<div class="float-l clear-l span-10" style="margin-top:40px;">
+	<span class="float-l right"><?php echo $this->formButton('btn_voltar_passo2',$this->escape($this->translate('L_BTN_ANTERIOR')),array('class'=>'verde right')); ?></span>
+	<label class="float-l bold right"> <<< <?php echo $this->escape($this->translate('L_VIEW_INFORMACOES_BASICAS')) ?></label>
+</div>
+<div class="float-r span-10" style="margin-top:40px;">
+	<span class="float-r right"><?php echo $this->formButton('btn_avancar_passo4',$this->escape($this->translate('L_BTN_PROXIMO')),array('class'=>'verde right')); ?></span>
+	<label class="float-r bold right"><?php echo $this->escape($this->translate('L_VIEW_VERIFICACAO_PERMISSOES')) ?> >>></label>
+</div>

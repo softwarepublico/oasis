@@ -1,0 +1,109 @@
+<?php
+	$this->script('editorHtml');
+	$this->script('validaForm');
+	$this->script('tab');
+	$this->script('grid');
+	$this->script('mascara');
+	$this->script('validaData');
+	$this->script('calendario');
+    $this->script('scriptFile',array('/gerenciamento-projeto/index.js'));
+?>
+
+<?php echo $this->formHidden('config_hidden_risco','N'); ?>
+<?php if (ChecaPermissao::possuiPermissao('gerenciamento-risco') === true): ?>
+<div id="risco" class="accordion-closed" onclick="if(($(this).hasClass('accordion-closed')) && ($('#config_hidden_risco').val() == 'N')){configGerenciamentoRisco();}">
+    <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_RISCO')) ?></span>
+</div>
+<div id="form_risco" accordion="accordion" class="hide accordion">
+    <?php echo $this->render('gerenciamento-risco/index.phtml') ?>
+</div>
+<?php endif; ?>
+
+<?php if (ChecaPermissao::possuiPermissao('gerenciamento-teste') === true): ?>
+	<div id="gerenciamento-teste" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){habilitaAbaGerenciamentoTeste();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_TESTE')) ?></span>
+    </div>
+	<div id="form_teste" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('gerenciamento-teste/index.phtml') ?>
+	</div>
+<?php endif; ?>
+
+<?php echo $this->formHidden('config_hidden_pedido_mudanca','N'); ?>
+<?php if (ChecaPermissao::possuiPermissao('pedido-mudanca') === true): ?>
+	<div id="pedido-mudanca" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){initAccordionPedidoMudanca();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_PEDIDO_MUDANCA')) ?></span>
+    </div>
+	<div id="form_pedido_mudanca" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('pedido-mudanca/index.phtml') ?>
+	</div>
+<?php endif; ?>
+
+<?php echo $this->formHidden('config_hidden_gerenciamento_mudanca','N'); ?>
+<?php if (ChecaPermissao::possuiPermissao('gerenciamento-mudanca') === true): ?>
+	<div id="analise-mudanca" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){initAccordionAnaliseMudanca();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_ANALISE_MUDANCA')) ?></span>
+    </div>
+	<div id="form_analise_mudanca" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('gerenciamento-mudanca/index.phtml') ?>
+	</div>
+<?php endif; ?>
+
+<?php echo $this->formHidden('config_hidden_medicao','N'); ?>
+<?php if (ChecaPermissao::possuiPermissao('medicao') === true): ?>
+	<div id="medicao" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){verificaConfigAccordionMedicao();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_MEDICAO')) ?></span>
+    </div>
+	<div id="form_medicao" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('medicao/index.phtml') ?>
+	</div>
+<?php endif; ?>
+
+<?php if (ChecaPermissao::possuiPermissao('baseline') === true): ?>
+	<div id="baseline" class="accordion-closed">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_BASELINE')) ?></span>
+    </div>
+	<div id="form_baseline" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('baseline/index.phtml') ?>
+	</div>
+<?php endif; ?>
+
+<?php /* PASSOU PARA MENU "ACOMPANHAMENTO INTERNO"
+ *
+ * echo $this->formHidden('config_hidden_analise_execucao_projeto','N'); ?>
+<?php if (ChecaPermissao::possuiPermissao('analise-execucao-projeto') === true): ?>
+	<div id="analise-execucao-projeto" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){verificaConfigAccordionAnaliseExecucaoProjeto();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_ANALISE_EXECUCAO')) ?></span>
+    </div>
+	<div id="form_analise_execucao_projeto" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('analise-execucao-projeto/index.phtml') ?>
+	</div>
+<?php endif; */?>
+
+<?php echo $this->formHidden('config_hidden_planejamento','N'); ?>
+<?php if (ChecaPermissao::possuiPermissao('planejamento') === true): ?>
+	<div id="gerenciamento-planejamento" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed')){configAccordionPlanejamento();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_PLANEJAMENTO')) ?></span>
+    </div>
+	<div id="form_gerenciamento_planejamento" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('planejamento/tabs.phtml') ?>
+	</div>
+<?php endif; ?>
+
+<?php  if (ChecaPermissao::possuiPermissao('matriz-rastreabilidade') === true): ?>
+	<div id="gerenciamento_accordion_matriz_rastreabilidade" class="accordion-closed">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_MATRIZ_RASTREABILIDADE')) ?></span>
+    </div>
+	<div id="form_gerenciamento_accordion_matriz_rastreabilidade" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('matriz-rastreabilidade/index.phtml') ?>
+	</div>
+<?php endif; ?>
+
+<?php echo $this->formHidden('config_hidden_gerencia_qualidade','N') ?>
+<?php if(ChecaPermissao::possuiPermissao('gerencia-qualidade') === true): ?>
+	<div id="gerencia_qualidade" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed') && ($('#config_hidden_gerencia_qualidade').val() == 'N')){configGerenciaQualidade();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_CRONOGRAMA_AUDITORIA_QUALIDADE')) ?></span>
+    </div>
+	<div id="form_gerencia_qualidade" accordion="accordion" class="hide accordion">
+        <?php echo $this->render('gerencia-qualidade/index.phtml') ?>
+    </div>
+<?php endif; ?>

@@ -1,0 +1,127 @@
+<?php
+    $this->script('scriptFile',array('/gerenciar-projetos-pre-projeto/index.js'));
+?>
+<script type="text/javascript" defer="defer">
+	$(document).ready(function() { 
+		// call the tablesorter plugin 
+	    $("#tablePreProjeto").tablesorter({widthFixed: true, widgets: ['zebra']});
+	    $("#tablePreProjeto").tablesorterPager({container: $("#pager_pre_projeto")}); 
+	    
+	    $("#tablePreProjetoEvolutivo").tablesorter({widthFixed: true, widgets: ['zebra']});
+	    $("#tablePreProjetoEvolutivo").tablesorterPager({container: $("#pager_pre_projeto_evolutivo")}); 
+	});
+</script>
+<div class="clear boxTab">
+	<label class="left float-l negrito"><?php echo $this->escape($this->translate('L_VIEW_PRE_PROJETO_NOVO')) ?></label>
+	<div class="float-r">
+        <button id="novo_pre_projeto" class="azul" style="margin-top:1px;"><?php echo mb_strtoupper($this->escape($this->translate('L_BTN_NOVO_PRE_PROJETO')), 'utf-8') ?></button>
+	</div>
+</div>
+<table id="tablePreProjeto" cellspacing="1" class="tablesorter">
+	<thead>
+	    <tr>
+            <th><?php echo $this->escape($this->translate('L_VIEW_GRID_SIGLA'          )) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_UNIDADE'        )) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_HORAS_ESTIMADAS')) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_ESCOPO_RESUMIDO')) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if ($this->resPreProjeto):
+        foreach ($this->resPreProjeto as $preProjeto):
+	?>
+            <tr>
+                <td>
+                    <a href="<?php echo $this->baseUrl();?>/pre-projeto/editar/cd_pre_projeto/<?php echo $preProjeto["cd_pre_projeto"] ?>/abaOrigem/preProjeto"><?php echo $preProjeto["tx_sigla_pre_projeto"]?></a>
+                </td>
+                <td><?php echo $preProjeto["tx_sigla_unidade"  ] ?></td>
+                <td><?php echo $preProjeto["tx_horas_estimadas"] ?></td>
+                <td><?php echo substr(strip_tags($preProjeto["tx_escopo_pre_projeto"]),0,40)."..." ?></td>
+            </tr>
+            <?php
+        endforeach;
+    else:
+		echo " <tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr> ";
+	endif;
+	?>
+	</tbody>
+</table>
+<div id="pager_pre_projeto" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">5</option>
+			<option value="20">10</option>
+			<option value="30">20</option>
+			<option value="40">30</option>
+		</select>
+	</form>
+</div>
+<?php if(ChecaPermissao::possuiPermissao('pre-projeto-evolutivo') === true): ?>
+<div class="clear boxTab">
+	<label class="left float-l negrito">Pré-projeto Evolutivo</label>
+	<div class="float-r">
+		<button id="novo_pre_projeto_evolutivo" class="azul" style="margin-top:1px;">NOVO PRÉ-PROJETO EVOLUTIVO</button>
+	</div>
+</div>
+<table id="tablePreProjetoEvolutivo" cellspacing="1" class="tablesorter">
+	<thead>
+	    <tr>
+			<th>Sigla do Projeto</th>
+			<th>Unidade</th>
+			<th>Sigla do Pré-Projeto Evolutivo</th>
+			<th>Objetivo Resumido</th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if ($this->resPreProjetoEvolutivo):
+	foreach ($this->resPreProjetoEvolutivo as $preProjetoEvolutivo):
+	?>
+	<tr>
+		<td>
+			<a href="<?php echo $this->baseUrl();?>/pre-projeto-evolutivo/index/cd_pre_projeto_evolutivo/<?php echo $preProjetoEvolutivo["cd_pre_projeto_evolutivo"] ?>"><?php echo $preProjetoEvolutivo["tx_sigla_projeto"]?></a>
+		</td>
+		<td><?php echo $preProjetoEvolutivo["tx_sigla_unidade"] ?></td>
+		<td><?php echo $preProjetoEvolutivo["tx_pre_projeto_evolutivo"] ?></td>
+		<td><?php echo substr($preProjetoEvolutivo["tx_objetivo_pre_proj_evol"],0,40)."..." ?></td>
+	</tr>
+	<?php
+	endforeach;
+		else:
+		echo " <tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr> ";
+	endif;
+	?>
+	</tbody>
+</table>
+<div id="pager_pre_projeto_evolutivo" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">5</option>
+			<option value="20">10</option>
+			<option value="30">20</option>
+			<option value="40">30</option>
+		</select>
+	</form>
+</div>
+<?php endif;?>

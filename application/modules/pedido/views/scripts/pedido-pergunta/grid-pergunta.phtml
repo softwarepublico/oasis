@@ -1,0 +1,53 @@
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#perguntas").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#perguntas").tablesorterPager({container: $("#perguntasPager")});
+});
+</script>
+<table cellspacing="1" id="perguntas" class="tablesorter">
+    <thead>
+        <tr>
+            <th class="{sorter: false}" style="width:10px;">&nbsp;</th>
+            <th class="span-9"><?php echo $this->escape($this->translate('L_VIEW_GRID_PERGUNTA'   )) ?></th>
+            <th class="span-8"><?php echo $this->escape($this->translate('L_VIEW_GRID_TEXTO_APOIO')) ?></th>
+            <th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_OBRIGATORIA')) ?></th>
+            <th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_MULTIPLA'   )) ?></th>
+        </tr>
+    </thead>
+    <tbody>
+<?php if(count($this->perguntas)): ?>
+    <?php foreach($this->perguntas as $pergunta): ?>
+        <tr>
+            <td><img id="imgExcluir" height="13" width="13" style="cursor:pointer; text-align: center;" onclick="excluirPerguntaPedido('<?php echo $pergunta->cd_pergunta_pedido ?>');" src="<?php echo $this->baseUrl()?>/public/img/del.png" alt="<?php echo $this->escape($this->translate('L_BTN_EXCLUIR')) ?>"/></td>
+            <td style="cursor:pointer" onclick="recuperaPergunta(<?php echo $pergunta->cd_pergunta_pedido?>)"><?php echo $pergunta->tx_titulo_pergunta ?></td>
+            <td style="cursor:pointer" onclick="recuperaPergunta(<?php echo $pergunta->cd_pergunta_pedido?>)"><?php echo $pergunta->tx_ajuda_pergunta?></td>
+            <td style="cursor:pointer" onclick="recuperaPergunta(<?php echo $pergunta->cd_pergunta_pedido?>)" class="center"><?php echo ($pergunta->st_obriga_resposta == 'S' ? 'Sim' : 'Não')?></td>
+            <td style="cursor:pointer" onclick="recuperaPergunta(<?php echo $pergunta->cd_pergunta_pedido?>)" class="center"><?php echo ($pergunta->st_multipla_resposta == 'S' ? 'Sim' : 'Não')?></td>
+        </tr>
+    <?php endforeach; ?>
+<?php else:
+        echo "<tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>";
+      endif; ?>
+    </tbody>
+</table>
+<div id="perguntasPager" class="pager">
+    <form>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+        <input type="text" class="pagedisplay"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+        <select class="pagesize">
+            <option selected="selected"  value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+        </select>
+    </form>
+</div>

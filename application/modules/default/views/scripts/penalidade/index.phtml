@@ -1,0 +1,9 @@
+<?php
+    $this->script('scriptFile',array('/penalidade/index.js'));
+    
+    echo $this->formPenalidade;
+?>
+<button id="bt_salvar_penalidade" class="verde float-l push-4" type="button" name="bt_salvar_penalidade"><?php echo $this->escape($this->translate('L_BTN_SALVAR')) ?></button>
+<button id="bt_excluir_penalidade" class="vermelho float-l push-4" type="button" name="bt_excluir_penalidade"><?php echo $this->escape($this->translate('L_BTN_EXCLUIR')) ?></button>
+<button id="bt_cancelar_penalidade" class="vermelho float-l push-4" type="button" name="bt_cancelar_penalidade"><?php echo $this->escape($this->translate('L_BTN_CANCELAR')) ?></button>
+<div id="gridPenalidade" class="float-l clear-l push-2"></div>

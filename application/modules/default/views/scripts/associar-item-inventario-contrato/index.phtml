@@ -1,0 +1,57 @@
+<?php
+    $this->script('scriptFile',array('/associar-item-inventario-contrato/index.js'));
+?>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#config_hidden_item_inventario_contrato").val('N');
+});
+
+function configAccordionItemInventarioContrato()
+{
+	if($("#config_hidden_item_inventario_contrato").val() === 'N'){
+		comboGroupContrato('D', 'cd_contrato_associar_item_inventario_contrato');
+		$("#config_hidden_item_inventario_contrato").val('S');
+	}
+}
+</script>
+<div style="margin-left:19px;">
+    
+    <?php echo $this->formHidden('cd_contrato'); ?>
+    
+	<label class="bold float-l span-2"><?php echo $this->translate('L_VIEW_CONTRATO') ?>:</label>
+	<?php echo $this->formSelect( 'cd_contrato_associar_item_inventario_contrato', null ,array('class'=>'float-l'), null ); ?>
+
+	<label class="bold float-l span-2 clear-l"><?php echo $this->translate('L_VIEW_INVENTARIOS') ?>:</label>
+	<?php echo $this->formSelect( 'cd_inventario_associar_item_inventario_contrato', null ,array('class'=>'float-l'), null ); ?>
+
+    
+    <label class="bold float-l span-11  clear-l" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_ITEM_INVENTARIO')) ?></label>
+    <label class="bold float-l span-8 " style="margin-top:2px; margin-left: -10px;"><?php echo $this->escape($this->translate('L_VIEW_ITEM_INVENTARIO_VINCULADOS_CONTRATO')) ?></label>
+	<?php
+		echo $this->formSelect( 'item_inventarios',
+		                        null, 
+		                        array(
+		                            'multiple' => 'multiple',
+	                                'class'    => 'span-9 float-l clear-l left',
+	                                'style'    => 'height: 150px;'
+		                        ));
+	?>	
+	<div class="span-2" style="position:relative; left:20px; top:62px">
+		<?php
+			echo $this->formButton('add_item_inventario_contrato', '>>');
+			echo $this->formButton('remove_item_inventario_contrato', '<<', array('style' => 'margin-top:10px;'));
+		?>	
+	</div>
+	<?php
+		echo $this->formSelect( 'item_inventarios_associados',
+		                        null, 
+		                        array(
+		                            'multiple' => 'multiple',
+		                            'class'    => 'span-9 float-l left',
+		                            'style'    => 'height: 150px;'
+		                        ));
+	?>
+	
+	<div class="accordionBottom" style="min-height: 20px;"></div> 
+</div>

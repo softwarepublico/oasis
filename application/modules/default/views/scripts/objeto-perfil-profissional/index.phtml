@@ -1,0 +1,11 @@
+<?php
+    $this->script('scriptFile',array('/objeto-perfil-profissional/index.js'));
+?>
+<div class="span-20" style="margin-left: 20px;">
+    <label class="bold span-3 float-l"><?php echo $this->escape($this->translate('L_VIEW_OBJETO')) ?>:</label>
+    	<?php echo $this->formSelect("cd_objeto_perfil_profissional", null, array('class'=>'float-l'), $this->contratos)?>
+    <label class="bold span-3 float-l clear-l"><?php echo $this->escape($this->translate('L_VIEW_PROFISSIONAL')) ?>:</label>
+    	<?php echo $this->formSelect("cd_profissional_objeto_perfil", null, array('class'=>'float-l'), array('0'=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE'))))?>
+    
+    <div id="treeviewMenu" style="display:none;" style="margin-left: 20px;"></div>
+</div>

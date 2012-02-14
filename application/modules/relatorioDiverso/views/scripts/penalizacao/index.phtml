@@ -1,0 +1,18 @@
+<?php
+    $this->script('validaForm');
+    $this->script('mascara');
+    $this->script('calendario');
+    $this->script('validaData');
+    $this->script('scriptFile',array('/penalizacao/index.js'));
+?>
+<form id="form_relatorio_penalizacao">
+	<label class="float-l span-3 required" for="cd_contrato"><?php echo $this->escape($this->translate('L_VIEW_CONTRATO')) ?>:</label>
+		<?php echo $this->formSelect('cd_contrato',null,array('class'=>'float-l span-4'),$this->comboContrato); ?>
+
+	<label class="float-l span-3 clear-l required" for="dt_inicio_periodo"><?php echo $this->escape($this->translate('L_VIEW_DATA_INICIAL')) ?>:</label>
+		<?php echo $this->data('dt_inicio_periodo',null,array('class'=>'float-l span-3'));?>
+
+	<label class="float-l span-3 clear-l required" for="dt_fim_periodo"><?php echo $this->escape($this->translate('L_VIEW_DATA_FINAL')) ?>:</label>
+		<?php echo $this->data('dt_fim_periodo',null,array('class'=>'float-l span-3'));?>
+</form>
+<?php echo $this->formButton('btn_gerar', $this->escape($this->translate('L_BTN_GERAR')), array('class'=>'buttonBar verde'));?>

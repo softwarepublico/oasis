@@ -1,0 +1,10 @@
+<?php
+    $this->script('scriptFile',array('/atividade/index.js'));
+
+    echo $this->formAtividade;
+
+    echo $this->formButton('bt_salvar_atividade', $this->translate('L_BTN_SALVAR'), array('class'=>'verde float-l push-3 clear-l'));
+    echo $this->formButton('bt_cancelar_atividade',$this->translate('L_BTN_CANCELAR'),array('class'=>'vermelho float-l push-3'));
+
+?>
+<div id="gridAtividade" class="float-l clear-l push-3"></div>

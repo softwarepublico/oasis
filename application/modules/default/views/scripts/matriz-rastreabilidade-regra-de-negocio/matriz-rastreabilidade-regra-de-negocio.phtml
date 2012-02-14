@@ -1,0 +1,87 @@
+<?php if($this->arrDados): ?>
+    <table border="1" style="border-collapse: collapse; border: 1px solid #54BDCD; width: auto;"  >
+        <thead>
+            <tr>
+                <th style="width: 50px;">&nbsp;</th>
+                <?php foreach($this->arrRequisitoPai as $cd_req_pai=>$rqPai):
+                
+                	$arr = explode('|',$rqPai);
+                ?>
+                <th style="width: 50px;" class="center" title="<?php echo $arr[0]; ?>"><?php echo "RE ".$arr[1]; ?></th>
+
+                <?php endforeach; ?>
+            </tr>
+        </thead>
+        <tbody>
+       <?php
+            //linha vertical de casos de uso 'todos os casos de uso do projeto'
+            //$rn = à regra de negocio da linha horizontal
+            foreach( $this->arrRegraDeNegocio as $rn ):
+
+                $cor   = "#FFFFFF";
+                $title = "";
+                $style = "";
+        ?>
+            <tr>
+                <td bgcolor="#C3D9FF" class="bold center" title="<?php echo $rn['tx_regra_negocio']; ?>" ><?php echo "RN ".$rn['ni_ordem_regra_negocio'];?></td>
+            <?php
+                //vai fazer a comparação entre a coluna de pais e
+                // todos os seus filhos com a linha que esta sendo impressa
+                //para saber se a coluna possui o filho igual a linha para pintar de verde ou amarela
+                foreach( $this->arrDados as $cd_pai=>$filhos):
+                	
+					$qtdFilho = count($filhos);
+                    $qtdFor   = 1;
+
+                    //vare os filhos constantes na coluna (que é o pai)
+                    //para saber se contem o mesmo indice da linha que é filho
+                    foreach( $filhos as $filho ):
+
+                        if( $rn['cd_regra_negocio'] == $filho['filho'] ){
+                            if( !$filho['st_fechamento_pai'] ){
+//								$cor   = "#FFF6A6"; // AMARELO
+                                $cor   = "#FF3300"; // VERMELHO
+                                $title = "title=\"".$this->escape($this->translate('L_VIEW_REQUISITO_PAI_NAO_FECHADO'))."\"";
+                                $style = "style=\"cursor:pointer;\"";
+                                ?>
+                                <td class="bold " bgcolor="<?php echo $cor; ?>" <?php echo $title; ?> <?php echo $style; ?> ></td>
+                                <?php
+                            }else{
+                                $cor   = "#88E386"; //VERDE
+                                $title = "title=\"".$this->escape($this->translate('L_VIEW_REQUISITO_PAI_FECHADO'))."\"";
+                                $style = "style=\"cursor:pointer;\"";
+                                ?>
+                                <td class="bold " bgcolor="<?php echo $cor; ?>" <?php echo $title; ?> <?php echo $style; ?> ></td>
+                                <?php
+                            }
+                            break;
+                        }else if( $qtdFilho == $qtdFor) {
+                            $cor   = "#FFFFFF";//BRANCO
+                            $style = "";
+                            $title = "";
+                            ?>
+                            <td class="bold " bgcolor="<?php echo $cor; ?>" <?php echo $title; ?> <?php echo $style; ?> ></td>
+                            <?php
+                        }
+                        $qtdFor++;
+                    endforeach;
+                endforeach;
+            ?>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <!-- Legenda -->
+	<div class="float-l">
+		<label class="span-2 float-l bold"><?php echo $this->escape($this->translate('L_VIEW_LEGENDA')) ?>:</label>
+		<span class="float-l"><div class="float-l" style="background:#FF3300; width:20px; margin-left:-15px" >&nbsp;</div></span>
+        <span class="float-l">&nbsp;<?php echo $this->escape($this->translate('L_VIEW_REQUISITO_PAI_NAO_FECHADO')) ?></span>
+		
+		<label class="span-2 float-l clear-l">&nbsp;</label>
+		<span class="float-l"><div class="float-l" style="background:#88E386; width:20px; margin-left:-15px" >&nbsp;</div></span>
+		<span class="float-l">&nbsp;<?php echo $this->escape($this->translate('L_VIEW_REQUISITO_PAI_FECHADO')) ?></span>
+	</div>
+<?php else: 
+	echo 'semRegistro';
+endif; ?>

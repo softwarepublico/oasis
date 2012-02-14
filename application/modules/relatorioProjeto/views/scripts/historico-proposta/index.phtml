@@ -1,0 +1,17 @@
+<?php 
+	$this->script('validaForm');
+    $this->script('scriptFile',array('/historico-proposta/index.js'));
+?>
+<form id="formRelatorioHistoricoProposta">
+    <label class="span-2 float-l clear-l" for="cd_contrato"><?php echo $this->escape($this->translate('L_VIEW_CONTRATO')) ?>:</label>
+    	<?php echo $this->formSelect("cd_contrato",null,array('class'=>'float-l'),$this->arrContrato); ?>
+   <label class="span-2 float-l clear-l required" for="cd_projeto"><?php echo $this->translate('L_VIEW_PROJETO') ?>:</label>
+    	<?php echo $this->formSelect("cd_projeto",null,array('class'=>'float-l'),array(0=>Base_Util::getTranslator('L_VIEW_COMBO_SELECIONE'))); ?>
+    <label class="span-2 float-l clear-l required" for="cd_proposta"><?php echo $this->translate('L_VIEW_PROPOSTA') ?>:</label>
+    	<p><?php echo $this->formSelect("cd_proposta",null,array('class'=>'float-l'), array(0=>Base_Util::getTranslator('L_VIEW_COMBO_SELECIONE'))); ?></p>
+    <label class="span-2 float-l clear-l required" for="dt_historico_proposta"><?php echo $this->translate('L_VIEW_DATA') ?>:</label>
+    	<p><?php echo $this->formSelect("dt_historico_proposta",null,array('class'=>'float-l'), array(0=>Base_Util::getTranslator('L_VIEW_COMBO_SELECIONE'))); ?></p>
+	
+
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->translate('L_BTN_GERAR') ?></button>
+</form>

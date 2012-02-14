@@ -1,0 +1,64 @@
+<?php 
+	$this->script('tab'); 
+	$this->script('grid'); 
+	$this->script('editorHtml');
+	$this->script('mascara');
+	$this->script('validaData');
+	$this->script('calendario');
+	$this->script('validaForm');
+	$this->script('numero');
+    $this->script('scriptFile',array('/menu-registro-atividade/index.js',
+                                     '/historico/index.js',
+                                     '/reuniao/index.js'));
+?>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#container-menuRegistroAtividade').show().tabs();
+});
+</script>
+<div id="container-menuRegistroAtividade" style="display: none;">
+	<ul>
+		<li>
+            <a href="#historico">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_HISTORICO')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#reuniao">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_REUNIAO')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#reuniao-profissional">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_REUNIAO_PROFISSIONAL')) ?></span>
+            </a>
+        </li>
+    </ul>
+    <div id="historico">
+    	<div class="clear" style="overflow: hidden;">
+	    	<?php 
+	    		echo $this->formHistorico;
+	    		echo $this->formButton('adicionarHistorico',$this->escape($this->translate('L_BTN_SALVAR')),array('class'=>'verde float-l clear-l push-2'));
+	    		echo $this->formButton('alterarHistorico',$this->escape($this->translate('L_BTN_ALTERAR')),array('class'=>'verde float-l clear-l push-2'));
+	    		echo $this->formButton('cancelarHistorico',$this->escape($this->translate('L_BTN_CANCELAR')),array('class'=>'vermelho float-l push-2'));
+	    	?>
+	    	<div id="gridHistorico" class="span-14 float-l clear-l gapLeft"></div>
+    	</div>
+    </div>
+    <div id="reuniao">
+        <div class="clear" style="overflow: hidden;">
+        	<?php
+        		echo $this->formReuniao;
+	    		echo $this->formButton('adicionarReuniao',$this->escape($this->translate('L_BTN_SALVAR')),array('class'=>'verde float-l clear-l push-3'));
+	    		echo $this->formButton('alterarReuniao',$this->escape($this->translate('L_BTN_ALTERAR')),array('class'=>'verde float-l clear-l push-3'));
+	    		echo $this->formButton('cancelarReuniao',$this->escape($this->translate('L_BTN_CANCELAR')),array('class'=>'vermelho float-l push-3'));
+        	?>
+        	<div id="gridReuniao" class="float-l clear-l push-3 span-13" ></div>
+        </div>
+    </div>
+    <div id="reuniao-profissional">
+        <div class="clear" style="overflow: hidden;">
+        <?php echo $this->render('reuniao-profissional/index.phtml'); ?>
+        </div>
+    </div>
+</div>

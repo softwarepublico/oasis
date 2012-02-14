@@ -1,0 +1,10 @@
+<div id="tabelaRequisitos" class="divTab">
+	<div class="clear boxTab">
+        <button id="btn_novo_requisito" class="azul float-r" style="margin-top:15px;"><?php echo mb_strtoupper($this->escape($this->translate('L_BTN_NOVO_REQUISITO')), 'utf-8') ?></button>
+		<label class="bold float-l span-4"><?php echo $this->escape($this->translate('L_VIEW_PROJETO')) ?>:</label>
+    		<p class="float-l span-4" style="margin-left: -40px;"><?php echo $this->escape($this->nomeProjeto); ?></p>
+    	<label class="bold float-l span-4 clear-l ">Proposta:</label>
+    		<p class="float-l span-4" style="margin-left: -40px;"><?php echo $this->escape($this->cd_proposta); ?></p>
+	</div>
+	<div id="gridRequisitosProposta"></div>
+</div>

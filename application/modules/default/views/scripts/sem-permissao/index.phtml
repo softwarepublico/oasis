@@ -1,0 +1,12 @@
+<fieldset class="span-21">
+    <legend><?php echo $this->escape($this->translate('L_MSG_ALERT_ACESSO_NEGADO')) ?></legend>
+    <div>
+        <?php echo $this->escape(Base_Util::getTranslator('L_MSG_ALERT_SEM_PERMISSAO_ACESSAR_AREA_OASIS', $this->permissao)) ?>
+    </div>
+</fieldset>
+<script language="javascript" type="text/javascript">
+$(document).ready( function() {
+    $('.breadCrumbs').css('visibility','hidden');
+    $('h1.title').css('visibility','hidden');
+});
+</script>

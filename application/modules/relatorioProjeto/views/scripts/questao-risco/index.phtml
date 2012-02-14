@@ -1,0 +1,14 @@
+<?php
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/questao-risco/index.js'));
+?>
+<form id="formRelatorioQuestaoRisco">
+    <label class="span-2 float-l bold right required" for="cd_objeto"><?php echo $this->translate('L_VIEW_OBJETO') ?>:</label>
+        <?php echo $this->formSelect('cd_objeto',null,array('class'=>'float-l'),$this->arrObjeto); ?>
+    <label class="span-2 float-l clear-l bold right" for="cd_etapa"><?php echo $this->translate('L_VIEW_ETAPA') ?>:</label>
+        <?php echo $this->formSelect('cd_etapa',null,array('class'=>'float-l'),array('0'=>Base_Util::getTranslator('L_VIEW_COMBO_SELECIONE'))); ?>
+    <label class="span-2 float-l clear-l bold right" for="cd_atividade"><?php echo $this->translate('L_VIEW_ATIVIDADE') ?>:</label>
+        <?php echo $this->formSelect('cd_atividade',null,array('class'=>'float-l'),array('0'=>Base_Util::getTranslator('L_VIEW_COMBO_SELECIONE'))); ?>
+    
+    <button class="buttonBar verde" id="btn_gerar" name="btn_gerar" type="button"><?php echo $this->translate('L_BTN_GERAR') ?></button>
+</form>

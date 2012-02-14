@@ -1,0 +1,92 @@
+<script type="text/javascript" language="javascript" src="<?php echo $this->baseUrl() ?>/public/js/modules/default/gerenciamento-risco/analiseItemRisco.js"></script>
+<div id="tabelaExecucao" class="divTab">
+	<?php 
+		echo $this->formHidden('cd_projeto_risco',$this->cd_projeto,null);
+		echo $this->formHidden('cd_proposta_risco',$this->cd_proposta,null);
+	?>
+
+	<div class="clear boxTab">
+		<label class="float-l span-2 right bold" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_PROJETO')) ?>:</label>
+        <p class="float-l"><?php echo $this->tx_projeto_risco; ?></p>
+        <label class="float-l span-2 clear-l right bold"><?php echo $this->escape($this->translate('L_VIEW_PROPOSTA')) ?>:</label>
+        <p class="float-l"><?php echo $this->tx_proposta_risco; ?> </p>
+	</div>
+    <br />
+	<?php 
+		if(count($this->arrEtapas) > 0): 
+			$qtdEtapas = count($this->arrEtapas);
+			$i = 1;
+			$style = "";
+	?>
+		<?php foreach($this->arrEtapas as $etapas): ?>
+			<div class="clear divTreeview" <?php echo $style; ?>>
+				<div class="float-l height-1" onclick="abrirAtividadeEtapa(<?php echo $etapas['cd_etapa'] ?>)">
+					<span class="mais float-l" id="<?php echo $etapas['cd_etapa'] ?>_img">&nbsp;</span><?php echo $etapas['tx_etapa']; ?>
+				</div>
+				<div class="float-r height-1" style="border: 1px solid; margin-bottom: 5px; margin-right: 5px; widht:<?php echo $etapas['tamanho']."px;" ?>">
+		            <div class="float-l height-1 center"  style="background: #FFFFFF no-repeat; width:<?php echo $etapas['riscoBranco'] ?>px;"><?php echo "<span>".$etapas['tx_riscoBranco']."</span>" ?></div>
+		            <div class="float-l height-1"  style="background: #00af4d no-repeat; width:<?php echo $etapas['riscoVerde'   ] ?>px;"></div>
+		            <div class="float-l height-1"  style="background: #fbe200 no-repeat; width:<?php echo $etapas['riscoAmarelo' ] ?>px;"></div>
+		            <div class="float-l height-1"  style="background: #e70033 no-repeat; width:<?php echo $etapas['riscoVermelho'] ?>px;"></div>
+		            <div class="float-l height-1"  style="background: #d0cfcb no-repeat; width:<?php echo $etapas['riscoCinza'   ] ?>px;"></div>
+				</div>
+				<div id="atividade_<?php echo $etapas['cd_etapa'] ?>" style="margin-left: 20px; display:none;">
+				<?php
+					$stColor = "S"; 
+					foreach($this->arrAtividade[$etapas['cd_etapa']] as $atividades):
+						//Condição para colocar a cor de fundo na div.
+						if($stColor == "S"){
+							echo "<div style=\"background-color: #E6E6FA; margin-bottom:5px;\" class=\"float-l clear-l span-20\">";
+							$stColor = "";
+						} else {
+							echo "<div style=\"background-color: #FFFFFF; margin-bottom:5px;\" class=\"float-l clear-l span-20\">";
+							$stColor = "S";
+						}
+				?>
+						<div class="float-l clear-l height-1" style="margin-top: 7px;" onclick="abrirItensAtividade(<?php echo $etapas['cd_etapa'] ?>,<?php echo $atividades['cd_atividade'] ?>)">
+							<span class="mais float-l" id="<?php echo "{$etapas['cd_etapa']}_{$atividades['cd_atividade']}_img" ?>">&nbsp;</span><?php echo $atividades['tx_atividade']; ?>
+						</div>
+						<div class="float-r clear-r height-1" style="border: 1px solid; margin: 5px 5px 11px 0px; margin-bottom: 5px; width:<?php echo $atividades['tamanho'] ?>px; margin-right: 11px;">
+				            <div class="float-l height-1 center"  style="background: #FFFFFF no-repeat; width:<?php echo $atividades['riscoBranco'] ?>px;"><?php echo "<span>".$atividades['tx_riscoBranco']."</span>" ?></div>
+				            <div class="float-l height-1"  style="background: #00af4d no-repeat; width:<?php echo $atividades['riscoVerde'   ] ?>px;"></div>
+				            <div class="float-l height-1"  style="background: #fbe200 no-repeat; width:<?php echo $atividades['riscoAmarelo' ] ?>px;"></div>
+				            <div class="float-l height-1"  style="background: #e70033 no-repeat; width:<?php echo $atividades['riscoVermelho'] ?>px;"></div>
+				            <div class="float-l height-1"  style="background: #d0cfcb no-repeat; width:<?php echo $atividades['riscoCinza'   ] ?>px;"></div>
+						</div>
+					</div>
+					<?php if(array_key_exists("{$etapas['cd_etapa']}_{$atividades['cd_atividade']}",$this->arrItens)): ?> 
+					<div id="<?php echo "{$etapas['cd_etapa']}_{$atividades['cd_atividade']}_item" ?>" style="margin-left: 30px; display:none;">
+					<?php
+						$stColorItemRisco = "S";
+						foreach($this->arrItens["{$etapas['cd_etapa']}_{$atividades['cd_atividade']}"] as $key=>$itens):
+							//Condição para colocar a cor de fundo na div.
+							if($stColorItemRisco == "S"){
+								echo "<div style=\"background-color: #E5ECF9;margin-bottom:2px;\" class=\"float-l clear-l span-20\">";
+								$stColorItemRisco = "";
+							} else {
+								echo "<div style=\"background-color: #F0F0F6; margin-bottom:2px;\" class=\"float-l clear-l span-20\">";
+								$stColorItemRisco = "S";
+							} 
+					?>
+								<div class="float-l clear-l" style="margin: 5px 5px 5px 0px;" onclick="abrirQuestionarioItemRisco(<?php echo $key; ?>,<?php echo $etapas['cd_etapa']; ?>,<?php echo $atividades['cd_atividade']; ?>)">
+									<span class="float-l" style="margin-top:4px;">&nbsp;</span><?php echo $itens['tx_item_risco']; ?>
+								</div>
+								<div class="float-r clear-r center" style="margin: 5px 5px 5px 0px;">
+									<span class="<?php echo $itens['cor_risco']; ?> float-l" style="margin-right: 35px;">&nbsp;</span>
+								</div>
+							</div>
+					<?php endforeach; ?>
+					</div>
+					<?php endif; ?>	
+				<?php endforeach; ?>			
+				</div>
+			</div>
+		<?php
+			if(($qtdEtapas-1) == $i){
+				$style = "style=\"border-bottom:1px solid rgb(84, 189, 205);\"";
+			}
+			$i++; 
+			endforeach; 
+		?>
+	<?php endif; ?>
+</div>

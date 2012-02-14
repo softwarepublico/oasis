@@ -1,0 +1,51 @@
+<script type="text/javascript" defer="defer">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableDocumentacaoProjetoContinuo").tablesorter({widthFixed: true, widgets: ['zebra']});
+});
+</script>
+<table id="tableDocumentacaoProjetoContinuo" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_DATA'          )) ?></th>
+			<th class="span-4"><?php echo $this->escape($this->translate('L_VIEW_GRID_TIPO_DOCUMENTO')) ?></th>
+			<th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_NOME_DOCUMENTO')) ?></th>
+			<th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_ABRIR'         )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res):
+		foreach ($this->res as $res):
+	?>
+	<tr>
+		<td style="cursor: pointer;"> 
+			<?php echo date('d/m/Y', strtotime($res['dt_doc_projeto_continuo'])) ?>
+		</td>
+		<td style="cursor: pointer;">
+			<?php echo $res['tx_tipo_documentacao'] ?>
+		</td>
+		<td style="cursor: pointer;">
+			<?php echo $res['tx_nome_arquivo'] ?>
+		</td>
+		<td>
+            <div id="divDownload">
+                <a id="aDonwload" href="<?php echo $this->baseUrl();?>/documentacao-projeto-continuo/download-projeto-continuo/data/<?php echo $res['dt_doc_projeto_continuo'] ?>/objeto/<?php echo $res['cd_objeto'] ?>/projeto-continuo/<?php echo $res['cd_projeto_continuado'] ?>/tipo/<?php echo $res['cd_tipo_documentacao'] ?>">
+                    <?php echo $this->escape($this->translate('L_VIEW_ABRIR')) ?>
+                </a>
+            </div>
+		</td>
+	</tr>
+	<?php
+		endforeach;
+	else:
+		echo "  <tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr> ";
+	endif;
+	?>
+	</tbody>
+</table>

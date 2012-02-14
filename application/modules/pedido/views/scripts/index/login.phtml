@@ -1,0 +1,24 @@
+<?php
+    $this->script('validaForm');
+    $this->script('scriptFile',array('/pedido.js','/index/index.js'))
+?>
+<div class="float-l push-6" style="color: red;">
+	<?php echo $this->errorMessage; ?>
+</div>
+<hr />
+<fieldset id="fld_form_cad_login_pedido" class="push-6 float-l">
+    <legend><?php echo $this->escape($this->translate('L_VIEW_LOGIN')) ?></legend>
+	<form action="<?php echo $this->url(array('module'=>'pedido', 'controller'=>'index','action'=>'login')); ?>" method="post">
+        <label class="float-l span-2 right"><?php echo $this->escape( $this->labelUserLogin ) ?>:</label>
+            <?php echo $this->formText('usuario','',array('class'=>'span-5 float-l', 'maxlength'=>'100')); ?>
+		<label class="float-l span-2 right clear-l"><?php echo $this->escape($this->translate('L_VIEW_SENHA')) ?>:</label>
+            <?php echo $this->formPassword('senha','',array('class'=>'span-5 float-l','onkeypress'=>'checarCapsLock(event,$(this))')) ?>
+        
+        <?php echo $this->formButton('btLogin', $this->escape($this->translate('L_BTN_ACESSAR')),array('class'=>'float-l clear-l push-2 verde','type'=>'submit')) ?>
+        <?php
+            if(true === $this->hasBtnCadastro){
+                echo $this->formButton('btnCadastro', $this->escape($this->translate('L_BTN_NOVO_USUARIO')),array('class'=>'float-l push-3 azul'));
+            }
+        ?>
+	</form>
+</fieldset>

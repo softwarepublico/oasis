@@ -1,0 +1,23 @@
+<?php
+    $this->script('scriptFile',array('/mensageria/index.js'));
+?>
+<div id="container-mensageria" style="display: none;">
+	<ul>
+        <li>
+            <a href="#aba_mensagens">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_MENSAGENS')) ?></span>
+            </a>
+        </li>
+        <li id="li_aba_mensagem" style="display: none;">
+            <a href="#aba_mensagem">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_MENSAGEM')) ?></span>
+            </a>
+        </li>
+    </ul>
+    <div id="aba_mensagens">
+    	<?php echo $this->render('mensageria/mensagens.phtml') ?>
+    </div>
+    <div id="aba_mensagem">
+    	<?php echo $this->render('mensageria/mensagem.phtml') ?>
+    </div>
+</div>

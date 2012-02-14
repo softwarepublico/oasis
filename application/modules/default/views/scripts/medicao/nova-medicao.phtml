@@ -1,0 +1,26 @@
+<div id="div_nova_medicao" class="divTab">
+	
+    <label class="right float-l span-4 required" for="tx_medicao" ><?php echo $this->escape($this->translate('L_VIEW_NOME')) ?>:</label>
+	<?php echo $this->formText( 'tx_medicao', null ,array('class'=>'span-13 float-l', 'maxlength'=>'200') );?>
+	
+	<label class="right float-l span-4 clear-l required" for="tx_objetivo_medicao" editor="editor" ><?php echo $this->escape($this->translate('L_VIEW_OBJETIVO')) ?>:</label>
+	<?php echo $this->editorHtml( 'tx_objetivo_medicao', null, array('class'=>'float-l','cols'=>'61','rows'=>'3', 'maxlength'=>'4000','editor'=>K_EDITOR));	?>
+	
+	<label class="right float-l span-4 clear-l"><?php echo $this->escape($this->translate('L_VIEW_NIVEL')) ?>:</label>
+		<input type="radio" class="float-l" style="margin-top: 5px;" name="st_nivel" id="nivel_estrategico" value="E" checked="checked"/>
+			<label class="float-l span-3" ><?php echo $this->escape($this->translate('L_VIEW_ESTRATEGICO')) ?></label>
+		<input type="radio" class="float-l" style="margin-top: 5px;" name="st_nivel" id="nivel_tecnico" value="T" />
+			<label class="float-l span-3" ><?php echo $this->escape($this->translate('L_VIEW_TECNICO')) ?></label>
+	
+	<label class="right float-l span-4 clear-l required" for="tx_procedimento_coleta" editor="editor" ><?php echo $this->escape($this->translate('L_VIEW_PROCEDIMENTO_COLETA')) ?>:</label>
+	<?php echo $this->editorHtml( 'tx_procedimento_coleta', null, array('class'=>'float-l','cols'=>'61','rows'=>'3', 'maxlength'=>'4000','editor'=>K_EDITOR)); ?>
+	
+    <label class="right float-l span-4 clear-l required" for="tx_procedimento_analise" editor="editor" ><?php echo $this->escape($this->translate('L_VIEW_PROCEDIMENTO_ANALISE')) ?>:</label>
+	<?php echo $this->editorHtml( 'tx_procedimento_analise', null, array('class'=>'float-l','cols'=>'61','rows'=>'3', 'maxlength'=>'4000','editor'=>K_EDITOR));	?>
+	
+	<?php
+		echo $this->formButton('btn_salvar_medicao', $this->escape($this->translate('L_BTN_SALVAR')), array('class'=>'verde float-l clear-l push-4'));
+		echo $this->formButton('btn_alterar_medicao', $this->escape($this->translate('L_BTN_SALVAR')), array('class'=>'verde float-l clear-l push-4','style'=>'display:none;'));
+		echo $this->formButton('btn_cancelar_medicao', $this->escape($this->translate('L_BTN_CANCELAR')), array('class'=>'vermelho float-l push-4'));
+	 ?>
+</div>

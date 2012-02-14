@@ -1,0 +1,30 @@
+<?php 
+	$this->script('tab'); 
+	$this->script('grid');
+    $this->script('scriptFile',array('/demanda-executor-demanda/index.js'));
+?>
+<script type="text/javascript">
+$(document).ready(function() { 
+	$('#containerDemandaExecutorDemanda').show().tabs(); 
+});
+</script>
+<div id="containerDemandaExecutorDemanda" style="display: none;">
+	<ul>
+    	<li>
+            <a href="#demanda-solicitada">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_DEMANDAS_SOLICITADAS')) ?></span>
+            </a>
+        </li>
+        <li>
+            <a href="#demanda-executada">
+                <span><?php echo $this->escape($this->translate('L_VIEW_ABA_DEMANDAS_EXECUTADAS')) ?></span>
+            </a>
+        </li>
+    </ul>
+    <div id="demanda-solicitada">
+    	<?php echo $this->render('demanda-executor-demanda/demanda-solicitada.phtml') ?>
+    </div>
+    <div id="demanda-executada">
+    	<?php echo $this->render('demanda-executor-demanda/demanda-executada.phtml') ?>
+    </div>
+</div>

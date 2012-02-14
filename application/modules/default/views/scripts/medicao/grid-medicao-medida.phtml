@@ -1,0 +1,69 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableMedicaoMedida").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableMedicaoMedida").tablesorterPager({container: $("#tableMedicaoMedidaPager")}); 
+});
+</script>
+<table id="tableMedicaoMedida" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th class="span-7"><?php echo $this->escape($this->translate('L_VIEW_GRID_MEDIDA'    )) ?></th>
+			<th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_PRIORIDADE')) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+		
+			$chave = '0';
+			if(!empty($res['st_prioridade_medida'])){
+				$chave = "{$res['cd_medida']}_{$res['st_prioridade_medida']}";
+			}
+	?>
+		<tr>
+			<td><?php echo $res['tx_medida']; ?></td>
+			<td><?php
+					echo $this->formSelect( 'cmb_prioridade_medida', 
+		                        $chave, 
+		                        array(
+	                                'class'		=> 'span-4 float-l',
+		                        	"onchange"	=>"salvaPrioridadeMedida(this.value)"
+		                        	  ),
+		                       	array("0"=>$this->escape($this->translate('L_VIEW_COMBO_SELECIONE')),
+		                       		  "{$res['cd_medida']}_A"=>$this->escape($this->translate('L_VIEW_COMBO_ALTISSIMA')),
+		                       		  "{$res['cd_medida']}_L"=>$this->escape($this->translate('L_VIEW_COMBO_ALTA')),
+		                       		  "{$res['cd_medida']}_M"=>$this->escape($this->translate('L_VIEW_COMBO_MEDIA')),
+		                       		  "{$res['cd_medida']}_B"=>$this->escape($this->translate('L_VIEW_COMBO_BAIXA')),
+		                       		 )
+		                        );
+				?>
+			</td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo " <tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			  </tr>";
+	}
+	?>
+	</tbody>
+</table>
+<div id="tableMedicaoMedidaPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="05">05</option>
+			<option value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+		</select>
+	</form>
+</div>

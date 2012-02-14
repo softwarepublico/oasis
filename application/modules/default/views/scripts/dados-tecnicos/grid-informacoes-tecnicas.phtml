@@ -1,0 +1,59 @@
+<script type="text/javascript">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableInformacoesTecnicas").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableInformacoesTecnicas").tablesorterPager({container: $("#pager")}); 
+});
+</script>
+<div id="formInformacoesTecnicas">
+<table id="tableInformacoesTecnicas" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th><?php echo $this->escape($this->translate('L_VIEW_GRID_TIPO')) ?>:</th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_DADOS')) ?>:</th>
+		</tr>
+  </thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $key=>$res):
+	?>
+		<tr>
+			<td class="span-7"><label class="float-l clear-l left">
+				<?php echo $res['tx_tipo_dado_tecnico'] ?>:</label>
+			</td>
+			<td class="span-5">
+				<?php
+					echo $this->formText('tx_conteudo_informacao_tecnica'.$res['cd_tipo_dado_tecnico'], $res['tx_conteudo_informacao_tecnica'],array('class'=>'span-5'));
+				 ?>
+			</td>
+		</tr>
+	<?php
+		endforeach;
+	} else {
+		echo "	<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr> ";
+	}
+	?>
+	</tbody>
+</table>
+</div>
+<!--   precisar de botões para paginador -->
+<div id="tableInformacoesTecnicasPager" class="pager">
+	<form >
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+	<button id="salvarDadosTecnicos" class="verde float-r" onclick="salvaDadosTecnicos();">Salvar Dados Técnicos</button>
+</div>

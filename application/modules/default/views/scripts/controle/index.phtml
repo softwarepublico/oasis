@@ -1,0 +1,92 @@
+<?php 
+	$this->script('tab');  
+	$this->script('grid');
+	$this->script('mascara');
+	$this->script('validaData');
+	$this->script('calendario');
+    $this->script('validaForm');
+    $this->script('editorHtml');
+    $this->script('numero');
+    $this->script('mascaraDinheiro');
+    $this->script('scriptFile',array('/controle/index.js'));
+?>
+<?php echo $this->formHidden('config_hidden_controle_proposta','N') ?>
+<?php if (ChecaPermissao::possuiPermissao('controle-proposta') === true): ?>
+	<div id="propostas_parcelas" class="accordion-closed" onclick="if(($(this).hasClass('accordion-closed')) && ($('#config_hidden_controle_proposta').val() == 'N')){configControleProposta();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_PROPOSTA')) ?></span>
+    </div>
+	<div id="form_proposta_parcelas" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('controle-proposta/index.phtml') ?>
+	</div>
+<?php endif; ?>
+
+<?php echo $this->formHidden('config_hidden_controle_parcela','N') ?>
+<?php if (ChecaPermissao::possuiPermissao('controle-parcela') === true): ?>
+	<div id="propostas_parcelas" class="accordion-closed" onclick="if(($(this).hasClass('accordion-closed')) && ($('#config_hidden_controle_parcela').val() == 'N')){configControleParcela();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_PARCELA')) ?></span>
+    </div>
+	<div id="form_proposta_parcelas" accordion="accordion" class="hide accordion">
+		<?php echo $this->render('controle-parcela/index.phtml') ?>
+	</div>
+<?php endif;?>
+
+<?php echo $this->formHidden('config_hidden_penalizacao','N') ?>
+<?php if (ChecaPermissao::possuiPermissao('penalizacao') === true): ?>
+	<div id="penalizacao" class="accordion-closed" onclick="if(($(this).hasClass('accordion-closed')) && ($('#config_hidden_penalizacao').val() == 'N')){configPenalizacao();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_PENALIZACAO')) ?></span>
+    </div>
+	<div id="form_penalizacao" accordion="accordion" class="hide accordion">
+	<?php echo $this->render('controle/penalizacao.phtml') ?></div>
+<?php endif; ?>
+
+<?php if (ChecaPermissao::possuiPermissao('questionario') === true): ?>
+	<div id="questionario" class="accordion-closed">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_QUESTIONARIO_AVALIACAO')) ?></span>
+    </div>
+	<div id="form_questionario" accordion="accordion" class="hide accordion">
+	<?php echo $this->render('questionario/index.phtml') ?></div>
+<?php endif; ?>
+
+<?php echo $this->formHidden('config_hidden_ocorrencia_administrativa','N') ?>
+<?php if (ChecaPermissao::possuiPermissao('ocorrencia-administrativa') === true): ?>
+	<div id="ocorrencia_administrativa" class="accordion-closed" onclick="if(($(this).hasClass('accordion-closed')) && ($('#config_hidden_ocorrencia_administrativa').val() == 'N')){configOcorrenciaAdministrativa();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_OCORRENCIA_ADMINISTRATIVA')) ?></span>
+    </div>
+	<div id="form_ocorrencia_administrativa" accordion="accordion" class="hide accordion">
+	<?php echo $this->render('ocorrencia-administrativa/index.phtml') ?></div>
+<?php endif; ?>
+
+<?php if (ChecaPermissao::possuiPermissao('documentacao-projeto-controle') === true): ?>
+	<div id="documentacao_projeto_controle" class="accordion-closed">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_DOCUMENTACAO_PROJETO')) ?></span>
+    </div>
+	<div id="form_documentacao_projeto_controle" accordion="accordion" class="hide accordion">
+	<?php echo $this->render('documentacao-projeto-controle/index.phtml') ?></div>
+<?php endif; ?>
+
+<?php echo $this->formHidden('config_hidden_disponibilidade_servico','N') ?>
+<?php if (ChecaPermissao::possuiPermissao('disponibilidade-servico') === true): ?>
+	<div id="disponibilizacao_servico" class="accordion-closed"  onclick="if(($(this).hasClass('accordion-closed')) && ($('#config_hidden_disponibilidade_servico').val() == 'N')){configDisponibilidadeServico();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_DISPONIBILIDADE_SERVICO')) ?></span>
+    </div>
+	<div id="form_disponibilizacao_servico" accordion="accordion" class="hide accordion">
+	<?php echo $this->render('disponibilidade-servico/index.phtml') ?></div>
+<?php endif; ?>
+
+<?php if (ChecaPermissao::possuiPermissao('custo-contrato-demanda') === true): ?>
+	<div id="custo_contrato_demanda" class="accordion-closed">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_CUSTO_CONTRATO_TIPO_DEMANDA')) ?></span>
+    </div>
+	<div id="form_custo_contrato_demanda" accordion="accordion" class="hide accordion">
+	<?php echo $this->render('custo-contrato-demanda/index.phtml') ?></div>
+<?php endif; ?>
+
+<?php echo $this->formHidden('config_hidden_suspensao_proposta','N') ?>
+<?php if(ChecaPermissao::possuiPermissao('suspensao-proposta') === true): ?>
+	<div id="suspensao_proposta" class="accordion-closed" onclick="if($(this).hasClass('accordion-closed') && ($('#config_hidden_suspensao_proposta').val() == 'N')){configSuspensaoProposta();}">
+        <span><?php echo $this->escape($this->translate('L_VIEW_ACCORDION_SUSPENSAO_PROPOSTA')) ?></span>
+    </div>
+	<div id="form_suspensao_proposta" accordion="accordion" class="hide accordion">
+        <?php echo $this->render('suspensao-proposta/index.phtml') ?>
+    </div>
+<?php endif; ?>

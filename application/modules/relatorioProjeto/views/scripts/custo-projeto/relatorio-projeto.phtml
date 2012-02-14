@@ -1,0 +1,106 @@
+<?php
+//criando o objeto
+$objPdf = new Base_Tcpdf_Pdf();
+
+$arrKeywords = array(K_CREATOR_SYSTEM,
+                             Base_Util::getTranslator('L_TIT_REL_CUSTO_PROJETO'),
+                             Base_Util::getTranslator('L_VIEW_CUSTO'),
+                             Base_Util::getTranslator('L_VIEW_PROJETO'),
+                             Base_Util::getTranslator('L_VIEW_RELATORIO')
+                            );
+
+//Inicia cabeçalho do relatório
+$objPdf->iniciaRelatorio(Base_Util::getTranslator('L_TIT_REL_CUSTO_PROJETO'), $arrKeywords);
+
+$objPdf->SetDisplayMode("real");
+
+// set font
+$objPdf->SetFont('helvetica', '', 10);
+
+// add a page
+$objPdf->AddPage();
+
+//Column titles
+$header = array(Base_Util::getTranslator('L_VIEW_PARCELA'),
+                Base_Util::getTranslator('L_VIEW_MES'),
+//                Base_Util::getTranslator('L_VIEW_UNIDADES_VARIAVEL', $this->siglaMetricaPadraoPorContrato),
+                Base_Util::getTranslator('L_VIEW_UNIDADES_METRICA'),
+                Base_Util::getTranslator('L_VIEW_VALOR'));
+
+$objPdf->Cell(PDF_MARGIN_LEFT, 6, Base_Util::getTranslator('L_VIEW_SIGLA')."      : ".$this->arrProjeto[0]['tx_sigla_projeto'], '', 0, 'L');
+$objPdf->Ln();
+$objPdf->MultiCell(180, 6, Base_Util::getTranslator('L_VIEW_PROJETO')."  : ".$this->arrProjeto[0]['tx_projeto'], '', 'L');
+$objPdf->Cell(PDF_MARGIN_LEFT, 6, Base_Util::getTranslator('L_VIEW_UNIDADE').": ".$this->arrProjeto[0]['tx_sigla_unidade'], '', 0, 'L');
+$objPdf->Ln();
+
+// print colored table
+coloredTable($header, $this->arrCustoProjeto, $objPdf);
+
+// ---------------------------------------------------------
+
+//Close and output PDF document
+$objPdf->Output('relatorio_custo_projeto.pdf', 'I');
+
+//============================================================+
+// END OF FILE                                                 
+//============================================================+
+
+function coloredTable($header,$data, $objPdf){
+	// Colors, line width and bold font
+	$objPdf->SetDrawColor(50);
+	$objPdf->SetFillColor(240,240,240);
+	$objPdf->SetTextColor(0);
+	$objPdf->SetLineWidth(0.3);
+	$objPdf->SetFont('', 'B',9);
+	// Header
+	$w = array(50, 35, 40, 55);
+	for($i = 0; $i < count($header); $i++)
+	$objPdf->Cell($w[$i], 7, $header[$i], 1, 0, 'C', 1);
+	$objPdf->Ln();
+	// Color and font restoration
+	$objPdf->SetFillColor(240, 248, 255);
+	$objPdf->SetTextColor(0);
+	$objPdf->SetFont('','',8);
+	// Data
+	$fill = 0;
+	
+	$propostaAux = "";
+	$totalHora = 0;
+	$totalValor = 0;
+	$qtdParcela = 0;
+	foreach($data as $row){
+		if($propostaAux != $row['cd_proposta']){
+			$objPdf->Cell($w[0], 6, "Proposta Nº ".$row['cd_proposta'], 'LR', 0, 'L', $fill);
+			$objPdf->Cell($w[1], 6, "", 'LR', 0, 'L', $fill);
+			$objPdf->Cell($w[2], 6, "", 'LR', 0, 'R', $fill);
+			$objPdf->Cell($w[3], 6, "", 'LR', 0, 'R', $fill);
+			$objPdf->Ln();
+		} 
+		$objPdf->Cell($w[0], 6, "Parcela Nº ".$row['ni_parcela'], 'LR', 0, 'C', $fill);
+		
+		$mes = substr("00".$row['ni_mes_execucao_parcela'],-2);
+		$objPdf->Cell($w[1], 6, $mes."/".$row['ni_ano_execucao_parcela'], 'LR', 0, 'C', $fill);
+//		$objPdf->Cell($w[2], 6, number_format($row['ni_horas_parcela'],0,'','.')."  ", 'LR', 0, 'R', $fill);
+		$objPdf->Cell($w[2], 6, number_format($row['ni_horas_parcela'],1,',','.')."  ", 'LR', 0, 'R', $fill);
+		$objPdf->Cell($w[3], 6, number_format($row['valor_parcela'],2,',','.')."  ", 'LR', 0, 'R', $fill);
+		$objPdf->Ln();
+		$fill=!$fill;
+		
+		$totalHora  += $row['ni_horas_parcela'];
+		$totalValor += $row['valor_parcela'];
+		$qtdParcela++;
+		
+		$propostaAux = $row['cd_proposta'];
+	}
+	$objPdf->Cell($w[0], 6, Base_Util::getTranslator('L_VIEW_TOTAL'), 'LTB', 0, 'L',0);
+	$objPdf->Cell($w[1], 6, "", 'TB', 0, 'R', 0);
+	$objPdf->Cell($w[2], 6, "", 'TB', 0, 'R', 0);
+	$objPdf->Cell($w[3], 6, number_format($totalValor,2,',','.')."  ", 'LRTB', 0, 'R', 0);
+	$objPdf->Ln();
+	
+	$objPdf->Cell($w[0], 6, Base_Util::getTranslator('L_VIEW_QTD_PARCELA').": ".$qtdParcela, '', 0, 'L',0);
+	$objPdf->Cell($w[1], 6, "", '', 0, 'R', 0);
+	$objPdf->Cell($w[2], 6, "", '', 0, 'R', 0);
+	$objPdf->Cell($w[3], 6, "", '', 0, 'R', 0);
+}
+?>

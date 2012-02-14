@@ -1,0 +1,7 @@
+<div class="clear boxTab">
+    <button id="btn_novo_inventario" class="azul float-r" style="margin-top: 2px;"><?php echo mb_strtoupper($this->escape($this->translate('L_BTN_NOVO_INVENTARIO')), 'utf-8') ?></button>
+
+    <label class="float-l bold" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_AREA_ATUACAO_TI')) ?>:</label>
+	<?php echo $this->formSelect('cmd_area_atuacao_ti_inventario', null, array('class'=>'float-l span-4'), $this->arrAreaAtuacaoTi); ?>
+</div>
+<div id="grid_inventario" class="float-l clear-l span-21"></div>

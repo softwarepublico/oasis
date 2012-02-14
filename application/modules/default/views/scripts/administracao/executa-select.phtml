@@ -1,0 +1,8 @@
+<div>
+    <label class="float-l right clear-l span-2" for="tx_analise_risco"><?php echo $this->escape($this->translate('L_VIEW_SELECT')) ?>:</label>
+    <span class="float-l span-13"><?php echo $this->formTextarea('tx_select',null,array('class'=>'float-l span-18 height-10'))?></span>
+
+        <?php echo $this->formButton('btn_executar',$this->escape($this->translate('L_BTN_EXECUTAR')),array('class'=>'verde float-l clear-l push-2')); ?>
+</div>
+<hr>
+<div id="grid_resultado_select" class="push-1 span-19" style="overflow-x: auto;"> </div>

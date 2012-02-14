@@ -1,0 +1,99 @@
+<script type="text/javascript" language="javascript" src="<?php echo $this->baseUrl()?>/public/js/modules/default/desalocacao-recurso-proposta/tab-desalocacao.js"></script>
+<script type="text/javascript" defer="defer">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableDesalocacaoRecursoPropostaTab"              ).tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableDesalocacaoRecursoPropostaProjetosPrevistos").tablesorter({widthFixed: true, widgets: ['zebra']});
+ 
+});
+</script>
+<form method="post" id="formDesalocacaoRecursoProposta">
+
+    <!-- Campos hidden do projeto e da proposta que está sendo analisada -->
+    <input type="hidden" id="cd_projeto_desalocacao_recurso_proposta" name="cd_projeto_desalocacao_recurso_proposta" value="<?php echo $this->cd_projeto ?>" />
+    <input type="hidden" id="cd_proposta_desalocacao_recurso_proposta" name="cd_proposta_desalocacao_recurso_proposta" value="<?php echo $this->cd_proposta ?>" />
+    <input type="hidden" id="soma_horas" name="soma_horas" />
+    <input type="hidden" id="cd_contrato" name="cd_contrato" value="<?php echo $this->cd_contrato ?>" />
+    <input type="hidden" id="valor_a_ser_alocado" name="valor_a_ser_alocado" value="<?php echo $this->valor_a_ser_alocado ?>" />
+
+    <div style="background-color:#fbfbfb;">
+        <div class="highlight" style="padding:5px">
+            <h2>Desalocação de Recurso de Proposta</h2>
+        </div>
+        <div style="padding-top:8px; padding-left:10px; padding-right:10px;">
+            <table id="tableDesalocacaoRecursoPropostaTab" cellspacing="1" class="tablesorter">
+                <thead>
+                    <tr>
+                        <th class="{sorter: false}"><?php echo $this->escape($this->translate('L_VIEW_GRID_PROJETO' )) ?>: <?php echo $this->tx_sigla_projeto ?></th>
+                        <th class="{sorter: false}"><?php echo $this->escape($this->translate('L_VIEW_GRID_PROPOSTA')) ?>: <?php echo $this->cd_proposta ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><?php echo $this->escape(Base_Util::getTranslator('L_VIEW_SIGLA_UNID_METRICA_ALOCADA_PROPOSTA', $this->unidadePadraoMetrica)) ?>:</td>
+                        <td><?php echo $this->horas_alocadas ?></td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $this->escape(Base_Util::getTranslator('L_VIEW_SIGLA_UNID_METRICA_EXECUTADO_PERIODO_CONTRATO', $this->unidadePadraoMetrica)) ?> :</td>
+                        <td><?php echo $this->valor_executado ?></td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $this->escape($this->translate('L_VIEW_VALOR_A_ALOCAR')) ?>:</td>
+                        <td><?php echo $this->valor_a_ser_alocado ?></td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr />
+            <table id="tableDesalocacaoRecursoPropostaProjetosPrevistos" cellspacing="1" class="tablesorter">
+                <thead>
+                    <tr>
+                        <th class="{sorter: false} span-11"><?php echo $this->escape($this->translate('L_VIEW_GRID_LISTA')) ?></th>
+                        <th class="{sorter: false} span-2"><?php echo $this->unidadePadraoMetrica.' '.$this->escape($this->translate('L_VIEW_GRID_TOTAIS')) ?></th>
+                        <th class="{sorter: false}"><?php echo $this->escape($this->translate('L_VIEW_GRID_CREDITOS')) ?></th>
+                        <th class="{sorter: false}"><?php echo $this->escape($this->translate('L_VIEW_GRID_DEBITOS' )) ?></th>
+                        <th class="{sorter: false}"><?php echo $this->escape($this->translate('L_VIEW_GRID_SALDO'   )) ?></th>
+                        <th class="{sorter: false} span-2"><?php echo $this->unidadePadraoMetrica.' '.$this->escape($this->translate('L_VIEW_GRID_ALOCACAO')) ?></th>
+                    </tr>
+                    <tr>
+                        <th colspan="5" class="{sorter: false}">&nbsp;</th>
+                        <th class="center; {sorter: false}" style="color:red"><?php echo round($this->valor_a_ser_alocado,1) ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($this->arrProjeto as $projeto): ?>
+                    <?php
+                    if (in_array($projeto->cd_projeto_previsto, $this->arrProjetoPrevistoQueCedeuRecurso)):
+					?>
+                    <tr class="negrito">
+                    <?php
+                    else:
+					?>
+                    <tr>
+                    <?php
+                    endif;
+					?>
+                        <td style="padding-left:10px;"><?php echo $projeto->tx_projeto_previsto ?></td>
+                        <td><?php echo $projeto->ni_horas_projeto_previsto ?></td>
+                        <td><?php echo $this->arrHorasProjetoPrevisto[$projeto->cd_projeto_previsto]['credito']  ?></td>
+                        <td><?php echo $this->arrHorasProjetoPrevisto[$projeto->cd_projeto_previsto]['debito']  ?></td>
+                        <td>
+                            <?php echo $this->arrHorasProjetoPrevisto[$projeto->cd_projeto_previsto]['total']  ?>
+                            <input type="hidden" id="saldo_<?php echo $projeto->cd_projeto_previsto ?>" name="saldo[<?php echo $projeto->cd_projeto_previsto ?>]" value="<?php echo $this->arrHorasProjetoPrevisto[$projeto->cd_projeto_previsto]['total'] ?>">
+                        </td>
+                        <td>
+                            <input type="text" id="cd_projeto_previsto_<?php echo $projeto->cd_projeto_previsto ?>" name="cd_projeto_previsto[<?php echo $projeto->cd_projeto_previsto ?>]" size="15" maxlength="10" value="">
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+
+    <hr />
+        <div class="gradient-b" style="margin-top:5px;">
+            <?php echo $this->formButton('bt_cancelar_desalocacao_recurso_proposta', mb_strtoupper( $this->escape($this->translate('L_BTN_CANCELAR')), 'utf-8'), array('class' => 'float-l vermelho'), null);?>
+            <?php echo $this->formButton('bt_salvar_desalocacao_recurso_proposta', mb_strtoupper( $this->escape($this->translate('L_BTN_SALVAR')), 'utf-8'), array('class' => 'float-r verde'), null);?>
+        </div>
+    </div>
+</form>

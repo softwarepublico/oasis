@@ -1,0 +1,105 @@
+<script type="text/javascript" defer="defer">
+$(document).ready(function() {
+    // call the tablesorter plugin
+    $("#tableRequisito_gerenciamentoTeste").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableRequisito_gerenciamentoTeste").tablesorterPager({container: $("#pagerRequisito_gerenciamentoTeste")});
+
+});
+</script>
+<table  id="tableRequisito_gerenciamentoTeste" cellspacing="1" class="tablesorter">
+    <thead>
+        <tr>
+            <th width="40%"><?php echo $this->escape($this->translate('L_VIEW_GRID_REQUISITO'   )) ?></th>
+            <th colspan="3"><?php echo $this->escape($this->translate('L_VIEW_GRID_ETAPAS_TESTES')) ?></th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php
+    if($this->res){
+        foreach ($this->res as $res):
+
+        $st_analise     = !is_null($res['st_analise']    ) ? 1 : 0;
+        $st_solucao     = !is_null($res['st_solucao']    ) ? 1 : 0;
+        $st_homologacao = !is_null($res['st_homologacao']) ? 1 : 0;
+
+        $params = array(
+            'codigo_tabela'    => $res['cd_requisito'],
+            'descricao_tabela' => $res['tx_requisito'],
+            'abaOrigem'        => 'requisito'
+        );
+
+        $params = str_replace('"',"'",json_encode($params));
+    ?>
+    <tr>
+        <td><?php echo $res['tx_requisito']?></td>
+        <td style="text-align:center" class="span-3">
+            <div><?php echo $this->escape($this->translate('L_VIEW_RELATO_TESTE')) ?></div>
+            <div>
+                <img
+                <?php if($this->permissao_requisito_analise): ?>
+                     style="cursor:pointer"
+                     onclick="cadastraTesteSubAba(<?php echo "'analise' , {$st_analise} , {$params}"; ?>)"
+                     title="<?php echo $this->escape($this->translate('L_MSG_CADASTRA_RELATO_TESTE_REQUISITO')) ?>"
+                <?php else: ?>
+                     style="cursor:not-allowed"
+                     title="<?php echo $this->escape($this->translate('L_MSG_ALERT_SEM_PERMISSAO_ACESSAR_LINK')) ?>"
+                <?php endif; ?>
+                     src="<?php echo $this->baseUrl(). '/public/img/'. (($st_analise)?'u42.png':'u46.png'); ?>" />
+            </div>
+        </td>
+        <td style="text-align:center" class="span-3">
+            <div><?php echo $this->escape($this->translate('L_VIEW_SOLUCAO')) ?></div>
+            <div>
+                <img
+                <?php if($this->permissao_requisito_solucao): ?>
+                     style="cursor:pointer"
+                     onclick="cadastraTesteSubAba(<?php echo "'solucao' , {$st_solucao} , {$params}"; ?>)"
+                     title="<?php echo $this->escape($this->translate('L_MSG_CADASTRA_SOLUCAO_REQUISITO')) ?>"
+                <?php else: ?>
+                     style="cursor:not-allowed"
+                     title="<?php echo $this->escape($this->translate('L_MSG_ALERT_SEM_PERMISSAO_ACESSAR_LINK')) ?>"
+                <?php endif; ?>
+                     src="<?php echo $this->baseUrl(). '/public/img/'. (($st_solucao)?'u42.png':'u46.png'); ?>" />
+            </div>
+        </td>
+        <td style="text-align:center" class="span-3">
+            <div><?php echo $this->escape($this->translate('L_VIEW_HOMOLOGACAO')) ?></div>
+            <div>
+                <img
+                <?php if($this->permissao_requisito_homologacao): ?>
+                     style="cursor:pointer"
+                     onclick="cadastraTesteSubAba(<?php echo "'homologacao' , {$st_homologacao} , {$params}"; ?>)"
+                     title="<?php echo $this->escape($this->translate('L_MSG_CADASTRA_HOMOLOGACAO_REQUISITO')) ?>"
+                <?php else: ?>
+                     style="cursor:not-allowed"
+                     title="<?php echo $this->escape($this->translate('L_MSG_ALERT_SEM_PERMISSAO_ACESSAR_LINK')) ?>"
+                <?php endif; ?>
+                     src="<?php echo $this->baseUrl(). '/public/img/'. (($st_homologacao)?'u42.png':'u46.png'); ?>" />
+            </div>
+        </td>
+    </tr>
+    <?php
+        endforeach;
+    } else {
+        echo '<tr>
+                    <td colspan="4" style="text-align:center"> '.$this->escape($this->translate('L_VIEW_SEM_REGISTRO')).' </td>
+              </tr>';
+    }
+    ?>
+    </tbody>
+</table>
+<div id="pagerRequisito_gerenciamentoTeste" class="pager">
+    <form>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+        <input type="text" class="pagedisplay" />
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+        <img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+        <select class="pagesize">
+            <option selected="selected"  value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+        </select>
+    </form>
+</div>

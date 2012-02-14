@@ -1,0 +1,49 @@
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#opcaoResposta").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#opcaoResposta").tablesorterPager({container: $("#opcaoRespostaPager")});
+});
+</script>
+<table cellspacing="1" id="opcaoResposta" class="tablesorter clear-l">
+    <thead>
+        <tr>
+            <th class="{sorter: false}" style="width:10px;">&nbsp;</th>
+            <th class="span-2"><?php echo $this->escape($this->translate('L_VIEW_GRID_ORDEM')) ?></th>
+            <th class="span-5"><?php echo $this->escape($this->translate('L_VIEW_GRID_OPCAO_RESPOSTA')) ?></th>
+            <th class="span-3"><?php echo $this->escape($this->translate('L_VIEW_GRID_TIPO')) ?></th>
+        </tr>
+    </thead>
+    <tbody>
+<?php if(count($this->opcoes)): ?>
+    <?php foreach($this->opcoes as $rs): ?>
+        <tr>
+            <td><img id="imgExcluir" height="13" width="13" style="cursor:pointer; text-align: center;" onclick="excluirOpcaoResposta(<?php echo $rs->cd_pergunta_pedido ?>, <?php echo $rs->cd_resposta_pedido ?>);" src="<?php echo $this->baseUrl()?>/public/img/del.png" alt="<?php echo $this->escape($this->translate('L_BTN_EXCLUIR')) ?>"/></td>
+            <td style="cursor:pointer;" onclick="recuperarOpcaoResposta(<?php echo $rs->cd_pergunta_pedido ?>, <?php echo $rs->cd_resposta_pedido ?>)" class="center"><?php echo $rs->ni_ordem_apresenta ?></td>
+            <td style="cursor:pointer;" onclick="recuperarOpcaoResposta(<?php echo $rs->cd_pergunta_pedido ?>, <?php echo $rs->cd_resposta_pedido ?>)" ><?php echo $rs->tx_titulo_resposta?></</td>
+            <td style="cursor:pointer;" onclick="recuperarOpcaoResposta(<?php echo $rs->cd_pergunta_pedido ?>, <?php echo $rs->cd_resposta_pedido ?>)" class="center"><?php echo $rs->st_resposta_texto_desc ?></td>
+        </tr>
+    <?php endforeach; ?>
+<?php else:
+        echo " <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+              </tr>";
+      endif; ?>
+    </tbody>
+</table>
+<div id="opcaoRespostaPager" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+		</select>
+	</form>
+</div>

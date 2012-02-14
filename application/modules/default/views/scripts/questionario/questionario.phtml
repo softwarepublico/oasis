@@ -1,0 +1,8 @@
+<div style="overflow:hidden;" id="questionario">
+	<label class="bold float-l span-2" style="margin-left:5px;"><?php echo $this->escape($this->translate('L_VIEW_PROJETO')) ?>:</label>
+		<?php echo $this->formSelect('cd_projeto',null,array('class'=>'float-l'),$this->arrProjeto) ?>
+    <label class="bold float-l span-2 clear-l" style="margin-left:5px;"><?php echo $this->escape($this->translate('L_VIEW_PROPOSTA')) ?>:</label>
+		<?php echo $this->formSelect('cd_proposta',null,array('class'=>'float-l')) ?>
+	<hr>
+	<div id="montaQuestionario"></div>	
+</div>

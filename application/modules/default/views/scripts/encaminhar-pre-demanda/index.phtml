@@ -1,0 +1,51 @@
+<?php
+	$this->script("numero");
+	$this->script("validaForm");
+    $this->script('scriptFile',array('/encaminhar-pre-demanda/index.js'));
+?>
+<form method="post" id="formEncaminharPreDemanda">
+	<input type="hidden" id="cd_pre_demanda" name="cd_pre_demanda" value="<?php echo $this->arrPreDemanda[0]['cd_pre_demanda'] ?>" />
+	<input type="hidden" id="cd_objeto_emissor" name="cd_objeto_receptor" value="<?php echo $this->arrPreDemanda[0]['cd_objeto'] ?>" />
+	<input type="hidden" id="cd_profissional" name="cd_profissional" value="<?php echo $this->arrPreDemanda[0]['cd_profissional'] ?>" />
+	<input type="hidden" id="tx_pre_demanda" name="tx_pre_demanda" value="<?php echo htmlspecialchars($this->arrPreDemanda[0]['tx_pre_demanda']) ?>" />
+	<input type="hidden" id="tx_profissional" name="tx_profissional" value="<?php echo $this->arrPreDemanda[0]['tx_profissional'] ?>" />
+	<input type="hidden" id="cd_unidade" name="cd_unidade" value="<?php echo $this->arrPreDemanda[0]['cd_unidade'] ?>" />
+	<input type="hidden" id="tx_telefone_solicitante" name="tx_telefone_solicitante" value="<?php echo $this->arrPreDemanda[0]['tx_ramal_profissional'] ?>" />
+	<input type="hidden" id="st_solicitacao" name="st_solicitacao" value="3" />
+
+	<div class="box span-21 border gradient">
+
+        <h3 class="highlight tarja-1"><?php echo $this->escape($this->translate('L_VIEW_DETALHE_PRE_DEMANDA')) ?></h3>
+        
+		<label class="bold span-5 float-l "><?php echo $this->escape($this->translate('L_VIEW_DATA_HORA_DEMANDA')) ?>:</label>
+            <p class="span-6"><?php echo date('d/m/Y H:i:s') ?></p>
+		<label class="bold span-5 float-l "><?php echo $this->escape($this->translate('L_VIEW_OBJETO_EXECUTOR')) ?>:</label>
+            <p class="span-5"><?php echo $this->arrPreDemanda[0]['tx_objeto']; ?></p>
+		<label class="bold span-5 float-l clear-n right"><?php echo $this->escape($this->translate('L_VIEW_TIPO')) ?>:</label>
+            <p class="span-2"><?php echo $this->escape($this->translate('L_VIEW_DEMANDA')) ?></p>
+		<label class="bold span-5 float-l"><?php echo $this->escape($this->translate('L_VIEW_SOLICITANTE')) ?>:</label>
+            <p class="span-5"><?php echo $this->arrPreDemanda[0]['tx_profissional'] ?></p>
+		<label class="bold span-5 float-l clear-n right"><?php echo $this->escape($this->translate('L_VIEW_UNIDADE')) ?>:</label>
+            <p class="span-2"><?php echo $this->arrPreDemanda[0]['tx_sigla_unidade'] ?></p>
+		<label class="bold span-5 float-l"><?php echo $this->escape($this->translate('L_VIEW_DESCRICAO')) ?>:</label>
+			<div class="span-15" style="margin-left: 10px;">
+				<?php echo $this->arrPreDemanda[0]['tx_pre_demanda'] ?>
+			</div>
+        <label class="bold span-5 float-l required" for="ni_prazo_atendimento">
+            <?php echo $this->escape($this->translate('L_VIEW_PRAZO_ATENDIMENTO')) ?> (<?php echo $this->escape($this->translate('L_VIEW_DIAS')) ?>):
+        </label>
+            <p class="span-5"><?php echo $this->soNumero('ni_prazo_atendimento',null,null,null) ?></p>
+		<label class="bold span-5 float-l clear-l"><?php echo $this->escape($this->translate('L_VIEW_OBSERVACAO')) ?>:</label>
+            <p class="span-10"><?php echo $this->formTextarea('tx_obs_solicitacao','', array('style' => 'width:550px; height:50px;', 'class' => 'span-4')) ?></p>
+		
+        <hr style="width:816px;"/>
+
+		<div class="float-l span-15">
+            <?php echo $this->formButton('bt_cancelar_encaminhar_pre_demanda', $this->escape($this->translate('L_BTN_CANCELAR')), array('class' => 'vermelho'), null); ?>
+		</div>
+
+		<div class="float-l">
+            <?php echo $this->formButton('bt_salvar_encaminhar_pre_demanda', $this->escape($this->translate('L_BTN_ENCAMINHAR_PRE_DEMANDA_EXECUCAO')), array('class' => 'verde'), null); ?>
+		</div>
+	</div>
+</form>

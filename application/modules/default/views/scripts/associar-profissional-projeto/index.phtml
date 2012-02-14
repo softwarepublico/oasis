@@ -1,0 +1,19 @@
+<?php
+    $this->script('scriptFile',array('/associar-profissional-projeto/index.js'));
+?>
+<div class="float-l" style="margin-left:19px;">
+    <label class="float-l bold"><?php echo $this->escape($this->translate('L_VIEW_PAPEL_PROFISSIONAL')) ?>:</label>
+	<?php echo $this->formSelect('cd_papel_profissional', null, array('class'=>'float-l'), $this->arrPapelProfissional); ?>
+</div>
+
+<div class="clear-l float-l" style="margin-left:19px;">
+
+	<?php echo $this->flipFlop(array('name'=>'cd_profissional', 'label'=>$this->escape($this->translate('L_VIEW_PROFISSIONAIS')), 'value'=>$this->profissionais),
+							   array('name'=>'cd_profissional2', 'label'=>$this->escape($this->translate('L_VIEW_PROFISSIONAIS_ALOCADOS')), 'value'=>$this->profissionais2),
+							   'add',
+							   'remove',8); ?>
+    
+    <div id="gridProfissionalPapelProfissional" class="float-l clear-l"></div>
+    <div class="accordionBottom" style="min-height: 10px;"></div>
+</div>
+

@@ -1,0 +1,20 @@
+<div class="divTab">
+    <div class="clear boxTab">
+        <label class="float-l" style="margin-top:2px;">
+            <?php echo $this->escape($this->translate('L_VIEW_PROJETO')) ?>:
+            <span class="SigProjeto bold"></span>
+        </label>
+        <label class="float-l" style="margin-top:2px;">
+            <?php echo $this->escape($this->translate('L_VIEW_MODULO')) ?>:
+            <span class="DescricaoModulo bold"></span>
+            <?php echo $this->formHidden('cd_casoDeUso_solucao__cd_modulo',null,array('class'=>'codTabelaModulo')); ?>
+        </label>
+        <hr />
+        <label class="float-l" style="margin-top:2px;">
+            <?php echo $this->escape($this->translate('L_VIEW_CASO_DE_USO')) ?>:
+            <span class="Descricao bold"></span>
+            <?php echo $this->formHidden('cd_casoDeUso_solucao',null,array('class'=>'codTabela')); ?>
+        </label>
+    </div>
+    <div id="grid_casoDeUso_solucao_gerenciamentoTeste"></div>
+</div>

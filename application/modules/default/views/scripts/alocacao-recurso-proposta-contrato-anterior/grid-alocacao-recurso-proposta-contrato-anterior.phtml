@@ -1,0 +1,70 @@
+<script type="text/javascript" defer="defer">
+$(document).ready(function() { 
+	// call the tablesorter plugin 
+    $("#tableAlocacaoRecursoPropostaContratoAnterior").tablesorter({widthFixed: true, widgets: ['zebra']});
+    $("#tableAlocacaoRecursoPropostaContratoAnterior").tablesorterPager({container: $("#pager_alocacao_recurso_proposta_contrato_anterior")}); 
+ 
+});
+</script>
+<table  id="tableAlocacaoRecursoPropostaContratoAnterior" cellspacing="1" class="tablesorter">
+	<thead>
+		<tr>
+            <th><?php echo $this->escape($this->translate('L_VIEW_GRID_PROJETO' )) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_PROPOSTA')) ?></th>
+			<th class="span-4"><?php echo $this->unidadePadraoMetrica; ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_ALOCADO'  )) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_DIFERENCA')) ?></th>
+			<th><?php echo $this->escape($this->translate('L_VIEW_GRID_ACAO'     )) ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	if($this->res){
+		foreach ($this->res as $res):
+	?>
+	<tr>
+		<td><?php echo $res['tx_sigla_projeto']?></td>
+		<td>
+            <a href="#" onclick="abrePopUp('<?php echo $this->baseUrl()?>/relatorioProjeto/documento-proposta/documento-proposta/cd_projeto/<?php echo $res['cd_projeto'] ?>/cd_proposta/<?php echo $res['cd_proposta'] ?>/tipo_proposta/C');">
+            <?php echo $this->escape($this->translate('L_VIEW_PROPOSTA_NR'))." " . $res['cd_proposta'] ?>
+            </a>
+        </td>
+		<td><?php echo $res['ni_horas_proposta'] ?></td>
+		<td><?php echo $res['alocado'  ] ?></td>
+		<td><?php echo $res['diferenca'] ?></td>
+		<td>
+            <button onClick="abreAlocacaoRecursoPropostaContratoAnterior('<?php echo $res['cd_projeto'] ?>', '<?php echo $res['cd_proposta'] ?>', '<?php echo $res['tx_sigla_projeto'] ?>')" class="azul" id="bt_alocar_recurso_contrato_anterior_<?php echo $res['cd_projeto']?>_<?php echo $res['cd_proposta']?>">
+                <?php echo $this->escape($this->translate('L_BTN_ALOCAR_RECURSO')) ?>
+            </button>
+        </td>
+	</tr>
+	<?php
+		endforeach;
+	} else {
+		echo " <tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr> ";
+	}
+	?>
+	</tbody>
+</table>
+<div id="pager_alocacao_recurso_proposta_contrato_anterior" class="pager">
+	<form>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/first.png" class="first"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/next.png" class="next"/>
+		<img src="<?php echo $this->baseUrl()?>/public/js/lib/jquery/tablesorter/addons/pager/icons/last.png" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="40">40</option>
+		</select>
+	</form>
+</div>

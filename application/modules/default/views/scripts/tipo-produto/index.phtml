@@ -1,0 +1,23 @@
+<?php
+    $this->script('scriptFile',array('/tipo-produto/index.js'));
+?>
+<form id="formTipoProduto" method="post" action="" enctype="application/x-www-form-urlencoded">
+	<div id="tipoProduto">
+		<div>
+			<?php echo $this->formHidden('cd_tipo_produto') ?>
+            <label class="clear-l float-l span-3 right required" style="margin-left:5px;"><?php echo $this->escape($this->translate('L_VIEW_METRICA')) ?>:</label>
+				<p><?php echo $this->formSelect('cd_definicao_metrica_tipo_produto',null,null,$this->comboMetrica) ?></p>
+			<label class=" clear-l  float-l span-3 right required" style="margin-left:5px;"><?php echo $this->escape($this->translate('L_VIEW_TIPO_PRODUTO')) ?>:</label>
+				<p><?php echo $this->formText('tx_tipo_produto',null, array('class'=>'span-5')); ?></p>
+			<label class="clear-l float-l span-3 right required" style="margin-left:5px;"><?php echo $this->escape($this->translate('L_VIEW_NR_ORDEM')) ?>:</label>
+				<p><?php echo $this->formText('ni_ordem_tipo_produto',null,array('onKeyPress'=>'return soNumeros(event)', 'class'=>'span-2')); ?></p>
+		</div>
+		<div id="griTipoProduto" class="float-l span-21" style="display: none;"></div>
+		<?php
+			echo $this->formButton('btn_salvar_tipo_produto',$this->escape($this->translate('L_BTN_SALVAR')), array('class'=>'float-l clear-l push-3 verde'));
+			echo $this->formButton('btn_alterar_tipo_produto',$this->escape($this->translate('L_BTN_ALTERAR')), array('class'=>'float-l push-3 azul'));
+			echo $this->formButton('btn_cancelar_tipo_produto',$this->escape($this->translate('L_BTN_CANCELAR')), array('class'=>'float-l push-3 vermelho'));
+		?>		
+	</div>
+	<div id="gridTipoProduto" class="float-l clear-l push-1"></div>
+</form>

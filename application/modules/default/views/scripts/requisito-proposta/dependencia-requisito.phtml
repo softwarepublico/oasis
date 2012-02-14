@@ -1,0 +1,28 @@
+<?php
+    $this->script('scriptFile',array('/requisito-proposta/dependencia-requisito.js'));
+?>
+<div id="div_dependencia_requisito" class="divTab" style="margin-left: 10px;">
+
+	<label class="span-3 right float-l bold"><?php echo $this->escape($this->translate('L_VIEW_PROJETO')) ?>:</label>
+	<p class="float-l clear-r"><?php echo $this->nomeProjeto; ?></p>
+    <label class="span-3 right float-l clear-l bold"><?php echo $this->escape($this->translate('L_VIEW_PROPOSTA')) ?>:</label>
+	<p class="float-l clear-r"><?php echo $this->cd_proposta; ?></p>
+
+	<hr class="span-21" style="border-top: 1px solid rgb(84, 189, 205); visibility: visible; height: 6px;"/>
+	
+	<label class="bold right float-l span-3" style="margin-top:2px;"><?php echo $this->escape($this->translate('L_VIEW_REQUISITO')) ?>:</label>
+	<?php 
+	    echo $this->formSelect( 'cmb_requisitos_dependencia', null ,array('class'=>'span-6 float-l'), $this->arrRequisitos );
+	    echo $this->formButton('btn_atualizar_versao_requisito_dependente', mb_strtoupper($this->escape($this->translate('L_BTN_ATUALIZAR_VERSAO_REQUISITO_DEPENDENTE')), 'utf-8'), array('class'=>'azul float-l push-2'));
+	?>
+
+	<?php
+		echo $this->flipFlop(array('name'=>'requisitos_1',
+                                   'label'=>$this->escape($this->translate('L_VIEW_REQUISITOS_NAO_ASSOCIADOS')),
+                                  ),
+							 array('name'=>'requisitos_2', 
+                                   'label'=>$this->escape($this->translate('L_VIEW_REQUISITOS_ASSOCIADOS')),
+                                  ),
+							 'add_dependencia',
+							 'remove_dependencia',8); ?>
+</div>

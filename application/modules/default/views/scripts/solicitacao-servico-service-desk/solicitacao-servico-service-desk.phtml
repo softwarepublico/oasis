@@ -1,0 +1,10 @@
+<div class="clear boxTab" >
+	<div class="span-18">	
+		<?php echo $this->formSelect('cd_objeto', null, array('class' => 'span-5 float-l', 'style' => 'margin-right: 10px;'), $this->objetoCombo) ?>
+		<?php echo $this->formSelect('st_solicitacao', null, array('class' => 'span-5 float-l', 'style' => 'margin-right: 10px;'), $this->tipoSolicitacaoCombo) ?>
+		<?php echo $this->formSelect('mes', $this->mesComboValue, array('class' => 'span-4 float-l', 'style' => 'margin-right: 10px;'), $this->mesCombo) ?>
+		<?php echo $this->formSelect('ano', $this->anoComboValue, array('class' => 'span-3 float-l'), $this->anoCombo) ?>
+	</div>
+    <?php echo $this->formButton('nova_solicitacao',$this->escape($this->translate('L_BTN_NOVA_SOLICITACAO')),array('class'=>'azul', 'style'=>'margin-top:2px;'));?>
+</div>
+<div id="grid"></div>
